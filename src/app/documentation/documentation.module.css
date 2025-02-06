@@ -1,0 +1,17 @@
+.mainContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+	padding: 10px 10px;
+}
+
+.componentContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.buttonTooltip {
+	position: relative;
+	width: fit-content;
+}

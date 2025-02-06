@@ -1,0 +1,29 @@
+@import "tokens/primitive.scss";
+
+// Component specific tokens - Dark
+@import "tokens/dark/components-dark.scss";
+// Semantic tokens - Dark
+@import "tokens/dark/semantic-dark.scss";
+// Component specific tokens - Light
+@import "tokens/light/components-light.scss";
+// Semantic tokens - Light
+@import "tokens/light/semantic-light.scss";
+
+:root {
+	//semantic
+	--width-container-xxsmall: 100%;
+	--width-container-xsmall: 100%;
+	--width-container-small: 100%;
+	--width-container-medium: 750px;
+	--width-container-large: 970px;
+	--width-container-xlarge: 1140px;
+	--width-container-xxlarge: 1440px;
+
+	--padding-container-xxsmall: 15px;
+	--padding-container-xsmall: 15px;
+	--padding-container-small: 15px;
+	--padding-container-medium: 15px;
+	--padding-container-large: 15px;
+	--padding-container-xlarge: 15px;
+	--padding-container-xxlarge: 15px;
+}

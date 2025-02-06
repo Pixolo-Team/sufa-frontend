@@ -1,0 +1,131 @@
+// Home container styling
+.homeContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
+	text-align: center;
+	padding: 0 var(--padding-xxlarge);
+
+	// Brand Icon styling
+	.brandIcon {
+		display: block;
+		margin-bottom: 50px;
+		margin-top: 80px;
+		object-fit: contain;
+	}
+
+	// Header section styling
+	.homeContent {
+		margin-bottom: 92px;
+		.homeHeading {
+			font-weight: var(--font-weight-extra-bold);
+			font-size: 80px;
+		}
+
+		.homeSubheading {
+			font-weight: var(--font-weight-medium);
+			font-size: var(--font-size-xlarge);
+
+			.designText {
+				color: var(--color-brand-primary-deep);
+			}
+		}
+	}
+
+	.exploreMore {
+		font-weight: var(--font-weight-semi-bold);
+		font-size: var(--font-size-large);
+		margin-bottom: var(--margin-medium);
+	}
+
+	// Buttons styling
+	.actionButtons {
+		display: flex;
+		gap: var(--gap-xxlarge);
+	}
+
+	// Footer styling
+	.homeBottomContainer {
+		position: absolute;
+		bottom: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.bottomText {
+			font-weight: var(--font-weight-medium);
+			font-size: var(--font-size-small);
+			margin-bottom: var(--margin-regular);
+		}
+	}
+}
+
+@media only screen and (max-width: 992px) {
+	.homeContainer {
+		// Brand Icon styling
+		.brandIcon {
+			width: 180px;
+		}
+
+		// Header section styling
+		.homeContent {
+			.homeHeading {
+				font-size: var(--font-size-8xl);
+			}
+
+			.homeSubheading {
+				font-size: var(--font-size-large);
+			}
+		}
+
+		.exploreMore {
+			font-size: var(--font-size-medium);
+			margin-bottom: var(--margin-regular);
+		}
+	}
+}
+
+// Ipad Mini
+@media only screen and (max-width: 772px) {
+	.homeContainer {
+		// Brand Icon styling
+		.brandIcon {
+			width: 160px;
+		}
+
+		// Header section styling
+		.homeContent {
+			.homeHeading {
+				font-size: var(--font-size-6xl);
+			}
+		}
+	}
+}
+
+// Mobile Phones
+@media only screen and (max-width: 600px) {
+	.homeContainer {
+		// Header section styling
+		.homeContent {
+			margin-bottom: 60px;
+			.homeHeading {
+				font-size: var(--font-size-3xl);
+				font-weight: var(--font-weight-bold);
+			}
+
+			.homeSubheading {
+				font-size: var(--font-size-small);
+			}
+		}
+
+		.exploreMore {
+			font-size: var(--font-size-regular);
+		}
+
+		// Buttons styling
+		.actionButtons {
+			flex-direction: column;
+			gap: var(--gap-medium);
+		}
+	}
+}

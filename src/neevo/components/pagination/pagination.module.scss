@@ -1,0 +1,212 @@
+$colors: (
+	primary: "Primary",
+	secondary: "Secondary",
+	neutral-light: "NeutralLight",
+	neutral-dark: "NeutralDark",
+);
+
+$variants: (
+	solid: "Solid",
+	soft: "Soft",
+	outline: "Outline",
+	plain: "Plain",
+);
+
+$shapes: (
+	default: "Default",
+	rounded: "Rounded",
+);
+
+$sizes: (
+	small: "Small",
+	medium: "Medium",
+	large: "Large",
+);
+
+.pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--gap-medium);
+	.arrow {
+		height: 32px;
+		width: 32px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		z-index: 1;
+		&::before {
+			content: "";
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			border-radius: 9999px;
+			background-color: var(--color-brand-neutral-light-400);
+			transition: all 0.3s ease-in-out;
+			transform: scale(0);
+			z-index: -1;
+		}
+		&:hover {
+			&::before {
+				transform: scale(1);
+			}
+		}
+		.arrowIcon {
+			height: var(--size-pagination-icon-medium);
+			width: var(--size-pagination-icon-medium);
+			path {
+				fill: var(--color-pagination-arrow-primary-solid);
+			}
+		}
+	}
+	.prevArrow {
+		.arrowIcon {
+			transform: rotate(180deg);
+		}
+	}
+	.nextArrow {
+	}
+	.paginationCountWrap {
+		position: relative;
+		display: flex;
+		gap: var(--gap-medium);
+	}
+	.paginationCount {
+		font-size: var(--font-size-pagination-medium);
+		color: var(--color-text-regular);
+		height: var(--size-pagination-medium);
+		width: var(--size-pagination-medium);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		z-index: 2;
+		line-height: 1em;
+		&::before {
+			position: absolute;
+			content: "";
+			height: 100%;
+			width: 100%;
+			border-radius: var(--border-radius-large);
+			background-color: var(--color-brand-neutral-light-400);
+			transform: scale(0);
+			transition: all 0.3s ease-in-out;
+			z-index: -1;
+		}
+		&:hover {
+			&::before {
+				transform: scale(1);
+			}
+		}
+		&.active {
+			color: var(--color-pagination-foreground-primary-solid);
+			&::before {
+				transform: scale(1);
+				background-color: var(--color-pagination-background-primary-solid);
+				z-index: -1;
+			}
+		}
+		&.ellipsisPagination {
+			pointer-events: none;
+		}
+	}
+}
+
+@mixin color-styles($variant, $color) {
+	.arrow {
+		.arrowIcon {
+			path {
+				fill: var(--color-pagination-arrow-#{$color}-#{$variant});
+			}
+		}
+	}
+	.paginationCount {
+		&.active {
+			color: var(--color-pagination-foreground-#{$color}-#{$variant});
+			&::before {
+				background-color: var(--color-pagination-background-#{$color}-#{$variant});
+			}
+			@if $variant == "outline" {
+				&::before {
+					background-color: transparent;
+					border: 1px solid var(--color-pagination-foreground-#{$color}-#{$variant});
+				}
+			}
+		}
+	}
+}
+
+@mixin size-styles($size, $shape) {
+	.arrow {
+		.arrowIcon {
+			height: var(--size-pagination-icon-#{$size});
+			width: var(--size-pagination-icon-#{$size});
+		}
+	}
+	.paginationCount {
+		font-size: var(--font-size-pagination-#{$size});
+		height: var(--size-pagination-#{$size});
+		width: var(--size-pagination-#{$size});
+		@if $shape == "rounded" {
+			&::before {
+				border-radius: 9999px;
+			}
+		}
+	}
+}
+
+@each $variant, $variant-name in $variants {
+	@each $color, $color-name in $colors {
+		.#{$variant-name}#{$color-name} {
+			@include color-styles($variant, $color);
+		}
+	}
+}
+
+@each $size, $size-name in $sizes {
+	@each $shape, $shape-name in $shapes {
+		.#{$size-name}#{$shape-name} {
+			@include size-styles($size, $shape);
+		}
+	}
+}
+
+// Small laptops
+@media only screen and (max-width: 1500px) {
+}
+
+//   Ipad air
+@media only screen and (max-width: 992px) {
+}
+
+// Ipad Mini
+@media only screen and (max-width: 768px) {
+}
+
+// Mobile Phones
+@media only screen and (max-width: 600px) {
+	.pagination {
+		gap: var(--gap-small);
+		.arrow {
+			height: 28px;
+			width: 28px;
+			.arrowIcon {
+				height: var(--size-pagination-icon-small);
+				width: var(--size-pagination-icon-small);
+			}
+		}
+		.paginationCountWrap {
+			gap: var(--gap-small);
+		}
+		.paginationCount {
+			font-size: var(--font-size-pagination-small);
+			height: var(--size-pagination-small);
+			width: var(--size-pagination-small);
+		}
+	}
+}
+
+// Small mobiles (iphone 5)
+@media only screen and (max-width: 350px) {
+}

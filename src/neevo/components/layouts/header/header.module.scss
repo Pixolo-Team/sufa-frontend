@@ -1,0 +1,113 @@
+.header {
+	position: relative;
+	border-bottom: 1px solid var(--color-brand-neutral-light-500);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: var(--padding-medium) var(--padding-xxlarge);
+
+	.leftContent {
+		.hamburgerMenuButton {
+			background-color: transparent;
+			.hamburgerIcon {
+				display: none;
+			}
+		}
+	}
+
+	.rightContent {
+		display: flex;
+		align-items: center;
+		gap: var(--gap-large);
+
+		.infoWrap {
+			display: flex;
+			align-items: center;
+			gap: var(--gap-medium);
+		}
+
+		.profileUserName {
+			font-weight: var(--font-weight-semi-bold);
+			margin-bottom: var(--margin-xsmall);
+			text-overflow: ellipsis;
+			max-width: 100px;
+			overflow: hidden;
+			white-space: nowrap;
+			font-size: var(--font-size-small);
+			color: var(--color-text-regular);
+		}
+		.userDesignation {
+			font-size: var(--font-size-xsmall);
+			font-weight: var(--font-weight-medium);
+			color: var(--color-text-tint);
+		}
+
+		.headerDropdownArrow {
+			height: 14px;
+			width: 14px;
+			transition: transform 0.3s ease-in-out;
+			transform: rotate(90deg);
+			&.drawerOpen {
+				transform: rotate(-90deg);
+			}
+		}
+
+		.optionsContainer {
+			width: 12%;
+			display: flex;
+			position: absolute;
+			top: 100%;
+			right: 1%;
+			margin-top: var(--margin-small);
+			border: 1px solid var(--color-brand-neutral-light-400);
+			background-color: var(--color-brand-neutral-light-100);
+			border-radius: var(--border-radius-large);
+			flex-direction: column;
+			z-index: 1;
+
+			.option {
+				display: flex;
+				align-items: center;
+				gap: var(--gap-medium);
+				border-bottom: 1px solid var(--color-brand-neutral-light-400);
+				padding: var(--gap-medium) var(--gap-large);
+
+				&:last-child {
+					border: none;
+				}
+
+				&:hover {
+					background-color: var(--color-brand-neutral-light-300);
+				}
+				.iconLeft {
+					height: 16px;
+					width: 16px;
+					path {
+						fill: var(--color-brand-neutral-dark-500);
+					}
+				}
+				.label {
+					text-align: center;
+					font-size: (--font-size-small);
+					font-weight: (--font-weight-regular);
+					color: var(--colr-text-bright);
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.header {
+		.leftContent {
+			.hamburgerMenuButton {
+				.hamburgerIcon {
+					display: block;
+					path {
+						fill: var(--color-brand-primary-regular);
+					}
+				}
+			}
+		}
+	}
+}

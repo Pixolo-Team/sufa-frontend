@@ -1,0 +1,212 @@
+// Define Select sizes.
+$sizes: (
+	small: "Small",
+	medium: "Medium",
+	large: "Large",
+);
+
+// Neevo Select default styles.
+.neevoSelectWrap {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-small);
+	// Label.
+	.label {
+		color: var(--color-select-label-default);
+		font-size: var(--font-size-select-label);
+		font-weight: var(--font-weight-select-label);
+		.inputRequired {
+			color: var(--color-error-deep);
+			margin-left: var(--margin-xsmall);
+		}
+	}
+	.selectElementWrapper {
+		// Select element.
+		position: relative;
+		.selectElement {
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: var(--gap-regular);
+			flex-direction: row;
+			background: var(--color-select-background-default);
+			border: 1px solid var(--border-color-select-default);
+			padding: 0 var(--padding-select-horizontal);
+			border-radius: var(--border-radius-select-default);
+			// Selected option (value)
+			.selectedOption {
+				color: var(--color-select-label-default);
+				font-size: var(--font-size-select-option-text-default);
+				font-weight: var(--font-weight-select-options-text-default);
+			}
+			// Left icon.
+			.iconLeft {
+				height: var(--size-select-icon);
+				width: var(--size-select-icon);
+				left: 12px;
+				path {
+					fill: var(--color-select-icon-default);
+				}
+			}
+			// Value
+			.value {
+				width: 100%;
+				font-size: var(--font-size-select-options-text-default);
+			}
+			.placeholder {
+				width: 100%;
+				color: var(--color-select-placeholder-default);
+			}
+			// Dropdown arrow icon.
+			.dropDownArrow {
+				height: var(--size-select-icon);
+				width: var(--size-select-icon);
+
+				transition: all 0.3s ease-in-out;
+				&.dropdownOpen {
+					transform: rotateZ(180deg);
+				}
+				path {
+					fill: var(--color-select-icon-default);
+				}
+			}
+		}
+
+		// Dropdown list.
+		.dropdownOptionsList {
+			margin-top: var(--margin-small);
+			border: 1px solid var(--border-color-select-options-default);
+			border-radius: var(--border-radius-select-options-default);
+			position: absolute;
+			top: 100%;
+			left: 0%;
+			width: 100%;
+			z-index: 1;
+			overflow-y: auto;
+			background-color: var(--color-select-options-background-default);
+			// Dropdown list options.
+			.dropdownOption {
+				display: flex;
+				align-items: center;
+				gap: var(--gap-small);
+				padding: 0 var(--padding-select-horizontal);
+				border-bottom: 1px solid var(--border-color-select-options-default);
+				cursor: pointer;
+
+				.optionsIconLeft {
+					height: var(--size-select-icon);
+					width: var(--size-select-icon);
+					left: 12px;
+					path {
+						fill: var(--color-select-icon-default);
+					}
+				}
+				.selectOptionsValue {
+					font-size: var(--font-size-select-options-text-default);
+				}
+
+				&:hover {
+					background-color: var(--color-select-options-background-selected);
+				}
+
+				&:nth-last-child(1) {
+					border-bottom: 0;
+				}
+			}
+		}
+	}
+	//Caption.
+	.caption {
+		color: var(--color-select-caption-default);
+		font-size: var(--font-size-select-caption);
+		font-weight: var(--font-weight-select-caption);
+	}
+
+	// Error message.
+	.errorMessage {
+		color: var(--color-select-error-default);
+		font-size: var(--font-size-select-error);
+		font-weight: var(--font-weight-select-error);
+	}
+}
+
+// Neevo Select Error class.
+.neevoSelectWrapError {
+	.selectElementWrapper {
+		.selectElement {
+			border-color: var(--border-color-select-error);
+		}
+	}
+}
+
+// Neevo Select Disabled class.
+.neevoSelectWrapDisabled {
+	// Label
+	.label {
+		color: var(--color-select-label-disabled);
+	}
+	.selectElementWrapper {
+		// Dropdown drawer.
+		.selectElement {
+			background: var(--color-select-background-disabled);
+			border-color: var(--border-color-select-disabled);
+			pointer-events: none;
+			// Selected option style.
+			.selectedOption {
+				color: var(--color-select-label-disabled);
+			}
+			.value {
+				color: var(--color-select-value-default);
+			}
+			// Placeholder.
+			.placeholder {
+				color: var(--color-select-placeholder-disabled);
+			}
+			// Icon left.
+			.iconLeft {
+				path {
+					fill: var(--color-select-icon-disabled);
+				}
+			}
+			// DropdownArrow icon.
+			.dropDownArrow {
+				path {
+					fill: var(--color-select-icon-disabled);
+				}
+			}
+		}
+	}
+	// Caption text.
+	.caption {
+		color: var(--color-select-caption-disabled);
+	}
+	// Error message text.
+	.errorMessage {
+		color: var(--color-select-error-disabled);
+	}
+}
+
+// Neevo Select Selected option class.
+.neevoSelectOptionSelected {
+	background-color: var(--color-select-options-background-selected);
+	border-bottom: 1px solid var(--border-color-select-options-selected);
+}
+
+@mixin select-size($size, $size-name) {
+	.neevoSelect#{$size-name} {
+		.selectElementWrapper {
+			.selectElement {
+				height: var(--height-select-#{$size});
+			}
+			.dropdownOptionsList {
+				.dropdownOption {
+					height: var(--height-select-options-#{$size});
+				}
+			}
+		}
+	}
+}
+
+@each $size, $size-name in $sizes {
+	@include select-size($size, $size-name);
+}
