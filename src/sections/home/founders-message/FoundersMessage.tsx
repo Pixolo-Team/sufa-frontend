@@ -15,8 +15,8 @@ import React from "react";
 
 // PLUGINS //
 
-/** Section Header Screen */
-const SectionHeader: React.FC<unknown> = () => {
+/** Founders Message Screen */
+const FoundersMessage: React.FC<unknown> = () => {
 	// Navigation and Route Params
 	
 	// Define States
@@ -30,9 +30,9 @@ const SectionHeader: React.FC<unknown> = () => {
     // View starts here
 	return (
 		<div>
-			Hello Section Header
+			Hello Founders Message
 		</div>
 	);
 };
 
-export default SectionHeader;
+export default FoundersMessage;

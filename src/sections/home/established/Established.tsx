@@ -15,8 +15,8 @@ import React from "react";
 
 // PLUGINS //
 
-/** Section Header Screen */
-const SectionHeader: React.FC<unknown> = () => {
+/** Established Screen */
+const Established: React.FC<unknown> = () => {
 	// Navigation and Route Params
 	
 	// Define States
@@ -30,9 +30,9 @@ const SectionHeader: React.FC<unknown> = () => {
     // View starts here
 	return (
 		<div>
-			Hello Section Header
+			Hello Established
 		</div>
 	);
 };
 
-export default SectionHeader;
+export default Established;
