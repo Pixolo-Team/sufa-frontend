@@ -1,36 +1,35 @@
 "use client";
+// REACT //
 import React from "react";
 
 // STYLES //
+import styles from "./section-header.module.scss";
 
-// COMPONENTS //
+interface SectionHeaderProps {
+	fadedText: string;
+	highlightedText: string;
+}
 
-// IMAGES //
-
-// SERVICES //
-
-// TYPES //
-
-// UTILS //
-
-// PLUGINS //
-
-/** Section Header Screen */
-const SectionHeader: React.FC<unknown> = () => {
+/** Section Header Component */
+const SectionHeader: React.FC<SectionHeaderProps> = ({
+	fadedText = "",
+	highlightedText = "",
+}) => {
 	// Navigation and Route Params
-	
+
 	// Define States
 
-    // Define Refs
+	// Define Refs
 
-    // Helper Functions
+	// Helper Functions
 
-    // UseEffect Functions and UseFocusEffect Functions
-	
-    // View starts here
+	// UseEffect Functions and UseFocusEffect Functions
+
+	// View starts here
 	return (
-		<div>
-			Hello Section Header
+		<div className={styles.textWrapper}>
+			<p className={styles.fadedText}>{fadedText}</p>
+			<p className={styles.highlightedText}>{highlightedText}</p>
 		</div>
 	);
 };
