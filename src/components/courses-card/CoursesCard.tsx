@@ -18,21 +18,17 @@ import React from "react";
 /** Courses Card Screen */
 const CoursesCard: React.FC<unknown> = () => {
 	// Navigation and Route Params
-	
+
 	// Define States
 
-    // Define Refs
+	// Define Refs
 
-    // Helper Functions
+	// Helper Functions
 
-    // UseEffect Functions and UseFocusEffect Functions
-	
-    // View starts here
-	return (
-		<div>
-			Hello Courses Card
-		</div>
-	);
+	// UseEffect Functions and UseFocusEffect Functions
+
+	// View starts here
+	return <div>Hello Courses Card</div>;
 };
 
 export default CoursesCard;

@@ -18,21 +18,17 @@ import React from "react";
 /** Section Header Screen */
 const SectionHeader: React.FC<unknown> = () => {
 	// Navigation and Route Params
-	
+
 	// Define States
 
-    // Define Refs
+	// Define Refs
 
-    // Helper Functions
+	// Helper Functions
 
-    // UseEffect Functions and UseFocusEffect Functions
-	
-    // View starts here
-	return (
-		<div>
-			Hello Section Header
-		</div>
-	);
+	// UseEffect Functions and UseFocusEffect Functions
+
+	// View starts here
+	return <div>Hello Section Header</div>;
 };
 
 export default SectionHeader;

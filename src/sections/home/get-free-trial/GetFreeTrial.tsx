@@ -18,21 +18,17 @@ import React from "react";
 /** Get Free Trial Screen */
 const GetFreeTrial: React.FC<unknown> = () => {
 	// Navigation and Route Params
-	
+
 	// Define States
 
-    // Define Refs
+	// Define Refs
 
-    // Helper Functions
+	// Helper Functions
 
-    // UseEffect Functions and UseFocusEffect Functions
-	
-    // View starts here
-	return (
-		<div>
-			Hello Get Free Trial
-		</div>
-	);
+	// UseEffect Functions and UseFocusEffect Functions
+
+	// View starts here
+	return <div>Hello Get Free Trial</div>;
 };
 
 export default GetFreeTrial;
