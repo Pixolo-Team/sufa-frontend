@@ -5,37 +5,21 @@
 	color: var(--color-brand-primary-deep);
 	.fadedText {
 		position: absolute;
-		font-size: 70px;
+		font-size: var(--color-brand-font-size-7xlarge);
 		font-weight: 800;
 		opacity: 0.1;
 		left: 50%;
 		transform: translate(-50%, 0);
 	}
 	.highlightedText {
-		font-size: var(--color-brand-font-size-8xlarge);
+		font-size: var(--color-brand-font-size-3xlarge);
 		font-weight: 700;
 		margin-top: 30px;
 	}
 }
 
-// Small laptops
-@media only screen and (max-width: 1500px) {
-}
-
-// Ipad air
-@media only screen and (max-width: 992px) {
-	.textWrapper {
-		.fadedText {
-			font-size: var(--color-brand-font-size-8xlarge);
-		}
-		.highlightedText {
-			font-size: var(--color-brand-font-size-6xlarge);
-		}
-	}
-}
-
-// Ipad Mini
-@media only screen and (max-width: 768px) {
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 	.textWrapper {
 		.fadedText {
 			font-size: 60px;
@@ -46,14 +30,30 @@
 	}
 }
 
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+// Ipad Mini
+@media only screen and (min-width: 768px) {
 	.textWrapper {
 		.fadedText {
-			font-size: var(--color-brand-font-size-7xlarge);
+			font-size: var(--color-brand-font-size-8xlarge);
 		}
 		.highlightedText {
-			font-size: var(--color-brand-font-size-3xlarge);
+			font-size: var(--color-brand-font-size-6xlarge);
 		}
 	}
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+	.textWrapper {
+		.fadedText {
+			font-size: 70px;
+		}
+		.highlightedText {
+			font-size: var(--color-brand-font-size-8xlarge);
+		}
+	}
+}
+
+// Small laptops
+@media only screen and (max-width: 1500px) {
 }
