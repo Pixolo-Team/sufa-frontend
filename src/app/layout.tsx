@@ -56,7 +56,7 @@ const kippaxModern = localFont({
 			weight: "100",
 		},
 	],
-	variable: "--font-family-kippax",
+	variable: "--font-family-primary",
 	display: "swap",
 });
 
