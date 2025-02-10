@@ -1,16 +1,44 @@
+.cardWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 260px;
+}
+.imageWrapper {
+	background-color: red;
+	width: 260px;
+	height: 360px;
+	border-radius: 130px;
+	overflow: hidden;
+	object-fit: cover;
+}
+.textWrapper {
+	padding: 18px 0;
+	text-align: center;
+}
+.title {
+	font-size: 26px;
+	font-weight: var(--font-weight-medium);
+}
+
+.description {
+	font-size: 12px;
+	font-weight: var(--font-weight-regular);
+}
 
 // Small laptops
-@media only screen and (max-width: 1500px) {
+@media only screen and (min-width: 1500px) {
 }
 
 // Ipad air
-@media only screen and (max-width: 992px) {
+@media only screen and (min-width: 992px) {
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
 }
 
 // Mobile Phones
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
 }
