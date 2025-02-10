@@ -41,7 +41,7 @@ const CoachesCard: React.FC<CoachesCardProps> = ({
 
 	// View starts here
 	return (
-		<div className={styles.contentWrapper}>
+		<div className={`${styles.contentWrapper} flex justify-center`}>
 			{/* Card title */}
 			<div className={styles.titleWrapper}>
 				{/* Coach First name */}
@@ -49,7 +49,9 @@ const CoachesCard: React.FC<CoachesCardProps> = ({
 				{/* Coach Last name */}
 				<p className={styles.lastName}>{last_name}</p>
 			</div>
-			<div className={styles.imageDescriptionWrapper}>
+			<div
+				className={`${styles.imageDescriptionWrapper} flex justify-center align-center fle`}
+			>
 				{/* Image */}
 				<div className={styles.imageWrapper}>
 					<Image src={src} alt="img" width={280} height={280} />
