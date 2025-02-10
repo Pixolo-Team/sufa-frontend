@@ -8,6 +8,8 @@
 .text-right {
 	text-align: right;
 }
+
+// Class for flex layouts
 .flex {
 	display: flex;
 }
@@ -33,4 +35,33 @@
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+// Class for font weight
+.font-weight-900 {
+	font-weight: var(--font-weight-black);
+}
+.font-weight-800 {
+	font-weight: var(--font-weight-extra-bold);
+}
+.font-weight-700 {
+	font-weight: var(--font-weight-bold);
+}
+.font-weight-600 {
+	font-weight: var(--font-weight-semi-bold);
+}
+.font-weight-500 {
+	font-weight: var(--font-weight-medium);
+}
+.font-weight-400 {
+	font-weight: var(--font-weight-regular);
+}
+.fon-weight-300 {
+	font-weight: var(--font-weight-light);
+}
+.font-weight-200 {
+	font-weight: var(--font-weight-extra-light);
+}
+.font-weight-100 {
+	font-weight: var(--font-weight-thin);
 }
