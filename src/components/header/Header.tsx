@@ -18,21 +18,17 @@ import React from "react";
 /** Header Screen */
 const Header: React.FC<unknown> = () => {
 	// Navigation and Route Params
-	
+
 	// Define States
 
-    // Define Refs
+	// Define Refs
 
-    // Helper Functions
+	// Helper Functions
 
-    // UseEffect Functions and UseFocusEffect Functions
-	
-    // View starts here
-	return (
-		<div>
-			Hello Header
-		</div>
-	);
+	// UseEffect Functions and UseFocusEffect Functions
+
+	// View starts here
+	return <div>Hello Header</div>;
 };
 
 export default Header;

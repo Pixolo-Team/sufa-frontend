@@ -18,21 +18,17 @@ import React from "react";
 /** Children To Champions Screen */
 const ChildrenToChampions: React.FC<unknown> = () => {
 	// Navigation and Route Params
-	
+
 	// Define States
 
-    // Define Refs
+	// Define Refs
 
-    // Helper Functions
+	// Helper Functions
 
-    // UseEffect Functions and UseFocusEffect Functions
-	
-    // View starts here
-	return (
-		<div>
-			Hello Children To Champions
-		</div>
-	);
+	// UseEffect Functions and UseFocusEffect Functions
+
+	// View starts here
+	return <div>Hello Children To Champions</div>;
 };
 
 export default ChildrenToChampions;

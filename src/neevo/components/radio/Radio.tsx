@@ -3,7 +3,7 @@
 import React, { useMemo } from "react";
 
 // STYLES //
-import styles from "@/neevo/components/Radio/radio.module.scss";
+import styles from "@/neevo/components/radio/radio.module.scss";
 
 // ENUMS //
 import { Colors, Sizes } from "@/neevo/enums/core.enum";

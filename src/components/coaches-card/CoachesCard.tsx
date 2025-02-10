@@ -18,21 +18,17 @@ import React from "react";
 /** Coaches Card Screen */
 const CoachesCard: React.FC<unknown> = () => {
 	// Navigation and Route Params
-	
+
 	// Define States
 
-    // Define Refs
+	// Define Refs
 
-    // Helper Functions
+	// Helper Functions
 
-    // UseEffect Functions and UseFocusEffect Functions
-	
-    // View starts here
-	return (
-		<div>
-			Hello Coaches Card
-		</div>
-	);
+	// UseEffect Functions and UseFocusEffect Functions
+
+	// View starts here
+	return <div>Hello Coaches Card</div>;
 };
 
 export default CoachesCard;
