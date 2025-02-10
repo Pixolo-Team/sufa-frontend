@@ -6,7 +6,7 @@ import React from "react";
 import styles from "./section-header.module.scss";
 
 interface SectionHeaderProps {
-	fadedText: string;
+	fadedText?: string;
 	highlightedText: string;
 }
 
@@ -29,7 +29,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 	return (
 		<div className={"container text-center"}>
 			{/* Faded text */}
-			<p className={styles.fadedText}>{fadedText}</p>
+			{!!fadedText && <p className={styles.fadedText}>{fadedText}</p>}
 			{/* Highlighted text */}
 			<p className={styles.highlightedText}>{highlightedText}</p>
 		</div>
