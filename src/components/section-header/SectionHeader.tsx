@@ -27,7 +27,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 
 	// View starts here
 	return (
-		<div className={styles.textWrapper}>
+		<div className={"container text-center"}>
 			{/* Faded text */}
 			<p className={styles.fadedText}>{fadedText}</p>
 			{/* Highlighted text */}
