@@ -33,7 +33,7 @@ const GraduatesCard: React.FC<GraduatesCardProps> = ({
 	// View starts here
 	return (
 		// Card Component
-		<div className={styles.cardWrapper}>
+		<div className={`${styles.cardWrapper} flex justify-center align∂-center`}>
 			<div className={styles.imageWrapper}>
 				{/* Image */}
 				<Image src={src} alt="img" width={260} height={360} />

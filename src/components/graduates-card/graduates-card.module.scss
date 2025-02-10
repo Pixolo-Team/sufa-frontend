@@ -1,12 +1,8 @@
 .cardWrapper {
-	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	width: 260px;
 }
 .imageWrapper {
-	background-color: red;
 	width: 260px;
 	height: 360px;
 	border-radius: 130px;
@@ -14,16 +10,16 @@
 	object-fit: cover;
 }
 .textWrapper {
-	padding: 18px 0;
+	padding: var(--padding-large) 0;
 	text-align: center;
 }
 .title {
-	font-size: 26px;
+	font-size: var(--color-brand-font-size-xlarge);
 	font-weight: var(--font-weight-medium);
 }
 
 .description {
-	font-size: 12px;
+	font-size: var(--color-brand-font-size-xsmall);
 	font-weight: var(--font-weight-regular);
 }
 
