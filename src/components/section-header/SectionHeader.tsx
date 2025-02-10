@@ -29,9 +29,13 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 	return (
 		<div className={"container text-center"}>
 			{/* Faded text */}
-			{!!fadedText && <p className={styles.fadedText}>{fadedText}</p>}
+			{!!fadedText && (
+				<p className={`${styles.fadedText} font-weight-800`}>{fadedText}</p>
+			)}
 			{/* Highlighted text */}
-			<p className={styles.highlightedText}>{highlightedText}</p>
+			<p className={`${styles.highlightedText} font-weight-700`}>
+				{highlightedText}
+			</p>
 		</div>
 	);
 };
