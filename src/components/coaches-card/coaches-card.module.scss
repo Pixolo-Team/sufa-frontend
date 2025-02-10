@@ -1,16 +1,75 @@
-
+.contentWrapper {
+	width: 300px;
+	height: 500px;
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	position: relative;
+	border-radius: 12px;
+}
+.titleWrapper {
+	position: absolute;
+	color: black;
+	background-color: white;
+	left: 22px;
+	top: 22px;
+	.firstName {
+		font-size: 26px;
+		font-weight: var(--font-weight-semi-bold);
+	}
+	.lastName {
+		font-size: 46px;
+		font-weight: var(--font-weight-extra-bold);
+	}
+}
+.imageDescriptionWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.imageWrapper {
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+	overflow: hidden;
+	margin: 14px 0;
+}
+.linkButton {
+	width: 54px;
+	height: 54px;
+	border-radius: 100%;
+	background-color: #fff;
+	position: absolute;
+	right: 32px;
+	top: 90px;
+}
+.chipWrapper {
+	position: absolute;
+	width: 100%;
+	bottom: 200px;
+	left: -12px;
+}
+.description {
+	z-index: 12;
+	color: #000;
+	font-size: 16px;
+	font-weight: var(--font-weight-semi-bold);
+	line-height: 22px;
+	padding: 0 24px;
+}
 // Small laptops
-@media only screen and (max-width: 1500px) {
+@media only screen and (min-width: 1500px) {
 }
 
 // Ipad air
-@media only screen and (max-width: 992px) {
+@media only screen and (min-width: 992px) {
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
 }
 
 // Mobile Phones
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
 }
