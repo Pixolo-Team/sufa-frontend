@@ -1,19 +1,16 @@
 "use client";
+// REACT //
 import React from "react";
 
 // STYLES //
+import styles from "./Banner.module.scss";
 
 // COMPONENTS //
+import Image from "next/image";
+import Button from "@/neevo/components/button/Button";
 
 // IMAGES //
-
-// SERVICES //
-
-// TYPES //
-
-// UTILS //
-
-// PLUGINS //
+import BannerImage from "@/../public/images/banner.png";
 
 /** Banner Screen */
 const Banner: React.FC<unknown> = () => {
@@ -28,7 +25,25 @@ const Banner: React.FC<unknown> = () => {
 	// UseEffect Functions and UseFocusEffect Functions
 
 	// View starts here
-	return <div>Hello Banner</div>;
+	return (
+		<div className={styles.bannerWrapper}>
+			<Image src={BannerImage} alt="Banner" className={styles.bannerImage} />
+			<div className={styles.textContent}>
+				<p className={styles.bannerTitle}>Where Little Feet Dream Big!</p>
+				<p className={styles.bannerDescription}>
+					At Skorost United Academy, we don’t just train players—we shape champions.
+					With every kick, every sprint, and every lesson, young athletes grow
+					stronger, smarter, and ready to take on the world.Í
+				</p>
+			</div>
+			<Button
+				text={"Book a FREE TRIAL"}
+				onClick={() => {
+					console.log();
+				}}
+			/>
+		</div>
+	);
 };
 
 export default Banner;
