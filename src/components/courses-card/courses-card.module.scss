@@ -10,16 +10,17 @@
 }
 .textWrapper {
 	background-color: #16db93;
-	border-top-right-radius: 10px;
-	padding: 8px;
+	border-top-right-radius: var(--border-radius-medium);
+	padding: var(--padding-regular);
 	position: absolute;
 	max-width: 50%;
 	left: 0;
 	bottom: 0;
 	.cardText {
-		font-size: 22px;
+		font-size: var(--color-brand-font-size-heading-4);
 		font-weight: 600;
 		color: #fff;
+		text-overflow: ellipsis;
 	}
 }
 .linkButton {

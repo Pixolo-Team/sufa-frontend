@@ -39,7 +39,9 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 		>
 			<div className={styles.textWrapper}>
 				{/* Card title */}
-				<p className={styles.cardText}>{courseTitle}</p>
+				{courseTitle.trim() !== "" && (
+					<p className={styles.cardText}>{courseTitle}</p>
+				)}
 			</div>
 			{/* Icon Button */}
 			<button
