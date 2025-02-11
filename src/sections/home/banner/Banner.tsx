@@ -3,18 +3,14 @@
 import React from "react";
 
 // ENUMS //
-import { Colors, Shapes, Sizes } from "@/neevo/enums/core.enum";
-import { ButtonSizes } from "@/neevo/enums/button.enum";
+import { Colors, Shapes } from "@/neevo/enums/core.enum";
+import { ButtonLevels, ButtonSizes } from "@/neevo/enums/button.enum";
 
 // STYLES //
 import styles from "./Banner.module.scss";
 
 // COMPONENTS //
-import Image from "next/image";
 import Button from "@/neevo/components/button/Button";
-
-// IMAGES //
-import BannerImage from "@/../public/images/banner.png";
 
 /** Banner Screen */
 const Banner: React.FC<unknown> = () => {
@@ -31,14 +27,29 @@ const Banner: React.FC<unknown> = () => {
 	// View starts here
 	return (
 		<div className={styles.bannerWrapper}>
-			{/* <Image src={BannerImage} alt="Banner" className={styles.bannerImage} /> */}
-			<div className={styles.textContent}>
+			<div>
+				{/* Image Wrapper */}
+				<picture>
+					<source media="(min-width: 768px)" srcSet="/images/group-banner.png" />
+					<source media="(min-width: 600px)" srcSet="/images/banner.png" />
+					<img
+						src="/images/banner.png"
+						alt="Group Banner"
+						className={styles.groupBannerImage}
+					/>
+				</picture>
+			</div>
+			{/* Content Wrapper */}
+			<div className={`${styles.textContent} flex align-center justify-center`}>
+				{/* Banner title */}
 				<p className={styles.bannerTitle}>Where Little Feet Dream Big!</p>
+				{/* Banner description */}
 				<p className={styles.bannerDescription}>
 					At Skorost United Academy, we don’t just train players—we shape champions.
 					With every kick, every sprint, and every lesson, young athletes grow
 					stronger, smarter, and ready to take on the world.
 				</p>
+				{/* Free Trial Button */}
 				<Button
 					text={"Book a FREE TRIAL"}
 					onClick={() => {
@@ -47,6 +58,7 @@ const Banner: React.FC<unknown> = () => {
 					shape={Shapes.ROUNDED}
 					size={ButtonSizes.XLARGE}
 					color={Colors.SECONDARY}
+					level={ButtonLevels.INLINE}
 				/>
 			</div>
 		</div>
