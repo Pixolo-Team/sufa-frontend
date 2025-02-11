@@ -8,15 +8,17 @@ import { Themes } from "@/neevo/enums/theme.enum";
 
 // STYLES //
 import "@/../public/styles/globals.scss";
+import { ThemeProvider } from "next-themes";
 
 // COMPONENTS //
 import localFont from "next/font/local";
 import Alert from "@/neevo/components/alert/Alert";
+import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 // CONTEXTS //
 import { AuthProvider } from "@/contexts/Auth.context";
 import { AppProvider } from "@/contexts/App.context";
-import { ThemeProvider } from "next-themes";
 
 // SERVICES //
 import { requestNotificationToken } from "@/services/notification/notification.service";
@@ -118,7 +120,12 @@ export default function RootLayout({
 								attribute="class"
 								storageKey="theme"
 							>
-								<div className="main">{children}</div>
+								{/* Header component */}
+								<Header />
+								{/* Main content */}
+								<main className="main">{children}</main>
+								{/* Footer component */}
+								<Footer />
 								{
 									// Show the alert
 									showNotification ? (
