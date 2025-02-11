@@ -1,22 +1,20 @@
 "use client";
+// REACT //
 import React from "react";
 
 // STYLES //
+import styles from "./section-header.module.scss";
 
-// COMPONENTS //
+interface SectionHeaderProps {
+	fadedText?: string;
+	highlightedText: string;
+}
 
-// IMAGES //
-
-// SERVICES //
-
-// TYPES //
-
-// UTILS //
-
-// PLUGINS //
-
-/** Section Header Screen */
-const SectionHeader: React.FC<unknown> = () => {
+/** Section Header Component */
+const SectionHeader: React.FC<SectionHeaderProps> = ({
+	fadedText = "",
+	highlightedText = "",
+}) => {
 	// Navigation and Route Params
 
 	// Define States
@@ -28,7 +26,18 @@ const SectionHeader: React.FC<unknown> = () => {
 	// UseEffect Functions and UseFocusEffect Functions
 
 	// View starts here
-	return <div>Hello Section Header</div>;
+	return (
+		<div className={"container text-center"}>
+			{/* Faded text */}
+			{!!fadedText && (
+				<p className={`${styles.fadedText} font-weight-800`}>{fadedText}</p>
+			)}
+			{/* Highlighted text */}
+			<p className={`${styles.highlightedText} font-weight-700`}>
+				{highlightedText}
+			</p>
+		</div>
+	);
 };
 
 export default SectionHeader;
