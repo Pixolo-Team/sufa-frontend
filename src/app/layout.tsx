@@ -8,15 +8,17 @@ import { Themes } from "@/neevo/enums/theme.enum";
 
 // STYLES //
 import "@/../public/styles/globals.scss";
+import { ThemeProvider } from "next-themes";
 
 // COMPONENTS //
-import { Montserrat, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import Alert from "@/neevo/components/alert/Alert";
+import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 // CONTEXTS //
 import { AuthProvider } from "@/contexts/Auth.context";
 import { AppProvider } from "@/contexts/App.context";
-import { ThemeProvider } from "next-themes";
 
 // SERVICES //
 import { requestNotificationToken } from "@/services/notification/notification.service";
@@ -29,18 +31,35 @@ import { onMessage } from "firebase/messaging";
 import { messaging } from "@/../firebase";
 
 // FONTS //
-// Primary Font
-const primaryFont = Montserrat({
-	weight: ["300", "400", "500", "600", "700", "800"],
-	subsets: ["latin"],
+const kippaxModern = localFont({
+	src: [
+		{
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Black.otf",
+			weight: "900",
+		},
+		{
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Extra-Bold.otf",
+			weight: "800",
+		},
+		{
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Bold.otf",
+			weight: "700",
+		},
+		{
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Medium.otf",
+			weight: "500",
+		},
+		{
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Regular.otf",
+			weight: "400",
+		},
+		{
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Thin.otf",
+			weight: "100",
+		},
+	],
 	variable: "--font-family-primary",
-});
-
-// Secondary Font
-const secondaryFont = Inter({
-	weight: ["300", "400", "500", "600", "700", "800"],
-	subsets: ["latin"],
-	variable: "--font-family-secondary",
+	display: "swap",
 });
 
 /** Root Layout Screen */
@@ -92,7 +111,7 @@ export default function RootLayout({
 				className="vertical-side-menu"
 				suppressHydrationWarning
 			>
-				<body className={`${primaryFont.variable} ${secondaryFont.variable}`}>
+				<body className={`${kippaxModern.className}`}>
 					<Suspense fallback={<div>Loading...</div>}>
 						<AppProvider>
 							<ThemeProvider
@@ -101,7 +120,12 @@ export default function RootLayout({
 								attribute="class"
 								storageKey="theme"
 							>
-								<div className="main">{children}</div>
+								{/* Header component */}
+								<Header />
+								{/* Main content */}
+								<main className="main">{children}</main>
+								{/* Footer component */}
+								<Footer />
 								{
 									// Show the alert
 									showNotification ? (
