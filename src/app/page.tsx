@@ -2,11 +2,6 @@
 // REACT //
 import React from "react";
 
-// COMPONENTS //
-import SectionHeader from "@/components/section-header/SectionHeader";
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
-
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
 import ChildrenToChampions from "@/sections/home/children-to-champions/ChildrenToChampions";
@@ -23,10 +18,7 @@ import JoinUs from "@/sections/home/join-us/JoinUs";
 /** Home Screen */
 const HomeScreen: React.FC<unknown> = () => {
 	return (
-		<div className={"flex align-center justify-center"}>
-			{/* Header Component */}
-			<Header />
-
+		<div>
 			{/* Banner Section */}
 			<Banner />
 
@@ -59,9 +51,6 @@ const HomeScreen: React.FC<unknown> = () => {
 
 			{/* Contact us Section */}
 			<ContactUs />
-
-			{/* Footer Component */}
-			<Footer />
 		</div>
 	);
 };
