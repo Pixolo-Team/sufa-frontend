@@ -5,15 +5,17 @@
 	overflow: hidden;
 	gap: 42px;
 }
+.wrapperStyles {
+	p {
+		margin: var(--margin-xxlarge) 0;
+		line-height: 32px;
+		font-size: var(--color-brand-font-size-regular);
+		text-align: left;
+	}
+}
 .messageWrapper {
 	margin: 60px;
 	width: 80%;
-}
-.foundersMessage {
-	margin: var(--margin-xxlarge) 0;
-	line-height: 32px;
-	font-size: var(--color-brand-font-size-regular);
-	text-align: left;
 }
 .founderName {
 	color: var(--color-brand-primary-regular);
@@ -38,8 +40,10 @@
 		margin: 60px;
 		width: 80%;
 	}
-	.foundersMessage {
-		font-size: var(--color-brand-font-size-medium);
+	.wrapperStyles {
+		p {
+			font-size: var(--color-brand-font-size-medium);
+		}
 	}
 }
 
