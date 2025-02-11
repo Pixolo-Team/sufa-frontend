@@ -1,16 +1,71 @@
-
-// Small laptops
-@media only screen and (max-width: 1500px) {
+.contentWrapper {
+	width: 100%;
+	height: 100vh;
+	margin: 0 34px;
+	overflow: hidden;
+	gap: 42px;
 }
-
-// Ipad air
-@media only screen and (max-width: 992px) {
+.messageWrapper {
+	margin: 60px;
+	width: 80%;
 }
-
-// Ipad Mini
-@media only screen and (max-width: 768px) {
+.foundersMessage {
+	margin: var(--margin-xxlarge) 0;
+	line-height: 32px;
+	font-size: var(--color-brand-font-size-regular);
+	text-align: left;
+}
+.founderName {
+	color: var(--color-brand-primary-regular);
+	font-size: var(--color-brand-font-size-medium);
+}
+.about {
+	color: var(--color-brand-primary-deep);
+	font-size: var(--color-brand-font-size-regular);
+}
+.founderImage {
+	display: none;
+}
+.doubleQuotes {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 // Mobile Phones
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
+	.messageWrapper {
+		margin: 60px;
+		width: 80%;
+	}
+	.foundersMessage {
+		font-size: var(--color-brand-font-size-medium);
+	}
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+	.messageWrapper {
+		margin: 100px;
+		width: 60%;
+	}
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+	.messageWrapper {
+		margin: 100px;
+		width: 60%;
+	}
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
+	.messageWrapper {
+		margin: 140px;
+		width: 50%;
+	}
+	.founderImage {
+		display: block;
+	}
 }
