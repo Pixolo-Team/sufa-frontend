@@ -64,8 +64,9 @@ const CoachesCard: React.FC<CoachesCardProps> = ({
 						<Image
 							src={coachImageSrc}
 							alt={firstName}
-							fill
-							className="img-responsive full-width-img "
+							width={250}
+							height={250}
+							className="img-responsive full-width-img"
 						/>
 					</div>
 					{/* Button with Social Media Icons or Arrow */}

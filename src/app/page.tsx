@@ -2,9 +2,6 @@
 // REACT //
 import React from "react";
 
-// COMPONENTS //
-import CoachesCard from "@/components/coaches-card/CoachesCard";
-
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
 import ChildrenToChampions from "@/sections/home/children-to-champions/ChildrenToChampions";
