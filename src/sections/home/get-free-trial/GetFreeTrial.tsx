@@ -1,19 +1,17 @@
 "use client";
+// REACT //
 import React from "react";
 
+// ENUMS //
+import { ButtonLevels, ButtonSizes } from "@/neevo/enums/button.enum";
+import { Shapes } from "@/neevo/enums/core.enum";
+
 // STYLES //
+import styles from "./get-free-trial.module.scss";
 
 // COMPONENTS //
-
-// IMAGES //
-
-// SERVICES //
-
-// TYPES //
-
-// UTILS //
-
-// PLUGINS //
+import Button from "@/neevo/components/button/Button";
+import Image from "next/image";
 
 /** Get Free Trial Screen */
 const GetFreeTrial: React.FC<unknown> = () => {
@@ -28,7 +26,47 @@ const GetFreeTrial: React.FC<unknown> = () => {
 	// UseEffect Functions and UseFocusEffect Functions
 
 	// View starts here
-	return <div>Hello Get Free Trial</div>;
+	return (
+		<div className={`${styles.contentWrapper} flex justify-center align-center`}>
+			<div className={styles.textWrapper}>
+				{/* Heading */}
+				<p className={`${styles.heading} font-weight-700`}>Get a Free Trial</p>
+				{/* Sub heading */}
+				<p className={`${styles.subHeading} font-weight-400`}>
+					Experience the Skorost way! Jossssin us for a free trial session.
+				</p>
+				{/* Button for small devices */}
+				<div className={styles.mobileButton}>
+					<Button
+						text={"Book a Free Trial"}
+						onClick={() => console.log("Button Clicked")}
+						level={ButtonLevels.INLINE}
+						size={ButtonSizes.MEDIUM}
+						shape={Shapes.ROUNDED}
+					/>
+				</div>
+				{/* Button for large devices */}
+				<div className={styles.desktopButton}>
+					<Button
+						text={"Book a Free Trial"}
+						onClick={() => console.log("Button Clicked")}
+						level={ButtonLevels.INLINE}
+						size={ButtonSizes.XXLARGE}
+						shape={Shapes.ROUNDED}
+					/>
+				</div>
+			</div>
+			{/* Image */}
+			<div className={styles.imageWrapper}>
+				<Image
+					src={"/images/tiger-cub.jpg"}
+					alt="tiger"
+					className={styles.image}
+					fill
+				/>
+			</div>
+		</div>
+	);
 };
 
 export default GetFreeTrial;
