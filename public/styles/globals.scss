@@ -17,7 +17,7 @@ html,
 body {
 	max-width: 100vw;
 	color: var(--color-foreground-light-regular);
-	background-color: var(--color-brand-neutral-light-100);
+	background-color: var(--color-brand-neutral-light-300);
 	font-family: var(--font-family-primary);
 }
 h1,
@@ -26,7 +26,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: var(--font-family-secondary);
+	font-family: var(--font-family-primary);
 }
 a {
 	color: inherit;
@@ -153,4 +153,11 @@ textarea {
 }
 .full-width-img {
 	width: 100% !important;
+}
+
+.font-secondary {
+	font-family: var(--font-family-secondary);
+}
+.font-primary {
+	font-family: var(--font-family-primary);
 }
