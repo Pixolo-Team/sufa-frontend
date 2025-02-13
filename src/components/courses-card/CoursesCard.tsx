@@ -6,17 +6,18 @@ import React from "react";
 import styles from "./courses-card.module.scss";
 
 // COMPONENTS //
+import Image from "next/image";
 import Icon from "@/neevo/components/Icon";
 
 interface CoursesCardProps {
-	src: string;
+	courseImageSrc: string;
 	courseTitle: string;
 	onClick: () => void;
 }
 
 /** Courses Card Component */
 const CoursesCard: React.FC<CoursesCardProps> = ({
-	src = "",
+	courseImageSrc = "",
 	courseTitle = "",
 	onClick,
 }) => {
@@ -33,10 +34,16 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 	// View starts here
 	return (
 		// Course card and Image
-		<div
-			className={styles.contentWrapper}
-			style={{ backgroundImage: `url(${src})` }}
-		>
+		<div className={styles.contentWrapper}>
+			{/* Course Image */}
+			<div className={styles.imageContainer}>
+				<Image
+					src={courseImageSrc}
+					alt={courseTitle}
+					className={styles.courseImage}
+					fill
+				/>
+			</div>
 			<div className={styles.textWrapper}>
 				{/* Card title */}
 				{courseTitle.trim() !== "" && (
