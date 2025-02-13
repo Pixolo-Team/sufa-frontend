@@ -66,7 +66,7 @@ const GetFreeTrial: React.FC<unknown> = () => {
 				<Image
 					src={TigerImage}
 					alt="tiger"
-					className={`${styles.image} img-responsive`}
+					className={`${styles.image} img-responsive full-width-img`}
 				/>
 			</div>
 		</div>
