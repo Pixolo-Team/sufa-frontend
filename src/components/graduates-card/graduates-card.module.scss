@@ -1,40 +1,39 @@
 .cardWrapper {
-	flex-direction: column;
-	width: 260px;
-}
-.imageWrapper {
-	width: 260px;
-	height: 360px;
-	border-radius: 130px;
-	overflow: hidden;
-	object-fit: cover;
-}
-.textWrapper {
-	padding: var(--padding-large) 0;
-	text-align: center;
-}
-.title {
-	font-size: var(--color-brand-font-size-xlarge);
-	font-weight: var(--font-weight-medium);
+	.imageWrapper {
+		aspect-ratio: 260/360;
+		border-radius: 130px;
+		overflow: hidden;
+		.image {
+			object-fit: cover;
+		}
+	}
+	.textWrapper {
+		padding: var(--padding-large) 0;
+		text-align: center;
+	}
+	.title {
+		font-size: var(--color-brand-font-size-xlarge);
+		font-weight: var(--font-weight-medium);
+	}
+
+	.description {
+		font-size: var(--color-brand-font-size-xsmall);
+		font-weight: var(--font-weight-regular);
+	}
 }
 
-.description {
-	font-size: var(--color-brand-font-size-xsmall);
-	font-weight: var(--font-weight-regular);
-}
-
-// Small laptops
-@media only screen and (min-width: 1500px) {
-}
-
-// Ipad air
-@media only screen and (min-width: 992px) {
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 }
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
 }
 
-// Mobile Phones
-@media only screen and (min-width: 600px) {
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }
