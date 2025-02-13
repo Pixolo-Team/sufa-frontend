@@ -1,25 +1,24 @@
 "use client";
-import React from "react";
+// REACT //
+import React, { useState } from "react";
 
 // STYLES //
+import styles from "./accordian.module.scss";
 
 // COMPONENTS //
+import Icon from "@/neevo/components/Icon";
 
-// IMAGES //
+interface AccordianProps {
+	title: string;
+	description: string;
+}
 
-// SERVICES //
-
-// TYPES //
-
-// UTILS //
-
-// PLUGINS //
-
-/** Accordian Screen */
-const Accordian: React.FC<unknown> = () => {
+/** Accordian Component */
+const Accordian: React.FC<AccordianProps> = ({ title, description }) => {
 	// Navigation and Route Params
 
 	// Define States
+	const [isAccordianActive, setIsAccordianActive] = useState<boolean>(false);
 
 	// Define Refs
 
@@ -28,7 +27,31 @@ const Accordian: React.FC<unknown> = () => {
 	// UseEffect Functions and UseFocusEffect Functions
 
 	// View starts here
-	return <div>Hello Accordian</div>;
+	return (
+		<div
+			className={`${styles.accordianContainer} ${
+				isAccordianActive && styles.active
+			}`}
+		>
+			<div className={styles.questionWrapper}>
+				{/* Title */}
+				<p className={`${styles.title} font-weight-500`}>{title}</p>
+				<button
+					className={styles.iconWrapper}
+					onClick={() => setIsAccordianActive(!isAccordianActive)}
+				>
+					{/* Icon */}
+					<Icon iconName="plus" className={styles.icon} mode="outline" />
+				</button>
+			</div>
+			{isAccordianActive && (
+				<div className={styles.answerWrapper}>
+					{/* Description */}
+					<p className={`${styles.description} font-weight-400`}>{description}</p>
+				</div>
+			)}
+		</div>
+	);
 };
 
 export default Accordian;
