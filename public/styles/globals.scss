@@ -104,20 +104,20 @@ textarea {
 	}
 }
 
-.mobileHide {
+.hide-on-mobile {
 	display: block !important;
 }
 
-.desktopHide {
+.hide-on-desktop {
 	display: none !important;
 }
 
 // Mobile Phones
 @media only screen and (max-width: 600px) {
-	.mobileHide {
+	.hide-on-mobile {
 		display: none !important;
 	}
-	.desktopHide {
+	.hide-on-desktop {
 		display: block !important;
 	}
 }
