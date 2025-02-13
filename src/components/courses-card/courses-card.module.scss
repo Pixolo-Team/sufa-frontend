@@ -1,16 +1,80 @@
+// STYLES //
+@import "@/../public/styles/mixins";
 
-// Small laptops
-@media only screen and (max-width: 1500px) {
+.contentWrapper {
+	// Todo: Color token
+	border: 12px solid #16db93;
+	border-radius: 20px;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
+
+	.imageContainer {
+		width: 100%;
+
+		.courseImage {
+			width: 100%;
+			aspect-ratio: 16/9;
+			transition: all 0.2s ease-in-out;
+		}
+	}
+
+	.textWrapper {
+		//TODO: Add token
+		background-color: #16db93;
+		border-top-right-radius: var(--border-radius-medium);
+		padding: var(--padding-regular);
+		position: absolute;
+		max-width: 70%;
+		left: 0;
+		bottom: 0;
+		.cardText {
+			font-size: var(--color-brand-font-size-heading-4);
+			// TODO: Use token
+			color: #fff;
+			@include multiline-ellipsis(2);
+		}
+	}
+	.linkButton {
+		width: 38px;
+		height: 38px;
+		border-radius: 100%;
+		// TODO: Use token
+		background-color: #fff;
+		position: absolute;
+		right: 12px;
+		bottom: 12px;
+		.buttonIcon {
+			transform: rotate(-45deg);
+			transition: all 0.2s ease-in-out;
+		}
+	}
+
+	&:hover {
+		.imageContainer {
+			.courseImage {
+				transform: scale(1.1);
+			}
+		}
+		.linkButton {
+			.buttonIcon {
+				transform: rotate(0deg);
+			}
+		}
+	}
 }
-
-// Ipad air
-@media only screen and (max-width: 992px) {
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
 }
 
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }

@@ -1,4 +1,4 @@
-// SVGs //
+// SVG's //
 import ArrowFilled from "@/../public/icons/filled/arrow.svg";
 import BoxMenuFilled from "@/../public/icons/filled/box-menu.svg";
 import CloseFilled from "@/../public/icons/filled/close.svg";
@@ -16,7 +16,7 @@ import MailOpenFilled from "@/../public/icons/filled/mail-open.svg";
 import MoreOptionsFilled from "@/../public/icons/filled/more-options.svg";
 import RightArrowFilled from "@/../public/icons/filled/right-arrow.svg";
 import SearchFilled from "@/../public/icons/filled/search.svg";
-//TODO : Add SearchOptionFilled
+import LinkArrowFilled from "@/../public/icons/filled/link-arrow.svg";
 import UserCircleFilled from "@/../public/icons/filled/user-circle.svg";
 import UsersFilled from "@/../public/icons/filled/users.svg";
 import VerfiedFilled from "@/../public/icons/filled/verified.svg";
@@ -27,7 +27,6 @@ import DeleteFilled from "@/../public/icons/filled/delete.svg";
 import NotFoundFilled from "@/../public/icons/filled/404.svg";
 import BadRequestFilled from "@/../public/icons/filled/400.svg";
 import InternalServerErrorFilled from "@/../public/icons/filled/500.svg";
-
 import ArrowOutline from "@/../public/icons/outline/arrow.svg";
 import BoxMenuOutline from "@/../public/icons/outline/box-menu.svg";
 import CloseOutline from "@/../public/icons/outline/close.svg";
@@ -54,6 +53,8 @@ import UploadTrayOutline from "@/../public/icons/outline/upload-tray.svg";
 import InvisibleOutline from "@/../public/icons/outline/invisible.svg";
 import DeleteOutline from "@/../public/icons/outline/delete.svg";
 
+//TODO : Add SearchOptionFilled
+
 // Define the mapping of component names to components
 const filled: {
 	[key: string]: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
@@ -71,6 +72,7 @@ const filled: {
 	hamburger: HamburgerFilled,
 	info: InfoFilled,
 	logout: LogoutFilled,
+	"link-arrow": LinkArrowFilled,
 	"mail-open": MailOpenFilled,
 	"more-options": MoreOptionsFilled,
 	"right-arrow": RightArrowFilled,
