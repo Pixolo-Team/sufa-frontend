@@ -13,6 +13,9 @@ import styles from "./get-free-trial.module.scss";
 import Button from "@/neevo/components/button/Button";
 import Image from "next/image";
 
+// IMAGES //
+import TigerImage from "@/../public/images/tiger-cub.jpg";
+
 /** Get Free Trial Screen */
 const GetFreeTrial: React.FC<unknown> = () => {
 	// Navigation and Route Params
@@ -33,7 +36,9 @@ const GetFreeTrial: React.FC<unknown> = () => {
 				<p className={`${styles.heading} font-weight-700`}>Get a Free Trial</p>
 				{/* Sub heading */}
 				<p className={`${styles.subHeading} font-weight-400`}>
-					Experience the Skorost way! Jossssin us for a free trial session.
+					Experience the Skorost way! Jossssin us for a free trial session.Experience
+					the Skorost way! Jossssin us for a free trial session.Experience the
+					Skorost way! Jossssin us for a free trial session.
 				</p>
 				{/* Button for small devices */}
 				<div className={styles.mobileButton}>
@@ -59,10 +64,9 @@ const GetFreeTrial: React.FC<unknown> = () => {
 			{/* Image */}
 			<div className={styles.imageWrapper}>
 				<Image
-					src={"/images/tiger-cub.jpg"}
+					src={TigerImage}
 					alt="tiger"
-					className={styles.image}
-					fill
+					className={`${styles.image} img-responsive`}
 				/>
 			</div>
 		</div>

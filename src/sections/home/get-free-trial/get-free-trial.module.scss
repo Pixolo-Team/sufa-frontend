@@ -1,6 +1,10 @@
 .contentWrapper {
+	max-width: 800px;
+	margin: auto;
 	gap: 10px;
 	.textWrapper {
+		// flex: 1;
+		width: 70%;
 		.heading {
 			color: var(--color-brand-primary-deep);
 			font-size: var(--color-brand-font-size-heading-3);
@@ -16,12 +20,7 @@
 		}
 	}
 	.imageWrapper {
-		position: relative;
-		width: 260px;
-		height: 230px;
-		.image {
-			object-fit: contain;
-		}
+		width: 30%;
 	}
 }
 
