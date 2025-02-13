@@ -21,7 +21,6 @@ interface CoachesCardProps {
 	coachImageSrc: string;
 	socialMedia?: {
 		instagram?: string;
-		facebook?: string;
 	};
 }
 
@@ -32,7 +31,7 @@ const CoachesCard: React.FC<CoachesCardProps> = ({
 	description = "",
 	designation = "",
 	coachImageSrc = "",
-	socialMedia,
+	socialMedia = {},
 }) => {
 	// Navigation and Route Params
 
@@ -46,46 +45,59 @@ const CoachesCard: React.FC<CoachesCardProps> = ({
 
 	// View starts here
 	return (
-		<div className={`${styles.contentWrapper}`}>
-			{/* Card title */}
-			<div className={styles.titleWrapper}>
-				{/* Coach First name */}
-				<p className={styles.firstName}>{firstName}</p>
-				{/* Coach Last name */}
-				<p className={styles.lastName}>{lastName}</p>
-			</div>
-			<div className={`${styles.imageDesignationWrapper} `}>
-				{/* Image */}
-				<div className={styles.imageWrapper}>
-					<Image src={coachImageSrc} alt={firstName} width={280} height={280} />
+		<div className={styles.cardWrapper}>
+			<div className={`${styles.contentWrapper} flex flex-column align-start`}>
+				{/* Card title */}
+				<div className={styles.titleWrapper}>
+					{/* Coach First name */}
+					<p className={`${styles.firstName} font-secondary font-weight-600`}>
+						{firstName}
+					</p>
+					{/* Coach Last name */}
+					<p className={`${styles.lastName} font-secondary font-weight-800`}>
+						{lastName}
+					</p>
 				</div>
-				{/* Button with Social Media Icons or Arrow */}
-				<button className={`${styles.linkButton} flex align-center justify-center`}>
-					{socialMedia?.instagram ? (
-						<a href={socialMedia.instagram} target="_blank" rel="noopener noreferrer">
-							<Icon className={styles.buttonIcon} iconName="instagram" />
-						</a>
-					) : socialMedia?.facebook ? (
-						<a href={socialMedia.facebook} target="_blank" rel="noopener noreferrer">
-							<Icon className={styles.buttonIcon} iconName="facebook" />
-						</a>
-					) : (
-						<Icon className={styles.buttonIcon} iconName="arrow" />
+				<div className={`${styles.imageDesignationWrapper} `}>
+					{/* Image */}
+					<div className={styles.imageWrapper}>
+						<Image
+							src={coachImageSrc}
+							alt={firstName}
+							fill
+							className="img-responsive full-width-img "
+						/>
+					</div>
+					{/* Button with Social Media Icons or Arrow */}
+					{socialMedia?.instagram && (
+						<button
+							className={`${styles.linkButton} flex align-center justify-center`}
+						>
+							<a
+								href={socialMedia.instagram}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Icon className={styles.buttonIcon} iconName="instagram" />
+							</a>
+						</button>
 					)}
-				</button>
-				<div className={styles.chipWrapper}>
-					{/* Designation */}
-					<Chip
-						text={designation}
-						color={Colors.PRIMARY}
-						shape={Shapes.ROUNDED}
-						size={Sizes.LARGE}
-					/>
+					<div className={`${styles.chipWrapper} font-secondary font-weight-700`}>
+						{/* Designation */}
+						<Chip
+							text={designation}
+							color={Colors.PRIMARY}
+							shape={Shapes.ROUNDED}
+							size={Sizes.LARGE}
+						/>
+					</div>
 				</div>
-			</div>
-			<div className={"flex justify-center"}>
-				{/* Description */}
-				<p className={styles.description}>{description}</p>
+				<div className={"flex justify-center"}>
+					{/* Description */}
+					<p className={`${styles.description} font-secondary font-weight-600`}>
+						{description}
+					</p>
+				</div>
 			</div>
 		</div>
 	);

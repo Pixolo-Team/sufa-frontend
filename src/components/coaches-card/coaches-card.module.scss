@@ -1,23 +1,24 @@
+.cardWrapper {
+	padding: var(--padding-xlarge);
+}
 .contentWrapper {
 	background-color: var(--color-background-light-tint);
 	position: relative;
 	border-radius: var(--border-radius-large);
-	padding: var(--padding-xxlarge);
+	padding: var(--padding-xlarge);
 }
 .titleWrapper {
 	position: relative;
 	z-index: 1;
 	color: black;
-	padding: var(--padding-medium);
+	padding-right: var(--padding-medium);
+	text-transform: capitalize;
 	background-color: var(--color-background-light-tint);
-	width: max-content;
 	.firstName {
 		font-size: var(--color-brand-font-size-heading-4);
-		font-weight: var(--font-weight-semi-bold);
 	}
 	.lastName {
-		font-size: 46px;
-		font-weight: var(--font-weight-extra-bold);
+		font-size: var(--color-brand-font-size-6xlarge);
 	}
 }
 .imageDesignationWrapper {
@@ -29,6 +30,7 @@
 	border-radius: 50%;
 	overflow: hidden;
 	margin-top: -22px;
+	position: relative;
 }
 .linkButton {
 	width: 54px;
@@ -37,32 +39,37 @@
 	background-color: var(--color-background-light-tint);
 	position: absolute;
 	right: 0;
-	top: 40px;
+	top: 20px;
+	filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.25));
 }
 .chipWrapper {
 	position: absolute;
-	left: -20px;
+	left: calc(var(--padding-xlarge) * -2);
 	bottom: 20px;
+	text-transform: capitalize;
 }
 .description {
 	margin-top: var(--margin-xlarge);
-	color: #000;
+	color: #000; //TODO: Add token
 	font-size: var(--color-brand-font-size-regular);
-	font-weight: var(--font-weight-semi-bold);
 	line-height: 22px;
 }
-// Small laptops
-@media only screen and (min-width: 1500px) {
-}
 
-// Ipad air
-@media only screen and (min-width: 992px) {
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 }
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
 }
+// Ipad air
+@media only screen and (min-width: 992px) {
+	.description {
+		font-size: var(--color-brand-font-size-large);
+		line-height: 28px;
+	}
+}
 
-// Mobile Phones
-@media only screen and (min-width: 600px) {
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }

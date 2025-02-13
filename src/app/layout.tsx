@@ -12,6 +12,7 @@ import { ThemeProvider } from "next-themes";
 
 // COMPONENTS //
 import localFont from "next/font/local";
+import { Montserrat } from "next/font/google";
 import Alert from "@/neevo/components/alert/Alert";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
@@ -59,6 +60,12 @@ const kippaxModern = localFont({
 		},
 	],
 	variable: "--font-family-primary",
+	display: "swap",
+});
+
+const secondaryFont = Montserrat({
+	subsets: ["latin"],
+	variable: "--font-family-secondary",
 	display: "swap",
 });
 
@@ -111,7 +118,7 @@ export default function RootLayout({
 				className="vertical-side-menu"
 				suppressHydrationWarning
 			>
-				<body className={`${kippaxModern.className}`}>
+				<body className={`${kippaxModern.variable} ${secondaryFont.variable}`}>
 					<Suspense fallback={<div>Loading...</div>}>
 						<AppProvider>
 							<ThemeProvider

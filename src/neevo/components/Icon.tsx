@@ -52,6 +52,7 @@ import PdfOutline from "@/../public/icons/outline/pdf.svg";
 import UploadTrayOutline from "@/../public/icons/outline/upload-tray.svg";
 import InvisibleOutline from "@/../public/icons/outline/invisible.svg";
 import DeleteOutline from "@/../public/icons/outline/delete.svg";
+import InstagramOutline from "@/../public/icons/outline/instagram.svg";
 
 //TODO : Add SearchOptionFilled
 
@@ -117,6 +118,7 @@ const outline: {
 	"upload-tray": UploadTrayOutline,
 	invisible: InvisibleOutline,
 	delete: DeleteOutline,
+	instagram: InstagramOutline,
 };
 
 const iconMap: {
