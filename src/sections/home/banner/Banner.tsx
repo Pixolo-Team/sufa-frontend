@@ -12,8 +12,13 @@ import styles from "./Banner.module.scss";
 // COMPONENTS //
 import Button from "@/neevo/components/button/Button";
 
+interface BannerProps {
+	bannerTitle: string;
+	bannerDescription: string;
+}
+
 /** Banner Screen */
-const Banner: React.FC<unknown> = () => {
+const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
 	// Navigation and Route Params
 
 	// Define States
@@ -26,8 +31,8 @@ const Banner: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<div className={styles.bannerWrapper}>
-			<div>
+		<div className={`${styles.bannerWrapper} flex align-center justify-center`}>
+			<div className={styles.imageWrapper}>
 				{/* Image Wrapper */}
 				<picture>
 					<source media="(min-width: 768px)" srcSet="/images/group-banner.png" />
@@ -42,13 +47,9 @@ const Banner: React.FC<unknown> = () => {
 			{/* Content Wrapper */}
 			<div className={`${styles.textContent} flex align-center justify-center`}>
 				{/* Banner title */}
-				<p className={styles.bannerTitle}>Where Little Feet Dream Big!</p>
+				<p className={styles.bannerTitle}>{bannerTitle}</p>
 				{/* Banner description */}
-				<p className={styles.bannerDescription}>
-					At Skorost United Academy, we don’t just train players—we shape champions.
-					With every kick, every sprint, and every lesson, young athletes grow
-					stronger, smarter, and ready to take on the world.
-				</p>
+				<p className={styles.bannerDescription}>{bannerDescription}</p>
 				{/* Free Trial Button */}
 				<Button
 					text={"Book a FREE TRIAL"}
