@@ -143,3 +143,9 @@ textarea {
 	background-color: var(--color-brand-neutral-light-800);
 	border-radius: var(--border-radius-small);
 }
+
+.img-responsive {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}

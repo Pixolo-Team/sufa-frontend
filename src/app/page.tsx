@@ -19,39 +19,42 @@ import JoinUs from "@/sections/home/join-us/JoinUs";
 const HomeScreen: React.FC<unknown> = () => {
 	return (
 		<div>
-			{/* Banner Section */}
-			<Banner />
-
-			{/* Founders Message Section */}
-			<FoundersMessage />
-
-			{/* Established Section */}
 			<Established />
-
-			{/* Courses Section */}
-			<Courses />
-
-			{/* Children to champions Section */}
-			<ChildrenToChampions />
-
-			{/* Get free trial Section */}
-			<GetFreeTrial />
-
-			{/* Graduates Section */}
-			<Graduates />
-
-			{/* Coaches Section */}
-			<Coaches />
-
-			{/* Faq Section */}
-			<Faq />
-
-			{/* Join us Section */}
-			<JoinUs />
-
-			{/* Contact us Section */}
-			<ContactUs />
 		</div>
+		// <div>
+		// 	{/* Banner Section */}
+		// 	<Banner />
+
+		// 	{/* Founders Message Section */}
+		// 	<FoundersMessage />
+
+		// 	{/* Established Section */}
+		// 	<Established />
+
+		// 	{/* Courses Section */}
+		// 	<Courses />
+
+		// 	{/* Children to champions Section */}
+		// 	<ChildrenToChampions />
+
+		// 	{/* Get free trial Section */}
+		// 	<GetFreeTrial />
+
+		// 	{/* Graduates Section */}
+		// 	<Graduates />
+
+		// 	{/* Coaches Section */}
+		// 	<Coaches />
+
+		// 	{/* Faq Section */}
+		// 	<Faq />
+
+		// 	{/* Join us Section */}
+		// 	<JoinUs />
+
+		// 	{/* Contact us Section */}
+		// 	<ContactUs />
+		// </div>
 	);
 };
 export default HomeScreen;
