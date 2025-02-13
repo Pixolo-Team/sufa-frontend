@@ -1,3 +1,5 @@
+// STYLES //
+@import "./mixins.scss";
 @import "./variables.scss";
 @import "./not-found.scss";
 @import "./side-menu.scss";
@@ -142,4 +144,13 @@ textarea {
 ::-webkit-scrollbar-thumb {
 	background-color: var(--color-brand-neutral-light-800);
 	border-radius: var(--border-radius-small);
+}
+
+.img-responsive {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+.full-width-img {
+	width: 100% !important;
 }

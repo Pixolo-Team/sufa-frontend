@@ -40,8 +40,9 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 				<Image
 					src={courseImageSrc}
 					alt={courseTitle}
-					className={styles.courseImage}
-					fill
+					className={`${styles.courseImage} img-responsive`}
+					width={600}
+					height={300}
 				/>
 			</div>
 			<div className={styles.textWrapper}>
@@ -56,7 +57,7 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 				onClick={onClick}
 			>
 				{/* Icon */}
-				<Icon className={styles.buttonIcon} iconName={"arrow"} />
+				<Icon className={styles.buttonIcon} iconName={"link-arrow"} mode="filled" />
 			</button>
 		</div>
 	);

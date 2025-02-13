@@ -1,48 +1,67 @@
+// STYLES //
+@import "@/../public/styles/mixins";
+
 .contentWrapper {
 	// Todo: Color token
 	border: 12px solid #16db93;
 	border-radius: 20px;
 	position: relative;
 	overflow: hidden;
-}
-.imageContainer {
-	width: 100%;
-	height: 100vh;
-	overflow: hidden;
-}
+	cursor: pointer;
 
-.courseImage {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
+	.imageContainer {
+		width: 100%;
 
-.textWrapper {
-	background-color: #16db93;
-	border-top-right-radius: var(--border-radius-medium);
-	padding: var(--padding-regular);
-	position: absolute;
-	max-width: 50%;
-	left: 0;
-	bottom: 0;
-	.cardText {
-		font-size: var(--color-brand-font-size-heading-4);
-		color: #fff;
-		overflow: hidden;
-		display: -webkit-box;
-		-webkit-line-clamp: 2; /* Limit to 2 lines */
-		-webkit-box-orient: vertical;
-		word-wrap: break-word;
+		.courseImage {
+			width: 100%;
+			aspect-ratio: 16/9;
+			transition: all 0.2s ease-in-out;
+		}
 	}
-}
-.linkButton {
-	width: 38px;
-	height: 38px;
-	border-radius: 100%;
-	background-color: #fff;
-	position: absolute;
-	right: 12px;
-	bottom: 12px;
+
+	.textWrapper {
+		//TODO: Add token
+		background-color: #16db93;
+		border-top-right-radius: var(--border-radius-medium);
+		padding: var(--padding-regular);
+		position: absolute;
+		max-width: 70%;
+		left: 0;
+		bottom: 0;
+		.cardText {
+			font-size: var(--color-brand-font-size-heading-4);
+			// TODO: Use token
+			color: #fff;
+			@include multiline-ellipsis(2);
+		}
+	}
+	.linkButton {
+		width: 38px;
+		height: 38px;
+		border-radius: 100%;
+		// TODO: Use token
+		background-color: #fff;
+		position: absolute;
+		right: 12px;
+		bottom: 12px;
+		.buttonIcon {
+			transform: rotate(-45deg);
+			transition: all 0.2s ease-in-out;
+		}
+	}
+
+	&:hover {
+		.imageContainer {
+			.courseImage {
+				transform: scale(1.1);
+			}
+		}
+		.linkButton {
+			.buttonIcon {
+				transform: rotate(0deg);
+			}
+		}
+	}
 }
 // Mobile Phones
 @media only screen and (min-width: 600px) {
