@@ -2,6 +2,9 @@
 // REACT //
 import React from "react";
 
+// COMPONENTS //
+import CoachesCard from "@/components/coaches-card/CoachesCard";
+
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
 import ChildrenToChampions from "@/sections/home/children-to-champions/ChildrenToChampions";
@@ -18,40 +21,49 @@ import JoinUs from "@/sections/home/join-us/JoinUs";
 /** Home Screen */
 const HomeScreen: React.FC<unknown> = () => {
 	return (
-		<div>
-			{/* Banner Section */}
-			<Banner />
-
-			{/* Founders Message Section */}
-			<FoundersMessage />
-
-			{/* Established Section */}
-			<Established />
-
-			{/* Courses Section */}
-			<Courses />
-
-			{/* Children to champions Section */}
-			<ChildrenToChampions />
-
-			{/* Get free trial Section */}
-			<GetFreeTrial />
-
-			{/* Graduates Section */}
-			<Graduates />
-
-			{/* Coaches Section */}
-			<Coaches />
-
-			{/* Faq Section */}
-			<Faq />
-
-			{/* Join us Section */}
-			<JoinUs />
-
-			{/* Contact us Section */}
-			<ContactUs />
+		<div style={{ width: "300px" }}>
+			<CoachesCard
+				firstName="pandit"
+				lastName="pandit"
+				coachImageSrc="/images/coach.jpg"
+				description={"Pandit is our Head Coach"}
+				designation={"head coach"}
+			/>
 		</div>
+		// <div>
+		// 	{/* Banner Section */}
+		// 	<Banner />
+
+		// 	{/* Founders Message Section */}
+		// 	<FoundersMessage />
+
+		// 	{/* Established Section */}
+		// 	<Established />
+
+		// 	{/* Courses Section */}
+		// 	<Courses />
+
+		// 	{/* Children to champions Section */}
+		// 	<ChildrenToChampions />
+
+		// 	{/* Get free trial Section */}
+		// 	<GetFreeTrial />
+
+		// 	{/* Graduates Section */}
+		// 	<Graduates />
+
+		// 	{/* Coaches Section */}
+		// 	<Coaches />
+
+		// 	{/* Faq Section */}
+		// 	<Faq />
+
+		// 	{/* Join us Section */}
+		// 	<JoinUs />
+
+		// 	{/* Contact us Section */}
+		// 	<ContactUs />
+		// </div>
 	);
 };
 export default HomeScreen;

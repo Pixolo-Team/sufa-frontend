@@ -1,18 +1,16 @@
 .contentWrapper {
-	width: 300px;
-	height: 500px;
 	background-color: var(--color-background-light-tint);
 	position: relative;
 	border-radius: var(--border-radius-large);
+	padding: var(--padding-xxlarge);
 }
 .titleWrapper {
-	position: absolute;
+	position: relative;
+	z-index: 1;
 	color: black;
-	padding: 0 var(--padding-medium);
+	padding: var(--padding-medium);
 	background-color: var(--color-background-light-tint);
-	left: 22px;
-	top: 22px;
-	max-width: 60%;
+	width: max-content;
 	.firstName {
 		font-size: var(--color-brand-font-size-heading-4);
 		font-weight: var(--font-weight-semi-bold);
@@ -22,15 +20,15 @@
 		font-weight: var(--font-weight-extra-bold);
 	}
 }
-.imageDescriptionWrapper {
-	flex-direction: column;
+.imageDesignationWrapper {
+	position: relative;
 }
 .imageWrapper {
 	width: 250px;
-	height: 250px;
+	aspect-ratio: 1;
 	border-radius: 50%;
 	overflow: hidden;
-	margin: var(--margin-medium) 0;
+	margin-top: -22px;
 }
 .linkButton {
 	width: 54px;
@@ -38,21 +36,20 @@
 	border-radius: 100%;
 	background-color: var(--color-background-light-tint);
 	position: absolute;
-	right: 32px;
-	top: 90px;
+	right: 0;
+	top: 40px;
 }
 .chipWrapper {
 	position: absolute;
-	width: 100%;
-	bottom: 200px;
-	left: -12px;
+	left: -20px;
+	bottom: 20px;
 }
 .description {
+	margin-top: var(--margin-xlarge);
 	color: #000;
 	font-size: var(--color-brand-font-size-regular);
 	font-weight: var(--font-weight-semi-bold);
 	line-height: 22px;
-	padding: 0 var(--padding-xxlarge);
 }
 // Small laptops
 @media only screen and (min-width: 1500px) {
