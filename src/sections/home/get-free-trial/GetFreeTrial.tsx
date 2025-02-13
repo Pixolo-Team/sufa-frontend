@@ -4,7 +4,7 @@ import React from "react";
 
 // ENUMS //
 import { ButtonLevels, ButtonSizes } from "@/neevo/enums/button.enum";
-import { Shapes } from "@/neevo/enums/core.enum";
+import { Colors, Shapes } from "@/neevo/enums/core.enum";
 
 // STYLES //
 import styles from "./get-free-trial.module.scss";
@@ -30,44 +30,46 @@ const GetFreeTrial: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<div className={`${styles.contentWrapper} flex justify-center align-center`}>
-			<div className={styles.textWrapper}>
-				{/* Heading */}
-				<p className={`${styles.heading} font-weight-700`}>Get a Free Trial</p>
-				{/* Sub heading */}
-				<p className={`${styles.subHeading} font-weight-400`}>
-					Experience the Skorost way! Jossssin us for a free trial session.Experience
-					the Skorost way! Jossssin us for a free trial session.Experience the
-					Skorost way! Jossssin us for a free trial session.
-				</p>
-				{/* Button for small devices */}
-				<div className={styles.mobileButton}>
-					<Button
-						text={"Book a Free Trial"}
-						onClick={() => console.log("Button Clicked")}
-						level={ButtonLevels.INLINE}
-						size={ButtonSizes.MEDIUM}
-						shape={Shapes.ROUNDED}
+		<div className="container">
+			<div className={`${styles.contentWrapper} flex justify-center align-center`}>
+				<div className={styles.textWrapper}>
+					{/* Heading */}
+					<p className={`${styles.heading} font-weight-700`}>Get a Free Trial</p>
+					{/* Sub heading */}
+					<p className={`${styles.subHeading} font-weight-400`}>
+						Experience the Skorost way! Join us for a free trial session.
+					</p>
+					{/* Button for small devices */}
+					<div className={"hide-on-desktop"}>
+						<Button
+							text={"Book a Free Trial"}
+							onClick={() => console.log("Button Clicked")}
+							level={ButtonLevels.INLINE}
+							size={ButtonSizes.MEDIUM}
+							shape={Shapes.ROUNDED}
+							color={Colors.SECONDARY}
+						/>
+					</div>
+					{/* Button for large devices */}
+					<div className={"hide-on-mobile"}>
+						<Button
+							text={"Book a Free Trial"}
+							onClick={() => console.log("Button Clicked")}
+							level={ButtonLevels.INLINE}
+							size={ButtonSizes.XLARGE}
+							shape={Shapes.ROUNDED}
+							color={Colors.SECONDARY}
+						/>
+					</div>
+				</div>
+				{/* Image */}
+				<div className={styles.imageWrapper}>
+					<Image
+						src={TigerImage}
+						alt="tiger"
+						className={`${styles.image} img-responsive full-width-img`}
 					/>
 				</div>
-				{/* Button for large devices */}
-				<div className={styles.desktopButton}>
-					<Button
-						text={"Book a Free Trial"}
-						onClick={() => console.log("Button Clicked")}
-						level={ButtonLevels.INLINE}
-						size={ButtonSizes.XXLARGE}
-						shape={Shapes.ROUNDED}
-					/>
-				</div>
-			</div>
-			{/* Image */}
-			<div className={styles.imageWrapper}>
-				<Image
-					src={TigerImage}
-					alt="tiger"
-					className={`${styles.image} img-responsive full-width-img`}
-				/>
 			</div>
 		</div>
 	);

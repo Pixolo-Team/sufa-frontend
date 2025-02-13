@@ -3,7 +3,6 @@
 	margin: auto;
 	gap: 10px;
 	.textWrapper {
-		// flex: 1;
 		width: 70%;
 		.heading {
 			color: var(--color-brand-primary-deep);
@@ -14,9 +13,6 @@
 			font-size: --color-brand-font-size-xsmall;
 			margin-top: var(--margin-regular);
 			margin-bottom: var(--margin-xxlarge);
-		}
-		.desktopButton {
-			display: none;
 		}
 	}
 	.imageWrapper {
@@ -31,9 +27,6 @@
 			.heading {
 				font-size: var(--color-brand-font-size-5xlarge);
 			}
-			.desktopButton {
-				display: none;
-			}
 		}
 	}
 }
@@ -43,19 +36,10 @@
 	.contentWrapper {
 		gap: 14px;
 		.textWrapper {
-			.heading {
-				font-size: var(--color-brand-font-size-5xlarge);
-			}
 			.subHeading {
 				font-size: var(--color-brand-font-size-small);
 				margin-top: var(--margin-regular);
 				margin-bottom: 28px;
-			}
-			.mobileButton {
-				display: none;
-			}
-			.desktopButton {
-				display: block;
 			}
 		}
 	}
@@ -67,7 +51,7 @@
 		gap: 30px;
 		.textWrapper {
 			.heading {
-				font-size: 60px;
+				font-size: 60px; //TODO: Add token
 			}
 			.subHeading {
 				font-size: var(--color-brand-font-size-regular);
