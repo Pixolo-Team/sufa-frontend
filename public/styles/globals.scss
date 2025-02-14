@@ -62,7 +62,7 @@ textarea {
 	margin: 0 auto;
 
 	// Extra Large desktops
-	@media (max-width: 1700px) and (min-width: 1501px) {
+	@media screen and (min-width: 1501px) {
 		width: var(--width-container-xxlarge);
 		padding: 0 var(--padding-container-xxlarge);
 	}
@@ -160,4 +160,31 @@ textarea {
 }
 .font-primary {
 	font-family: var(--font-family-primary);
+}
+.custom-slick-arrow-wrapper {
+	width: 100%;
+	gap: 8px;
+	margin-top: 40px;
+	.custom-slick-arrow {
+		width: 38px;
+		height: 38px;
+		border-radius: 100%;
+		// TODO: Use token
+		background-color: #fff;
+		transition: all 0.2s ease-in-out;
+		.arrow-icon {
+			path {
+				fill: var(--color-brand-primary-deep);
+			}
+		}
+		&:hover {
+			transform: scale(1.2);
+			background-color: var(--color-brand-primary-tint);
+		}
+	}
+	.custom-slick-arrow-left {
+		.arrow-icon {
+			transform: rotate(180deg);
+		}
+	}
 }
