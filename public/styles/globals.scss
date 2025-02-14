@@ -5,6 +5,7 @@
 @import "./side-menu.scss";
 @import "./utility.scss";
 @import "./toast.scss";
+@import "./custom-slick-arrow.scss";
 
 $mobile: var(--breakpoint-small-mobile);
 
@@ -62,7 +63,7 @@ textarea {
 	margin: 0 auto;
 
 	// Extra Large desktops
-	@media (max-width: 1700px) and (min-width: 1501px) {
+	@media screen and (min-width: 1501px) {
 		width: var(--width-container-xxlarge);
 		padding: 0 var(--padding-container-xxlarge);
 	}
@@ -160,4 +161,7 @@ textarea {
 }
 .font-primary {
 	font-family: var(--font-family-primary);
+}
+
+.section-spacing {
 }
