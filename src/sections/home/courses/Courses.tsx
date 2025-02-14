@@ -1,19 +1,13 @@
 "use client";
+// REACT //
 import React from "react";
 
 // STYLES //
+import styles from "./courses.module.scss";
 
 // COMPONENTS //
-
-// IMAGES //
-
-// SERVICES //
-
-// TYPES //
-
-// UTILS //
-
-// PLUGINS //
+import CoursesCard from "@/components/courses-card/CoursesCard";
+import SectionHeader from "@/components/section-header/SectionHeader";
 
 /** Courses Screen */
 const Courses: React.FC<unknown> = () => {
@@ -25,10 +19,36 @@ const Courses: React.FC<unknown> = () => {
 
 	// Helper Functions
 
-	// UseEffect Functions and UseFocusEffect Functions
+	// UseEffect Functions and UseFocusEffect Functions`
 
 	// View starts here
-	return <div>Hello Courses</div>;
+	return (
+		<div>
+			{/* Section header component */}
+			<SectionHeader fadedText="Champions" highlightedText="Courses" />
+			<p className={`${styles.sectionDescription} font-weight-500`}>
+				Designed for Excellence!
+			</p>
+			{/* Courses card components */}
+			<div className={`${styles.cardsWrapper} container`}>
+				<CoursesCard
+					courseImageSrc="/images/keeper.jpg"
+					courseTitle="Goalkeeper Development"
+					onClick={() => console.log("Goalkeeper Development")}
+				/>
+				<CoursesCard
+					courseImageSrc="/images/keeper.jpg"
+					courseTitle="Goalkeeper Development"
+					onClick={() => console.log("Goalkeeper Development")}
+				/>
+				<CoursesCard
+					courseImageSrc="/images/keeper.jpg"
+					courseTitle="Goalkeeper Development"
+					onClick={() => console.log("Goalkeeper Development")}
+				/>
+			</div>
+		</div>
+	);
 };
 
 export default Courses;
