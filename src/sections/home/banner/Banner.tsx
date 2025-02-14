@@ -11,6 +11,10 @@ import styles from "./Banner.module.scss";
 
 // COMPONENTS //
 import Button from "@/neevo/components/button/Button";
+import Image from "next/image";
+
+// IMAGES //
+import PandaImage from "@/../public/images/panda.png";
 
 interface BannerProps {
 	bannerTitle: string;
@@ -53,16 +57,19 @@ const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
 					{bannerDescription}
 				</p>
 				{/* Free Trial Button */}
-				<Button
-					text={"Book a FREE TRIAL"}
-					onClick={() => {
-						console.log();
-					}}
-					shape={Shapes.ROUNDED}
-					size={ButtonSizes.XLARGE}
-					color={Colors.SECONDARY}
-					level={ButtonLevels.INLINE}
-				/>
+				<div className={styles.buttonWrapper}>
+					<Image src={PandaImage} alt="Panda" className={styles.buttonImage} />
+					<Button
+						text={"Book a FREE TRIAL"}
+						onClick={() => {
+							console.log();
+						}}
+						shape={Shapes.ROUNDED}
+						size={ButtonSizes.XLARGE}
+						color={Colors.SECONDARY}
+						level={ButtonLevels.INLINE}
+					/>
+				</div>
 			</div>
 		</div>
 	);
