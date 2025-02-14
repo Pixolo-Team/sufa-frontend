@@ -75,7 +75,9 @@ const Coaches: React.FC<unknown> = () => {
 	// View starts here
 	return (
 		<section className="section-spacing">
+			{/* Section Header */}
 			<SectionHeader fadedText="Guruji" highlightedText="Our Coaches" />
+			{/* Coaches slider */}
 			<div className={`${styles.coachesWrapper} container`}>
 				<Slider ref={sliderRef} {...settings} className={styles.slider}>
 					{coachesData.map((coach, coachIndex) => (
