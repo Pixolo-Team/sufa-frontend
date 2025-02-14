@@ -37,13 +37,11 @@
 
 		.bannerTitle {
 			font-size: var(--color-brand-font-size-heading-2);
-			font-weight: var(--font-weight-700);
 			line-height: 40px;
 		}
 
 		.bannerDescription {
 			font-size: var(--color-brand-font-size-small);
-			font-weight: var(--font-weight-400);
 			margin: 26px 0 80px 0;
 			line-height: 24px;
 		}
@@ -67,7 +65,7 @@
 	.bannerWrapper {
 		.textContent {
 			.bannerTitle {
-				font-size: 40px;
+				font-size: var(--color-brand-font-size-5xlarge);
 			}
 
 			.bannerDescription {
@@ -82,12 +80,11 @@
 	.bannerWrapper {
 		.textContent {
 			.bannerTitle {
-				font-size: 60px;
+				font-size: var(--color-brand-font-size-8xlarge);
 			}
 
 			.bannerDescription {
 				font-size: var(--color-brand-font-size-medium);
-				width: 80%;
 			}
 		}
 	}
@@ -100,12 +97,10 @@
 		}
 		.textContent {
 			.bannerTitle {
-				font-size: 70px;
+				font-size: var(--color-brand-font-size-9xlarge);
 			}
 
 			.bannerDescription {
-				font-size: var(--color-brand-font-size-medium);
-				width: 80%;
 				margin: 26px 0 80px 0;
 			}
 		}

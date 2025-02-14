@@ -35,8 +35,8 @@ const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
 			<div className={styles.imageWrapper}>
 				{/* Image Wrapper */}
 				<picture>
-					<source media="(min-width: 768px)" srcSet="/images/group-banner.png" />
-					<source media="(min-width: 600px)" srcSet="/images/banner.png" />
+					<source media="(min-width: 768px)" srcSet="/images/banner-desktop.jpg" />
+					<source media="(min-width: 600px)" srcSet="/images/banner-mobile.jpg" />
 					<img
 						src="/images/banner.png"
 						alt="Group Banner"
@@ -47,9 +47,11 @@ const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
 			{/* Content Wrapper */}
 			<div className={`${styles.textContent} flex align-center justify-center`}>
 				{/* Banner title */}
-				<p className={styles.bannerTitle}>{bannerTitle}</p>
+				<p className={`${styles.bannerTitle} font-weight-700`}>{bannerTitle}</p>
 				{/* Banner description */}
-				<p className={styles.bannerDescription}>{bannerDescription}</p>
+				<p className={`${styles.bannerDescription} font-weight-400`}>
+					{bannerDescription}
+				</p>
 				{/* Free Trial Button */}
 				<Button
 					text={"Book a FREE TRIAL"}

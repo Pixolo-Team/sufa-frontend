@@ -5,13 +5,13 @@ import { getMessaging, Messaging } from "firebase/messaging";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-	apiKey: "AIzaSyDBXo0PCskA2Nq5eGSHUG1PZgYlB_dgWJU",
-	authDomain: "skorost-united-fa.firebaseapp.com",
-	projectId: "skorost-united-fa",
-	storageBucket: "skorost-united-fa.firebasestorage.app",
-	messagingSenderId: "36505876847",
-	appId: "1:36505876847:web:c7e15cdc2e7d2b8014909a",
-	measurementId: "G-V8B8BSM6M3",
+	apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+	authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+	measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
