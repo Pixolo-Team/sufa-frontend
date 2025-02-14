@@ -34,12 +34,10 @@ const Accordian: React.FC<AccordianProps> = ({
 
 	// View starts here
 	return (
-		<div
-			className={`${styles.accordianContainer} ${isOpen && styles.active}`}
-			onClick={onToggle}
-		>
+		<div className={`${styles.accordianItem} ${isOpen && styles.active}`}>
 			<div
 				className={`${styles.questionWrapper} flex align-center justify-between`}
+				onClick={onToggle}
 			>
 				{/* Title */}
 				<p className={`${styles.title} font-weight-500`}>{title}</p>

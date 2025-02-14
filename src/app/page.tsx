@@ -14,9 +14,11 @@ import FoundersMessage from "@/sections/home/founders-message/FoundersMessage";
 import GetFreeTrial from "@/sections/home/get-free-trial/GetFreeTrial";
 import Graduates from "@/sections/home/graduates/Graduates";
 import JoinUs from "@/sections/home/join-us/JoinUs";
+import Accordian from "@/components/accordian/Accordian";
 
 /** Home Screen */
 const HomeScreen: React.FC<unknown> = () => {
+	const [isOpen, setIsOpen] = React.useState(false);
 	return (
 		<div>
 			{/* Banner Section */}
@@ -27,6 +29,15 @@ const HomeScreen: React.FC<unknown> = () => {
 
 			{/* Established Section */}
 			<Established />
+
+			<Accordian
+				description="We are a team of passionate individuals who believe in the power of education. We are committed to providing the best learning experience for our students."
+				isOpen={isOpen}
+				onToggle={() => {
+					setIsOpen((prev) => !prev);
+				}}
+				title="Our Mission"
+			></Accordian>
 
 			{/* Courses Section */}
 			<Courses />

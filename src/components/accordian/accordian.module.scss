@@ -1,7 +1,6 @@
-.accordianContainer {
+.accordianItem {
 	padding: var(--padding-medium) var(--padding-large);
 	border-radius: 16px;
-	cursor: pointer;
 	background-color: var(--color-brand-neutral-light-200);
 
 	&.active {
@@ -31,6 +30,7 @@
 
 	.questionWrapper {
 		gap: var(--gap-xlarge);
+		cursor: pointer;
 
 		.title {
 			font-size: var(--color-brand-font-size-medium);
@@ -70,7 +70,7 @@
 
 // Mobile Phones
 @media only screen and (max-width: 600px) {
-	.accordianContainer {
+	.accordianItem {
 		.questionWrapper {
 			.title {
 				font-size: var(--color-brand-font-size-small);
