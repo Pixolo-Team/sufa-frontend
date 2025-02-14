@@ -1,16 +1,67 @@
-
-// Small laptops
-@media only screen and (max-width: 1500px) {
-}
-
-// Ipad air
-@media only screen and (max-width: 992px) {
-}
-
-// Ipad Mini
-@media only screen and (max-width: 768px) {
+.contentWrapper {
+	max-width: 800px;
+	margin: auto;
+	gap: 10px;
+	.textWrapper {
+		width: 70%;
+		.heading {
+			color: var(--color-brand-primary-deep);
+			font-size: var(--color-brand-font-size-heading-3);
+		}
+		.subHeading {
+			color: var(--color-text-tint);
+			font-size: --color-brand-font-size-xsmall;
+			margin-top: var(--margin-regular);
+			margin-bottom: var(--margin-xxlarge);
+		}
+	}
+	.imageWrapper {
+		width: 30%;
+	}
 }
 
 // Mobile Phones
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
+	.contentWrapper {
+		.textWrapper {
+			.heading {
+				font-size: var(--color-brand-font-size-5xlarge);
+			}
+		}
+	}
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+	.contentWrapper {
+		gap: 14px;
+		.textWrapper {
+			.subHeading {
+				font-size: var(--color-brand-font-size-small);
+				margin-top: var(--margin-regular);
+				margin-bottom: 28px;
+			}
+		}
+	}
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+	.contentWrapper {
+		gap: 30px;
+		.textWrapper {
+			.heading {
+				font-size: 60px; //TODO: Add token
+			}
+			.subHeading {
+				font-size: var(--color-brand-font-size-regular);
+				margin-top: var(--margin-medium);
+				margin-bottom: 32px;
+			}
+		}
+	}
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }
