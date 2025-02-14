@@ -34,7 +34,10 @@ const Accordian: React.FC<AccordianProps> = ({
 
 	// View starts here
 	return (
-		<div className={`${styles.accordianContainer}`} onClick={onToggle}>
+		<div
+			className={`${styles.accordianContainer} ${isOpen && styles.active}`}
+			onClick={onToggle}
+		>
 			<div
 				className={`${styles.questionWrapper} flex align-center justify-between`}
 			>
@@ -44,7 +47,11 @@ const Accordian: React.FC<AccordianProps> = ({
 					className={`${styles.iconWrapper} flex align-center justify-center`}
 				>
 					{/* Icon */}
-					<Icon iconName="plus" className={styles.icon} mode="outline" />
+					<Icon
+						iconName={isOpen ? "minus" : "plus"}
+						className={styles.icon}
+						mode="outline"
+					/>
 				</button>
 			</div>
 			{isOpen && (
