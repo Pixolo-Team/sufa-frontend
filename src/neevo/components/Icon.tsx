@@ -17,6 +17,7 @@ import MoreOptionsFilled from "@/../public/icons/filled/more-options.svg";
 import PlusFilled from "@/../public/icons/filled/plus.svg";
 import RightArrowFilled from "@/../public/icons/filled/right-arrow.svg";
 import SearchFilled from "@/../public/icons/filled/search.svg";
+import LinkArrowFilled from "@/../public/icons/filled/link-arrow.svg";
 import UserCircleFilled from "@/../public/icons/filled/user-circle.svg";
 import UsersFilled from "@/../public/icons/filled/users.svg";
 import VerfiedFilled from "@/../public/icons/filled/verified.svg";
@@ -53,6 +54,7 @@ import UploadTrayOutline from "@/../public/icons/outline/upload-tray.svg";
 import InvisibleOutline from "@/../public/icons/outline/invisible.svg";
 import DeleteOutline from "@/../public/icons/outline/delete.svg";
 import PlusOutline from "@/../public/icons/outline/plus.svg";
+import InstagramOutline from "@/../public/icons/outline/instagram.svg";
 
 //TODO : Add SearchOptionFilled
 
@@ -73,6 +75,7 @@ const filled: {
 	hamburger: HamburgerFilled,
 	info: InfoFilled,
 	logout: LogoutFilled,
+	"link-arrow": LinkArrowFilled,
 	"mail-open": MailOpenFilled,
 	"more-options": MoreOptionsFilled,
 	plus: PlusFilled,
@@ -119,6 +122,7 @@ const outline: {
 	"upload-tray": UploadTrayOutline,
 	invisible: InvisibleOutline,
 	delete: DeleteOutline,
+	instagram: InstagramOutline,
 };
 
 const iconMap: {
