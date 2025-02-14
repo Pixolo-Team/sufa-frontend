@@ -44,7 +44,7 @@ const Coaches: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<div>
+		<section className="section-spacing">
 			<SectionHeader fadedText="Guruji" highlightedText="Our Coaches" />
 			<div className={`${styles.coachesWrapper} container`}>
 				<Slider ref={sliderRef} {...settings} className={styles.slider}>
@@ -68,7 +68,7 @@ const Coaches: React.FC<unknown> = () => {
 				{/* Custom slick arrows */}
 				<CustomSlickArrows sliderRef={sliderRef} />
 			</div>
-		</div>
+		</section>
 	);
 };
 

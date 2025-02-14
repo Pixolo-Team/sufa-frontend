@@ -169,8 +169,7 @@ textarea {
 		width: 38px;
 		height: 38px;
 		border-radius: 100%;
-		// TODO: Use token
-		background-color: #fff;
+		background-color: var(--color-background-light-tint);
 		transition: all 0.2s ease-in-out;
 		.arrow-icon {
 			path {
@@ -187,4 +186,7 @@ textarea {
 			transform: rotate(180deg);
 		}
 	}
+}
+
+.section-spacing {
 }
