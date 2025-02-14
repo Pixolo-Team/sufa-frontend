@@ -23,7 +23,6 @@
 		.answerWrapper {
 			.description {
 				color: var(--color-brand-neutral-light-200);
-
 			}
 		}
 	}
@@ -60,11 +59,13 @@
 }
 
 // Mobile Phones
-@media only screen and (min-width: 600px) {}
+@media only screen and (min-width: 600px) {
+}
 
 // Ipad air
 @media only screen and (min-width: 768px) {
 	.accordianItem {
+		padding: var(--padding-xlarge) var(--padding-xxlarge);
 		.questionWrapper {
 			.title {
 				font-size: var(--color-brand-font-size-medium);
@@ -77,12 +78,13 @@
 				line-height: 20px;
 			}
 		}
-
 	}
 }
 
 // Ipad Mini
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+}
 
 // Small laptops
-@media only screen and (min-width: 1500px) {}
+@media only screen and (min-width: 1500px) {
+}
