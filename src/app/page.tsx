@@ -14,11 +14,9 @@ import FoundersMessage from "@/sections/home/founders-message/FoundersMessage";
 import GetFreeTrial from "@/sections/home/get-free-trial/GetFreeTrial";
 import Graduates from "@/sections/home/graduates/Graduates";
 import JoinUs from "@/sections/home/join-us/JoinUs";
-import Accordian from "@/components/accordian/Accordian";
 
 /** Home Screen */
 const HomeScreen: React.FC<unknown> = () => {
-	const [isOpen, setIsOpen] = React.useState(false);
 	return (
 		<div>
 			{/* Banner Section */}
