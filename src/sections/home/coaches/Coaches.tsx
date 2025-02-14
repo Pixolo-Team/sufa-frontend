@@ -37,7 +37,7 @@ const settings: Settings = {
 	],
 };
 
-const coachesDummyData = [
+const coachesData = [
 	{
 		firstName: "Adarsh",
 		lastName: "Anchan",
@@ -78,8 +78,8 @@ const Coaches: React.FC<unknown> = () => {
 			<SectionHeader fadedText="Guruji" highlightedText="Our Coaches" />
 			<div className={`${styles.coachesWrapper} container`}>
 				<Slider ref={sliderRef} {...settings} className={styles.slider}>
-					{coachesDummyData.map((coach, index) => (
-						<div key={index}>
+					{coachesData.map((coach, coachIndex) => (
+						<div key={coachIndex}>
 							<div className={styles.cardWrap}>
 								<div className={styles.cardWrapInner}>
 									<CoachesCard
