@@ -24,7 +24,6 @@ const Established: React.FC<unknown> = () => {
 		variableWidth: true,
 		centerMode: true,
 		centerPadding: "0px",
-		// slidesToShow: 1,
 		slidesToScroll: 1,
 		autoplay: true,
 		autoplaySpeed: 3000,
@@ -44,8 +43,8 @@ const Established: React.FC<unknown> = () => {
 	// View starts here
 	return (
 		<div className={styles.establishedWrapper}>
-			<p>ESTABLISHED IN 2003</p>
-			<Slider {...settings}>
+			<p className={`${styles.heading} font-weight-700`}>ESTABLISHED IN 2003</p>
+			<Slider {...settings} className={styles.slider}>
 				<div>
 					<div className={styles.imageWrapper}>
 						<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />

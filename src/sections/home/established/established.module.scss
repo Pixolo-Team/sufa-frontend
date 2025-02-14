@@ -1,4 +1,16 @@
 .establishedWrapper {
+	.heading {
+		font-size: var(--color-brand-font-size-5xlarge); //TODO: Add token
+		color: transparent;
+		-webkit-text-stroke: 2px var(--color-brand-neutral-dark-400); // Stroke color
+		text-align: center;
+		text-transform: uppercase;
+		position: relative;
+		z-index: 1;
+	}
+	.slider {
+		margin-top: -20px;
+	}
 	.imageWrapper {
 		width: 60vw;
 		img {
@@ -7,18 +19,31 @@
 		}
 	}
 }
-// Small laptops
-@media only screen and (max-width: 1500px) {
-}
-
-// Ipad air
-@media only screen and (max-width: 992px) {
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
+	.establishedWrapper {
+		.heading {
+			font-size: var(--color-brand-font-size-9xlarge); //TODO: Add token
+		}
+		.slider {
+			margin-top: -50px;
+		}
+	}
 }
 
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+// Ipad air
+@media only screen and (min-width: 992px) {
+	.establishedWrapper {
+		.heading {
+			font-size: var(--color-brand-font-size-10xlarge); //TODO: Add token
+		}
+	}
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }
