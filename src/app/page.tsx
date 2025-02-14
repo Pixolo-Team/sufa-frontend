@@ -30,15 +30,6 @@ const HomeScreen: React.FC<unknown> = () => {
 			{/* Established Section */}
 			<Established />
 
-			<Accordian
-				description="We are a team of passionate individuals who believe in the power of education. We are committed to providing the best learning experience for our students."
-				isOpen={isOpen}
-				onToggle={() => {
-					setIsOpen((prev) => !prev);
-				}}
-				title="Our Mission"
-			></Accordian>
-
 			{/* Courses Section */}
 			<Courses />
 
