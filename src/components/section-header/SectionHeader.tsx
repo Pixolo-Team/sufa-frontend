@@ -4,16 +4,19 @@ import React from "react";
 
 // STYLES //
 import styles from "./section-header.module.scss";
+import Image from "next/image";
 
 interface SectionHeaderProps {
 	fadedText?: string;
 	highlightedText: string;
+	image?: string;
 }
 
 /** Section Header Component */
 const SectionHeader: React.FC<SectionHeaderProps> = ({
 	fadedText = "",
 	highlightedText = "",
+	image,
 }) => {
 	// Navigation and Route Params
 
@@ -27,15 +30,29 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 
 	// View starts here
 	return (
-		<div className={"container text-center"}>
-			{/* Faded text */}
-			{!!fadedText && (
-				<p className={`${styles.fadedText} font-weight-800`}>{fadedText}</p>
+		<div
+			className={`container text-center flex align-center justify-center ${styles.wrapper}`}
+		>
+			{/* Image */}
+			{!!image && (
+				<Image
+					src={image}
+					alt="Section Header Image"
+					className={styles.image}
+					width={100}
+					height={100}
+				/>
 			)}
-			{/* Highlighted text */}
-			<p className={`${styles.highlightedText} font-weight-700`}>
-				{highlightedText}
-			</p>
+			<div>
+				{/* Faded text */}
+				{!!fadedText && (
+					<p className={`${styles.fadedText} font-weight-800`}>{fadedText}</p>
+				)}
+				{/* Highlighted text */}
+				<p className={`${styles.highlightedText} font-weight-700`}>
+					{highlightedText}
+				</p>
+			</div>
 		</div>
 	);
 };

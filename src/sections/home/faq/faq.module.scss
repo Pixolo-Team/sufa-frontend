@@ -1,10 +1,7 @@
-.squirrelImage {
-	margin-right: -10px;
-}
 .content {
-	margin-top: 8px;
+	margin-top: var(--margin-small);
 	.accordianItem {
-		margin-bottom: 10px;
+		margin-bottom: var(--margin-medium);
 	}
 }
 
@@ -17,7 +14,7 @@
 	.content {
 		margin-top: 40px;
 		.accordianItem {
-			margin-bottom: 16px;
+			margin-bottom: var(--margin-large);
 		}
 	}
 }
