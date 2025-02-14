@@ -37,6 +37,36 @@ const settings: Settings = {
 	],
 };
 
+const coachesDummyData = [
+	{
+		firstName: "Adarsh",
+		lastName: "Anchan",
+		description:
+			"Pandit is our Head Coach, he is very experienced and good with kids. He has school experience. He is thin. He wears specs.",
+		designation: "Frontend Engineer - Lead",
+		coachImageSrc: "/images/coach.jpg",
+		socialMedia: { instagram: "inst" },
+	},
+	{
+		firstName: "Ravi",
+		lastName: "Shankar",
+		description:
+			"Coach Ravi specializes in tactical training and has years of experience coaching at the national level.",
+		designation: "Senior Coach",
+		coachImageSrc: "/images/coach.jpg",
+		socialMedia: { instagram: "ravi_inst" },
+	},
+	{
+		firstName: "Meera",
+		lastName: "Iyer",
+		description:
+			"Meera is known for her strategic approach and has coached various youth teams with great success.",
+		designation: "Technical Coach",
+		coachImageSrc: "/images/coach.jpg",
+		socialMedia: { instagram: "meera_insta" },
+	},
+];
+
 /** Coaches Screen */
 const Coaches: React.FC<unknown> = () => {
 	// Define Refs
@@ -48,17 +78,17 @@ const Coaches: React.FC<unknown> = () => {
 			<SectionHeader fadedText="Guruji" highlightedText="Our Coaches" />
 			<div className={`${styles.coachesWrapper} container`}>
 				<Slider ref={sliderRef} {...settings} className={styles.slider}>
-					{[1, 2, 3].map((_, index) => (
+					{coachesDummyData.map((coach, index) => (
 						<div key={index}>
 							<div className={styles.cardWrap}>
 								<div className={styles.cardWrapInner}>
 									<CoachesCard
-										firstName="Adarsh"
-										lastName="Anchan"
-										description="Pandit is our Head Coach, he is very experienced and good with kids. He has school experience. He is thin. He wears specs."
-										designation="Frontend Engineer - Lead"
-										coachImageSrc="/images/coach.jpg"
-										socialMedia={{ instagram: "inst" }}
+										firstName={coach.firstName}
+										lastName={coach.lastName}
+										description={coach.description}
+										designation={coach.designation}
+										coachImageSrc={coach.coachImageSrc}
+										socialMedia={coach.socialMedia}
 									/>
 								</div>
 							</div>
