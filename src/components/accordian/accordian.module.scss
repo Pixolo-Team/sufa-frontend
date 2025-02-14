@@ -1,6 +1,7 @@
 .accordianContainer {
-	padding: 14px 18px;
+	padding: var(--padding-medium) var(--padding-large);
 	border-radius: 16px;
+	cursor: pointer;
 	&.active {
 		background-color: var(--color-brand-primary-deep);
 		.questionWrapper {
@@ -21,24 +22,15 @@
 		}
 	}
 	.questionWrapper {
-		justify-content: space-between;
-		align-items: center;
-		gap: 20px;
-		display: flex;
+		gap: var(--gap-xlarge);
 		.title {
-			font-size: 14px;
+			font-size: var(--color-brand-font-size-small);
 		}
 
 		.iconWrapper {
-			width: max-content;
-			height: max-content;
 			background-color: var(--color-brand-primary-deep);
-			padding: 4px;
+			padding: var(--padding-small);
 			border-radius: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
 			.icon {
 				color: var(--color-brand-primary-contrast);
 				width: 12px;
@@ -47,9 +39,9 @@
 		}
 	}
 	.answerWrapper {
-		margin-top: 8px;
+		margin-top: var(--margin-regularå);
 		.description {
-			font-size: 14px;
+			font-size: var(--color-brand-font-size-small);
 		}
 	}
 }
