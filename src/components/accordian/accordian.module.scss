@@ -33,7 +33,7 @@
 		cursor: pointer;
 
 		.title {
-			font-size: var(--color-brand-font-size-medium);
+			font-size: var(--color-brand-font-size-small);
 		}
 
 		.iconWrapper {
@@ -53,36 +53,37 @@
 		margin-top: var(--margin-regular);
 
 		.description {
-			font-size: var(--color-brand-font-size-small);
-			line-height: 20px;
+			font-size: var(--color-brand-font-size-2xsmall);
+			line-height: 16px;
 		}
 	}
 }
 
-// Small laptops
-@media only screen and (max-width: 1500px) {}
+// Mobile Phones
+@media only screen and (min-width: 600px) {}
 
 // Ipad air
-@media only screen and (max-width: 992px) {}
-
-// Ipad Mini
-@media only screen and (max-width: 768px) {}
-
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 768px) {
 	.accordianItem {
 		.questionWrapper {
 			.title {
-				font-size: var(--color-brand-font-size-small);
+				font-size: var(--color-brand-font-size-medium);
 			}
 		}
 
 		.answerWrapper {
 			.description {
-				font-size: var(--color-brand-font-size-2xsmall);
-				line-height: 16px;
+				font-size: var(--color-brand-font-size-small);
+				line-height: 20px;
 			}
 		}
 
 	}
 }
+
+
+// Ipad Mini
+@media only screen and (min-width: 992px) {}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {}
