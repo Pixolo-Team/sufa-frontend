@@ -14,7 +14,7 @@ import Button from "@/neevo/components/button/Button";
 import Image from "next/image";
 
 // IMAGES //
-import TigerImage from "@/../public/images/tiger-cub.jpg";
+import TigerImage from "@/../public/images/tiger-cub.png";
 
 /** Get Free Trial Screen */
 const GetFreeTrial: React.FC<unknown> = () => {

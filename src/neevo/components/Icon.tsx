@@ -14,6 +14,7 @@ import InfoFilled from "@/../public/icons/filled/info.svg";
 import LogoutFilled from "@/../public/icons/filled/logout.svg";
 import MailOpenFilled from "@/../public/icons/filled/mail-open.svg";
 import MoreOptionsFilled from "@/../public/icons/filled/more-options.svg";
+import PlusFilled from "@/../public/icons/filled/plus.svg";
 import RightArrowFilled from "@/../public/icons/filled/right-arrow.svg";
 import SearchFilled from "@/../public/icons/filled/search.svg";
 import LinkArrowFilled from "@/../public/icons/filled/link-arrow.svg";
@@ -52,6 +53,8 @@ import PdfOutline from "@/../public/icons/outline/pdf.svg";
 import UploadTrayOutline from "@/../public/icons/outline/upload-tray.svg";
 import InvisibleOutline from "@/../public/icons/outline/invisible.svg";
 import DeleteOutline from "@/../public/icons/outline/delete.svg";
+import PlusOutline from "@/../public/icons/outline/plus.svg";
+import MinusOutline from "@/../public/icons/outline/minus.svg";
 import InstagramOutline from "@/../public/icons/outline/instagram.svg";
 
 //TODO : Add SearchOptionFilled
@@ -76,6 +79,7 @@ const filled: {
 	"link-arrow": LinkArrowFilled,
 	"mail-open": MailOpenFilled,
 	"more-options": MoreOptionsFilled,
+	plus: PlusFilled,
 	"right-arrow": RightArrowFilled,
 	search: SearchFilled,
 	"user-circle": UserCircleFilled,
@@ -108,6 +112,7 @@ const outline: {
 	logout: LogoutOutline,
 	"mail-open": MailOpenOutline,
 	"more-options": MoreOptionsOutline,
+	plus: PlusOutline,
 	"right-arrow": RightArrowOutline,
 	search: SearchOutline,
 	"search-option": SearchOptionOutline,
@@ -119,6 +124,7 @@ const outline: {
 	invisible: InvisibleOutline,
 	delete: DeleteOutline,
 	instagram: InstagramOutline,
+	minus: MinusOutline,
 };
 
 const iconMap: {

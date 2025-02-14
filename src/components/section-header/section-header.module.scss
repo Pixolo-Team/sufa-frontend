@@ -5,18 +5,19 @@
 	width: 100%;
 	text-transform: uppercase;
 }
+
 .highlightedText {
 	color: var(--color-brand-primary-deep);
 	font-size: var(--color-brand-font-size-3xlarge);
-	margin-top: -50px;
+	margin-top: -36px;
 }
 
 // Mobile Phones
 @media only screen and (min-width: 600px) {
 	.fadedText {
-		// Todo : Add tokens here
-		font-size: 60px;
+		font-size: 60px; // Todo: Add tokens here
 	}
+
 	.highlightedText {
 		font-size: var(--color-brand-font-size-5xlarge);
 	}
@@ -27,6 +28,7 @@
 	.fadedText {
 		font-size: var(--color-brand-font-size-8xlarge);
 	}
+
 	.highlightedText {
 		font-size: var(--color-brand-font-size-6xlarge);
 	}
@@ -35,14 +37,15 @@
 // Ipad air
 @media only screen and (min-width: 992px) {
 	.fadedText {
-		// Todo : Add tokens here
-		font-size: 70px;
+		font-size: 70px; // Todo: Add tokens here
 	}
+
 	.highlightedText {
 		font-size: var(--color-brand-font-size-8xlarge);
+		margin-top: -50px;
 	}
 }
 
 // Small laptops
-@media only screen and (max-width: 1500px) {
+@media only screen and (min-width: 1500px) {
 }
