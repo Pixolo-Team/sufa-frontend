@@ -1,6 +1,5 @@
 .fadedText {
 	color: var(--color-brand-primary-deep);
-	position: absolute;
 	font-size: var(--color-brand-font-size-7xlarge);
 	opacity: 0.1;
 	width: 100%;
@@ -9,7 +8,7 @@
 .highlightedText {
 	color: var(--color-brand-primary-deep);
 	font-size: var(--color-brand-font-size-3xlarge);
-	margin-top: 30px;
+	margin-top: -50px;
 }
 
 // Mobile Phones

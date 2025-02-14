@@ -1,16 +1,43 @@
-
-// Small laptops
-@media only screen and (max-width: 1500px) {
+.coachesWrapper {
+	margin-top: 40px;
+	.cardWrap {
+		display: flex;
+		justify-content: center;
+		.cardWrapInner {
+			max-width: 330px;
+		}
+	}
+	:global(.slick-current) {
+		.cardWrapInner {
+			transform: translateY(-20px);
+		}
+	}
 }
 
-// Ipad air
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 600px) {
+	.coachesWrapper {
+		padding: 0;
+	}
+}
+// Mobile Phones
+@media only screen and (min-width: 600px) {
+	.coachesWrapper {
+		:global(.slick-current) {
+			.cardWrapInner {
+				transform: translateY(0);
+			}
+		}
+	}
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
 }
 
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }
