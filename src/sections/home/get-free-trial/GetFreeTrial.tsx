@@ -30,48 +30,52 @@ const GetFreeTrial: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<div className="container">
-			<div className={`${styles.contentWrapper} flex justify-center align-center`}>
-				<div className={styles.textWrapper}>
-					{/* Heading */}
-					<p className={`${styles.heading} font-weight-700`}>Get a Free Trial</p>
-					{/* Sub heading */}
-					<p className={`${styles.subHeading} font-weight-400`}>
-						Experience the Skorost way! Join us for a free trial session.
-					</p>
-					{/* Button for small devices */}
-					<div className={"hide-on-desktop"}>
-						<Button
-							text={"Book a Free Trial"}
-							onClick={() => console.log("Button Clicked")}
-							level={ButtonLevels.INLINE}
-							size={ButtonSizes.MEDIUM}
-							shape={Shapes.ROUNDED}
-							color={Colors.SECONDARY}
+		<section className="section-spacing">
+			<div className="container">
+				<div
+					className={`${styles.contentWrapper} flex justify-center align-center`}
+				>
+					<div className={styles.textWrapper}>
+						{/* Heading */}
+						<p className={`${styles.heading} font-weight-700`}>Get a Free Trial</p>
+						{/* Sub heading */}
+						<p className={`${styles.subHeading} font-weight-400`}>
+							Experience the Skorost way! Join us for a free trial session.
+						</p>
+						{/* Button for small devices */}
+						<div className={"hide-on-desktop"}>
+							<Button
+								text={"Book a Free Trial"}
+								onClick={() => console.log("Button Clicked")}
+								level={ButtonLevels.INLINE}
+								size={ButtonSizes.MEDIUM}
+								shape={Shapes.ROUNDED}
+								color={Colors.SECONDARY}
+							/>
+						</div>
+						{/* Button for large devices */}
+						<div className={"hide-on-mobile"}>
+							<Button
+								text={"Book a Free Trial"}
+								onClick={() => console.log("Button Clicked")}
+								level={ButtonLevels.INLINE}
+								size={ButtonSizes.XLARGE}
+								shape={Shapes.ROUNDED}
+								color={Colors.SECONDARY}
+							/>
+						</div>
+					</div>
+					{/* Image */}
+					<div className={styles.imageWrapper}>
+						<Image
+							src={TigerImage}
+							alt="tiger"
+							className={`${styles.image} img-responsive full-width-img`}
 						/>
 					</div>
-					{/* Button for large devices */}
-					<div className={"hide-on-mobile"}>
-						<Button
-							text={"Book a Free Trial"}
-							onClick={() => console.log("Button Clicked")}
-							level={ButtonLevels.INLINE}
-							size={ButtonSizes.XLARGE}
-							shape={Shapes.ROUNDED}
-							color={Colors.SECONDARY}
-						/>
-					</div>
-				</div>
-				{/* Image */}
-				<div className={styles.imageWrapper}>
-					<Image
-						src={TigerImage}
-						alt="tiger"
-						className={`${styles.image} img-responsive full-width-img`}
-					/>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 

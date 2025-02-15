@@ -215,3 +215,12 @@ textarea {
 	padding-top: 70px;
 	padding-bottom: 70px;
 }
+
+.bg-primary-regular {
+	background-color: var(--color-brand-primary-regular);
+	color: var(--color-brand-primary-contrast);
+}
+.bg-primary-deep {
+	background-color: var(--color-brand-primary-deep);
+	color: var(--color-brand-primary-contrast);
+}
