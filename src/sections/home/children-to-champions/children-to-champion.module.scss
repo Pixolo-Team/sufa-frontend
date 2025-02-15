@@ -1,4 +1,43 @@
+.wrapper {
+	position: relative;
+	width: 100%;
+	padding: 50px 0;
+	overflow: hidden;
+}
 
+.marqueeContainer {
+	position: relative;
+	width: 100%;
+	height: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.marquee {
+	position: absolute;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.topMarquee {
+	top: 50%;
+	transform: translateY(-50%) rotate(-4deg); // Rotates slightly
+	z-index: 2;
+	background-color: var(--color-brand-neutral-light-100);
+}
+
+.bottomMarquee {
+	background-color: var(--color-brand-primary-regular);
+	top: 50%;
+	transform: translateY(-50%) rotate(4deg); // Opposite rotation
+	z-index: 1;
+}
+
+.marqueeItem {
+	padding: 10px;
+}
 // Small laptops
 @media only screen and (max-width: 1500px) {
 }

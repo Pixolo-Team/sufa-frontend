@@ -3,6 +3,7 @@ import ArrowFilled from "@/../public/icons/filled/arrow.svg";
 import BoxMenuFilled from "@/../public/icons/filled/box-menu.svg";
 import CloseFilled from "@/../public/icons/filled/close.svg";
 import CheckFilled from "@/../public/icons/filled/check.svg";
+import CuteFilled from "@/../public/icons/filled/cute.svg";
 import DiscFilled from "@/../public/icons/filled/disc.svg";
 import ExclamationFilled from "@/../public/icons/filled/exclamation.svg";
 import DownArrowFilled from "@/../public/icons/filled/down-arrow.svg";
@@ -67,6 +68,7 @@ const filled: {
 	"box-menu": BoxMenuFilled,
 	close: CloseFilled,
 	check: CheckFilled,
+	cute: CuteFilled,
 	disc: DiscFilled,
 	exclamation: ExclamationFilled,
 	"down-arrow": DownArrowFilled,

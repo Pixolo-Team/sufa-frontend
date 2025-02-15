@@ -1,0 +1,46 @@
+"use client";
+// REACT //
+import React from "react";
+
+// STYLES //
+import styles from "./children-champion.module.scss";
+
+// COMPONENTS //
+import Icon from "@/neevo/components/Icon";
+
+interface ChildrenChampionProps {
+	color: "primary" | "default";
+}
+
+/** Children To Champions Component */
+const ChildrenChampion: React.FC<ChildrenChampionProps> = ({
+	color = "default",
+}) => {
+	// Navigation and Route Params
+
+	// Define States
+
+	// Define Refs
+
+	// Helper Functions
+
+	// UseEffect Functions and UseFocusEffect Functions
+
+	// View starts here
+	return (
+		<div
+			className={`${styles.contentWrapper} flex align-center justify-center ${
+				color === "primary" ? styles.primaryClass : ""
+			}`}
+		>
+			<p className={`${styles.title} font-weight-700`}>
+				FROM CHILDREN TO CHAMPIONS
+			</p>
+			<div>
+				<Icon iconName={"cute"} className={styles.icon} mode="filled" />
+			</div>
+		</div>
+	);
+};
+
+export default ChildrenChampion;

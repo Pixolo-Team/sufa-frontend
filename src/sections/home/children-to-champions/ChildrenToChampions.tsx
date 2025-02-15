@@ -1,19 +1,14 @@
 "use client";
+// REACT //
 import React from "react";
+import Marquee from "react-fast-marquee";
 
 // STYLES //
+import styles from "./children-to-champion.module.scss";
 
 // COMPONENTS //
-
-// IMAGES //
-
-// SERVICES //
-
-// TYPES //
-
-// UTILS //
-
-// PLUGINS //
+import Icon from "@/neevo/components/Icon";
+import ChildrenChampion from "@/components/children-champion/ChildrenChampion";
 
 /** Children To Champions Screen */
 const ChildrenToChampions: React.FC<unknown> = () => {
@@ -28,7 +23,32 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 	// UseEffect Functions and UseFocusEffect Functions
 
 	// View starts here
-	return <div>Hello Children To Champions</div>;
+	return (
+		<section className="section-spacing">
+			<div className={`${styles.wrapper} flex align-center justify-center`}>
+				{/* Marquee Wrapper */}
+				<div className={styles.marqueeContainer}>
+					{/* Top Marquee */}
+					<div className={`${styles.marquee} ${styles.topMarquee}`}>
+						<Marquee direction="left">
+							<div className={styles.marqueeItem}>
+								<ChildrenChampion color="default" />
+							</div>
+						</Marquee>
+					</div>
+
+					{/* Bottom Marquee */}
+					<div className={`${styles.marquee} ${styles.bottomMarquee}`}>
+						<Marquee direction="right">
+							<div className={styles.marqueeItem}>
+								<ChildrenChampion color="primary" />
+							</div>
+						</Marquee>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
 };
 
 export default ChildrenToChampions;
