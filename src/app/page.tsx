@@ -2,6 +2,10 @@
 // REACT //
 import React from "react";
 
+// STYLES //
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
 import ChildrenToChampions from "@/sections/home/children-to-champions/ChildrenToChampions";
