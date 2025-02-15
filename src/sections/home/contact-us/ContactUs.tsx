@@ -15,7 +15,6 @@ import Button from "@/neevo/components/button/Button";
 
 // IMAGES //
 import FootballImage from "@/../public/images/football-img.png";
-import GrassImage from "@/../public/images/grass.png";
 
 /** Contact Us Screen */
 const ContactUs: React.FC<unknown> = () => {
@@ -31,23 +30,25 @@ const ContactUs: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<section>
+		<section
+			className={`section-spacing padding-bottom-0 ${styles.contactUsWrapper}`}
+		>
 			{/* Contact Us Section */}
 			<div className="container">
 				<div
-					className={`${styles.contactUsWrapper} flex justify-center align-center`}
+					className={`${styles.contactUsInner} flex justify-center align-center`}
 				>
 					<div className={styles.imageWrapper}>
 						<Image
 							src={FootballImage}
 							alt="ftb"
-							className="img-responsive full-width-image"
+							className="img-responsive full-width-img"
 						/>
 					</div>
 					<div className={styles.contentWrapper}>
 						{/* Title */}
 						<p className={`${styles.title} font-weight-700`}>
-							Still have any Question
+							Still have any Question?
 						</p>
 						{/* Button for small devices */}
 						<div className={"hide-on-desktop"}>
@@ -79,9 +80,8 @@ const ContactUs: React.FC<unknown> = () => {
 				</div>
 			</div>
 			{/* Bottom image */}
-			<div className={styles.bottomImage}>
-				<Image src={GrassImage} alt="grass" className={`${styles.grassImage}`} />
-				<div className={styles.bottomBackground}></div>
+			<div className={styles.bottomImageWrapper}>
+				<div className={styles.bottomImage} />
 			</div>
 		</section>
 	);
