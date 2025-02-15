@@ -10,6 +10,7 @@ import Image from "next/image";
 import Icon from "@/neevo/components/Icon";
 
 interface CoursesCardProps {
+	wrapperClass?: string;
 	courseImageSrc: string;
 	courseTitle: string;
 	onClick: () => void;
@@ -17,6 +18,7 @@ interface CoursesCardProps {
 
 /** Courses Card Component */
 const CoursesCard: React.FC<CoursesCardProps> = ({
+	wrapperClass = "",
 	courseImageSrc = "",
 	courseTitle = "",
 	onClick,
@@ -34,15 +36,15 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 	// View starts here
 	return (
 		// Course card and Image
-		<div className={styles.contentWrapper}>
+		<div className={`${styles.contentWrapper} ${wrapperClass}`}>
 			{/* Course Image */}
 			<div className={styles.imageContainer}>
 				<Image
 					src={courseImageSrc}
 					alt={courseTitle}
 					className={`${styles.courseImage} img-responsive`}
-					width={600}
-					height={300}
+					width={640}
+					height={360}
 				/>
 			</div>
 			<div className={styles.textWrapper}>

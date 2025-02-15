@@ -9,6 +9,10 @@ import styles from "./courses.module.scss";
 import CoursesCard from "@/components/courses-card/CoursesCard";
 import SectionHeader from "@/components/section-header/SectionHeader";
 
+import gdpImage from "@/../public/images/courses/gdp.jpg";
+import u11Image from "@/../public/images/courses/u-11.jpg";
+import u15Image from "@/../public/images/courses/u-15.jpg";
+
 /** Courses Screen */
 const Courses: React.FC<unknown> = () => {
 	// Navigation and Route Params
@@ -23,31 +27,36 @@ const Courses: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<div>
-			{/* Section header component */}
-			<SectionHeader fadedText="Champions" highlightedText="Courses" />
-			<p className={`${styles.sectionDescription} font-weight-500`}>
-				Designed for Excellence!
-			</p>
-			{/* Courses card components */}
-			<div className={`${styles.cardsWrapper} container`}>
-				<CoursesCard
-					courseImageSrc="/images/keeper.jpg"
-					courseTitle="Goalkeeper Development"
-					onClick={() => console.log("Goalkeeper Development")}
-				/>
-				<CoursesCard
-					courseImageSrc="/images/keeper.jpg"
-					courseTitle="Goalkeeper Development"
-					onClick={() => console.log("Goalkeeper Development")}
-				/>
-				<CoursesCard
-					courseImageSrc="/images/keeper.jpg"
-					courseTitle="Goalkeeper Development"
-					onClick={() => console.log("Goalkeeper Development")}
-				/>
+		<section className="section-spacing">
+			<div className="container">
+				{/* Section header component */}
+				<SectionHeader fadedText="Champions" highlightedText="Courses" />
+				<p className={`${styles.sectionDescription} font-weight-500`}>
+					Designed for Excellence!
+				</p>
+				{/* Courses card components */}
+				<div className={`${styles.cardsWrapper} `}>
+					<CoursesCard
+						wrapperClass={styles.cardItem}
+						courseImageSrc={gdpImage.src}
+						courseTitle="Goalkeeper Development"
+						onClick={() => console.log("Goalkeeper Development")}
+					/>
+					<CoursesCard
+						wrapperClass={styles.cardItem}
+						courseImageSrc={u11Image.src}
+						courseTitle="Under-11 Boys"
+						onClick={() => console.log("Under-11 Boys")}
+					/>
+					<CoursesCard
+						wrapperClass={styles.cardItem}
+						courseImageSrc={u15Image.src}
+						courseTitle="Under-15 Boys"
+						onClick={() => console.log("Under-15 Boys")}
+					/>
+				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
