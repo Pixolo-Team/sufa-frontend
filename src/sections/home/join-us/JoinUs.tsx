@@ -1,19 +1,21 @@
 "use client";
+// REACT //
 import React from "react";
 
+// ENUMS //
+import { Colors, Shapes } from "@/neevo/enums/core.enum";
+import { ButtonLevels, ButtonSizes } from "@/neevo/enums/button.enum";
+
 // STYLES //
+import styles from "./join-us.module.scss";
 
 // COMPONENTS //
+import Image from "next/image";
+import Button from "@/neevo/components/button/Button";
 
 // IMAGES //
-
-// SERVICES //
-
-// TYPES //
-
-// UTILS //
-
-// PLUGINS //
+import FootballImage from "@/../public/images/football.png";
+import JoinUsImage from "@/../public/images/join-us.jpg";
 
 /** Join Us Screen */
 const JoinUs: React.FC<unknown> = () => {
@@ -28,7 +30,46 @@ const JoinUs: React.FC<unknown> = () => {
 	// UseEffect Functions and UseFocusEffect Functions
 
 	// View starts here
-	return <div>Hello Join Us</div>;
+	return (
+		<section
+			className={`${styles.sectionWrapper} flex justify-center align-center`}
+		>
+			{/* Join us image */}
+			<div className={styles.imageWrapper}>
+				<Image src={JoinUsImage} alt="cta" className={styles.image} />
+			</div>
+			<div className={`${styles.contentWrapper} text-center`}>
+				{/* Title */}
+				<p className={`${styles.title} font-weight-500`}>
+					Join the Academy today and start{" "}
+					<span className={styles.inlineImageWrapper}>
+						<Image
+							src={FootballImage}
+							alt="football"
+							className={styles.inlineImage}
+						/>
+					</span>{" "}
+					your journey towards excellence!
+				</p>
+				{/* Description */}
+				<p className={`${styles.description}`}>
+					Click below and register for a free trial session and become a part of our
+					community.
+				</p>
+				{/* Button */}
+				<Button
+					text={"Book a Free Trial"}
+					color={Colors.SECONDARY}
+					size={ButtonSizes.XLARGE}
+					shape={Shapes.ROUNDED}
+					level={ButtonLevels.INLINE}
+					onClick={() => {
+						console.log("Button Clicked");
+					}}
+				/>
+			</div>
+		</section>
+	);
 };
 
 export default JoinUs;
