@@ -3,7 +3,6 @@
 	.cardWrap {
 		display: flex;
 		justify-content: center;
-		padding: 40px;
 		.cardWrapInner {
 			max-width: 300px;
 		}
@@ -13,15 +12,15 @@
 			transform: translateY(20px);
 		}
 	}
+
 	:global(.slick-current) {
-		.cardWrapInner {
-			transform: scale(1.1);
-		}
-		:global(.graduate-content) {
-			transition: all 0.5s ease-in-out;
-			visibility: visible;
-			opacity: 1;
-			transform: translateY(0);
+		.cardWrap {
+			:global(.graduate-content) {
+				transition: all 0.5s ease-in-out;
+				visibility: visible;
+				opacity: 1;
+				transform: translateY(0);
+			}
 		}
 	}
 }
@@ -33,17 +32,22 @@
 }
 // Mobile Phones
 @media only screen and (min-width: 600px) {
-	.graduatesWrapper {
-		:global(.slick-current) {
-			.cardWrapInner {
-				transform: scale(1.1);
-			}
-		}
-	}
 }
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
+	.graduatesWrapper {
+		.cardWrap {
+			padding: 60px;
+		}
+		:global(.slick-current) {
+			.cardWrap {
+				.cardWrapInner {
+					transform: scale(1.2);
+				}
+			}
+		}
+	}
 }
 
 // Ipad air

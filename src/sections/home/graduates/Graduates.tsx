@@ -34,6 +34,7 @@ const settings: Settings = {
 		},
 	],
 };
+
 const graduatesList = [
 	{
 		description: "Graduated in 2003 and played in the India League for DK Pharma",
@@ -41,7 +42,8 @@ const graduatesList = [
 		graduateSrc: "/images/graduate.jpg",
 	},
 	{
-		description: "Graduated in 2003 and played in the India League for DK Pharma",
+		description:
+			"Graduated in 2003 and played in the India League for DK Pharma. Graduated in 2003 and played in the India.",
 		graduateName: "Ravi Shankar",
 		graduateSrc: "/images/graduate.jpg",
 	},
@@ -51,7 +53,7 @@ const graduatesList = [
 		graduateSrc: "/images/graduate.jpg",
 	},
 	{
-		description: "Graduated in 2003 and played in the India League for DK Pharma",
+		description: "Graduated in 2003 and played in the India League.",
 		graduateName: "Ravi Shankar",
 		graduateSrc: "/images/graduate.jpg",
 	},
