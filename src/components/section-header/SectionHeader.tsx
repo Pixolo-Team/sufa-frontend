@@ -41,7 +41,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 					<Image
 						src={leftImage}
 						alt="Section Header Image"
-						className={`${styles.image} img-responsive full-width-image`}
+						className={`${styles.image} img-responsive full-width-img`}
 						width={100}
 						height={100}
 					/>
