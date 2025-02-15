@@ -46,7 +46,7 @@ const GraduatesCard: React.FC<GraduatesCardProps> = ({
 					height={360}
 				/>
 			</div>
-			<div className={styles.textWrapper}>
+			<div className={`${styles.textWrapper} graduate-content`}>
 				{/* Coach name */}
 				<p className={styles.title}>{graduateName}</p>
 				{/* Description */}

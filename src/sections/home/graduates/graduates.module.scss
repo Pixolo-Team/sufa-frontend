@@ -1,16 +1,57 @@
+.graduatesWrapper {
+	margin-top: 40px;
+	.cardWrap {
+		.cardWrapInner {
+			max-width: 300px;
+		}
+		:global(.graduate-content) {
+			visibility: hidden;
+			opacity: 0;
+			transform: translateY(20px);
+		}
+	}
 
-// Small laptops
-@media only screen and (max-width: 1500px) {
+	:global(.slick-current) {
+		.cardWrap {
+			:global(.graduate-content) {
+				transition: all 0.5s ease-in-out;
+				visibility: visible;
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+	}
 }
 
-// Ipad air
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 600px) {
+	.graduatesWrapper {
+		padding: 0;
+	}
+}
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
+	.graduatesWrapper {
+		.cardWrap {
+			padding: 60px;
+		}
+		:global(.slick-current) {
+			.cardWrap {
+				.cardWrapInner {
+					transform: scale(1.2);
+				}
+			}
+		}
+	}
 }
 
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }
