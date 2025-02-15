@@ -4,6 +4,8 @@ import React from "react";
 
 // STYLES //
 import styles from "./section-header.module.scss";
+
+// COMPONENTS //
 import Image from "next/image";
 
 interface SectionHeaderProps {
@@ -31,7 +33,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 	// View starts here
 	return (
 		<div
-			className={`container text-center flex align-center justify-center ${styles.wrapper}`}
+			className={`text-center flex align-center justify-center ${styles.wrapper}`}
 		>
 			{/* Image */}
 			{!!image && (
