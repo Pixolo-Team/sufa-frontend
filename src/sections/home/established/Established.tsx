@@ -41,36 +41,50 @@ const Established: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<div className={styles.establishedWrapper}>
-			{/* Heading at front */}
-			<p className={`${styles.heading} ${styles.backHeading} font-weight-700`}>
-				ESTABLISHED IN 2003
-			</p>
-			<div className={styles.sliderWrapper}>
-				{/* Heading at back */}
-				<p className={`${styles.heading} ${styles.frontHeading} font-weight-700`}>
+		<section className="section-spacing">
+			<div className={styles.establishedWrapper}>
+				{/* Heading at front */}
+				<p className={`${styles.heading} ${styles.backHeading} font-weight-700`}>
 					ESTABLISHED IN 2003
 				</p>
-				{/* Images Silder */}
-				<Slider {...settings} className={styles.slider}>
-					<div>
-						<div className={styles.imageWrapper}>
-							<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />
+				<div className={styles.sliderWrapper}>
+					{/* Heading at back */}
+					<p className={`${styles.heading} ${styles.frontHeading} font-weight-700`}>
+						ESTABLISHED IN 2003
+					</p>
+					{/* Images Silder */}
+					<Slider {...settings} className={styles.slider}>
+						<div>
+							<div className={styles.imageWrapper}>
+								<Image
+									src={SkorostImage}
+									alt="skorost"
+									className={"img-responsive full-width-img"}
+								/>
+							</div>
 						</div>
-					</div>
-					<div>
-						<div className={styles.imageWrapper}>
-							<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />
+						<div>
+							<div className={styles.imageWrapper}>
+								<Image
+									src={SkorostImage}
+									alt="skorost"
+									className={"img-responsive full-width-img"}
+								/>
+							</div>
 						</div>
-					</div>
-					<div>
-						<div className={styles.imageWrapper}>
-							<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />
+						<div>
+							<div className={styles.imageWrapper}>
+								<Image
+									src={SkorostImage}
+									alt="skorost"
+									className={"img-responsive full-width-img"}
+								/>
+							</div>
 						</div>
-					</div>
-				</Slider>
+					</Slider>
+				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
