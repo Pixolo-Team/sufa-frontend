@@ -30,7 +30,7 @@ const settings: Settings = {
 		},
 	],
 };
-
+// Graduates List data
 const graduatesList = [
 	{
 		description: "Graduated in 2003 and played in the India League for DK Pharma",
@@ -77,7 +77,7 @@ const Graduates: React.FC<unknown> = () => {
 				<Slider ref={sliderRef} {...settings} className={styles.slider}>
 					{graduatesList.map((graduate, graduateIndex) => (
 						<div key={graduateIndex}>
-							<div className={styles.cardWrap}>
+							<div className={`${styles.cardWrap} flex justify-center`}>
 								<div className={styles.cardWrapInner}>
 									<GraduatesCard
 										description={graduate.description}
