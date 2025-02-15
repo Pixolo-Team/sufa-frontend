@@ -15,8 +15,7 @@
 // Mobile Phones
 @media only screen and (min-width: 600px) {
 	.fadedText {
-		// Todo : Add tokens here
-		font-size: 60px;
+		font-size: 60px; // Todo: Add tokens here
 	}
 
 	.highlightedText {
@@ -38,8 +37,7 @@
 // Ipad air
 @media only screen and (min-width: 992px) {
 	.fadedText {
-		// Todo : Add tokens here
-		font-size: 70px;
+		font-size: 70px; // Todo: Add tokens here
 	}
 
 	.highlightedText {
@@ -49,4 +47,5 @@
 }
 
 // Small laptops
-@media only screen and (max-width: 1500px) {}
+@media only screen and (min-width: 1500px) {
+}
