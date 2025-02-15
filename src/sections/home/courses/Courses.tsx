@@ -9,6 +9,7 @@ import styles from "./courses.module.scss";
 import CoursesCard from "@/components/courses-card/CoursesCard";
 import SectionHeader from "@/components/section-header/SectionHeader";
 
+// IMAGES //
 import gdpImage from "@/../public/images/courses/gdp.jpg";
 import u11Image from "@/../public/images/courses/u-11.jpg";
 import u15Image from "@/../public/images/courses/u-15.jpg";
