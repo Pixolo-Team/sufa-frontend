@@ -20,7 +20,12 @@ const HomeScreen: React.FC<unknown> = () => {
 	return (
 		<div>
 			{/* Banner Section */}
-			<Banner />
+			<Banner
+				bannerTitle="Where Little Feet Dream Big!"
+				bannerDescription="At Skorost United Academy, we don’t just train players—we shape champions.
+					With every kick, every sprint, and every lesson, young athletes grow
+					stronger, smarter, and ready to take on the world."
+			/>
 
 			{/* Founders Message Section */}
 			<FoundersMessage />
