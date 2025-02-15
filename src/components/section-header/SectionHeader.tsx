@@ -27,7 +27,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 
 	// View starts here
 	return (
-		<div className={"container text-center"}>
+		<div className={"text-center"}>
 			{/* Faded text */}
 			{!!fadedText && (
 				<p className={`${styles.fadedText} font-weight-800`}>{fadedText}</p>
