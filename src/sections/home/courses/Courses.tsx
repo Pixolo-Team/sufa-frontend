@@ -32,11 +32,11 @@ const Courses: React.FC<unknown> = () => {
 			<div className="container">
 				{/* Section header component */}
 				<SectionHeader fadedText="Champions" highlightedText="Courses" />
-				<p className={`${styles.sectionDescription} font-weight-500`}>
+				<p className={`${styles.sectionDescription} text-center font-weight-500`}>
 					Designed for Excellence!
 				</p>
 				{/* Courses card components */}
-				<div className={`${styles.cardsWrapper} `}>
+				<div className={`${styles.cardsWrapper} flex flex-column`}>
 					<CoursesCard
 						wrapperClass={styles.cardItem}
 						courseImageSrc={gdpImage.src}
