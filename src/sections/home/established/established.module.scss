@@ -12,7 +12,6 @@
 		transform: translateY(-50%);
 	}
 
-
 	.backHeading {
 		-webkit-text-stroke: 2px var(--color-brand-neutral-dark-400);
 	}
@@ -35,8 +34,6 @@
 // Mobile Phones
 @media only screen and (min-width: 600px) {
 	.establishedWrapper {
-
-
 		.heading {
 			font-size: var(--color-brand-font-size-8xlarge);
 		}
@@ -46,9 +43,6 @@
 				width: 60vw;
 			}
 
-			.slider {
-				margin-top: -50px;
-			}
 		}
 	}
 }
@@ -59,12 +53,6 @@
 		.heading {
 			font-size: var(--color-brand-font-size-8xlarge);
 		}
-
-		.sliderWrapper {
-			.slider {
-				margin-top: -50px;
-			}
-		}
 	}
 }
 
@@ -74,8 +62,6 @@
 		.heading {
 			font-size: var(--color-brand-font-size-10xlarge);
 		}
-
-		.sliderWrapper {}
 	}
 }
 
