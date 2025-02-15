@@ -21,7 +21,7 @@
 
 .topMarquee {
 	top: 50%;
-	transform: translateY(-50%) rotate(-4deg); // Rotates slightly
+	transform: translateY(-50%) rotate(-6deg); // Rotates slightly
 	z-index: 2;
 	background-color: var(--color-brand-neutral-light-100);
 }
@@ -29,7 +29,7 @@
 .bottomMarquee {
 	background-color: var(--color-brand-primary-regular);
 	top: 50%;
-	transform: translateY(-50%) rotate(4deg); // Opposite rotation
+	transform: translateY(-50%) rotate(6deg); // Opposite rotation
 	z-index: 1;
 }
 
@@ -43,6 +43,19 @@
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
+	.topMarquee {
+		top: 50%;
+		transform: translateY(-50%) rotate(-4deg); // Rotates slightly
+		z-index: 2;
+		background-color: var(--color-brand-neutral-light-100);
+	}
+
+	.bottomMarquee {
+		background-color: var(--color-brand-primary-regular);
+		top: 50%;
+		transform: translateY(-50%) rotate(4deg); // Opposite rotation
+		z-index: 1;
+	}
 	.marqueeContainer {
 		height: 200px;
 	}
