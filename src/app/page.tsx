@@ -2,6 +2,10 @@
 // REACT //
 import React from "react";
 
+// STYLES //
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
 import ChildrenToChampions from "@/sections/home/children-to-champions/ChildrenToChampions";
@@ -32,41 +36,31 @@ const HomeScreen: React.FC<unknown> = () => {
 
 			{/* Established Section */}
 			<Established />
+
+			{/* Courses Section */}
+			<Courses />
+
+			{/* Children to champions Section */}
+			<ChildrenToChampions />
+
+			{/* Get free trial Section */}
+			<GetFreeTrial />
+
+			{/* Graduates Section */}
+			<Graduates />
+
+			{/* Coaches Section */}
+			<Coaches />
+
+			{/* Faq Section */}
+			<Faq />
+
+			{/* Join us Section */}
+			<JoinUs />
+
+			{/* Contact us Section */}
+			<ContactUs />
 		</div>
-		// <div>
-		// 	{/* Banner Section */}
-		// 	<Banner />
-
-		// 	{/* Founders Message Section */}
-		// 	<FoundersMessage />
-
-		// 	{/* Established Section */}
-		// 	<Established />
-
-		// 	{/* Courses Section */}
-		// 	<Courses />
-
-		// 	{/* Children to champions Section */}
-		// 	<ChildrenToChampions />
-
-		// 	{/* Get free trial Section */}
-		// 	<GetFreeTrial />
-
-		// 	{/* Graduates Section */}
-		// 	<Graduates />
-
-		// 	{/* Coaches Section */}
-		// 	<Coaches />
-
-		// 	{/* Faq Section */}
-		// 	<Faq />
-
-		// 	{/* Join us Section */}
-		// 	<JoinUs />
-
-		// 	{/* Contact us Section */}
-		// 	<ContactUs />
-		// </div>
 	);
 };
 export default HomeScreen;

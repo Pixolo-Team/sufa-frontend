@@ -5,8 +5,6 @@ import Slider, { Settings } from "react-slick";
 
 // STYLES //
 import styles from "./established.module.scss";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 // COMPONENTS //
 import Image from "next/image";
@@ -23,7 +21,7 @@ const settings: Settings = {
 	centerMode: true,
 	centerPadding: "0px",
 	slidesToScroll: 1,
-	autoplay: false,
+	autoplay: true,
 	autoplaySpeed: 3000,
 	arrows: false,
 	swipeToSlide: true,
@@ -45,12 +43,12 @@ const Established: React.FC<unknown> = () => {
 	return (
 		<div className={styles.establishedWrapper}>
 			{/* Heading at front */}
-			<p className={`${styles.frontHeading} font-weight-700`}>
+			<p className={`${styles.heading} ${styles.backHeading} font-weight-700`}>
 				ESTABLISHED IN 2003
 			</p>
 			<div className={styles.sliderWrapper}>
 				{/* Heading at back */}
-				<p className={`${styles.backHeading} font-weight-700`}>
+				<p className={`${styles.heading} ${styles.frontHeading} font-weight-700`}>
 					ESTABLISHED IN 2003
 				</p>
 				{/* Images Silder */}
