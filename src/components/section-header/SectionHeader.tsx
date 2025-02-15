@@ -11,14 +11,14 @@ import Image from "next/image";
 interface SectionHeaderProps {
 	fadedText?: string;
 	highlightedText: string;
-	image?: string;
+	leftImage?: string;
 }
 
 /** Section Header Component */
 const SectionHeader: React.FC<SectionHeaderProps> = ({
 	fadedText = "",
 	highlightedText = "",
-	image,
+	leftImage,
 }) => {
 	// Navigation and Route Params
 
@@ -36,14 +36,16 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 			className={`text-center flex align-center justify-center ${styles.wrapper}`}
 		>
 			{/* Image */}
-			{!!image && (
-				<Image
-					src={image}
-					alt="Section Header Image"
-					className={styles.image}
-					width={100}
-					height={100}
-				/>
+			{!!leftImage && (
+				<div className={styles.leftImageWrapper}>
+					<Image
+						src={leftImage}
+						alt="Section Header Image"
+						className={`${styles.image} img-responsive full-width-images`}
+						width={100}
+						height={100}
+					/>
+				</div>
 			)}
 			<div>
 				{/* Faded text */}

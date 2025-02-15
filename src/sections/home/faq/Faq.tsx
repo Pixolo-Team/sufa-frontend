@@ -9,7 +9,7 @@ import styles from "./faq.module.scss";
 import Accordian from "@/components/accordian/Accordian";
 import SectionHeader from "@/components/section-header/SectionHeader";
 
-const faqDummyData = [
+const faqList = [
 	{
 		question: "What age groups do you accept?",
 		answer:
@@ -28,7 +28,7 @@ const faqDummyData = [
 	{
 		question: "Are the coaches certified?",
 		answer:
-			"Yes, all our coaches are certified professionals with years of experience in training students.",
+			"Yes, all our coaches are certified professionals with years of experience in training students.Yes, all our coaches are certified professionals with years of experience in training studentsYes, all our coaches are certified professionals with years of experience in training studentsYes, all our coaches are certified professionals with years of experience in training studentsYes, all our coaches are certified professionals with years of experience in training studentsYes, all our coaches are certified professionals with years of experience in training studentsYes, all our coaches are certified professionals with years of experience in training studentsYes, all our coaches are certified professionals with years of experience in training studentsYes, all our coaches are certified professionals with years of experience in training studentsYes, all our coaches are certified professionals with years of experience in training studentsYes, all our coaches are certified professionals with years of experience in training students",
 	},
 ];
 
@@ -57,11 +57,11 @@ const Faq: React.FC<unknown> = () => {
 				<SectionHeader
 					fadedText="Faq`s"
 					highlightedText="All the A’s to your Q’s"
-					image={"/images/squirrel.png"}
+					leftImage={"/images/squirrel.png"}
 				/>
 				{/* Accordian Items */}
 				<div className={styles.content}>
-					{faqDummyData.map((faqItem, faqItemIndex) => (
+					{faqList.map((faqItem, faqItemIndex) => (
 						<div key={faqItemIndex} className={styles.accordianItem}>
 							<Accordian
 								title={faqItem.question}
