@@ -1,16 +1,90 @@
+.accordianItem {
+	padding: var(--padding-medium) var(--padding-large);
+	border-radius: 16px;
+	background-color: var(--color-brand-neutral-light-200);
 
-// Small laptops
-@media only screen and (max-width: 1500px) {
-}
+	&.active {
+		background-color: var(--color-brand-primary-deep);
 
-// Ipad air
-@media only screen and (max-width: 992px) {
-}
+		.questionWrapper {
+			.title {
+				color: var(--color-brand-primary-contrast);
+			}
 
-// Ipad Mini
-@media only screen and (max-width: 768px) {
+			.iconWrapper {
+				background-color: var(--color-brand-primary-contrast);
+
+				.icon {
+					color: var(--color-brand-primary-deep);
+				}
+			}
+		}
+
+		.answerWrapper {
+			max-width: 90%;
+
+			.description {
+				color: var(--color-brand-neutral-light-200);
+			}
+		}
+	}
+
+	.questionWrapper {
+		gap: var(--gap-xlarge);
+		cursor: pointer;
+
+		.title {
+			font-size: var(--color-brand-font-size-small);
+		}
+
+		.iconWrapper {
+			background-color: var(--color-brand-primary-deep);
+			padding: var(--padding-small);
+			border-radius: 100%;
+
+			.icon {
+				color: var(--color-brand-primary-contrast);
+				width: 12px;
+				height: 12px;
+			}
+		}
+	}
+
+	.answerWrapper {
+		margin-top: var(--margin-regular);
+
+		.description {
+			font-size: var(--color-brand-font-size-2xsmall);
+			line-height: 16px;
+		}
+	}
 }
 
 // Mobile Phones
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {}
+
+// Ipad air
+@media only screen and (min-width: 768px) {
+	.accordianItem {
+		padding: var(--padding-xlarge) var(--padding-xxlarge);
+
+		.questionWrapper {
+			.title {
+				font-size: var(--color-brand-font-size-medium);
+			}
+		}
+
+		.answerWrapper {
+			.description {
+				font-size: var(--color-brand-font-size-small);
+				line-height: 20px;
+			}
+		}
+	}
 }
+
+// Ipad Mini
+@media only screen and (min-width: 992px) {}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {}

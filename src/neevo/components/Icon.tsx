@@ -14,6 +14,7 @@ import InfoFilled from "@/../public/icons/filled/info.svg";
 import LogoutFilled from "@/../public/icons/filled/logout.svg";
 import MailOpenFilled from "@/../public/icons/filled/mail-open.svg";
 import MoreOptionsFilled from "@/../public/icons/filled/more-options.svg";
+import PlusFilled from "@/../public/icons/filled/plus.svg";
 import RightArrowFilled from "@/../public/icons/filled/right-arrow.svg";
 import SearchFilled from "@/../public/icons/filled/search.svg";
 import LinkArrowFilled from "@/../public/icons/filled/link-arrow.svg";
@@ -27,6 +28,8 @@ import DeleteFilled from "@/../public/icons/filled/delete.svg";
 import NotFoundFilled from "@/../public/icons/filled/404.svg";
 import BadRequestFilled from "@/../public/icons/filled/400.svg";
 import InternalServerErrorFilled from "@/../public/icons/filled/500.svg";
+import QuoteFilled from "@/../public/icons/filled/quote.svg";
+
 import ArrowOutline from "@/../public/icons/outline/arrow.svg";
 import BoxMenuOutline from "@/../public/icons/outline/box-menu.svg";
 import CloseOutline from "@/../public/icons/outline/close.svg";
@@ -52,6 +55,8 @@ import PdfOutline from "@/../public/icons/outline/pdf.svg";
 import UploadTrayOutline from "@/../public/icons/outline/upload-tray.svg";
 import InvisibleOutline from "@/../public/icons/outline/invisible.svg";
 import DeleteOutline from "@/../public/icons/outline/delete.svg";
+import PlusOutline from "@/../public/icons/outline/plus.svg";
+import MinusOutline from "@/../public/icons/outline/minus.svg";
 import InstagramOutline from "@/../public/icons/outline/instagram.svg";
 
 //TODO : Add SearchOptionFilled
@@ -76,6 +81,7 @@ const filled: {
 	"link-arrow": LinkArrowFilled,
 	"mail-open": MailOpenFilled,
 	"more-options": MoreOptionsFilled,
+	plus: PlusFilled,
 	"right-arrow": RightArrowFilled,
 	search: SearchFilled,
 	"user-circle": UserCircleFilled,
@@ -88,6 +94,7 @@ const filled: {
 	"not-found": NotFoundFilled,
 	"bad-request": BadRequestFilled,
 	"internal-server-error": InternalServerErrorFilled,
+	quote: QuoteFilled,
 };
 
 const outline: {
@@ -108,6 +115,7 @@ const outline: {
 	logout: LogoutOutline,
 	"mail-open": MailOpenOutline,
 	"more-options": MoreOptionsOutline,
+	plus: PlusOutline,
 	"right-arrow": RightArrowOutline,
 	search: SearchOutline,
 	"search-option": SearchOptionOutline,
@@ -119,6 +127,7 @@ const outline: {
 	invisible: InvisibleOutline,
 	delete: DeleteOutline,
 	instagram: InstagramOutline,
+	minus: MinusOutline,
 };
 
 const iconMap: {
