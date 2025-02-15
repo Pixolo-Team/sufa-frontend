@@ -42,7 +42,7 @@ const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
 					<source media="(min-width: 768px)" srcSet="/images/banner-desktop.jpg" />
 					<source media="(min-width: 600px)" srcSet="/images/banner-mobile.jpg" />
 					<img
-						src="/images/banner.png"
+						src="/images/banner-mobile.jpg"
 						alt="Group Banner"
 						className={styles.groupBannerImage}
 					/>
