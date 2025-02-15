@@ -49,7 +49,9 @@ const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
 				</picture>
 			</div>
 			{/* Content Wrapper */}
-			<div className={`${styles.textContent} flex align-center justify-center`}>
+			<div
+				className={`${styles.textContent} flex align-center justify-center flex-column`}
+			>
 				{/* Banner title */}
 				<p className={`${styles.bannerTitle} font-weight-700`}>{bannerTitle}</p>
 				{/* Banner description */}
