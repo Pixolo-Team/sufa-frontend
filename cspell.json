@@ -12,7 +12,8 @@
 		"searchbar",
 		"xsmall",
 		"xlarge",
-		"xxlarge"
+		"xxlarge",
+		"skorost"
 	],
 	"ignoreWords": [],
 	"import": []
