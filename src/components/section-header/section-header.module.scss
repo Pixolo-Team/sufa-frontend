@@ -1,3 +1,7 @@
+.wrapper {
+	gap: 0;
+}
+
 .fadedText {
 	color: var(--color-brand-primary-deep);
 	font-size: var(--color-brand-font-size-7xlarge);
@@ -8,8 +12,12 @@
 
 .highlightedText {
 	color: var(--color-brand-primary-deep);
-	font-size: var(--color-brand-font-size-3xlarge);
+	font-size: var(--color-brand-font-size-large);
 	margin-top: -36px;
+}
+
+.leftImageWrapper {
+	width: 60px;
 }
 
 // Mobile Phones
@@ -36,6 +44,10 @@
 
 // Ipad air
 @media only screen and (min-width: 992px) {
+	.wrapper {
+		gap: 20px;
+	}
+
 	.fadedText {
 		font-size: 70px; // Todo: Add tokens here
 	}
@@ -44,8 +56,11 @@
 		font-size: var(--color-brand-font-size-8xlarge);
 		margin-top: -50px;
 	}
+
+	.leftImageWrapper {
+		width: 100px;
+	}
 }
 
 // Small laptops
-@media only screen and (min-width: 1500px) {
-}
+@media only screen and (min-width: 1500px) {}
