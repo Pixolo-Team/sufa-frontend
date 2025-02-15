@@ -147,6 +147,44 @@ textarea {
 	border-radius: var(--border-radius-small);
 }
 
+.left-container-padding {
+	padding-left: calc((100vw - var(--width-container-xlarge)) / 2);
+	// Extra Large desktops
+	@media screen and (min-width: 1501px) {
+		padding-left: calc((100vw - var(--width-container-xxlarge)) / 2);
+	}
+
+	// Desktops
+	@media (max-width: 1500px) and (min-width: 1201px) {
+		padding-left: calc((100vw - var(--width-container-xlarge)) / 2);
+	}
+
+	// Laptops
+	@media (max-width: 1200px) and (min-width: 993px) {
+		padding-left: calc((100vw - var(--width-container-large)) / 2);
+	}
+
+	// Tablets
+	@media (max-width: 992px) and (min-width: 768px) {
+		padding-left: calc((100vw - var(--width-container-medium)) / 2);
+	}
+
+	// Large mobiles
+	@media (max-width: 767px) and (min-width: 601px) {
+		padding-left: calc((100vw - var(--width-container-small)) / 2);
+	}
+
+	// Medium mobiles
+	@media (max-width: 600px) and (min-width: 381px) {
+		padding-left: calc((100vw - var(--width-container-xsmall)) / 2);
+	}
+
+	// Small mobiles
+	@media screen and (max-width: 380px) {
+		padding-left: calc((100vw - var(--width-container-xxsmall)) / 2);
+	}
+}
+
 .img-responsive {
 	display: block;
 	max-width: 100%;
