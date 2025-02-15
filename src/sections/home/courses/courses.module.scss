@@ -1,12 +1,9 @@
 .sectionDescription {
 	font-size: var(--color-brand-font-size-xlarge);
-	text-align: center;
 }
 .cardsWrapper {
-	margin-top: 40px;
-	display: flex;
-	flex-direction: column;
-	gap: 32px;
+	margin-top: 50px;
+	gap: 32px; //TODO: Add token
 }
 
 // Mobile Phones
