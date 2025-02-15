@@ -52,7 +52,7 @@ const JoinUs: React.FC<unknown> = () => {
 					your journey towards excellence!
 				</p>
 				{/* Description */}
-				<p className={`${styles.description} font-weight-400`}>
+				<p className={`${styles.description}`}>
 					Click below and register for a free trial session and become a part of our
 					community.
 				</p>
