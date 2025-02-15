@@ -33,9 +33,11 @@ const ChildrenChampion: React.FC<ChildrenChampionProps> = ({
 				color === "primary" ? styles.primaryClass : ""
 			}`}
 		>
+			{/* Title */}
 			<p className={`${styles.title} font-weight-700`}>
-				FROM CHILDREN TO CHAMPIONS
+				From Children to Champions
 			</p>
+			{/* Icon */}
 			<div>
 				<Icon iconName={"cute"} className={styles.icon} mode="filled" />
 			</div>

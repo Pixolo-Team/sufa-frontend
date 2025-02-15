@@ -1,37 +1,56 @@
 .contentWrapper {
-	gap: 12px;
-	padding: 10px;
+	gap: var(--gap-medium);
+	padding: var(--padding-regular);
 	.title {
-		font-size: 60px;
+		font-size: var(--color-brand-font-size-medium);
+		text-transform: uppercase;
 	}
 	.icon {
-		width: 80px;
-		height: 80px;
-		color: green;
+		width: 24px;
+		height: 24px;
+		color: var(--color-brand-primary-regular);
 	}
 }
 .primaryClass {
 	color: var(--color-brand-primary-contrast);
+	.icon {
+		color: var(--color-brand-primary-contrast);
+	}
 }
-// Small laptops
-@media only screen and (max-width: 1500px) {
-}
-
-// Ipad air
-@media only screen and (max-width: 992px) {
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
 	.contentWrapper {
-		gap: 32px;
-		padding: 24px;
+		gap: var(--gap-xxlarge);
+		padding: var(--padding-medium);
 		.title {
-			font-size: 18px;
+			font-size: var(--color-brand-font-size-5xlarge);
+		}
+		.icon {
+			width: 40px;
+			height: 40px;
 		}
 	}
 }
 
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+// Ipad air
+@media only screen and (min-width: 992px) {
+	.contentWrapper {
+		gap: 32px;
+		padding: var(--padding-xxlarge);
+		.title {
+			font-size: 60px; //TODO:: Add token
+		}
+		.icon {
+			width: 80px;
+			height: 80px;
+		}
+	}
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }

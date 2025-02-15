@@ -8,7 +8,7 @@
 .marqueeContainer {
 	position: relative;
 	width: 100%;
-	height: 200px;
+	height: 100px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -17,8 +17,6 @@
 .marquee {
 	position: absolute;
 	width: 100%;
-	display: flex;
-	justify-content: center;
 }
 
 .topMarquee {
@@ -38,18 +36,22 @@
 .marqueeItem {
 	padding: 10px;
 }
-// Small laptops
-@media only screen and (max-width: 1500px) {
-}
 
-// Ipad air
-@media only screen and (max-width: 992px) {
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
+	.marqueeContainer {
+		height: 200px;
+	}
 }
 
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }

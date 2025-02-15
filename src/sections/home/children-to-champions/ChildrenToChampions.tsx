@@ -29,7 +29,9 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 				{/* Marquee Wrapper */}
 				<div className={styles.marqueeContainer}>
 					{/* Top Marquee */}
-					<div className={`${styles.marquee} ${styles.topMarquee}`}>
+					<div
+						className={`${styles.marquee} ${styles.topMarquee} flex  justify-center`}
+					>
 						<Marquee direction="left">
 							<div className={styles.marqueeItem}>
 								<ChildrenChampion color="default" />
