@@ -1,7 +1,7 @@
 "use client";
 // REACT //
 import React from "react";
-import Slider from "react-slick";
+import Slider, { Settings } from "react-slick";
 
 // STYLES //
 import styles from "./established.module.scss";
@@ -14,22 +14,23 @@ import Image from "next/image";
 // IMAGES //
 import SkorostImage from "@/../public/images/skorost.jpg";
 
+// Slider settings
+const settings: Settings = {
+	dots: false,
+	infinite: true,
+	speed: 500,
+	variableWidth: true,
+	centerMode: true,
+	centerPadding: "0px",
+	slidesToScroll: 1,
+	autoplay: false,
+	autoplaySpeed: 3000,
+	arrows: false,
+	swipeToSlide: true,
+};
+
 /** Established Screen */
 const Established: React.FC<unknown> = () => {
-	// Slider settings
-	const settings = {
-		dots: false,
-		infinite: true,
-		speed: 500,
-		variableWidth: true,
-		centerMode: true,
-		centerPadding: "0px",
-		slidesToScroll: 1,
-		autoplay: true,
-		autoplaySpeed: 3000,
-		arrows: false,
-		swipeToSlide: true,
-	};
 	// Navigation and Route Params
 
 	// Define States
@@ -43,24 +44,34 @@ const Established: React.FC<unknown> = () => {
 	// View starts here
 	return (
 		<div className={styles.establishedWrapper}>
-			<p className={`${styles.heading} font-weight-700`}>ESTABLISHED IN 2003</p>
-			<Slider {...settings} className={styles.slider}>
-				<div>
-					<div className={styles.imageWrapper}>
-						<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />
+			{/* Heading at front */}
+			<p className={`${styles.frontHeading} font-weight-700`}>
+				ESTABLISHED IN 2003
+			</p>
+			<div className={styles.sliderWrapper}>
+				{/* Heading at back */}
+				<p className={`${styles.backHeading} font-weight-700`}>
+					ESTABLISHED IN 2003
+				</p>
+				{/* Images Silder */}
+				<Slider {...settings} className={styles.slider}>
+					<div>
+						<div className={styles.imageWrapper}>
+							<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />
+						</div>
 					</div>
-				</div>
-				<div>
-					<div className={styles.imageWrapper}>
-						<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />
+					<div>
+						<div className={styles.imageWrapper}>
+							<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />
+						</div>
 					</div>
-				</div>
-				<div>
-					<div className={styles.imageWrapper}>
-						<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />
+					<div>
+						<div className={styles.imageWrapper}>
+							<Image src={SkorostImage} alt="skorost" className={"img-responsive"} />
+						</div>
 					</div>
-				</div>
-			</Slider>
+				</Slider>
+			</div>
 		</div>
 	);
 };
