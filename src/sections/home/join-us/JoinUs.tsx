@@ -38,17 +38,17 @@ const JoinUs: React.FC<unknown> = () => {
 			<div className={styles.imageWrapper}>
 				<Image src={JoinUsImage} alt="cta" className={styles.image} />
 			</div>
-			<div className={`${styles.contentWrapper} container text-center`}>
+			<div className={`${styles.contentWrapper} text-center`}>
 				{/* Title */}
 				<p className={`${styles.title} font-weight-500`}>
 					Join the Academy today and start{" "}
-					<div className={styles.inlineImageWrapper}>
+					<span className={styles.inlineImageWrapper}>
 						<Image
 							src={FootballImage}
 							alt="football"
 							className={styles.inlineImage}
 						/>
-					</div>{" "}
+					</span>{" "}
 					your journey towards excellence!
 				</p>
 				{/* Description */}
