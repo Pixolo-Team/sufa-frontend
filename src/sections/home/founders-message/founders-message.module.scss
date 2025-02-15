@@ -1,6 +1,5 @@
 .contentWrapper {
 	width: 100%;
-	margin: 0 34px;
 	overflow: hidden;
 	gap: 60px;
 }
@@ -23,7 +22,7 @@
 	color: var(--color-brand-primary-deep);
 	font-size: var(--color-brand-font-size-regular);
 }
-.founderImage {
+.imageWrapper {
 	display: none;
 }
 .doubleQuotes {
@@ -45,18 +44,26 @@
 
 // Ipad air
 @media only screen and (min-width: 992px) {
-}
-
-// Small laptops
-@media only screen and (min-width: 1500px) {
-	.founderImage {
-		display: block;
-	}
 	.doubleQuotes {
 		justify-content: flex-start;
 	}
 	.imageWrapper {
+		display: block;
 		width: 500px;
 		height: 500px;
+	}
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
+}
+
+// Custom
+@media only screen and (max-width: 991px) {
+	.messageWrapper {
+		:global(.left-container-padding) {
+			padding-left: 5%;
+			padding-right: 5%;
+		}
 	}
 }
