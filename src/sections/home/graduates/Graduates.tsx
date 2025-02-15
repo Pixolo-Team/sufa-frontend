@@ -19,15 +19,11 @@ const settings: Settings = {
 	speed: 500,
 	slidesToShow: 3,
 	slidesToScroll: 1,
-	autoplay: false,
+	autoplay: true,
 	autoplaySpeed: 3000,
 	variableWidth: true,
 	centerMode: true,
 	responsive: [
-		{
-			breakpoint: 992, // iPad Air
-			settings: { slidesToShow: 2 },
-		},
 		{
 			breakpoint: 600,
 			settings: { slidesToShow: 1, variableWidth: false },
