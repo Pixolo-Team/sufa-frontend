@@ -42,7 +42,13 @@ const JoinUs: React.FC<unknown> = () => {
 				{/* Title */}
 				<p className={`${styles.title} font-weight-500`}>
 					Join the Academy today and start{" "}
-					<Image src={FootballImage} alt="football" className={styles.inlineImage} />
+					<div className={styles.inlineImageWrapper}>
+						<Image
+							src={FootballImage}
+							alt="football"
+							className={styles.inlineImage}
+						/>
+					</div>{" "}
 					your journey towards excellence!
 				</p>
 				{/* Description */}
