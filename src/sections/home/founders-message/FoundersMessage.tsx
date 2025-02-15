@@ -29,7 +29,7 @@ const FoundersMessage: React.FC<unknown> = () => {
 	// View starts here
 	return (
 		<section className="section-spacing">
-			<div className={`${styles.contentWrapper} flex justify-center align-center`}>
+			<div className={`${styles.contentWrapper}`}>
 				<div className={styles.messageWrapper}>
 					<div className="left-container-padding">
 						{/* Quotes svg */}
