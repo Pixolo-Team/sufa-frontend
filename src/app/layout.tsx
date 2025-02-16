@@ -13,6 +13,7 @@ import localFont from "next/font/local";
 import { Montserrat } from "next/font/google";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import { AppProvider } from "@/contexts/App.context";
 
 // FONTS //
 const kippaxModern = localFont({
@@ -73,19 +74,21 @@ export default function RootLayout({
 		>
 			<body className={`${kippaxModern.variable} ${secondaryFont.variable}`}>
 				<Suspense fallback={<div>Loading...</div>}>
-					<ThemeProvider
-						enableSystem={true}
-						defaultTheme={Themes.LIGHT}
-						attribute="class"
-						storageKey="theme"
-					>
-						{/* Header component */}
-						<Header />
-						{/* Main content */}
-						<main className="main">{children}</main>
-						{/* Footer component */}
-						<Footer />
-					</ThemeProvider>
+					<AppProvider>
+						<ThemeProvider
+							enableSystem={true}
+							defaultTheme={Themes.LIGHT}
+							attribute="class"
+							storageKey="theme"
+						>
+							{/* Header component */}
+							<Header />
+							{/* Main content */}
+							<main className="main">{children}</main>
+							{/* Footer component */}
+							<Footer />
+						</ThemeProvider>
+					</AppProvider>
 				</Suspense>
 			</body>
 		</html>
