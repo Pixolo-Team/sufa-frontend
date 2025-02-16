@@ -83,7 +83,6 @@ export default function RootLayout({
 						>
 							{/* Header component */}
 							<Header />
-							
 							{/* Main content */}
 							<main className="main">{children}</main>
 
