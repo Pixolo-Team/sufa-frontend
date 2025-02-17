@@ -1,34 +1,50 @@
-// Remove this while actual development
-// This is just for testing
-%dummyHeaderStyles {
-	padding: 10px;
-	background-color: white;
-	position: fixed;
-	top: 10px;
-	width: 90%;
-	left: 5%;
-	z-index: 100;
-	text-align: center;
-	border-radius: 5px;
-	box-shadow: 0px 0px 15px -20px #333;
-}
-
 .headerWrap {
-	@extend %dummyHeaderStyles;
+	padding: 16px 28px;
+	background-color: var(--color-background-light-tint);
+	position: fixed;
+	top: 24px;
+	width: 80%;
+	left: 10%;
+	z-index: 100;
+	border-radius: var(--border-radius-large);
+	p {
+		font-size: var(--color-brand-font-size-medium);
+	}
+	.titleWrapper {
+		gap: 40px;
+		display: none;
+	}
+	.hamburgerMenu {
+		display: block;
+	}
+	.dropdownWrapper {
+		display: flex;
+		margin-top: var(--margin-xxlarge);
+		gap: var(--gap-xxlarge);
+	}
 }
-
-// Small laptops
-@media only screen and (max-width: 1500px) {
-}
-
-// Ipad air
-@media only screen and (max-width: 992px) {
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
+	.headerWrap {
+		padding: var(--padding-large) 70px;
+		.titleWrapper {
+			display: flex;
+		}
+		.hamburgerMenu,
+		.dropdownWrapper {
+			display: none;
+		}
+	}
 }
 
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }
