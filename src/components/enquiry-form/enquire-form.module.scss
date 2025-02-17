@@ -1,0 +1,30 @@
+.inputBoxWrapper {
+    margin-bottom: var(--margin-xxlarge);
+    flex-direction: column;
+    gap: 24px;
+}
+
+.inputBox {
+    width: 100%;
+}
+
+
+// Mobile Phones
+@media only screen and (min-width: 600px) {}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+    .inputBoxWrapper {
+        flex-direction: row;
+    }
+
+    .inputBox {
+        width: 50%;
+    }
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {}

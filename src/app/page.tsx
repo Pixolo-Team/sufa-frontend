@@ -1,10 +1,17 @@
 "use client";
 // REACT //
-import React from "react";
+import React, { useState } from "react";
+
+// ENUMS //
+import { Sizes } from "@/neevo/enums/core.enum";
 
 // STYLES //
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+// COMPONENTS //
+import Popup from "@/neevo/components/popup/Popup";
+import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
 
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
@@ -21,6 +28,9 @@ import JoinUs from "@/sections/home/join-us/JoinUs";
 
 /** Home Screen */
 const HomeScreen: React.FC<unknown> = () => {
+	// Define states
+	const [showPopup, setShowPopup] = useState<boolean>(false);
+
 	return (
 		<div>
 			{/* Banner Section */}
@@ -30,36 +40,41 @@ const HomeScreen: React.FC<unknown> = () => {
 					With every kick, every sprint, and every lesson, young athletes grow
 					stronger, smarter, and ready to take on the world."
 			/>
-
 			{/* Founders Message Section */}
 			<FoundersMessage />
-
 			{/* Established Section */}
 			<Established />
-
 			{/* Courses Section */}
 			<Courses />
-
 			{/* Children to champions Section */}
 			<ChildrenToChampions />
-
 			{/* Get free trial Section */}
 			<GetFreeTrial />
-
 			{/* Graduates Section */}
 			<Graduates />
-
 			{/* Coaches Section */}
 			<Coaches />
-
 			{/* Faq Section */}
 			<Faq />
-
 			{/* Join us Section */}
 			<JoinUs />
-
 			{/* Contact us Section */}
-			<ContactUs />
+			<ContactUs onClick={() => setShowPopup(true)} />
+
+			{/* COntact Us popup */}
+			{showPopup && (
+				<Popup
+					onCloseClick={() => {
+						setShowPopup(false);
+					}}
+					onOverlayClick={() => {
+						setShowPopup(false);
+					}}
+					size={Sizes.SMALL}
+				>
+					<EnquiryForm />
+				</Popup>
+			)}
 		</div>
 	);
 };
