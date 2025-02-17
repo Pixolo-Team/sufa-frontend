@@ -78,7 +78,7 @@ const Coaches: React.FC<unknown> = () => {
 			{/* Section Header */}
 			<SectionHeader fadedText="Guruji" highlightedText="Our Coaches" />
 			{/* Coaches slider */}
-			<div className={`${styles.coachesWrapper} container`}>
+			<div className={`${styles.coachesWrapper} container fade-in-up`}>
 				<Slider ref={sliderRef} {...settings} className={styles.slider}>
 					{coachesData.map((coach, coachIndex) => (
 						<div key={coachIndex}>
