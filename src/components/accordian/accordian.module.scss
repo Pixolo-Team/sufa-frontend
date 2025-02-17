@@ -21,9 +21,10 @@
 		}
 
 		.answerWrapper {
+			max-width: 90%;
+
 			.description {
 				color: var(--color-brand-neutral-light-200);
-
 			}
 		}
 	}
@@ -65,6 +66,8 @@
 // Ipad air
 @media only screen and (min-width: 768px) {
 	.accordianItem {
+		padding: var(--padding-xlarge) var(--padding-xxlarge);
+
 		.questionWrapper {
 			.title {
 				font-size: var(--color-brand-font-size-medium);
@@ -77,7 +80,6 @@
 				line-height: 20px;
 			}
 		}
-
 	}
 }
 

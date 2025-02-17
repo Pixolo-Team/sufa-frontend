@@ -29,6 +29,8 @@ import DeleteFilled from "@/../public/icons/filled/delete.svg";
 import NotFoundFilled from "@/../public/icons/filled/404.svg";
 import BadRequestFilled from "@/../public/icons/filled/400.svg";
 import InternalServerErrorFilled from "@/../public/icons/filled/500.svg";
+import QuoteFilled from "@/../public/icons/filled/quote.svg";
+
 import ArrowOutline from "@/../public/icons/outline/arrow.svg";
 import BoxMenuOutline from "@/../public/icons/outline/box-menu.svg";
 import CloseOutline from "@/../public/icons/outline/close.svg";
@@ -94,6 +96,7 @@ const filled: {
 	"not-found": NotFoundFilled,
 	"bad-request": BadRequestFilled,
 	"internal-server-error": InternalServerErrorFilled,
+	quote: QuoteFilled,
 };
 
 const outline: {

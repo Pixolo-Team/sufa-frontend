@@ -1,16 +1,69 @@
+.establishedWrapper {
+	position: relative;
 
-// Small laptops
-@media only screen and (max-width: 1500px) {
-}
+	.heading {
+		font-size: var(--color-brand-font-size-5xlarge);
+		color: transparent;
+		text-align: center;
+		text-transform: uppercase;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		transform: translateY(-50%);
+	}
 
-// Ipad air
-@media only screen and (max-width: 992px) {
-}
+	.backHeading {
+		-webkit-text-stroke: 2px var(--color-brand-neutral-dark-400);
+	}
 
-// Ipad Mini
-@media only screen and (max-width: 768px) {
+	.sliderWrapper {
+		overflow: hidden;
+		position: relative;
+
+		.frontHeading {
+			-webkit-text-stroke: 2px white;
+			z-index: 2;
+		}
+
+		.imageWrapper {
+			width: 100vw;
+		}
+	}
 }
 
 // Mobile Phones
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
+	.establishedWrapper {
+		.heading {
+			font-size: var(--color-brand-font-size-8xlarge);
+		}
+
+		.sliderWrapper {
+			.imageWrapper {
+				width: 60vw;
+			}
+
+		}
+	}
 }
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+	.establishedWrapper {
+		.heading {
+			font-size: var(--color-brand-font-size-8xlarge);
+		}
+	}
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+	.establishedWrapper {
+		.heading {
+			font-size: var(--color-brand-font-size-10xlarge);
+		}
+	}
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {}

@@ -28,7 +28,11 @@ const Footer: React.FC<unknown> = () => {
 	// UseEffect Functions and UseFocusEffect Functions
 
 	// View starts here
-	return <div>Hello Footer</div>;
+	return (
+		<footer className="section-spacing text-center bg-primary-deep">
+			Hello Footer
+		</footer>
+	);
 };
 
 export default Footer;
