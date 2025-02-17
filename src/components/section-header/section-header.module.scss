@@ -1,11 +1,5 @@
 .wrapper {
 	gap: 0;
-	&:global(.section-header-parallax) {
-		.highlightedText {
-			transform: translateY(calc(var(--viewport-y) * -50px));
-			will-change: transform;
-		}
-	}
 }
 
 .fadedText {

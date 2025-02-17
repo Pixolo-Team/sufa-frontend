@@ -32,11 +32,13 @@ const Courses: React.FC<unknown> = () => {
 			<div className="container">
 				{/* Section header component */}
 				<SectionHeader fadedText="Champions" highlightedText="Courses" />
-				<p className={`${styles.sectionDescription} text-center font-weight-500`}>
+				<p
+					className={`${styles.sectionDescription} text-center font-weight-500 fade-in-up`}
+				>
 					Designed for Excellence!
 				</p>
 				{/* Courses card components */}
-				<div className={`${styles.cardsWrapper} flex flex-column`}>
+				<div className={`${styles.cardsWrapper} flex flex-column fade-in-up`}>
 					<CoursesCard
 						wrapperClass={styles.cardItem}
 						courseImageSrc={gdpImage.src}

@@ -42,7 +42,7 @@ const Established: React.FC<unknown> = () => {
 	// View starts here
 	return (
 		<section className="section-spacing">
-			<div className={styles.establishedWrapper}>
+			<div className={`${styles.establishedWrapper} fade-in-up`}>
 				{/* Heading at front */}
 				<p className={`${styles.heading} ${styles.backHeading} font-weight-700`}>
 					ESTABLISHED IN 2003

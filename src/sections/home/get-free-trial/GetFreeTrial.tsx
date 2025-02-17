@@ -35,7 +35,7 @@ const GetFreeTrial: React.FC<unknown> = () => {
 				<div
 					className={`${styles.contentWrapper} flex justify-center align-center`}
 				>
-					<div className={styles.textWrapper}>
+					<div className={`${styles.textWrapper} fade-in-up`}>
 						{/* Heading */}
 						<p className={`${styles.heading} font-weight-700`}>Get a Free Trial</p>
 						{/* Sub heading */}
@@ -66,7 +66,7 @@ const GetFreeTrial: React.FC<unknown> = () => {
 						</div>
 					</div>
 					{/* Image */}
-					<div className={styles.imageWrapper}>
+					<div className={`${styles.imageWrapper} fade-in-up`}>
 						<Image
 							src={TigerImage}
 							alt="tiger"

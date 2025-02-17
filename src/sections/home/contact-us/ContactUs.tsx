@@ -38,14 +38,14 @@ const ContactUs: React.FC<unknown> = () => {
 				<div
 					className={`${styles.contactUsInner} flex justify-center align-center`}
 				>
-					<div className={styles.imageWrapper}>
+					<div className={`${styles.imageWrapper} fade-in-up`}>
 						<Image
 							src={FootballImage}
 							alt="ftb"
 							className="img-responsive full-width-img"
 						/>
 					</div>
-					<div className={styles.contentWrapper}>
+					<div className={`${styles.contentWrapper} fade-in-up`}>
 						{/* Title */}
 						<p className={`${styles.title} font-weight-700`}>
 							Still have any Question?
