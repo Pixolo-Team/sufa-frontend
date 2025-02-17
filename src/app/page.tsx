@@ -25,9 +25,12 @@ import JoinUs from "@/sections/home/join-us/JoinUs";
 /** Home Screen */
 const HomeScreen: React.FC<unknown> = () => {
 	useEffect(() => {
+		// Fade In Up animations
 		ScrollOut({
 			targets: ".fade-in-up",
+			once: true,
 		});
+		// Section Title parallax animations
 		ScrollOut({
 			targets: ".section-header-parallax",
 			cssProps: true,

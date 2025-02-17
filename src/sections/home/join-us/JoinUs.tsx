@@ -38,9 +38,9 @@ const JoinUs: React.FC<unknown> = () => {
 			<div className={styles.imageWrapper}>
 				<Image src={JoinUsImage} alt="cta" className={styles.image} />
 			</div>
-			<div className={`${styles.contentWrapper} text-center fade-in-up`}>
+			<div className={`${styles.contentWrapper} text-center `}>
 				{/* Title */}
-				<p className={`${styles.title} font-weight-500`}>
+				<p className={`${styles.title} font-weight-500 fade-in-up`}>
 					Join the Academy today and start{" "}
 					<span className={styles.inlineImageWrapper}>
 						<Image
@@ -52,21 +52,23 @@ const JoinUs: React.FC<unknown> = () => {
 					your journey towards excellence!
 				</p>
 				{/* Description */}
-				<p className={`${styles.description}`}>
+				<p className={`${styles.description} fade-in-up`}>
 					Click below and register for a free trial session and become a part of our
 					community.
 				</p>
 				{/* Button */}
-				<Button
-					text={"Book a Free Trial"}
-					color={Colors.SECONDARY}
-					size={ButtonSizes.XLARGE}
-					shape={Shapes.ROUNDED}
-					level={ButtonLevels.INLINE}
-					onClick={() => {
-						console.log("Button Clicked");
-					}}
-				/>
+				<div className="fade-in-up">
+					<Button
+						text={"Book a Free Trial"}
+						color={Colors.SECONDARY}
+						size={ButtonSizes.XLARGE}
+						shape={Shapes.ROUNDED}
+						level={ButtonLevels.INLINE}
+						onClick={() => {
+							console.log("Button Clicked");
+						}}
+					/>
+				</div>
 			</div>
 		</section>
 	);
