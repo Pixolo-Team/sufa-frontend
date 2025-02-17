@@ -7,7 +7,10 @@ import styles from "./header.module.scss";
 
 // SVG's //
 import SkorostLogo from "@/../public/images/skorost.svg";
-import HamburgerIcon from "@/../public/icons/hamburger.svg";
+import LineIcon from "@/../public/icons/line.svg";
+
+// Header items
+const headerTitlesList = ["Courses", "Contact Us"];
 
 /** Header Screen */
 const Header: React.FC<unknown> = () => {
@@ -30,26 +33,35 @@ const Header: React.FC<unknown> = () => {
 				<SkorostLogo />
 				{/* Titles */}
 				<div className={`${styles.titleWrapper} font-weight-500 justify-end`}>
-					<p>Courses</p>
-					<p>Contact US</p>
+					{headerTitlesList.map((title, titleIndex) => (
+						<p key={titleIndex} className={styles.title}>
+							{title}
+						</p>
+					))}
 				</div>
 				{/* Hamburger Menu */}
 				<div
-					className={styles.hamburgerMenu}
+					className={`${styles.hamburgerMenu} flex flex-column ${
+						isDropdownVisible ? styles.active : ""
+					}`}
 					onClick={() => setDropdownVisible((prev) => !prev)}
 				>
-					<HamburgerIcon />
+					<LineIcon className={styles.icon} />
+					<LineIcon className={styles.icon} />
 				</div>
 			</div>
 			{/* Menu Dropdown */}
-			{isDropdownVisible && (
-				<div
-					className={`${styles.dropdownWrapper} font-weight-500 align-start flex-column`}
-				>
-					<p>Courses</p>
-					<p>Contact US</p>
-				</div>
-			)}
+			<div
+				className={`font-weight-500  ${
+					isDropdownVisible ? styles.showDropdown : styles.hideDropdown
+				}`}
+			>
+				{headerTitlesList.map((title, index) => (
+					<p key={index} className={styles.title}>
+						{title}
+					</p>
+				))}
+			</div>
 		</header>
 	);
 };

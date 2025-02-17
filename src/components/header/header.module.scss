@@ -1,5 +1,5 @@
 .headerWrap {
-	padding: 16px 28px;
+	padding: var(--padding-large) 28px;
 	background-color: var(--color-background-light-tint);
 	position: fixed;
 	top: 24px;
@@ -7,7 +7,7 @@
 	left: 10%;
 	z-index: 100;
 	border-radius: var(--border-radius-large);
-	p {
+	.title {
 		font-size: var(--color-brand-font-size-medium);
 	}
 	.titleWrapper {
@@ -15,12 +15,36 @@
 		display: none;
 	}
 	.hamburgerMenu {
-		display: block;
+		gap: var(--gap-medium);
+		.icon {
+			transition: all 0.3s ease-in-out;
+		}
+
+		&.active {
+			.icon:first-child {
+				transform: translateY(7px) rotate(45deg);
+			}
+
+			.icon:nth-child(2) {
+				transform: translateY(-7px) rotate(-45deg);
+			}
+		}
 	}
-	.dropdownWrapper {
-		display: flex;
-		margin-top: var(--margin-xxlarge);
-		gap: var(--gap-xxlarge);
+	.showDropdown {
+		visibility: visible;
+		opacity: 1;
+		transition: all 0.2s ease-in-out;
+		.title {
+			padding: var(--padding-regular) 0;
+			display: block;
+		}
+	}
+	.hideDropdown {
+		visibility: hidden;
+		opacity: 0;
+		.title {
+			display: none;
+		}
 	}
 }
 // Mobile Phones
@@ -34,8 +58,10 @@
 		.titleWrapper {
 			display: flex;
 		}
-		.hamburgerMenu,
-		.dropdownWrapper {
+		.hamburgerMenu {
+			display: none;
+		}
+		.showDropdown {
 			display: none;
 		}
 	}
