@@ -3,17 +3,17 @@
 import React from "react";
 
 // STYLES //
-import styles from "./children-champion.module.scss";
+import styles from "./children-champion-item.module.scss";
 
 // COMPONENTS //
 import Icon from "@/neevo/components/Icon";
 
 interface ChildrenChampionProps {
-	color: "primary" | "default";
+	color?: "primary" | "default";
 }
 
 /** Children To Champions Component */
-const ChildrenChampion: React.FC<ChildrenChampionProps> = ({
+const ChildrenChampionItem: React.FC<ChildrenChampionProps> = ({
 	color = "default",
 }) => {
 	// Navigation and Route Params
@@ -45,4 +45,4 @@ const ChildrenChampion: React.FC<ChildrenChampionProps> = ({
 	);
 };
 
-export default ChildrenChampion;
+export default ChildrenChampionItem;

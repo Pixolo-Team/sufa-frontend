@@ -1,20 +1,15 @@
-.wrapper {
-	position: relative;
-	padding: 10vmin 0;
-}
-
-.marqueeContainer {
-	position: relative;
+.childrenToChampionsWrapper {
+	padding: 15vmin 0;
+	overflow: hidden;
 }
 
 .topMarquee {
-	transform: translateY(50%) rotate(5deg); // Rotates slightly
-	background-color: var(--color-brand-primary-regular);
+	transform: translateY(50%) rotate(5deg) scale(1.1); // Rotates slightly
 }
 
 .bottomMarquee {
 	background-color: var(--color-brand-neutral-light-100);
-	transform: translateY(-50%) rotate(-5deg); // Opposite rotation
+	transform: translateY(-50%) rotate(-5deg) scale(1.1); // Opposite rotation
 }
 
 .marqueeItem {
