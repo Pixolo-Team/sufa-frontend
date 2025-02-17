@@ -38,7 +38,7 @@ const JoinUs: React.FC<unknown> = () => {
 			<div className={styles.imageWrapper}>
 				<Image src={JoinUsImage} alt="cta" className={styles.image} />
 			</div>
-			<div className={`${styles.contentWrapper} text-center`}>
+			<div className={`${styles.contentWrapper} text-center fade-in-up`}>
 				{/* Title */}
 				<p className={`${styles.title} font-weight-500`}>
 					Join the Academy today and start{" "}
@@ -48,7 +48,7 @@ const JoinUs: React.FC<unknown> = () => {
 							alt="football"
 							className={styles.inlineImage}
 						/>
-					</span>{" "}
+					</span>
 					your journey towards excellence!
 				</p>
 				{/* Description */}
