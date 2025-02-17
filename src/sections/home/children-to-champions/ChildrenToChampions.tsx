@@ -25,16 +25,22 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 	// View starts here
 	return (
 		<section className="section-spacing">
-			<div className={`${styles.wrapper} flex align-center justify-center`}>
+			<div className={`${styles.wrapper} `}>
 				{/* Marquee Wrapper */}
-				<div className={styles.marqueeContainer}>
+				<div className={`${styles.marqueeContainer} `}>
 					{/* Top Marquee */}
 					<div
 						className={`${styles.marquee} ${styles.topMarquee} flex  justify-center`}
 					>
 						<Marquee direction="left">
 							<div className={styles.marqueeItem}>
-								<ChildrenChampion color="default" />
+								<ChildrenChampion color="primary" />
+							</div>
+							<div className={styles.marqueeItem}>
+								<ChildrenChampion color="primary" />
+							</div>
+							<div className={styles.marqueeItem}>
+								<ChildrenChampion color="primary" />
 							</div>
 						</Marquee>
 					</div>
@@ -43,7 +49,13 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 					<div className={`${styles.marquee} ${styles.bottomMarquee}`}>
 						<Marquee direction="right">
 							<div className={styles.marqueeItem}>
-								<ChildrenChampion color="primary" />
+								<ChildrenChampion color="default" />
+							</div>
+							<div className={styles.marqueeItem}>
+								<ChildrenChampion color="default" />
+							</div>
+							<div className={styles.marqueeItem}>
+								<ChildrenChampion color="default" />
 							</div>
 						</Marquee>
 					</div>

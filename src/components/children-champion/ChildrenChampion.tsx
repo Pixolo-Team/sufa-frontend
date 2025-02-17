@@ -30,7 +30,7 @@ const ChildrenChampion: React.FC<ChildrenChampionProps> = ({
 	return (
 		<div
 			className={`${styles.contentWrapper} flex align-center justify-center ${
-				color === "primary" ? styles.primaryClass : ""
+				color === "primary" ? styles.itemPrimary : ""
 			}`}
 		>
 			{/* Title */}
