@@ -31,10 +31,12 @@ const HomeScreen: React.FC<unknown> = () => {
 			once: true,
 		});
 		// Section Title parallax animations
-		ScrollOut({
-			targets: ".section-header-parallax",
-			cssProps: true,
-		});
+		// ScrollOut({
+		// 	targets: ".section-header-parallax",
+		// 	cssProps: {
+		// 		viewportY: true,
+		// 	},
+		// });
 	}, []);
 
 	return (
