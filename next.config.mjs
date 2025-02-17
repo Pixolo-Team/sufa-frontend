@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		domains: ["images.pexels.com"],
+		remotePatterns : [
+			{
+				hostname: 'images.pexels.com',
+			}
+		]
 	},
 	webpack(config) {
 		config.module.rules.push({
