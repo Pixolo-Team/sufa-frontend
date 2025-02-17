@@ -33,7 +33,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 	// View starts here
 	return (
 		<div
-			className={`section-header-parallax text-center flex align-center justify-center ${styles.wrapper}`}
+			className={`fade-in-up text-center flex align-center justify-center ${styles.wrapper}`}
 		>
 			{/* Image */}
 			{!!leftImage && (
