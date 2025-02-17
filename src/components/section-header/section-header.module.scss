@@ -1,5 +1,10 @@
 .wrapper {
 	gap: 0;
+	&:global(.section-header-parallax) {
+		.fadedText {
+			transform: translateY(calc(var(--viewport-y) * -50px));
+		}
+	}
 }
 
 .fadedText {
