@@ -13,6 +13,8 @@ import localFont from "next/font/local";
 import { Montserrat } from "next/font/google";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+
+// CONTEXTS //
 import { AppProvider } from "@/contexts/App.context";
 
 // FONTS //
@@ -83,7 +85,7 @@ export default function RootLayout({
 						>
 							{/* Header component */}
 							<Header />
-							
+
 							{/* Main content */}
 							<main className="main">{children}</main>
 

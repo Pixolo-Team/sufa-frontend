@@ -1,6 +1,6 @@
 "use client";
 // REACT //
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // ENUMS //
 import { Sizes } from "@/neevo/enums/core.enum";
@@ -12,6 +12,9 @@ import "slick-carousel/slick/slick-theme.css";
 // COMPONENTS //
 import Popup from "@/neevo/components/popup/Popup";
 import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
+
+// OTHERS //
+import ScrollOut from "scroll-out";
 
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
@@ -30,6 +33,20 @@ import JoinUs from "@/sections/home/join-us/JoinUs";
 const HomeScreen: React.FC<unknown> = () => {
 	// Define states
 	const [showPopup, setShowPopup] = useState<boolean>(false);
+
+	// Use Effects
+	useEffect(() => {
+		// Fade In Up animations
+		ScrollOut({
+			targets: ".fade-in-up",
+			once: true,
+		});
+		// Section Title parallax animations
+		ScrollOut({
+			targets: ".section-header-parallax",
+			cssProps: true,
+		});
+	}, []);
 
 	return (
 		<div>

@@ -39,35 +39,39 @@ const FoundersMessage: React.FC<unknown> = () => {
 						</div>
 						{/* Founder message */}
 						<ContentFromCms wrapperClassName={styles.founderContentStyles}>
-							<p>
+							<p className="fade-in-up">
 								At Skorost United Academy, every child who steps onto the field isn’t
 								just a player—we see them as the future of the game, and more
 								importantly, the future of life itself. This academy is built on
 								passion, discipline, and an unbreakable spirit—the same values that have
 								shaped my own journey in football.
 							</p>
-							<p>
+							<p className="fade-in-up">
 								We don’t just teach football; we build character. We create an
 								environment where young athletes grow into strong, confident
 								individuals—ready to take on challenges, both on and off the field.
 								Every drill, every match, every lesson is designed not just to make
 								better players, but to make better people.
 							</p>
-							<p>
+							<p className="fade-in-up">
 								Here, you’re not just joining an academy—you’re becoming part of a
 								legacy. Welcome to Skorost United. Let’s write history together.
 							</p>
 						</ContentFromCms>
 						{/* Founder sign */}
-						<Image src={FounderSign} alt="sign" />
+						<Image src={FounderSign} alt="sign" className="fade-in-up" />
 						{/* Founder Name */}
-						<p className={`${styles.founderName} font-weight-800`}>ABHAY AMIN</p>
+						<p className={`${styles.founderName} font-weight-800 fade-in-up`}>
+							ABHAY AMIN
+						</p>
 						{/* About */}
-						<p className={`${styles.designation} font-weight-700`}>FOUNDER & OWNER</p>
+						<p className={`${styles.designation} font-weight-700 fade-in-up`}>
+							FOUNDER & OWNER
+						</p>
 					</div>
 				</div>
 				{/* Founder Image */}
-				<div className={styles.imageWrapper}>
+				<div className={`${styles.imageWrapper} fade-in-up`}>
 					<Image
 						src={FounderImage}
 						alt="founder"

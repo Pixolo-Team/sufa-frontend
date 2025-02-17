@@ -42,20 +42,20 @@ const ContactUs: React.FC<ContactUsProps> = ({ onClick }) => {
 				<div
 					className={`${styles.contactUsInner} flex justify-center align-center`}
 				>
-					<div className={styles.imageWrapper}>
+					<div className={`${styles.imageWrapper} fade-in-up`}>
 						<Image
 							src={FootballImage}
 							alt="ftb"
 							className="img-responsive full-width-img"
 						/>
 					</div>
-					<div className={styles.contentWrapper}>
+					<div className={`${styles.contentWrapper} `}>
 						{/* Title */}
-						<p className={`${styles.title} font-weight-700`}>
+						<p className={`${styles.title} font-weight-700 fade-in-up`}>
 							Still have any Question?
 						</p>
 						{/* Button for small devices */}
-						<div className={"hide-on-desktop"}>
+						<div className={"hide-on-desktop fade-in-up"}>
 							<Button
 								text={"Contact Us"}
 								shape={Shapes.ROUNDED}
@@ -68,7 +68,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onClick }) => {
 							/>
 						</div>
 						{/* Button for large devices */}
-						<div className={"hide-on-mobile"}>
+						<div className={"hide-on-mobile fade-in-up"}>
 							<Button
 								text={"Contact Us"}
 								shape={Shapes.ROUNDED}
