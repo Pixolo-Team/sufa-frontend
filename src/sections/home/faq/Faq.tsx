@@ -62,7 +62,7 @@ const Faq: React.FC<unknown> = () => {
 				{/* Accordian Items */}
 				<div className={styles.content}>
 					{faqList.map((faqItem, faqItemIndex) => (
-						<div key={faqItemIndex} className={styles.accordianItem}>
+						<div key={faqItemIndex} className={`${styles.accordianItem} fade-in-up`}>
 							<Accordian
 								title={faqItem.question}
 								description={faqItem.answer}

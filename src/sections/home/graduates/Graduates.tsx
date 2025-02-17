@@ -73,7 +73,7 @@ const Graduates: React.FC<unknown> = () => {
 			{/* Section Header */}
 			<SectionHeader fadedText="Champs" highlightedText="Meet Our Graduates" />
 			{/* Graduate slider */}
-			<div className={`${styles.graduatesWrapper}`}>
+			<div className={`${styles.graduatesWrapper} fade-in-up`}>
 				<Slider ref={sliderRef} {...settings} className={styles.slider}>
 					{graduatesList.map((graduate, graduateIndex) => (
 						<div key={graduateIndex}>

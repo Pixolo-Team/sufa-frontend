@@ -35,15 +35,17 @@ const GetFreeTrial: React.FC<unknown> = () => {
 				<div
 					className={`${styles.contentWrapper} flex justify-center align-center`}
 				>
-					<div className={styles.textWrapper}>
+					<div className={`${styles.textWrapper} `}>
 						{/* Heading */}
-						<p className={`${styles.heading} font-weight-700`}>Get a Free Trial</p>
+						<p className={`${styles.heading} font-weight-700 fade-in-up`}>
+							Get a Free Trial
+						</p>
 						{/* Sub heading */}
-						<p className={`${styles.subHeading} font-weight-400`}>
+						<p className={`${styles.subHeading} font-weight-400 fade-in-up`}>
 							Experience the Skorost way! Join us for a free trial session.
 						</p>
 						{/* Button for small devices */}
-						<div className={"hide-on-desktop"}>
+						<div className={"hide-on-desktop fade-in-up"}>
 							<Button
 								text={"Book a Free Trial"}
 								onClick={() => console.log("Button Clicked")}
@@ -54,7 +56,7 @@ const GetFreeTrial: React.FC<unknown> = () => {
 							/>
 						</div>
 						{/* Button for large devices */}
-						<div className={"hide-on-mobile"}>
+						<div className={"hide-on-mobile fade-in-up"}>
 							<Button
 								text={"Book a Free Trial"}
 								onClick={() => console.log("Button Clicked")}
@@ -66,7 +68,7 @@ const GetFreeTrial: React.FC<unknown> = () => {
 						</div>
 					</div>
 					{/* Image */}
-					<div className={styles.imageWrapper}>
+					<div className={`${styles.imageWrapper} fade-in-up`}>
 						<Image
 							src={TigerImage}
 							alt="tiger"
