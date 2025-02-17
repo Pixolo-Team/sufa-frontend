@@ -1,6 +1,5 @@
-"use client";
 // REACT //
-import React, { useState } from "react";
+import React from "react";
 
 // STYLES //
 import styles from "./accordian.module.scss";
