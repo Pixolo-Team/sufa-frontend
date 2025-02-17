@@ -2,6 +2,7 @@
 import React from "react";
 
 // STYLES //
+import styles from "./header.module.scss";
 
 // COMPONENTS //
 
@@ -28,7 +29,7 @@ const Header: React.FC<unknown> = () => {
 	// UseEffect Functions and UseFocusEffect Functions
 
 	// View starts here
-	return <div>Hello Header</div>;
+	return <header className={styles.headerWrap}>Hello Header</header>;
 };
 
 export default Header;

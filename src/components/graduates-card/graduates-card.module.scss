@@ -19,6 +19,8 @@
 	.description {
 		font-size: var(--color-brand-font-size-xsmall);
 		font-weight: var(--font-weight-regular);
+		padding: var(--padding-medium) var(--padding-xlarge);
+		line-height: 20px; //TODO: Add token
 	}
 }
 

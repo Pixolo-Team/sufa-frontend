@@ -1,16 +1,33 @@
-
-// Small laptops
-@media only screen and (max-width: 1500px) {
+.childrenToChampionsWrapper {
+	padding: 15vmin 0;
+	overflow: hidden;
 }
 
-// Ipad air
-@media only screen and (max-width: 992px) {
+.topMarquee {
+	transform: translateY(50%) rotate(5deg) scale(1.1); // Rotates slightly
 }
 
-// Ipad Mini
-@media only screen and (max-width: 768px) {
+.bottomMarquee {
+	background-color: var(--color-brand-neutral-light-100);
+	transform: translateY(-50%) rotate(-5deg) scale(1.1); // Opposite rotation
+}
+
+.marqueeItem {
+	padding: var(--padding-regular);
 }
 
 // Mobile Phones
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }

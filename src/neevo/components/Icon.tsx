@@ -3,6 +3,7 @@ import ArrowFilled from "@/../public/icons/filled/arrow.svg";
 import BoxMenuFilled from "@/../public/icons/filled/box-menu.svg";
 import CloseFilled from "@/../public/icons/filled/close.svg";
 import CheckFilled from "@/../public/icons/filled/check.svg";
+import CuteFilled from "@/../public/icons/filled/cute.svg";
 import DiscFilled from "@/../public/icons/filled/disc.svg";
 import ExclamationFilled from "@/../public/icons/filled/exclamation.svg";
 import DownArrowFilled from "@/../public/icons/filled/down-arrow.svg";
@@ -28,6 +29,8 @@ import DeleteFilled from "@/../public/icons/filled/delete.svg";
 import NotFoundFilled from "@/../public/icons/filled/404.svg";
 import BadRequestFilled from "@/../public/icons/filled/400.svg";
 import InternalServerErrorFilled from "@/../public/icons/filled/500.svg";
+import QuoteFilled from "@/../public/icons/filled/quote.svg";
+
 import ArrowOutline from "@/../public/icons/outline/arrow.svg";
 import BoxMenuOutline from "@/../public/icons/outline/box-menu.svg";
 import CloseOutline from "@/../public/icons/outline/close.svg";
@@ -67,6 +70,7 @@ const filled: {
 	"box-menu": BoxMenuFilled,
 	close: CloseFilled,
 	check: CheckFilled,
+	cute: CuteFilled,
 	disc: DiscFilled,
 	exclamation: ExclamationFilled,
 	"down-arrow": DownArrowFilled,
@@ -92,6 +96,7 @@ const filled: {
 	"not-found": NotFoundFilled,
 	"bad-request": BadRequestFilled,
 	"internal-server-error": InternalServerErrorFilled,
+	quote: QuoteFilled,
 };
 
 const outline: {
