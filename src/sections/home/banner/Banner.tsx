@@ -24,7 +24,6 @@ interface BannerProps {
 /** Banner Screen */
 const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
 	// Navigation and Route Params
-
 	// Define States
 
 	// Define Refs
@@ -53,13 +52,15 @@ const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
 				className={`${styles.textContent} flex align-center justify-center flex-column`}
 			>
 				{/* Banner title */}
-				<p className={`${styles.bannerTitle} font-weight-700`}>{bannerTitle}</p>
+				<p className={`${styles.bannerTitle} font-weight-700 fade-in-up`}>
+					{bannerTitle}
+				</p>
 				{/* Banner description */}
-				<p className={`${styles.bannerDescription} font-weight-400`}>
+				<p className={`${styles.bannerDescription} font-weight-400 fade-in-up`}>
 					{bannerDescription}
 				</p>
 				{/* Free Trial Button */}
-				<div className={styles.buttonWrapper}>
+				<div className={`${styles.buttonWrapper} fade-in-up`}>
 					<Image src={PandaImage} alt="Panda" className={styles.buttonImage} />
 					<Button
 						text={"Book a FREE TRIAL"}

@@ -1,10 +1,14 @@
 "use client";
 // REACT //
-import React from "react";
+import React, { useEffect } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
 
 // STYLES //
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+// OTHERS //
+import ScrollOut from "scroll-out";
 
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
@@ -21,6 +25,16 @@ import JoinUs from "@/sections/home/join-us/JoinUs";
 
 /** Home Screen */
 const HomeScreen: React.FC<unknown> = () => {
+	useEffect(() => {
+		ScrollOut({
+			targets: ".fade-in-up",
+		});
+		ScrollOut({
+			targets: ".section-header-parallax",
+			cssProps: true,
+		});
+	}, []);
+
 	return (
 		<div>
 			{/* Banner Section */}

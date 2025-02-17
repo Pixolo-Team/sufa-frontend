@@ -224,3 +224,17 @@ textarea {
 	background-color: var(--color-brand-primary-deep);
 	color: var(--color-brand-primary-contrast);
 }
+
+.fade-in-up {
+	&[data-scroll] {
+		transition: all 0.7s ease-in-out;
+	}
+	&[data-scroll="in"] {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	&[data-scroll="out"] {
+		transform: translateY(50px);
+		opacity: 0;
+	}
+}

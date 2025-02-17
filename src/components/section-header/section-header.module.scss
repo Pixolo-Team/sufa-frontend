@@ -1,5 +1,11 @@
 .wrapper {
 	gap: 0;
+	&:global(.section-header-parallax) {
+		.highlightedText {
+			transform: translateY(calc(var(--viewport-y) * -50px));
+			will-change: transform;
+		}
+	}
 }
 
 .fadedText {
@@ -63,4 +69,5 @@
 }
 
 // Small laptops
-@media only screen and (min-width: 1500px) {}
+@media only screen and (min-width: 1500px) {
+}
