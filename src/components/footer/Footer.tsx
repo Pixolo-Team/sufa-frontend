@@ -1,19 +1,12 @@
 "use client";
+// REACT //
 import React from "react";
 
 // STYLES //
+import styles from "./footer.module.scss";
 
-// COMPONENTS //
-
-// IMAGES //
-
-// SERVICES //
-
-// TYPES //
-
-// UTILS //
-
-// PLUGINS //
+// SVG's //
+import InstagramIcon from "@/../public/icons/outline/instagram.svg";
 
 /** Footer Screen */
 const Footer: React.FC<unknown> = () => {
@@ -29,8 +22,29 @@ const Footer: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<footer className="section-spacing text-center bg-primary-deep">
-			Hello Footer
+		<footer className={`${styles.footerWrap} bg-primary-deep`}>
+			<div
+				className={`${styles.footerContent} container flex justify-between flex-column`}
+			>
+				{/* Copyright section */}
+				<div className={`${styles.copyrightWrapper}`}>
+					<span> © Skorost United Football Academy 2025. </span>
+					{""}
+					<span> All Rights Reserved </span>
+				</div>
+				{/* Social media link section */}
+				<div className={`${styles.socialMediaWrap} flex`}>
+					<p>Follow us on</p>
+					<a
+						href="https://www.instagram.com/skorostunitedfootballacademy/"
+						target="_blank"
+						rel="noreferrer"
+					>
+						{/* Instagram Icon */}
+						<InstagramIcon />
+					</a>
+				</div>
+			</div>
 		</footer>
 	);
 };

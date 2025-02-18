@@ -1,16 +1,38 @@
-
-// Small laptops
-@media only screen and (max-width: 1500px) {
+.footerWrap {
+	padding: 32px;
+	.footerContent {
+		text-align: center;
+		align-items: center;
+		gap: var(--gap-medium);
+		font-size: var(--color-brand-font-size-small);
+		.copyrightWrapper {
+			line-height: 1.5;
+		}
+		.socialMediaWrap {
+			gap: var(--gap-regular);
+		}
+	}
 }
-
-// Ipad air
-@media only screen and (max-width: 992px) {
+// Mobile Phones
+@media only screen and (min-width: 600px) {
 }
 
 // Ipad Mini
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
+	.footerWrap {
+		.footerContent {
+			flex-direction: row;
+			.copyrightWrapper {
+				text-align: center;
+			}
+		}
+	}
 }
 
-// Mobile Phones
-@media only screen and (max-width: 600px) {
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
 }
