@@ -12,7 +12,7 @@ import Hamburger from "@/components/hamburger/Hamburger";
 import SkorostLogo from "@/../public/images/skorost.svg";
 
 // Header items
-const headerTitlesList: string[] = ["Courses", "Contact Us"];
+const headerListItems: string[] = ["Courses", "Contact Us"];
 
 /** Header Screen */
 const Header: React.FC<unknown> = () => {
@@ -36,11 +36,11 @@ const Header: React.FC<unknown> = () => {
 					<SkorostLogo />
 
 					{/* Titles */}
-					<div className={`${styles.titleWrapper} font-weight-500 justify-end`}>
-						{headerTitlesList.map((title, titleIndex) => (
-							<p key={titleIndex} className={styles.title}>
-								{title}
-							</p>
+					<div className={`${styles.pageLinkWrap} font-weight-500 justify-end`}>
+						{headerListItems.map((link, linkIndex) => (
+							<a key={linkIndex} className={styles.pageLink}>
+								{link}
+							</a>
 						))}
 					</div>
 
@@ -56,10 +56,10 @@ const Header: React.FC<unknown> = () => {
 						isDropdownVisible ? styles.showDropdown : styles.hideDropdown
 					}`}
 				>
-					{headerTitlesList.map((title, index) => (
-						<p key={index} className={styles.title}>
-							{title}
-						</p>
+					{headerListItems.map((link, linkIndex) => (
+						<a key={linkIndex} className={styles.pageLink}>
+							{link}
+						</a>
 					))}
 				</div>
 			</div>

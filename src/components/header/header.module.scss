@@ -8,10 +8,10 @@
 	transform: translateX(-50%);
 	z-index: 100;
 	border-radius: var(--border-radius-large);
-	.title {
+	.pageLink {
 		font-size: var(--color-brand-font-size-medium);
 	}
-	.titleWrapper {
+	.pageLinkWrap {
 		gap: 40px;
 		display: none;
 	}
@@ -21,7 +21,7 @@
 		opacity: 1;
 		transform: translateY(0);
 		transition: all 0.5s ease-in-out;
-		.title {
+		.pageLink {
 			padding: var(--padding-large) 0 0 0;
 			display: block;
 		}
@@ -31,7 +31,7 @@
 		opacity: 0;
 		transform: translateY(10px);
 		transition: all 0.5s ease-in-out;
-		.title {
+		.pageLink {
 			display: none;
 		}
 	}
@@ -44,7 +44,7 @@
 @media only screen and (min-width: 768px) {
 	.headerWrap {
 		padding: var(--padding-large) 70px;
-		.titleWrapper {
+		.pageLinkWrap {
 			display: flex;
 		}
 		.showDropdown {
