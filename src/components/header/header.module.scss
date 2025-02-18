@@ -46,10 +46,12 @@
 @media only screen and (min-width: 768px) {
 	.headerWrap {
 		padding: var(--padding-large) 70px;
-		.pageLinkWrap {
-			display: flex;
-			.pageLink {
-				padding: 0;
+		.headerMain {
+			.pageLinkWrap {
+				display: flex;
+				.pageLink {
+					padding: 0;
+				}
 			}
 		}
 		.showDropdown {
