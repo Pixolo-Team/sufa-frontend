@@ -8,6 +8,10 @@ import { Sizes } from "@/neevo/enums/core.enum";
 // STYLES //
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import styles from "./page.module.scss";
+
+// COMPONENTS //
+import Image from "next/image";
 
 // COMPONENTS //
 import Popup from "@/neevo/components/popup/Popup";
@@ -15,6 +19,9 @@ import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
 
 // OTHERS //
 import ScrollOut from "scroll-out";
+
+// IMAGES //
+import WhatsappImage from "@/../public/images/whatsapp-64.png";
 
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
@@ -41,17 +48,10 @@ const HomeScreen: React.FC<unknown> = () => {
 			targets: ".fade-in-up",
 			once: true,
 		});
-		// Section Title parallax animations
-		// ScrollOut({
-		// 	targets: ".section-header-parallax",
-		// 	cssProps: {
-		// 		viewportY: true,
-		// 	},
-		// });
 	}, []);
 
 	return (
-		<div>
+		<div className={styles.homeScreen}>
 			{/* Banner Section */}
 			<Banner
 				bannerTitle="Where Little Feet Dream Big!"
@@ -90,6 +90,23 @@ const HomeScreen: React.FC<unknown> = () => {
 
 			{/* Contact us Section */}
 			<ContactUs onButtonClick={() => setShowEnquiryPopup(true)} />
+
+			{/* Floating section */}
+			<div
+				className={`${styles.floatingSection} flex justify-center align-center`}
+			>
+				<a
+					href="https://wa.me/919004453226?text=Hi! I would like to know more about your academy."
+					target="_blank"
+					rel="noreferrer"
+				>
+					<Image
+						src={WhatsappImage}
+						alt="whatsapp"
+						className="img-responsive full-width-img"
+					/>
+				</a>
+			</div>
 
 			{/* Contact Us popup */}
 			{showEnquiryPopup && (
