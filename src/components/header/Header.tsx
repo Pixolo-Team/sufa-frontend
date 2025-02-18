@@ -12,7 +12,7 @@ import Hamburger from "../hamburger/Hamburger";
 import SkorostLogo from "@/../public/images/skorost.svg";
 
 // Header items
-const headerTitlesList = ["Courses", "Contact Us"];
+const headerTitlesList: string[] = ["Courses", "Contact Us"];
 
 /** Header Screen */
 const Header: React.FC<unknown> = () => {

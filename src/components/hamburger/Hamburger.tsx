@@ -29,12 +29,13 @@ const Hamburger: React.FC<HamburgerProps> = ({
 		// Hamburger menu component
 		<div
 			className={`${styles.hamburgerWrapper} ${
-				isDropdownVisible ? styles.active : ""
+				isDropdownVisible ? styles.showDropdown : ""
 			}`}
 			onClick={onClick}
 		>
-			<div className={styles.line}></div>
-			<div className={styles.line}></div>
+			{/* Hamburger line items */}
+			<div className={styles.line} />
+			<div className={styles.line} />
 		</div>
 	);
 };
