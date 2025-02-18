@@ -32,7 +32,7 @@ import JoinUs from "@/sections/home/join-us/JoinUs";
 /** Home Screen */
 const HomeScreen: React.FC<unknown> = () => {
 	// Define states
-	const [showPopup, setShowPopup] = useState<boolean>(false);
+	const [showEnquiryPopup, setShowEnquiryPopup] = useState<boolean>(false);
 
 	// Use Effects
 	useEffect(() => {
@@ -57,35 +57,45 @@ const HomeScreen: React.FC<unknown> = () => {
 					With every kick, every sprint, and every lesson, young athletes grow
 					stronger, smarter, and ready to take on the world."
 			/>
+
 			{/* Founders Message Section */}
 			<FoundersMessage />
+
 			{/* Established Section */}
 			<Established />
+
 			{/* Courses Section */}
 			<Courses />
+
 			{/* Children to champions Section */}
 			<ChildrenToChampions />
+
 			{/* Get free trial Section */}
 			<GetFreeTrial />
+
 			{/* Graduates Section */}
 			<Graduates />
+
 			{/* Coaches Section */}
 			<Coaches />
+
 			{/* Faq Section */}
 			<Faq />
+
 			{/* Join us Section */}
 			<JoinUs />
-			{/* Contact us Section */}
-			<ContactUs onClick={() => setShowPopup(true)} />
 
-			{/* COntact Us popup */}
-			{showPopup && (
+			{/* Contact us Section */}
+			<ContactUs onClick={() => setShowEnquiryPopup(true)} />
+
+			{/* Contact Us popup */}
+			{showEnquiryPopup && (
 				<Popup
 					onCloseClick={() => {
-						setShowPopup(false);
+						setShowEnquiryPopup(false);
 					}}
 					onOverlayClick={() => {
-						setShowPopup(false);
+						setShowEnquiryPopup(false);
 					}}
 					size={Sizes.SMALL}
 				>

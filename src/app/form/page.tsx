@@ -10,7 +10,7 @@ import InputBox from "@/neevo/components/input-box/InputBox";
 import Button from "@/neevo/components/button/Button";
 
 // API SERVICES //
-import { createLeadRequest } from "@/services/api/privyr.api.service";
+import { createLeadRequest } from "@/services/api/leads.api.service";
 
 // SERVICES //
 import { showToast } from "@/neevo/services/toast.service";

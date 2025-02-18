@@ -1,11 +1,7 @@
-.inputBoxWrapper {
-    margin-bottom: var(--margin-xxlarge);
-    flex-direction: column;
-    gap: 24px;
-}
-
-.inputBox {
+.inputBox,
+.textArea {
     width: 100%;
+    margin-bottom: var(--margin-xxlarge);
 }
 
 
@@ -15,12 +11,14 @@
 // Ipad Mini
 @media only screen and (min-width: 768px) {
     .inputBoxWrapper {
-        flex-direction: row;
+        display: flex;
+        gap: 24px;
     }
 
     .inputBox {
         width: 50%;
     }
+
 }
 
 // Ipad air
