@@ -16,8 +16,12 @@ import Image from "next/image";
 // IMAGES //
 import TigerImage from "@/../public/images/tiger-cub.png";
 
+interface GetFreeTrialProps {
+	onButtonClick: () => void;
+}
+
 /** Get Free Trial Screen */
-const GetFreeTrial: React.FC<unknown> = () => {
+const GetFreeTrial: React.FC<GetFreeTrialProps> = ({ onButtonClick }) => {
 	// Navigation and Route Params
 
 	// Define States
@@ -48,7 +52,7 @@ const GetFreeTrial: React.FC<unknown> = () => {
 						<div className={"hide-on-desktop fade-in-up"}>
 							<Button
 								text={"Book a Free Trial"}
-								onClick={() => console.log("Button Clicked")}
+								onClick={() => onButtonClick()}
 								level={ButtonLevels.INLINE}
 								size={ButtonSizes.MEDIUM}
 								shape={Shapes.ROUNDED}
@@ -59,7 +63,7 @@ const GetFreeTrial: React.FC<unknown> = () => {
 						<div className={"hide-on-mobile fade-in-up"}>
 							<Button
 								text={"Book a Free Trial"}
-								onClick={() => console.log("Button Clicked")}
+								onClick={() => onButtonClick()}
 								level={ButtonLevels.INLINE}
 								size={ButtonSizes.XLARGE}
 								shape={Shapes.ROUNDED}

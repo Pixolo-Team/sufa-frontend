@@ -1,7 +1,14 @@
 .inputBox,
 .textArea {
     width: 100%;
-    margin-bottom: var(--margin-xxlarge);
+}
+
+.inputBoxWrapper {
+    gap: 24px;
+}
+
+.buttonWrapper {
+    margin-top: var(--margin-xxlarge);
 }
 
 
@@ -11,12 +18,11 @@
 // Ipad Mini
 @media only screen and (min-width: 768px) {
     .inputBoxWrapper {
-        display: flex;
-        gap: 24px;
+        flex-direction: row;
     }
 
     .inputBox {
-        width: 50%;
+        width: calc(50% - 12px);
     }
 
 }

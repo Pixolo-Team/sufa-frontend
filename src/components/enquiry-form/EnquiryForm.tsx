@@ -127,7 +127,7 @@ const EnquiryForm: React.FC = () => {
 
 	return (
 		<>
-			<div className={`${styles.inputBoxWrapper}`}>
+			<div className={`flex flex-wrap flex-column ${styles.inputBoxWrapper}`}>
 				{/* Name Input Box */}
 				<div className={styles.inputBox}>
 					<InputBox
@@ -154,9 +154,7 @@ const EnquiryForm: React.FC = () => {
 						onClear={() => handleInputChange("email", "")}
 					/>
 				</div>
-			</div>
 
-			<div className={`${styles.inputBoxWrapper}`}>
 				{/* Phone Number Input Box  */}
 				<div className={styles.inputBox}>
 					<InputBox
@@ -183,9 +181,7 @@ const EnquiryForm: React.FC = () => {
 						errorMessage={enquiryErrors["others.subject"]}
 					/>
 				</div>
-			</div>
 
-			<div className={`${styles.inputBoxWrapper}`}>
 				<div className={styles.textArea}>
 					{/* Message Text area */}
 					<TextArea
@@ -201,12 +197,14 @@ const EnquiryForm: React.FC = () => {
 			</div>
 
 			{/* Submit Button */}
-			<Button
-				onClick={submitEnquiryForm}
-				text="Submit"
-				color={Colors.SECONDARY}
-				shape={Shapes.ROUNDED}
-			/>
+			<div className={styles.buttonWrapper}>
+				<Button
+					onClick={submitEnquiryForm}
+					text="Submit"
+					color={Colors.SECONDARY}
+					shape={Shapes.ROUNDED}
+				/>
+			</div>
 		</>
 	);
 };

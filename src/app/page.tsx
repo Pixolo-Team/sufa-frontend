@@ -56,6 +56,7 @@ const HomeScreen: React.FC<unknown> = () => {
 				bannerDescription="At Skorost United Academy, we don’t just train players—we shape champions.
 					With every kick, every sprint, and every lesson, young athletes grow
 					stronger, smarter, and ready to take on the world."
+				onButtonClick={() => setShowEnquiryPopup(true)}
 			/>
 
 			{/* Founders Message Section */}
@@ -71,7 +72,7 @@ const HomeScreen: React.FC<unknown> = () => {
 			<ChildrenToChampions />
 
 			{/* Get free trial Section */}
-			<GetFreeTrial />
+			<GetFreeTrial onButtonClick={() => setShowEnquiryPopup(true)} />
 
 			{/* Graduates Section */}
 			<Graduates />
@@ -83,10 +84,10 @@ const HomeScreen: React.FC<unknown> = () => {
 			<Faq />
 
 			{/* Join us Section */}
-			<JoinUs />
+			<JoinUs onButtonClick={() => setShowEnquiryPopup(true)} />
 
 			{/* Contact us Section */}
-			<ContactUs onClick={() => setShowEnquiryPopup(true)} />
+			<ContactUs onButtonClick={() => setShowEnquiryPopup(true)} />
 
 			{/* Contact Us popup */}
 			{showEnquiryPopup && (

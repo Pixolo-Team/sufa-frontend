@@ -17,11 +17,11 @@ import Button from "@/neevo/components/button/Button";
 import FootballImage from "@/../public/images/football-img.png";
 
 interface ContactUsProps {
-	onClick: () => void;
+	onButtonClick: () => void;
 }
 
 /** Contact Us Screen */
-const ContactUs: React.FC<ContactUsProps> = ({ onClick }) => {
+const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 	// Navigation and Route Params
 
 	// Define States
@@ -62,7 +62,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onClick }) => {
 								size={ButtonSizes.MEDIUM}
 								color={Colors.SECONDARY}
 								onClick={() => {
-									onClick();
+									onButtonClick();
 								}}
 								level={ButtonLevels.BLOCK}
 							/>
@@ -75,7 +75,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onClick }) => {
 								size={ButtonSizes.XXLARGE}
 								color={Colors.SECONDARY}
 								onClick={() => {
-									onClick();
+									onButtonClick();
 								}}
 								level={ButtonLevels.BLOCK}
 							/>
