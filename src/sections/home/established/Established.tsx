@@ -1,7 +1,6 @@
 "use client";
 // REACT //
 import React from "react";
-import Slider, { Settings } from "react-slick";
 
 // STYLES //
 import styles from "./established.module.scss";
@@ -11,21 +10,6 @@ import Image from "next/image";
 
 // IMAGES //
 import SkorostImage from "@/../public/images/skorost.jpg";
-
-// Slider settings
-const settings: Settings = {
-	dots: false,
-	infinite: true,
-	speed: 500,
-	variableWidth: true,
-	centerMode: true,
-	centerPadding: "0px",
-	slidesToScroll: 1,
-	autoplay: true,
-	autoplaySpeed: 3000,
-	arrows: false,
-	swipeToSlide: true,
-};
 
 /** Established Screen */
 const Established: React.FC<unknown> = () => {
@@ -55,35 +39,13 @@ const Established: React.FC<unknown> = () => {
 						<p className="fade-in-up">ESTABLISHED IN 2003</p>
 					</div>
 					{/* Images Silder */}
-					<Slider {...settings} className={styles.slider}>
-						<div>
-							<div className={styles.imageWrapper}>
-								<Image
-									src={SkorostImage}
-									alt="skorost"
-									className={"img-responsive full-width-img"}
-								/>
-							</div>
-						</div>
-						<div>
-							<div className={styles.imageWrapper}>
-								<Image
-									src={SkorostImage}
-									alt="skorost"
-									className={"img-responsive full-width-img"}
-								/>
-							</div>
-						</div>
-						<div>
-							<div className={styles.imageWrapper}>
-								<Image
-									src={SkorostImage}
-									alt="skorost"
-									className={"img-responsive full-width-img"}
-								/>
-							</div>
-						</div>
-					</Slider>
+					<div className={styles.imageWrapper}>
+						<Image
+							src={SkorostImage}
+							alt="skorost"
+							className={"img-responsive full-width-img"}
+						/>
+					</div>
 				</div>
 			</div>
 		</section>
