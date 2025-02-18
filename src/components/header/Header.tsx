@@ -31,11 +31,11 @@ const Header: React.FC<unknown> = () => {
 	return (
 		<header>
 			<div className={styles.headerWrap}>
-				<div className="flex justify-between align-center">
+				<div className={`${styles.headerMain} flex justify-between align-center`}>
 					{/* Header logo */}
 					<SkorostLogo />
 
-					{/* Titles */}
+					{/* Links */}
 					<nav className={`${styles.pageLinkWrap} font-weight-500 justify-end`}>
 						{headerListItems.map((link, linkIndex) => (
 							<a href="/" key={linkIndex} className={styles.pageLink}>
@@ -52,8 +52,8 @@ const Header: React.FC<unknown> = () => {
 				</div>
 				{/* Menu Dropdown */}
 				<div
-					className={`font-weight-500  ${
-						isDropdownVisible ? styles.showDropdown : styles.hideDropdown
+					className={`font-weight-500 ${styles.headerDropdown} ${
+						isDropdownVisible ? styles.showDropdown : ""
 					}`}
 				>
 					{headerListItems.map((link, linkIndex) => (
