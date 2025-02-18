@@ -73,7 +73,7 @@ const EnquiryForm: React.FC = () => {
 
 		// Check if subject is empty
 		if (!enquiryInputs.others.subject.trim()) {
-			newErrors["others.Subject"] = "Subject is required";
+			newErrors["others.subject"] = "Subject is required";
 		}
 
 		// Set Error State
