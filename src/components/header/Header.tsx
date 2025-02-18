@@ -38,7 +38,7 @@ const Header: React.FC<unknown> = () => {
 					{/* Titles */}
 					<div className={`${styles.pageLinkWrap} font-weight-500 justify-end`}>
 						{headerListItems.map((link, linkIndex) => (
-							<a key={linkIndex} className={styles.pageLink}>
+							<a href="/" key={linkIndex} className={styles.pageLink}>
 								{link}
 							</a>
 						))}
@@ -57,7 +57,7 @@ const Header: React.FC<unknown> = () => {
 					}`}
 				>
 					{headerListItems.map((link, linkIndex) => (
-						<a key={linkIndex} className={styles.pageLink}>
+						<a href="/" key={linkIndex} className={styles.pageLink}>
 							{link}
 						</a>
 					))}
