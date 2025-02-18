@@ -5,9 +5,16 @@ import React, { useEffect } from "react";
 // STYLES //
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import styles from "./page.module.scss";
+
+// COMPONENTS //
+import Image from "next/image";
 
 // OTHERS //
 import ScrollOut from "scroll-out";
+
+// IMAGES //
+import WhatsappImage from "@/../public/images/whatsapp-64.png";
 
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
@@ -30,17 +37,10 @@ const HomeScreen: React.FC<unknown> = () => {
 			targets: ".fade-in-up",
 			once: true,
 		});
-		// Section Title parallax animations
-		// ScrollOut({
-		// 	targets: ".section-header-parallax",
-		// 	cssProps: {
-		// 		viewportY: true,
-		// 	},
-		// });
 	}, []);
 
 	return (
-		<div>
+		<div className={styles.homeScreen}>
 			{/* Banner Section */}
 			<Banner
 				bannerTitle="Where Little Feet Dream Big!"
@@ -78,6 +78,18 @@ const HomeScreen: React.FC<unknown> = () => {
 
 			{/* Contact us Section */}
 			<ContactUs />
+
+			<div
+				className={`${styles.floatingSection} flex justify-center align-center`}
+			>
+				<a href="https://wa.me/919004453226" target="_blank" rel="noreferrer">
+					<Image
+						src={WhatsappImage}
+						alt="whatsapp"
+						className="img-responsive full-width-img"
+					/>
+				</a>
+			</div>
 		</div>
 	);
 };

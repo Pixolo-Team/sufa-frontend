@@ -41,7 +41,7 @@ const Footer: React.FC<unknown> = () => {
 						rel="noreferrer"
 					>
 						{/* Instagram Icon */}
-						<InstagramIcon />
+						<InstagramIcon style={{ color: "white" }} />
 					</a>
 				</div>
 			</div>
