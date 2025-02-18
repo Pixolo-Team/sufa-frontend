@@ -9,6 +9,7 @@
 	justify-content: center;
 	align-items: center;
 }
+
 .popupOverlay {
 	position: fixed;
 	top: 0;
@@ -18,6 +19,7 @@
 	background-color: rgba(0, 0, 0, 0.8);
 	z-index: 9999;
 }
+
 .closePopupButton {
 	position: absolute;
 	top: 10px;
@@ -30,17 +32,21 @@
 	justify-content: center;
 	border-radius: 50%;
 	transition: all 0.3s ease-in-out;
+
 	&:hover {
 		background-color: var(--color-brand-neutral-light-300);
 	}
+
 	.closeIcon {
 		height: 16px;
 		width: 16px;
+
 		path {
-			fill: var(--color-brand-primary-regular);
+			fill: var(--color-brand-neutral-dark-500);
 		}
 	}
 }
+
 .commonPopupWrap {
 	background-color: var(--color-brand-neutral-light-100);
 	padding: var(--padding-popup-vertical) var(--padding-popup-horizontal);
@@ -53,23 +59,29 @@
 
 	&.small {
 		width: 500px;
+
 		.confirmationButton {
 			width: 70px;
 		}
 	}
+
 	&.medium {
 		width: 600px;
+
 		.confirmationButton {
 			width: 125px;
 		}
 	}
+
 	&.large {
 		width: 800px;
+
 		.confirmationButton {
 			width: 140px;
 		}
 	}
 }
+
 .confirmationTitle {
 	font-size: var(--font-size-popup-title);
 	font-weight: var(--font-weight-popup-title);
@@ -77,6 +89,7 @@
 	line-height: var(--line-height-regular);
 	color: var(--color-brand-neutral-dark-900);
 }
+
 .description {
 	font-size: var(--font-size-popup-description);
 	font-weight: var(--font-weight-popup-description);
