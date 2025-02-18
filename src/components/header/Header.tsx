@@ -36,13 +36,13 @@ const Header: React.FC<unknown> = () => {
 					<SkorostLogo />
 
 					{/* Titles */}
-					<div className={`${styles.pageLinkWrap} font-weight-500 justify-end`}>
+					<nav className={`${styles.pageLinkWrap} font-weight-500 justify-end`}>
 						{headerListItems.map((link, linkIndex) => (
 							<a href="/" key={linkIndex} className={styles.pageLink}>
 								{link}
 							</a>
 						))}
-					</div>
+					</nav>
 
 					{/* Hamburger Menu */}
 					<Hamburger
