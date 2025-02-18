@@ -5,8 +5,8 @@ import React, { useState } from "react";
 // STYLES //
 import styles from "./header.module.scss";
 
-// OTHERS //
-import Hamburger from "../hamburger/Hamburger";
+// COMPONENTS //
+import Hamburger from "@/components/hamburger/Hamburger";
 
 // SVG's //
 import SkorostLogo from "@/../public/images/skorost.svg";
