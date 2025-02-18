@@ -19,10 +19,15 @@ import PandaImage from "@/../public/images/panda.png";
 interface BannerProps {
 	bannerTitle: string;
 	bannerDescription: string;
+	onButtonClick: () => void;
 }
 
 /** Banner Screen */
-const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
+const Banner: React.FC<BannerProps> = ({
+	bannerTitle,
+	bannerDescription,
+	onButtonClick,
+}) => {
 	// Navigation and Route Params
 	// Define States
 
@@ -65,7 +70,7 @@ const Banner: React.FC<BannerProps> = ({ bannerTitle, bannerDescription }) => {
 					<Button
 						text={"Book a FREE TRIAL"}
 						onClick={() => {
-							console.log();
+							onButtonClick();
 						}}
 						shape={Shapes.ROUNDED}
 						size={ButtonSizes.XLARGE}

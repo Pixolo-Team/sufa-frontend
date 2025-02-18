@@ -1,6 +1,9 @@
 "use client";
 // REACT //
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
+// ENUMS //
+import { Sizes } from "@/neevo/enums/core.enum";
 
 // STYLES //
 import "slick-carousel/slick/slick.css";
@@ -9,6 +12,10 @@ import styles from "./page.module.scss";
 
 // COMPONENTS //
 import Image from "next/image";
+
+// COMPONENTS //
+import Popup from "@/neevo/components/popup/Popup";
+import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
 
 // OTHERS //
 import ScrollOut from "scroll-out";
@@ -31,6 +38,10 @@ import JoinUs from "@/sections/home/join-us/JoinUs";
 
 /** Home Screen */
 const HomeScreen: React.FC<unknown> = () => {
+	// Define states
+	const [showEnquiryPopup, setShowEnquiryPopup] = useState<boolean>(false);
+
+	// Use Effects
 	useEffect(() => {
 		// Fade In Up animations
 		ScrollOut({
@@ -47,6 +58,7 @@ const HomeScreen: React.FC<unknown> = () => {
 				bannerDescription="At Skorost United Academy, we don’t just train players—we shape champions.
 					With every kick, every sprint, and every lesson, young athletes grow
 					stronger, smarter, and ready to take on the world."
+				onButtonClick={() => setShowEnquiryPopup(true)}
 			/>
 
 			{/* Founders Message Section */}
@@ -62,7 +74,7 @@ const HomeScreen: React.FC<unknown> = () => {
 			<ChildrenToChampions />
 
 			{/* Get free trial Section */}
-			<GetFreeTrial />
+			<GetFreeTrial onButtonClick={() => setShowEnquiryPopup(true)} />
 
 			{/* Graduates Section */}
 			<Graduates />
@@ -74,11 +86,12 @@ const HomeScreen: React.FC<unknown> = () => {
 			<Faq />
 
 			{/* Join us Section */}
-			<JoinUs />
+			<JoinUs onButtonClick={() => setShowEnquiryPopup(true)} />
 
 			{/* Contact us Section */}
-			<ContactUs />
+			<ContactUs onButtonClick={() => setShowEnquiryPopup(true)} />
 
+			{/* Floating section */}
 			<div
 				className={`${styles.floatingSection} flex justify-center align-center`}
 			>
@@ -94,6 +107,21 @@ const HomeScreen: React.FC<unknown> = () => {
 					/>
 				</a>
 			</div>
+
+			{/* Contact Us popup */}
+			{showEnquiryPopup && (
+				<Popup
+					onCloseClick={() => {
+						setShowEnquiryPopup(false);
+					}}
+					onOverlayClick={() => {
+						setShowEnquiryPopup(false);
+					}}
+					size={Sizes.SMALL}
+				>
+					<EnquiryForm />
+				</Popup>
+			)}
 		</div>
 	);
 };

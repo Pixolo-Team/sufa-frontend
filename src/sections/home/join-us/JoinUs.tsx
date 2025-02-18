@@ -17,8 +17,12 @@ import Button from "@/neevo/components/button/Button";
 import FootballImage from "@/../public/images/football.png";
 import JoinUsImage from "@/../public/images/join-us.jpg";
 
+interface JoinUsProps {
+	onButtonClick: () => void;
+}
+
 /** Join Us Screen */
-const JoinUs: React.FC<unknown> = () => {
+const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
 	// Navigation and Route Params
 
 	// Define States
@@ -65,7 +69,7 @@ const JoinUs: React.FC<unknown> = () => {
 						shape={Shapes.ROUNDED}
 						level={ButtonLevels.INLINE}
 						onClick={() => {
-							console.log("Button Clicked");
+							onButtonClick();
 						}}
 					/>
 				</div>
