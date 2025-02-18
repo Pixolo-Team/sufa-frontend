@@ -34,7 +34,7 @@ const ENQUIRY_INPUT_INIT = {
 	name: "",
 	email: "",
 	phone: "",
-	others: {
+	other_fields: {
 		subject: "",
 		message: "",
 	},
@@ -72,8 +72,8 @@ const EnquiryForm: React.FC = () => {
 		}
 
 		// Check if subject is empty
-		if (!enquiryInputs.others.subject.trim()) {
-			newErrors["others.subject"] = "Subject is required";
+		if (!enquiryInputs.other_fields.subject.trim()) {
+			newErrors["other_fields.subject"] = "Subject is required";
 		}
 
 		// Set Error State
@@ -118,8 +118,8 @@ const EnquiryForm: React.FC = () => {
 	const handleOthersChange = useCallback((key: string, value: string) => {
 		setEnquiryInputs((prev) => ({
 			...prev,
-			others: {
-				...prev.others,
+			other_fields: {
+				...prev.other_fields,
 				[key]: value,
 			},
 		}));
@@ -177,8 +177,8 @@ const EnquiryForm: React.FC = () => {
 						label="Subject"
 						onChange={(item) => handleOthersChange("subject", item.value)}
 						placeholder="Select Subject"
-						isError={!!enquiryErrors["others.subject"]}
-						errorMessage={enquiryErrors["others.subject"]}
+						isError={!!enquiryErrors["other_fields.subject"]}
+						errorMessage={enquiryErrors["other_fields.subject"]}
 					/>
 				</div>
 
@@ -186,7 +186,7 @@ const EnquiryForm: React.FC = () => {
 					{/* Message Text area */}
 					<TextArea
 						label="Message"
-						value={enquiryInputs.others.message}
+						value={enquiryInputs.other_fields.message}
 						onChange={(value) => handleOthersChange("message", value)}
 						errorMessage=""
 						isError={false}
