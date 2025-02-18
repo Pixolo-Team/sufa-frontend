@@ -21,14 +21,14 @@
 	.headerDropdown {
 		padding: var(--padding-medium);
 		border-radius: var(--border-radius-large);
-		margin-top: 4px;
+		margin-top: var(--margin-small);
 		background-color: var(--color-background-light-tint);
 		visibility: hidden;
 		opacity: 0;
 		transform: translateY(30px);
 		transition: all 0.3s ease-in-out;
 		.pageLink {
-			padding: var(--padding-medium) 16px;
+			padding: var(--padding-medium) var(--padding-large);
 			display: block;
 		}
 		&.showDropdown {
