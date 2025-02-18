@@ -4,7 +4,8 @@
 	position: fixed;
 	top: 24px;
 	width: 80%;
-	left: 10%;
+	left: 50%;
+	transform: translateX(-50%);
 	z-index: 100;
 	border-radius: var(--border-radius-large);
 	.title {
@@ -14,34 +15,22 @@
 		gap: 40px;
 		display: none;
 	}
-	.hamburgerMenu {
-		gap: var(--gap-medium);
-		.icon {
-			transition: all 0.3s ease-in-out;
-		}
 
-		&.active {
-			.icon:first-child {
-				transform: translateY(7px) rotate(45deg);
-			}
-
-			.icon:nth-child(2) {
-				transform: translateY(-7px) rotate(-45deg);
-			}
-		}
-	}
 	.showDropdown {
 		visibility: visible;
 		opacity: 1;
-		transition: all 0.2s ease-in-out;
+		transform: translateY(0);
+		transition: all 0.5s ease-in-out;
 		.title {
-			padding: var(--padding-regular) 0;
+			padding: var(--padding-large) 0 0 0;
 			display: block;
 		}
 	}
 	.hideDropdown {
 		visibility: hidden;
 		opacity: 0;
+		transform: translateY(10px);
+		transition: all 0.5s ease-in-out;
 		.title {
 			display: none;
 		}
@@ -57,9 +46,6 @@
 		padding: var(--padding-large) 70px;
 		.titleWrapper {
 			display: flex;
-		}
-		.hamburgerMenu {
-			display: none;
 		}
 		.showDropdown {
 			display: none;
