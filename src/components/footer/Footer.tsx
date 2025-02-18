@@ -23,26 +23,28 @@ const Footer: React.FC<unknown> = () => {
 	// View starts here
 	return (
 		<footer className={`${styles.footerWrap} bg-primary-deep`}>
-			<div
-				className={`${styles.footerContent} container flex justify-between flex-column`}
-			>
-				{/* Copyright section */}
-				<div className={`${styles.copyrightWrapper}`}>
-					<span> © Skorost United Football Academy 2025. </span>
-					{""}
-					<span> All Rights Reserved </span>
-				</div>
-				{/* Social media link section */}
-				<div className={`${styles.socialMediaWrap} flex`}>
-					<p>Follow us on</p>
-					<a
-						href="https://www.instagram.com/skorostunitedfootballacademy/"
-						target="_blank"
-						rel="noreferrer"
-					>
-						{/* Instagram Icon */}
-						<InstagramIcon style={{ color: "white" }} />
-					</a>
+			<div className="container">
+				<div
+					className={`${styles.footerContent}  flex justify-between flex-column`}
+				>
+					{/* Copyright section */}
+					<div className={`${styles.copyrightWrapper}`}>
+						<span> © Skorost United Football Academy 2025. </span>
+						{""}
+						<span> All Rights Reserved </span>
+					</div>
+					{/* Social media link section */}
+					<div className={`${styles.socialMediaWrap} flex`}>
+						<p>Follow us on</p>
+						<a
+							href="https://www.instagram.com/skorostunitedfootballacademy/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							{/* Instagram Icon */}
+							<InstagramIcon style={{ color: "white" }} />
+						</a>
+					</div>
 				</div>
 			</div>
 		</footer>

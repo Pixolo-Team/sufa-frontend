@@ -82,7 +82,11 @@ const HomeScreen: React.FC<unknown> = () => {
 			<div
 				className={`${styles.floatingSection} flex justify-center align-center`}
 			>
-				<a href="https://wa.me/919004453226" target="_blank" rel="noreferrer">
+				<a
+					href="https://wa.me/919004453226?text=Hi! I would like to know more about your academy."
+					target="_blank"
+					rel="noreferrer"
+				>
 					<Image
 						src={WhatsappImage}
 						alt="whatsapp"
