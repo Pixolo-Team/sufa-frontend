@@ -32,7 +32,7 @@ const settings: Settings = {
 		},
 		{
 			breakpoint: 600,
-			settings: { slidesToShow: 1, centerMode: true, variableWidth: true },
+			settings: { slidesToShow: 1 },
 		},
 	],
 };
