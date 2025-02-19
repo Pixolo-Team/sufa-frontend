@@ -12,8 +12,6 @@ import styles from "./page.module.scss";
 
 // COMPONENTS //
 import Image from "next/image";
-
-// COMPONENTS //
 import Popup from "@/neevo/components/popup/Popup";
 import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
 

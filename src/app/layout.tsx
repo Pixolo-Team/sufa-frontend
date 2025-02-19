@@ -17,6 +17,27 @@ import Footer from "@/components/footer/Footer";
 // CONTEXTS //
 import { AppProvider } from "@/contexts/App.context";
 
+// DATA //
+import { Metadata } from "next";
+
+// Metadata
+export const metadata: Metadata = {
+	title: "Skorost United Football Academy",
+	description: "Where Little Feet Dream Big!",
+	keywords: "skorost, united, academy",
+	openGraph: {
+		title: "Skorost United Football Academy",
+		description: "Where Little Feet Dream Big!",
+		url: "https://skorostunited.com",
+		images: [
+			{
+				url: "https://skorostunited.com/images/og-image.jpg",
+				alt: "Skorost United Football Academy",
+			},
+		],
+	},
+};
+
 // FONTS //
 const kippaxModern = localFont({
 	src: [
@@ -74,13 +95,6 @@ export default function RootLayout({
 			className="vertical-side-menu"
 			suppressHydrationWarning
 		>
-			<head>
-				<meta property="og:title" content="Skorost United Football Academy" />
-				<meta property="og:description" content="Where Little Feet Dream Big!" />
-				<meta property="og:image" content="/images/og-image.jpg" />
-				<meta property="og:url" content="https://skorostunited.com" />
-				<meta name="keywords" content="skorost, united, academy" />
-			</head>
 			<body className={`${kippaxModern.variable} ${secondaryFont.variable}`}>
 				<Suspense fallback={<div>Loading...</div>}>
 					<AppProvider>
