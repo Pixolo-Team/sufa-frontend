@@ -74,6 +74,13 @@ export default function RootLayout({
 			className="vertical-side-menu"
 			suppressHydrationWarning
 		>
+			<head>
+				<meta property="og:title" content="Skorost United Football Academy" />
+				<meta property="og:description" content="Where Little Feet Dream Big!" />
+				<meta property="og:image" content="/images/og-image.jpg" />
+				<meta property="og:url" content="https://skorostunited.com" />
+				<meta name="keywords" content="skorost, united, academy" />
+			</head>
 			<body className={`${kippaxModern.variable} ${secondaryFont.variable}`}>
 				<Suspense fallback={<div>Loading...</div>}>
 					<AppProvider>

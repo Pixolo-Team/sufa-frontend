@@ -50,12 +50,12 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 			<div>
 				{/* Faded text */}
 				{!!fadedText && (
-					<p className={`${styles.fadedText} font-weight-800`}>{fadedText}</p>
+					<h2 className={`${styles.fadedText} font-weight-800`}>{fadedText}</h2>
 				)}
 				{/* Highlighted text */}
-				<p className={`${styles.highlightedText} font-weight-700`}>
+				<h3 className={`${styles.highlightedText} font-weight-700`}>
 					{highlightedText}
-				</p>
+				</h3>
 			</div>
 		</div>
 	);

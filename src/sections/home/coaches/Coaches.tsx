@@ -39,8 +39,8 @@ const settings: Settings = {
 
 const coachesData = [
 	{
-		firstName: "Adarsh",
-		lastName: "Anchan",
+		firstName: "Shubham",
+		lastName: "Pandit",
 		description:
 			"Pandit is our Head Coach, he is very experienced and good with kids. He has school experience. He is thin. He wears specs.",
 		designation: "Frontend Engineer - Lead",
