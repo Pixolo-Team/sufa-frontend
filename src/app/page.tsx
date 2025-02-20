@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: "Skorost United Football Academy",
 		description: "Where Little Feet Dream Big!",
-		url: "https://skorostunited.com",
+		url: "https://academy.skorostunited.com",
 		images: [
 			{
 				url: "/images/og-image.jpg",
