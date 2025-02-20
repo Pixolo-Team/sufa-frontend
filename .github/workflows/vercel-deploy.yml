@@ -1,19 +1,13 @@
-name: Deploy to Vercel
+name: Trigger Vercel Deploy
 
 on:
   push:
     branches:
-      - development
+      - main  # Change to the branch you want to auto-deploy
 
 jobs:
-  deploy:
+  trigger-vercel:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install Vercel CLI
-        run: npm install -g vercel
-
-      - name: Deploy to Vercel
-        run: vercel --prod --token Py0cEoB1aEJzlbBVwretGCXt --yes
+      - name: Trigger Vercel Deployment
+        run: curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }}
