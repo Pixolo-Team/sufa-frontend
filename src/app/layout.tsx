@@ -14,30 +14,6 @@ import { Montserrat } from "next/font/google";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 
-// CONTEXTS //
-import { AppProvider } from "@/contexts/App.context";
-
-// DATA //
-import { Metadata } from "next";
-
-// Metadata
-export const metadata: Metadata = {
-	title: "Skorost United Football Academy",
-	description: "Where Little Feet Dream Big!",
-	keywords: "skorost, united, academy",
-	openGraph: {
-		title: "Skorost United Football Academy",
-		description: "Where Little Feet Dream Big!",
-		url: "https://skorostunited.com",
-		images: [
-			{
-				url: "https://skorostunited.com/images/og-image.jpg",
-				alt: "Skorost United Football Academy",
-			},
-		],
-	},
-};
-
 // FONTS //
 const kippaxModern = localFont({
 	src: [
@@ -97,23 +73,21 @@ export default function RootLayout({
 		>
 			<body className={`${kippaxModern.variable} ${secondaryFont.variable}`}>
 				<Suspense fallback={<div>Loading...</div>}>
-					<AppProvider>
-						<ThemeProvider
-							enableSystem={true}
-							defaultTheme={Themes.LIGHT}
-							attribute="class"
-							storageKey="theme"
-						>
-							{/* Header component */}
-							<Header />
+					<ThemeProvider
+						enableSystem={true}
+						defaultTheme={Themes.LIGHT}
+						attribute="class"
+						storageKey="theme"
+					>
+						{/* Header component */}
+						<Header />
 
-							{/* Main content */}
-							<main className="main">{children}</main>
+						{/* Main content */}
+						<main className="main">{children}</main>
 
-							{/* Footer component */}
-							<Footer />
-						</ThemeProvider>
-					</AppProvider>
+						{/* Footer component */}
+						<Footer />
+					</ThemeProvider>
 				</Suspense>
 			</body>
 		</html>
