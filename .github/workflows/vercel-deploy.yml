@@ -3,7 +3,7 @@ name: Deploy to Vercel
 on:
   push:
     branches:
-      - development  # Change to the branch you want to auto-deploy
+      - development
 
 jobs:
   deploy:
@@ -16,4 +16,4 @@ jobs:
         run: npm install -g vercel
 
       - name: Deploy to Vercel
-        run: vercel --prod --token Py0cEoB1aEJzlbBVwretGCXt
+        run: vercel --prod --token --yes Py0cEoB1aEJzlbBVwretGCXt
