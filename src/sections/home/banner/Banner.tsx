@@ -6,7 +6,7 @@ import { Colors, Shapes } from "@/neevo/enums/core.enum";
 import { ButtonLevels, ButtonSizes } from "@/neevo/enums/button.enum";
 
 // STYLES //
-import styles from "./Banner.module.scss";
+import styles from "./banner.module.scss";
 
 // COMPONENTS //
 import Button from "@/neevo/components/button/Button";
