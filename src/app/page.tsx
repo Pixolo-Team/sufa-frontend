@@ -33,7 +33,9 @@ export const metadata: Metadata = {
 const HomeScreen: React.FC<unknown> = () => {
 	// Define Navigation
 	
-	// Define states
+	// Define Context
+
+	// Define States
 
 	// Define Refs
 
