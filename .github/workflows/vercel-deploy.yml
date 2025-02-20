@@ -16,4 +16,4 @@ jobs:
         run: npm install -g vercel
 
       - name: Deploy to Vercel
-        run: vercel --prod --token --yes Py0cEoB1aEJzlbBVwretGCXt
+        run: vercel --prod --token Py0cEoB1aEJzlbBVwretGCXt --yes
