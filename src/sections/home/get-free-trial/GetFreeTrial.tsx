@@ -51,7 +51,7 @@ const GetFreeTrial: React.FC<GetFreeTrialProps> = ({ onButtonClick }) => {
 						{/* Button for small devices */}
 						<div className={"hide-on-desktop fade-in-up"}>
 							<Button
-								text={"Book a Free Trial"}
+								text={"Book a Free Trial Now"}
 								onClick={() => onButtonClick()}
 								level={ButtonLevels.INLINE}
 								size={ButtonSizes.MEDIUM}
@@ -62,7 +62,7 @@ const GetFreeTrial: React.FC<GetFreeTrialProps> = ({ onButtonClick }) => {
 						{/* Button for large devices */}
 						<div className={"hide-on-mobile fade-in-up"}>
 							<Button
-								text={"Book a Free Trial"}
+								text={"Book a Free Trial Now"}
 								onClick={() => onButtonClick()}
 								level={ButtonLevels.INLINE}
 								size={ButtonSizes.XLARGE}
