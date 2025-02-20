@@ -3,7 +3,7 @@ name: Trigger Vercel Deploy
 on:
   push:
     branches:
-      - main  # Change to the branch you want to auto-deploy
+      - development
 
 jobs:
   trigger-vercel:
