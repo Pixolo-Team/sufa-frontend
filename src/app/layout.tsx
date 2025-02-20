@@ -58,6 +58,8 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
+	// Define Navigation
+
 	// Define States
 
 	// Helper Functions
