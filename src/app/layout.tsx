@@ -18,27 +18,27 @@ import Footer from "@/components/footer/Footer";
 const kippaxModern = localFont({
 	src: [
 		{
-			path: "../../public/fonts/kippax-modern/Kippax-Modern-Black.otf",
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Black.woff",
 			weight: "900",
 		},
 		{
-			path: "../../public/fonts/kippax-modern/Kippax-Modern-Extra-Bold.otf",
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Extra-Bold.woff",
 			weight: "800",
 		},
 		{
-			path: "../../public/fonts/kippax-modern/Kippax-Modern-Bold.otf",
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Bold.woff",
 			weight: "700",
 		},
 		{
-			path: "../../public/fonts/kippax-modern/Kippax-Modern-Medium.otf",
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Medium.woff",
 			weight: "500",
 		},
 		{
-			path: "../../public/fonts/kippax-modern/Kippax-Modern-Regular.otf",
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Regular.woff",
 			weight: "400",
 		},
 		{
-			path: "../../public/fonts/kippax-modern/Kippax-Modern-Thin.otf",
+			path: "../../public/fonts/kippax-modern/Kippax-Modern-Thin.woff",
 			weight: "100",
 		},
 	],
