@@ -42,9 +42,9 @@ const coachesData = [
 		firstName: "Shubham",
 		lastName: "Pandit",
 		description:
-			"A dynamic leader with the heart of a true footballer, Shubham Pandit brings his C License certification and a wealth of experience to our pitch. His journey from the player’s boots to the coach’s whistle is a tale of grit and growth. Under his guidance, young talents don’t just learn the game—they learn to love it, play it, and own it. He is the torchbearer of our winning mindset, inspiring every player to dream big and play bigger.",
+			"A C License coach with passion and experience, he transforms young talents with grit and dedication. Inspiring players to love, play, and own the game, he instills a winning mindset that fuels big dreams and bold play.",
 		designation: "Head Coach",
-		coachImageSrc: "/images/coach.jpg",
+		coachImageSrc: "/images/pandit.jpg",
 		socialMedia: { instagram: "inst" },
 	},
 	{
@@ -53,8 +53,8 @@ const coachesData = [
 		description:
 			"An I-League goalkeeper, Harsh Patil coaches our U11 and U15 teams. As the head of our Goalkeeper Development Program (GDP), he molds young keepers with agility, tactical awareness, and fearless confidence.",
 		designation: "Goalkeeper Coach",
-		coachImageSrc: "/images/coach.jpg",
-		socialMedia: { instagram: "ravi_inst" },
+		coachImageSrc: "/images/harsh.jpg",
+		socialMedia: { instagram: "https://www.instagram.com/_harshgk/" },
 	},
 	{
 		firstName: "Dipesh",
@@ -62,8 +62,8 @@ const coachesData = [
 		description:
 			"Captain of our senior team, Dipesh Suvarna is developing his coaching skills while leading young athletes. His firsthand experience offers invaluable mentorship on and off the pitch.",
 		designation: "Youth Coach",
-		coachImageSrc: "/images/coach.jpg",
-		socialMedia: { instagram: "meera_insta" },
+		coachImageSrc: "/images/dipesh.jpg",
+		socialMedia: { instagram: "https://www.instagram.com/dipesh_31/" },
 	},
 	{
 		firstName: "Fawaz",
@@ -71,7 +71,7 @@ const coachesData = [
 		description:
 			"With rich experience as a senior player and coach, Fawaz Pakkir sharpens young footballers’ skills and game sense—building future champions with every drill.",
 		designation: "Youth Coach",
-		coachImageSrc: "/images/coach.jpg",
+		coachImageSrc: "/images/fawaz.jpg",
 		socialMedia: { instagram: "meera_insta" },
 	},
 	{
@@ -89,7 +89,7 @@ const coachesData = [
 		description:
 			"Pradeep Ghavri ensures our players’ peak performance with specialized fitness programs. His training builds strength, prevents injuries, and boosts overall conditioning.",
 		designation: "Fitness Coach",
-		coachImageSrc: "/images/coach.jpg",
+		coachImageSrc: "/images/pradeep.jpg",
 		socialMedia: { instagram: "meera_insta" },
 	},
 ];
