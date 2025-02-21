@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://academy.skorostunited.com/sitemap.xml
