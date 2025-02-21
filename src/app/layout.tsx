@@ -14,6 +14,9 @@ import { Montserrat } from "next/font/google";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 
+// OTHERS //
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 // FONTS //
 const kippaxModern = localFont({
 	src: [
@@ -76,6 +79,8 @@ export default function RootLayout({
 			suppressHydrationWarning
 		>
 			<body className={`${kippaxModern.variable} ${secondaryFont.variable}`}>
+				{/* Google Analytics */}
+				<GoogleAnalytics gaId="G-V7ETJVBHG2" />
 				<Suspense fallback={<div>Loading...</div>}>
 					<ThemeProvider
 						enableSystem={true}

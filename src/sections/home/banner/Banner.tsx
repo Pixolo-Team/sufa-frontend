@@ -56,9 +56,9 @@ const Banner: React.FC<BannerProps> = ({
 				className={`${styles.textContent} flex align-center justify-center flex-column`}
 			>
 				{/* Banner title */}
-				<p className={`${styles.bannerTitle} font-weight-700 fade-in-up`}>
+				<h1 className={`${styles.bannerTitle} font-weight-700 fade-in-up`}>
 					{bannerTitle}
-				</p>
+				</h1>
 				{/* Banner description */}
 				<p className={`${styles.bannerDescription} font-weight-400 fade-in-up`}>
 					{bannerDescription}
@@ -67,7 +67,7 @@ const Banner: React.FC<BannerProps> = ({
 				<div className={`${styles.buttonWrapper} fade-in-up`}>
 					<Image src={PandaImage} alt="Panda" className={styles.buttonImage} />
 					<Button
-						text={"Book a FREE TRIAL"}
+						text={"Book a FREE TRIAL Now"}
 						onClick={() => {
 							onButtonClick();
 						}}

@@ -34,23 +34,28 @@ const settings: Settings = {
 const graduatesList = [
 	{
 		description: "Graduated in 2003 and played in the India League for DK Pharma",
-		graduateName: "Ravi Shankar",
+		graduateName: "Shubham Verma",
 		graduateSrc: "/images/graduate.jpg",
 	},
 	{
 		description:
 			"Graduated in 2003 and played in the India League for DK Pharma. Graduated in 2003 and played in the India.",
-		graduateName: "Ravi Shankar",
+		graduateName: "Harsh Patil",
 		graduateSrc: "/images/graduate.jpg",
 	},
 	{
 		description: "Graduated in 2003 and played in the India League for DK Pharma",
-		graduateName: "Ravi Shankar",
+		graduateName: "Pawan Pattem",
 		graduateSrc: "/images/graduate.jpg",
 	},
 	{
 		description: "Graduated in 2003 and played in the India League.",
-		graduateName: "Ravi Shankar",
+		graduateName: "Karan Jagtap",
+		graduateSrc: "/images/graduate.jpg",
+	},
+	{
+		description: "Graduated in 2003 and played in the India League.",
+		graduateName: "Allen Thomas",
 		graduateSrc: "/images/graduate.jpg",
 	},
 ];

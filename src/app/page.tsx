@@ -13,12 +13,17 @@ import { Metadata } from "next";
 
 // Metadata
 export const metadata: Metadata = {
-	title: "Skorost United Football Academy",
-	description: "Where Little Feet Dream Big!",
-	keywords: "skorost, united, academy",
+	title:
+		"Skorost United Football Academy | Ghatkopar, Mumbai | U11, U13, U15, U17, U19 | Expert Goalkeeper Coaching | Free Trial Session",
+	description:
+		"Discover Skorost United Football Academy in Ghatkopar, Mumbai! Offering holistic development for kids aged 6-16 with expert coaching, specialized goalkeeper training, and dynamic sports programs. Book a free trial session today and kickstart your child’s football journey!",
+	keywords:
+		"Football Academy, Goalkeeper Coaching, Football Coaching, Ghatkopar, Mumbai, Ghatkopar East, Ghatkopar West, Sport Coaching, Personal Training for Football, Kids Football Academy, Youth Football Coaching, Advanced Goalkeeper Training, Football Classes Mumbai, Sports Development for Kids, Football Training for Beginners, Football Programs for Children, Sports for Kids, Holistic Development, Youth Sports Coaching, Football Fitness, Football Camps Mumbai, Football Workshops Ghatkopar, After School Sports Activities, Learn Football Skills, Professional Football Coaching, Top Football Academy Mumbai, Football Coaching Near Me, Free Trial Session",
 	openGraph: {
-		title: "Skorost United Football Academy",
-		description: "Where Little Feet Dream Big!",
+		title:
+			"Skorost United Football Academy | Ghatkopar, Mumbai | U11, U13, U15, U17, U19 | Expert Goalkeeper Coaching | Free Trial Session",
+		description:
+			"Discover Skorost United Football Academy in Ghatkopar, Mumbai! Offering holistic development for kids aged 6-16 with expert coaching, specialized goalkeeper training, and dynamic sports programs. Book a free trial session today and kickstart your child’s football journey!",
 		url: "https://academy.skorostunited.com",
 		images: [
 			{
@@ -26,6 +31,12 @@ export const metadata: Metadata = {
 				alt: "Skorost United Football Academy",
 			},
 		],
+	},
+	alternates: {
+		canonical: "https://academy.skorostunited.com",
+	},
+	other: {
+		"google-site-verification": "_oSbhp3h8iKU34WhrZC8kmkzDaHpqNhZnX93WHIAeHA",
 	},
 };
 

@@ -13,7 +13,8 @@
 		"xsmall",
 		"xlarge",
 		"xxlarge",
-		"skorost"
+		"skorost",
+		"ghatkopar"
 	],
 	"ignoreWords": [],
 	"import": []

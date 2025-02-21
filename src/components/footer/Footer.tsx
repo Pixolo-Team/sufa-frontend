@@ -7,6 +7,8 @@ import styles from "./footer.module.scss";
 
 // SVG's //
 import InstagramIcon from "@/../public/icons/outline/instagram.svg";
+import FacebookIcon from "@/../public/icons/outline/facebook.svg";
+import YoutubeIcon from "@/../public/icons/outline/youtube.svg";
 
 /** Footer Screen */
 const Footer: React.FC<unknown> = () => {
@@ -43,6 +45,22 @@ const Footer: React.FC<unknown> = () => {
 						>
 							{/* Instagram Icon */}
 							<InstagramIcon style={{ color: "white" }} />
+						</a>
+						<a
+							href="https://www.facebook.com/profile.php?id=61573394522811/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							{/* Facebook Icon */}
+							<FacebookIcon style={{ color: "white" }} />
+						</a>
+						<a
+							href="https://www.youtube.com/@SkorostUnitedFootballAcademy/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							{/* Youtube Icon */}
+							<YoutubeIcon style={{ color: "white" }} />
 						</a>
 					</div>
 				</div>
