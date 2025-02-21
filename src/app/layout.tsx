@@ -13,6 +13,8 @@ import localFont from "next/font/local";
 import { Montserrat } from "next/font/google";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+
+// OTHERS //
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 // FONTS //
