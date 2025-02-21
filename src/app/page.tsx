@@ -35,6 +35,9 @@ export const metadata: Metadata = {
 	alternates: {
 		canonical: "https://academy.skorostunited.com",
 	},
+	other: {
+		"google-site-verification": "_oSbhp3h8iKU34WhrZC8kmkzDaHpqNhZnX93WHIAeHA",
+	},
 };
 
 /** Home Screen */
