@@ -1,7 +1,6 @@
 .contentWrapper {
 	width: 100%;
 	overflow: hidden;
-	gap: 60px;
 }
 .founderContentStyles {
 	p {
@@ -25,7 +24,9 @@
 .imageWrapper {
 	display: none;
 }
-.doubleQuotes {}
+.founderImage {
+	transform: scale(1.2);
+}
 
 // Mobile Phones
 @media only screen and (min-width: 600px) {
@@ -44,6 +45,10 @@
 @media only screen and (min-width: 992px) {
 	.doubleQuotes {
 		justify-content: flex-start;
+	}
+	.messageWrapper {
+		position: relative;
+		z-index: 2;
 	}
 	.imageWrapper {
 		display: block;

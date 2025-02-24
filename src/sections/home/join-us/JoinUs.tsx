@@ -40,9 +40,14 @@ const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
 			{/* Join us image */}
 			<div className={styles.imageWrapper}>
 				<picture>
-					<source media="(min-width: 768px)" srcSet="/images/join-us.jpg" />
+					<source media="(min-width: 768px)" srcSet="/images/join-us-desktop.jpg" />
 					<source media="(min-width: 600px)" srcSet="/images/join-us-mobile.jpg" />
-					<img src="/images/join-us-mobile.jpg" alt="cta" className={styles.image} />
+					<Image
+						src="/images/join-us-mobile.jpg"
+						alt="cta"
+						className={styles.image}
+						fill
+					/>
 				</picture>
 			</div>
 			<div className={`${styles.contentWrapper} text-center `}>
