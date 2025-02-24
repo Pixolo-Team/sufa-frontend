@@ -1,5 +1,5 @@
 // REACT //
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // ENUMS //
 import { Colors, Shapes } from "@/neevo/enums/core.enum";
@@ -28,18 +28,25 @@ const Banner: React.FC<BannerProps> = ({
 	onButtonClick,
 }) => {
 	// Navigation and Route Params
+
 	// Define States
+	const [show, setShow] = useState(false);
 
 	// Define Refs
 
 	// Helper Functions
 
 	// UseEffect Functions and UseFocusEffect Functions
+	useEffect(() => {
+		setShow(true); // Optional initial delay
+	}, []);
 
 	// View starts here
 	return (
-		<div className={`${styles.bannerWrapper} flex align-center justify-center`}>
-			<div className={styles.imageWrapper}>
+		<div className={`${styles.bannerWrapper}   flex align-center justify-center`}>
+			<div
+				className={`${styles.imageWrapper} ${show ? styles.revealContainer : ""}`}
+			>
 				{/* Image Wrapper */}
 				<iframe
 					src="https://www.youtube.com/embed/5xpKumlsud8?si=W5bgTXuJ7G1GkH6s&amp;controls=0&loop=1&autoplay=1&mute=1&rel=0&modestbranding=1&playlist=5xpKumlsud8&start=5&showinfo=0&disablekb=1&fs=0"
@@ -49,10 +56,13 @@ const Banner: React.FC<BannerProps> = ({
 					referrerPolicy="strict-origin-when-cross-origin"
 					allowFullScreen
 				></iframe>
+				<div className={styles.overlay}></div>
 			</div>
 			{/* Content Wrapper */}
 			<div
-				className={`${styles.textContent} flex align-center justify-center flex-column`}
+				className={`${styles.textContent} ${
+					show ? styles.showContent : ""
+				} flex align-center justify-center flex-column`}
 			>
 				{/* Banner title */}
 				<h1 className={`${styles.bannerTitle} font-weight-700 fade-in-up`}>
