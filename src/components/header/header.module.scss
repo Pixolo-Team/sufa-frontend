@@ -1,9 +1,26 @@
+// When the page is being scrolled Down
+[data-scroll-dir-y="1"] {
+	.headerWrap {
+		transform: translateY(-100%) translateX(-50%);
+		opacity: 0;
+	}
+}
+
+// When the page is being scrolled Up
+[data-scroll-dir-y="-1"] {
+	.headerWrap {
+		transform: translateY(0) translateX(-50%);
+		opacity: 1;
+	}
+}
+
 .headerWrap {
 	position: fixed;
 	top: 24px;
 	width: 80%;
 	left: 50%;
 	transform: translateX(-50%);
+	transition: all 0.3s ease-in-out;
 	z-index: 100;
 	.headerMain {
 		padding: var(--padding-large) 28px;
@@ -38,6 +55,7 @@
 		}
 	}
 }
+
 // Mobile Phones
 @media only screen and (min-width: 600px) {
 }
@@ -54,7 +72,7 @@
 				}
 			}
 		}
-		.showDropdown {
+		.headerDropdown {
 			display: none;
 		}
 	}
