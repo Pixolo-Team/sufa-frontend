@@ -1,5 +1,5 @@
 // REACT //
-import React from "react";
+import React, { useEffect } from "react";
 
 // ENUMS //
 import { Colors, Shapes } from "@/neevo/enums/core.enum";
@@ -41,15 +41,14 @@ const Banner: React.FC<BannerProps> = ({
 		<div className={`${styles.bannerWrapper} flex align-center justify-center`}>
 			<div className={styles.imageWrapper}>
 				{/* Image Wrapper */}
-				<picture>
-					<source media="(min-width: 768px)" srcSet="/images/banner-desktop.jpg" />
-					<source media="(min-width: 600px)" srcSet="/images/banner-mobile.jpg" />
-					<img
-						src="/images/banner-mobile.jpg"
-						alt="Group Banner"
-						className={styles.groupBannerImage}
-					/>
-				</picture>
+				<iframe
+					src="https://www.youtube.com/embed/5xpKumlsud8?si=W5bgTXuJ7G1GkH6s&amp;controls=0&loop=1&autoplay=1&mute=1&rel=0&modestbranding=1&playlist=5xpKumlsud8&start=5&showinfo=0&disablekb=1&fs=0"
+					title="YouTube video player"
+					frameBorder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerPolicy="strict-origin-when-cross-origin"
+					allowFullScreen
+				></iframe>
 			</div>
 			{/* Content Wrapper */}
 			<div

@@ -15,7 +15,6 @@ import Button from "@/neevo/components/button/Button";
 
 // IMAGES //
 import FootballImage from "@/../public/images/football.png";
-import JoinUsImage from "@/../public/images/join-us.jpg";
 
 interface JoinUsProps {
 	onButtonClick: () => void;
@@ -40,7 +39,16 @@ const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
 		>
 			{/* Join us image */}
 			<div className={styles.imageWrapper}>
-				<Image src={JoinUsImage} alt="cta" className={styles.image} />
+				<picture>
+					<source media="(min-width: 768px)" srcSet="/images/join-us-desktop.jpg" />
+					<source media="(min-width: 600px)" srcSet="/images/join-us-mobile.jpg" />
+					<Image
+						src="/images/join-us-mobile.jpg"
+						alt="cta"
+						className={styles.image}
+						fill
+					/>
+				</picture>
 			</div>
 			<div className={`${styles.contentWrapper} text-center `}>
 				{/* Title */}

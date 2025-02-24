@@ -25,7 +25,7 @@ const settings: Settings = {
 	centerMode: true,
 	responsive: [
 		{
-			breakpoint: 600,
+			breakpoint: 992,
 			settings: { slidesToShow: 1, variableWidth: false },
 		},
 	],
