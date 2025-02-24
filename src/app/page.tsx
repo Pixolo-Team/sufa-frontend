@@ -13,7 +13,7 @@ import { Metadata } from "next";
 
 // Metadata
 export const metadata: Metadata = {
-	title: "Skorost United Academy, Ghatkopar East & West | Free Trial",
+	title: "Skorost United Football Academy, Ghatkopar East & West | Free Trial",
 	description:
 		"Skorost United Academy, Ghatkopar: Ages 5-16, expert licensed coaches, specialized goalkeeper training. Renowned football club. Book a free trial session!",
 	keywords:

@@ -74,15 +74,15 @@ const coachesData = [
 		coachImageSrc: "/images/fawaz.jpg",
 		socialMedia: { instagram: "meera_insta" },
 	},
-	{
-		firstName: "Sarthak",
-		lastName: "Bhosale",
-		description:
-			"Sarthak Bhosale leads our senior girls' team with a focus on skill, teamwork, and confidence. His training transforms talent into fierce competitors.",
-		designation: "Women’s Coach",
-		coachImageSrc: "/images/coach.jpg",
-		socialMedia: { instagram: "meera_insta" },
-	},
+	// {
+	// 	firstName: "Sarthak",
+	// 	lastName: "Bhosale",
+	// 	description:
+	// 		"Sarthak Bhosale leads our senior girls' team with a focus on skill, teamwork, and confidence. His training transforms talent into fierce competitors.",
+	// 	designation: "Women’s Coach",
+	// 	coachImageSrc: "/images/coach.jpg",
+	// 	socialMedia: { instagram: "meera_insta" },
+	// },
 	{
 		firstName: "Pradeep",
 		lastName: "Ghavri",
