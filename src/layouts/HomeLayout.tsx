@@ -44,7 +44,14 @@ const HomeLayout: React.FC<unknown> = () => {
 		// Fade In Up animations
 		ScrollOut({
 			targets: ".fade-in-up",
-			once: true,
+			cssProps: true,
+		});
+
+		ScrollOut({
+			targets: ".translate-X",
+			cssProps: {
+				viewportY: true,
+			},
 		});
 	}, []);
 

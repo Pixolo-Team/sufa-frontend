@@ -1,6 +1,5 @@
 // REACT //
 import React from "react";
-import Marquee from "react-fast-marquee";
 
 // STYLES //
 import styles from "./children-to-champion.module.scss";
@@ -27,9 +26,9 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 			<div className={`${styles.marqueeContainer}`}>
 				{/* Top Marquee */}
 				<div
-					className={`${styles.topMarquee} bg-primary-regular flex  justify-center`}
+					className={`${styles.topMarquee} translate-X bg-primary-regular flex  justify-center`}
 				>
-					<Marquee direction="left">
+					<div className={`${styles.innerTextWrap}`}>
 						<div className={styles.marqueeItem}>
 							<ChildrenChampionItem color="primary" />
 						</div>
@@ -39,12 +38,12 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 						<div className={styles.marqueeItem}>
 							<ChildrenChampionItem color="primary" />
 						</div>
-					</Marquee>
+					</div>
 				</div>
 
 				{/* Bottom Marquee */}
-				<div className={`${styles.bottomMarquee}`}>
-					<Marquee direction="right">
+				<div className={`${styles.bottomMarquee} translate-X`}>
+					<div className={`${styles.innerTextWrap}`}>
 						<div className={styles.marqueeItem}>
 							<ChildrenChampionItem color="default" />
 						</div>
@@ -54,7 +53,7 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 						<div className={styles.marqueeItem}>
 							<ChildrenChampionItem color="default" />
 						</div>
-					</Marquee>
+					</div>
 				</div>
 			</div>
 		</section>
