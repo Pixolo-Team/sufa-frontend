@@ -1,6 +1,7 @@
 "use client";
 // REACT //
 import React from "react";
+import Tilty from "react-tilty";
 
 // STYLES //
 import styles from "./courses-card.module.scss";
@@ -8,7 +9,6 @@ import styles from "./courses-card.module.scss";
 // COMPONENTS //
 import Image from "next/image";
 import Icon from "@/neevo/components/Icon";
-import Tilty from "react-tilty";
 
 interface CoursesCardProps {
 	wrapperClass?: string;
