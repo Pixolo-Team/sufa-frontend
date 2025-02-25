@@ -1,6 +1,9 @@
 .bannerWrapper {
+	--clip-animation-duration: 0.7s;
 	width: 100%;
-	height: 100vh;
+	max-height: 100vh;
+	min-height: 600px;
+	aspect-ratio: 16/9;
 	position: relative;
 	background-color: var(--color-brand-primary-deep);
 	border-bottom-left-radius: 3vw;
@@ -12,7 +15,7 @@
 		height: 100%;
 		position: relative;
 		clip-path: inset(0 0 100% 0);
-		transition: clip-path 1.5s ease-in-out;
+		transition: clip-path var(--clip-animation-duration) ease-out;
 
 		&.revealContainer {
 			clip-path: inset(0 0 0 0); /* Fully visible */
@@ -20,7 +23,7 @@
 
 		iframe {
 			width: 100%;
-			height: 100%;
+			aspect-ratio: 16/9;
 		}
 
 		.overlay {
@@ -46,8 +49,8 @@
 		z-index: 22;
 		color: var(--color-brand-primary-contrast);
 		transform: translateY(400px);
-		transition: opacity 1.1s ease-in-out, transform 1.1s ease-in-out;
-		transition-delay: 1.2s;
+		transition: all 0.5s ease-out;
+		transition-delay: var(--clip-animation-duration);
 
 		&.showContent {
 			transform: translateY(0);
