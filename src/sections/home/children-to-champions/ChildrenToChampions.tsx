@@ -21,36 +21,35 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<section className={`${styles.childrenToChampionsWrapper} section-spacing`}>
-			{/* Marquee Wrapper */}
-			<div className={`${styles.marqueeContainer}`}>
-				{/* Top Marquee */}
+		<section className={`${styles.childrenToChampionsWrapper} section-spacing `}>
+			{/* Scrolling Texts Wrapper */}
+			<div className={`${styles.scrollingTextsContainer}`}>
+				{/* Top Scrolling Text */}
 				<div
-					className={`${styles.topMarquee} translate-X bg-primary-regular flex  justify-center`}
+					className={`${styles.topScrollingTexts} translate-X2 bg-primary-regular`}
 				>
 					<div className={`${styles.innerTextWrap}`}>
-						<div className={styles.marqueeItem}>
+						<div className={styles.scrollingText}>
 							<ChildrenChampionItem color="primary" />
 						</div>
-						<div className={styles.marqueeItem}>
+						<div className={styles.scrollingText}>
 							<ChildrenChampionItem color="primary" />
 						</div>
-						<div className={styles.marqueeItem}>
+						<div className={styles.scrollingText}>
 							<ChildrenChampionItem color="primary" />
 						</div>
 					</div>
 				</div>
-
-				{/* Bottom Marquee */}
-				<div className={`${styles.bottomMarquee} translate-X`}>
+				{/* Bottom Scrolling Text */}
+				<div className={`${styles.bottomScrollingTexts} translate-X1`}>
 					<div className={`${styles.innerTextWrap}`}>
-						<div className={styles.marqueeItem}>
+						<div className={styles.scrollingText}>
 							<ChildrenChampionItem color="default" />
 						</div>
-						<div className={styles.marqueeItem}>
+						<div className={styles.scrollingText}>
 							<ChildrenChampionItem color="default" />
 						</div>
-						<div className={styles.marqueeItem}>
+						<div className={styles.scrollingText}>
 							<ChildrenChampionItem color="default" />
 						</div>
 					</div>

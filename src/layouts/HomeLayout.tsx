@@ -48,7 +48,7 @@ const HomeLayout: React.FC<unknown> = () => {
 		});
 
 		ScrollOut({
-			targets: ".translate-X",
+			targets: ".translate-X1,.translate-X2",
 			cssProps: {
 				viewportY: true,
 			},
