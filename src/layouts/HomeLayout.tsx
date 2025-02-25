@@ -14,6 +14,7 @@ import styles from "./home-layout.module.scss";
 import Image from "next/image";
 import Popup from "@/neevo/components/popup/Popup";
 import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
+import StickySocial from "@/components/sticky-social/StickySocial";
 
 // OTHERS //
 import ScrollOut from "scroll-out";
@@ -118,6 +119,8 @@ const HomeLayout: React.FC<unknown> = () => {
 					<EnquiryForm />
 				</Popup>
 			)}
+
+			<StickySocial />
 		</div>
 	);
 };

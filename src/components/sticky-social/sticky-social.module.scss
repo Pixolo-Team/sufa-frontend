@@ -1,0 +1,57 @@
+// When the page is being scrolled Down
+[data-scroll-dir-y="1"] {
+	.stickySocialWrap {
+		transform: translateY(0) translateX(-50%);
+		opacity: 1;
+	}
+}
+
+// // When the page is being scrolled Up
+[data-scroll-dir-y="-1"] {
+	.stickySocialWrap {
+		transform: translateY(100%) translateX(-50%);
+		opacity: 0;
+	}
+}
+
+.stickySocialWrap {
+	position: fixed;
+	bottom: 24px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: var(--color-brand-primary-regular);
+	padding: var(--padding-medium) 26px;
+	border-radius: 20px;
+	color: var(--color-brand-neutral-dark-900);
+	z-index: 999;
+	transition: all 0.3s ease-in-out;
+	gap: 26px;
+	.socialIconsWrapper {
+		gap: var(--gap-medium);
+		a {
+			display: flex;
+		}
+		.line {
+			width: 12px;
+			height: 2px;
+			background-color: var(--color-background-light-tint);
+			transform: rotate(90deg);
+			border-radius: 2px;
+		}
+	}
+}
+// Mobile Phones
+@media only screen and (min-width: 600px) {
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
+}
