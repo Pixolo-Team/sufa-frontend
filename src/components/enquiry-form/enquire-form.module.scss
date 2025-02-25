@@ -1,34 +1,31 @@
 .inputBox,
 .textArea {
-    width: 100%;
+	width: 100%;
 }
 
 .inputBoxWrapper {
-    gap: var(--gap-xxlarge);
+	gap: var(--gap-xxlarge);
 }
 
 .buttonWrapper {
-    margin-top: var(--margin-xxlarge);
+	margin-top: var(--margin-xxlarge);
 }
 
-
 // Mobile Phones
-@media only screen and (min-width: 600px) {}
+@media only screen and (min-width: 600px) {
+}
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
-    .inputBoxWrapper {
-        flex-direction: row;
-    }
-
-    .inputBox {
-        width: calc(50% - 12px);
-    }
-
+	.inputBoxWrapper {
+		flex-direction: row;
+	}
 }
 
 // Ipad air
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+}
 
 // Small laptops
-@media only screen and (min-width: 1500px) {}
+@media only screen and (min-width: 1500px) {
+}
