@@ -21,17 +21,14 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<section className={`${styles.childrenToChampionsWrapper} section-spacing `}>
+		<section
+			className={`${styles.childrenToChampionsWrapper} childrenToChampionsWrapper section-spacing `}
+		>
 			{/* Scrolling Texts Wrapper */}
 			<div className={`${styles.scrollingTextsContainer}`}>
 				{/* Top Scrolling Text */}
-				<div
-					className={`${styles.topScrollingTexts} translate-X2 bg-primary-regular`}
-				>
+				<div className={`${styles.topScrollingTexts} bg-primary-regular`}>
 					<div className={`${styles.innerTextWrap}`}>
-						<div className={styles.scrollingText}>
-							<ChildrenChampionItem color="primary" />
-						</div>
 						<div className={styles.scrollingText}>
 							<ChildrenChampionItem color="primary" />
 						</div>
@@ -41,11 +38,8 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 					</div>
 				</div>
 				{/* Bottom Scrolling Text */}
-				<div className={`${styles.bottomScrollingTexts} translate-X1`}>
+				<div className={`${styles.bottomScrollingTexts}`}>
 					<div className={`${styles.innerTextWrap}`}>
-						<div className={styles.scrollingText}>
-							<ChildrenChampionItem color="default" />
-						</div>
 						<div className={styles.scrollingText}>
 							<ChildrenChampionItem color="default" />
 						</div>
