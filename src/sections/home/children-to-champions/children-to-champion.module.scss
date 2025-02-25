@@ -1,33 +1,42 @@
 .childrenToChampionsWrapper {
 	padding: 15vmin 0;
-	overflow: hidden;
 }
 
-.topMarquee {
+.topScrollingTexts {
 	transform: translateY(50%) rotate(5deg) scale(1.1); // Rotates slightly
+
+	.innerTextWrap {
+		transform: translate3d(calc(((var(--viewport-y) * 50%) - 50%) + ((var(--viewport-y) * -50vw) + 50vw)), 0, 0);
+	}
 }
 
-.bottomMarquee {
+.innerTextWrap {
+	display: flex;
+	white-space: nowrap;
+	width: max-content;
+}
+
+.bottomScrollingTexts {
 	background-color: var(--color-brand-neutral-light-100);
 	transform: translateY(-50%) rotate(-5deg) scale(1.1); // Opposite rotation
+
+	.innerTextWrap {
+		transform: translate3d(calc((var(--viewport-y) * -50% - 50%) + (var(--viewport-y) * 50vw + 50vw)), 0, 0);
+	}
 }
 
-.marqueeItem {
+.scrollingText {
 	padding: var(--padding-regular);
 }
 
 // Mobile Phones
-@media only screen and (min-width: 600px) {
-}
+@media only screen and (min-width: 600px) {}
 
 // Ipad Mini
-@media only screen and (min-width: 768px) {
-}
+@media only screen and (min-width: 768px) {}
 
 // Ipad air
-@media only screen and (min-width: 992px) {
-}
+@media only screen and (min-width: 992px) {}
 
 // Small laptops
-@media only screen and (min-width: 1500px) {
-}
+@media only screen and (min-width: 1500px) {}
