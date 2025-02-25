@@ -37,8 +37,12 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 	// View starts here
 	return (
 		// Course card and Image
-		<Tilty glare={true}>
-			<div className={`${styles.contentWrapper} ${wrapperClass}`}>
+		<Tilty
+			className={`${styles.contentWrapper} ${wrapperClass}`}
+			glare={true}
+			maxGlare={0.5}
+		>
+			<div>
 				{/* Course Image */}
 				<div className={styles.imageContainer}>
 					<Image
