@@ -14,7 +14,9 @@
 	height: max-content;
 	position: fixed;
 	width: 100%;
-	bottom: -100%;
+	bottom: 0;
+	right: 0;
+	transform: translateY(100%);
 	background-color: var(--color-background-light-tint);
 	padding: 28px;
 	border-top-left-radius: var(--border-radius-large);
@@ -22,7 +24,7 @@
 	z-index: 9999;
 	transition: all 0.5s ease-out;
 	&.showPopup {
-		bottom: 0;
+		transform: translateY(0%);
 	}
 	.closeIcon {
 		position: absolute;
@@ -30,7 +32,7 @@
 		top: 28px;
 	}
 	.formTitle {
-		font-size: 28px;
+		font-size: var(--color-brand-font-size-2xlarge);
 		margin-bottom: var(--margin-xxlarge);
 	}
 }
@@ -41,7 +43,7 @@
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.8);
-	z-index: 9999;
+	z-index: 9998;
 }
 
 // Mobile Phones
@@ -58,17 +60,14 @@
 	}
 	.formModal {
 		height: 100vh;
-		top: 50%;
-		transform: translateY(-50%);
 		border-radius: unset;
-		right: -100%;
 		width: 500px;
-		bottom: unset;
+		transform: translateX(100%);
 		&.showPopup {
-			right: 0;
+			transform: translateX(0);
 		}
 		.formTitle {
-			font-size: 38px;
+			font-size: var(--color-brand-font-size-4xlarge);
 		}
 	}
 }
