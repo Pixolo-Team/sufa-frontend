@@ -59,7 +59,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 							<Button
 								text={"Contact Us"}
 								shape={Shapes.ROUNDED}
-								size={ButtonSizes.MEDIUM}
+								size={ButtonSizes.LARGE}
 								color={Colors.SECONDARY}
 								onClick={() => {
 									onButtonClick();
