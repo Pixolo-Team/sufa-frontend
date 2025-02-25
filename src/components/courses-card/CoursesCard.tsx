@@ -1,6 +1,7 @@
 "use client";
 // REACT //
 import React from "react";
+import Tilty from "react-tilty";
 
 // STYLES //
 import styles from "./courses-card.module.scss";
@@ -36,32 +37,43 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 	// View starts here
 	return (
 		// Course card and Image
-		<div className={`${styles.contentWrapper} ${wrapperClass}`}>
-			{/* Course Image */}
-			<div className={styles.imageContainer}>
-				<Image
-					src={courseImageSrc}
-					alt={courseTitle}
-					className={`${styles.courseImage} img-responsive`}
-					width={640}
-					height={360}
-				/>
+		<Tilty
+			className={`${styles.contentWrapper} ${wrapperClass}`}
+			glare={true}
+			maxGlare={0.5}
+			scale={1.5}
+		>
+			<div>
+				{/* Course Image */}
+				<div className={styles.imageContainer}>
+					<Image
+						src={courseImageSrc}
+						alt={courseTitle}
+						className={`${styles.courseImage} img-responsive`}
+						width={640}
+						height={360}
+					/>
+				</div>
+				<div className={styles.textWrapper}>
+					{/* Card title */}
+					{courseTitle.trim() !== "" && (
+						<p className={`${styles.cardText} font-weight-600`}>{courseTitle}</p>
+					)}
+				</div>
+				{/* Icon Button */}
+				<button
+					className={`${styles.linkButton} flex align-center justify-center`}
+					onClick={onClick}
+				>
+					{/* Icon */}
+					<Icon
+						className={styles.buttonIcon}
+						iconName={"link-arrow"}
+						mode="filled"
+					/>
+				</button>
 			</div>
-			<div className={styles.textWrapper}>
-				{/* Card title */}
-				{courseTitle.trim() !== "" && (
-					<p className={`${styles.cardText} font-weight-600`}>{courseTitle}</p>
-				)}
-			</div>
-			{/* Icon Button */}
-			<button
-				className={`${styles.linkButton} flex align-center justify-center`}
-				onClick={onClick}
-			>
-				{/* Icon */}
-				<Icon className={styles.buttonIcon} iconName={"link-arrow"} mode="filled" />
-			</button>
-		</div>
+		</Tilty>
 	);
 };
 

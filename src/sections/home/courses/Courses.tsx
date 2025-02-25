@@ -39,19 +39,19 @@ const Courses: React.FC<unknown> = () => {
 				{/* Courses card components */}
 				<div className={`${styles.cardsWrapper} flex flex-column`}>
 					<CoursesCard
-						wrapperClass={`${styles.cardItem} fade-in-up`}
+						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={gdpImage.src}
 						courseTitle="Goalkeeper Development"
 						onClick={() => console.log("Goalkeeper Development")}
 					/>
 					<CoursesCard
-						wrapperClass={`${styles.cardItem} fade-in-up`}
+						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u11Image.src}
 						courseTitle="Under-11 Boys"
 						onClick={() => console.log("Under-11 Boys")}
 					/>
 					<CoursesCard
-						wrapperClass={`${styles.cardItem} fade-in-up`}
+						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u15Image.src}
 						courseTitle="Under-15 Boys"
 						onClick={() => console.log("Under-15 Boys")}

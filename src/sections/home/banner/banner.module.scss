@@ -1,6 +1,9 @@
 .bannerWrapper {
+	--clip-animation-duration: 0.7s;
 	width: 100%;
-	height: 100vh;
+	max-height: 100vh;
+	min-height: 600px;
+	aspect-ratio: 16/9;
 	position: relative;
 	background-color: var(--color-brand-primary-deep);
 	border-bottom-left-radius: 3vw;
@@ -10,24 +13,32 @@
 	.imageWrapper {
 		width: 100%;
 		height: 100%;
+		position: relative;
+		clip-path: inset(0 0 100% 0);
+		transition: clip-path var(--clip-animation-duration) ease-out;
+
+		&.revealContainer {
+			clip-path: inset(0 0 0 0); /* Fully visible */
+		}
+
 		iframe {
 			width: 100%;
-			height: 100%;
+			aspect-ratio: 16/9;
 		}
-	}
 
-	&::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(
-			180deg,
-			rgba(1, 100, 162, 0.05) 0%,
-			var(--color-brand-primary-deep, #0f9563) 72.95%
-		);
+		.overlay {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(
+				180deg,
+				rgba(1, 100, 162, 0.05) 0%,
+				var(--color-brand-primary-deep, #0f9563) 72.95%
+			);
+		}
 	}
 
 	.textContent {
@@ -37,6 +48,13 @@
 		text-align: center;
 		z-index: 22;
 		color: var(--color-brand-primary-contrast);
+		transform: translateY(400px);
+		transition: all 0.5s ease-out;
+		transition-delay: var(--clip-animation-duration);
+
+		&.showContent {
+			transform: translateY(0);
+		}
 
 		.bannerTitle {
 			font-size: var(--color-brand-font-size-heading-2);
