@@ -49,7 +49,7 @@ const Banner: React.FC<BannerProps> = ({
 			>
 				{/* Video / Image Wrapper */}
 				<iframe
-					src="https://www.youtube.com/embed/5xpKumlsud8?controls=0&loop=1&autoplay=1&mute=1&rel=0&showinfo=0"
+					src="https://www.youtube.com/embed/5xpKumlsud8?playlist=5xpKumlsud8&controls=0&loop=1&autoplay=1&mute=1&rel=0&showinfo=0"
 					frameBorder="0"
 					title="Pro Football Academy Promo"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
