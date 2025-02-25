@@ -3,9 +3,8 @@
 
 .contentWrapper {
 	width: 100%;
-	border: 12px solid var(--card-color, #16db93); // Todo: Color token
+	border: 12px solid var(--card-color, #16db93); //TODO: Add token
 	border-radius: 20px;
-	// position: relative;
 	overflow: hidden;
 	cursor: pointer;
 
@@ -15,7 +14,7 @@
 		.courseImage {
 			width: 100%;
 			aspect-ratio: 16/9;
-			// transition: all 0.2s ease-in-out;
+			transition: all 0.2s ease-in-out;
 		}
 	}
 
@@ -29,7 +28,7 @@
 		bottom: 0;
 
 		.cardText {
-			font-size: var(--color-brand-font-size-heading-4); // TODO: Use token
+			font-size: var(--color-brand-font-size-heading-4);
 			color: #fff;
 			@include multiline-ellipsis(2);
 		}
@@ -38,7 +37,6 @@
 	.linkButton {
 		width: 38px;
 		height: 38px;
-
 		border-radius: 100%;
 		background-color: #fff; // TODO: Use token
 		position: absolute;
@@ -47,12 +45,11 @@
 
 		.buttonIcon {
 			transform: rotate(-45deg);
-			// transition: all 0.2s ease-in-out;
+			transition: all 0.2s ease-in-out;
 		}
 	}
 
 	&:hover {
-
 		.linkButton {
 			.buttonIcon {
 				transform: rotate(0deg);
