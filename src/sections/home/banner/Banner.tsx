@@ -47,16 +47,7 @@ const Banner: React.FC<BannerProps> = ({
 			<div
 				className={`${styles.imageWrapper} ${show ? styles.revealContainer : ""}`}
 			>
-				{/* Image Wrapper */}
-				{/* <iframe
-					src="https://www.youtube.com/embed/5xpKumlsud8?si=W5bgTXuJ7G1GkH6s&amp;controls=0&loop=1&autoplay=1&mute=1&rel=0&modestbranding=1&playlist=5xpKumlsud8&start=5&showinfo=0&disablekb=1&fs=0"
-					title="YouTube video player"
-					frameBorder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerPolicy="strict-origin-when-cross-origin"
-					allowFullScreen
-				></iframe> */}
-
+				{/* Video / Image Wrapper */}
 				<iframe
 					src="https://www.youtube.com/embed/5xpKumlsud8?controls=0&loop=1&autoplay=1&mute=1&rel=0&showinfo=0"
 					frameBorder="0"
