@@ -10,6 +10,30 @@
 	bottom: 20px;
 	right: 20px;
 }
+.formModal {
+	height: max-content;
+	position: fixed;
+	width: 100%;
+	bottom: -100%;
+	background-color: var(--color-background-light-tint);
+	padding: 28px;
+	border-top-left-radius: var(--border-radius-large);
+	border-top-right-radius: var(--border-radius-large);
+	z-index: 9999;
+	transition: all 0.5s ease-out;
+	&.showPopup {
+		bottom: 0;
+	}
+	.closeIcon {
+		position: absolute;
+		right: 28px;
+		top: 28px;
+	}
+	.formTitle {
+		font-size: 28px;
+		margin-bottom: var(--margin-xxlarge);
+	}
+}
 
 // Mobile Phones
 @media only screen and (min-width: 600px) {
@@ -22,6 +46,21 @@
 		height: 50px;
 		bottom: 50px;
 		right: 50px;
+	}
+	.formModal {
+		height: 100vh;
+		top: 50%;
+		transform: translateY(-50%);
+		border-radius: unset;
+		right: -100%;
+		width: 500px;
+		bottom: unset;
+		&.showPopup {
+			right: 0;
+		}
+		.formTitle {
+			font-size: 38px;
+		}
 	}
 }
 

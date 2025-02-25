@@ -75,6 +75,7 @@ const CoachesCard: React.FC<CoachesCardProps> = ({
 							className={`${styles.linkButton} flex align-center justify-center`}
 						>
 							<a
+								className="flex"
 								href={socialMedia.instagram}
 								target="_blank"
 								rel="noopener noreferrer"

@@ -12,8 +12,8 @@ import styles from "./home-layout.module.scss";
 
 // COMPONENTS //
 import Image from "next/image";
-import Popup from "@/neevo/components/popup/Popup";
 import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
+import Icon from "@/neevo/components/Icon";
 
 // OTHERS //
 import ScrollOut from "scroll-out";
@@ -103,21 +103,18 @@ const HomeLayout: React.FC<unknown> = () => {
 					/>
 				</a>
 			</div>
-
-			{/* Contact Us popup */}
-			{showEnquiryPopup && (
-				<Popup
-					onCloseClick={() => {
-						setShowEnquiryPopup(false);
-					}}
-					onOverlayClick={() => {
-						setShowEnquiryPopup(false);
-					}}
-					size={Sizes.SMALL}
-				>
-					<EnquiryForm />
-				</Popup>
-			)}
+			{/* Contact Us modal */}
+			<div
+				className={`${styles.formModal} ${
+					showEnquiryPopup ? styles.showPopup : ""
+				}`}
+			>
+				<div onClick={() => setShowEnquiryPopup(false)}>
+					<Icon iconName={"close"} className={styles.closeIcon} mode="filled" />
+				</div>
+				<h2 className={styles.formTitle}>Book A Trial Now</h2>
+				<EnquiryForm />
+			</div>
 		</div>
 	);
 };
