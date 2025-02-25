@@ -103,6 +103,12 @@ const HomeLayout: React.FC<unknown> = () => {
 					/>
 				</a>
 			</div>
+			{showEnquiryPopup && (
+				<div
+					className={styles.overlay}
+					onClick={() => setShowEnquiryPopup(false)}
+				></div>
+			)}
 			{/* Contact Us modal */}
 			<div
 				className={`${styles.formModal} ${
