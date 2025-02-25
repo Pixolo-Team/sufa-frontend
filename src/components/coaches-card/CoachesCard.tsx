@@ -95,7 +95,7 @@ const CoachesCard: React.FC<CoachesCardProps> = ({
 				</div>
 				<div className={"flex justify-center"}>
 					{/* Description */}
-					<p className={`${styles.description} font-secondary font-weight-600`}>
+					<p className={`${styles.description} font-secondary font-weight-500`}>
 						{description}
 					</p>
 				</div>
