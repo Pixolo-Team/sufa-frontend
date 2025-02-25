@@ -44,7 +44,7 @@ const HomeLayout: React.FC<unknown> = () => {
 		// Fade In Up animations
 		ScrollOut({
 			targets: ".fade-in-up",
-			cssProps: true,
+			once: true,
 		});
 
 		ScrollOut({
