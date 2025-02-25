@@ -95,7 +95,7 @@ export default function RootLayout({
 							<ReactLenis
 								root
 								options={{
-									lerp: 0.3,
+									lerp: 0.5,
 									smoothWheel: true,
 									duration: 1.5,
 								}}
