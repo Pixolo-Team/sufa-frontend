@@ -5,7 +5,7 @@
 	width: 100%;
 	border: 12px solid var(--card-color, #16db93); // Todo: Color token
 	border-radius: 20px;
-	position: relative;
+	// position: relative;
 	overflow: hidden;
 	cursor: pointer;
 
@@ -15,7 +15,7 @@
 		.courseImage {
 			width: 100%;
 			aspect-ratio: 16/9;
-			transition: all 0.2s ease-in-out;
+			// transition: all 0.2s ease-in-out;
 		}
 	}
 
@@ -49,11 +49,7 @@
 	}
 
 	&:hover {
-		.imageContainer {
-			.courseImage {
-				transform: scale(1.1);
-			}
-		}
+
 		.linkButton {
 			.buttonIcon {
 				transform: rotate(0deg);
@@ -61,6 +57,7 @@
 		}
 	}
 }
+
 // Mobile Phones
 @media only screen and (min-width: 600px) {
 }
