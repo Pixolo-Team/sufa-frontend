@@ -13,6 +13,10 @@
 .messageWrapper {
 	flex: 1;
 }
+.verifiedIcon {
+	width: 20px;
+	height: 34px;
+}
 .founderName {
 	color: var(--color-brand-primary-regular);
 	font-size: var(--color-brand-font-size-medium);
@@ -45,6 +49,10 @@
 @media only screen and (min-width: 992px) {
 	.doubleQuotes {
 		justify-content: flex-start;
+	}
+	.verifiedIcon {
+		width: 52px;
+		height: 90px;
 	}
 	.messageWrapper {
 		position: relative;
