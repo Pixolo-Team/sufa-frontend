@@ -2,20 +2,26 @@
 	max-width: 800px;
 	margin: auto;
 	gap: 10px;
+	position: relative;
 	.textWrapper {
-		width: 70%;
+		width: 100%;
 		.heading {
 			color: var(--color-brand-primary-deep);
 			font-size: var(--color-brand-font-size-heading-3);
+			padding-right: 30%;
 		}
 		.subHeading {
 			color: var(--color-text-tint);
 			font-size: --color-brand-font-size-xsmall;
 			margin-top: var(--margin-regular);
 			margin-bottom: var(--margin-xxlarge);
+			padding-right: 30%;
 		}
 	}
 	.imageWrapper {
+		position: absolute;
+		top: 0;
+		right: 0;
 		width: 30%;
 	}
 }
