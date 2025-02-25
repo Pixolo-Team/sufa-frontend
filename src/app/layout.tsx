@@ -1,5 +1,6 @@
 // REACT //
 import { Suspense } from "react";
+import ReactLenis from "lenis/react";
 
 // ENUMS //
 import { Themes } from "@/neevo/enums/theme.enum";
@@ -13,8 +14,6 @@ import localFont from "next/font/local";
 import { Montserrat } from "next/font/google";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
-
-// OTHERS //
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 // FONTS //
@@ -64,7 +63,7 @@ export default function RootLayout({
 	// Define Navigation
 
 	// Define Context
-	
+
 	// Define States
 
 	// Helper Functions
@@ -92,7 +91,18 @@ export default function RootLayout({
 						<Header />
 
 						{/* Main content */}
-						<main className="main">{children}</main>
+						<main className="main">
+							<ReactLenis
+								root
+								options={{
+									lerp: 0.3,
+									smoothWheel: true,
+									duration: 1.5,
+								}}
+							>
+								{children}
+							</ReactLenis>
+						</main>
 
 						{/* Footer component */}
 						<Footer />
