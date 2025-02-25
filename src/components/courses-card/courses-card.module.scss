@@ -50,6 +50,8 @@
 	}
 
 	&:hover {
+		box-shadow: 0px 10px 40px 10px rgba(0, 0, 0, 0.2);
+		z-index: 1;
 		.linkButton {
 			.buttonIcon {
 				transform: rotate(0deg);
@@ -59,13 +61,17 @@
 }
 
 // Mobile Phones
-@media only screen and (min-width: 600px) {}
+@media only screen and (min-width: 600px) {
+}
 
 // Ipad Mini
-@media only screen and (min-width: 768px) {}
+@media only screen and (min-width: 768px) {
+}
 
 // Ipad air
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+}
 
 // Small laptops
-@media only screen and (min-width: 1500px) {}
+@media only screen and (min-width: 1500px) {
+}

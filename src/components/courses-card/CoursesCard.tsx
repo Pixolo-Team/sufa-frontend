@@ -41,10 +41,7 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 			className={`${styles.contentWrapper} ${wrapperClass}`}
 			glare={true}
 			maxGlare={0.5}
-			style={{
-				boxShadow: "0 3px 47px rgba(0, 0, 0, 0.2)",
-			}}
-			scale={1.05}
+			scale={1.5}
 		>
 			<div>
 				{/* Course Image */}
