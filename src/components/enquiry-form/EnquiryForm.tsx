@@ -205,7 +205,7 @@ const EnquiryForm: React.FC = () => {
 					text="Submit"
 					color={Colors.SECONDARY}
 					shape={Shapes.ROUNDED}
-					size={ButtonSizes.LARGE}
+					size={ButtonSizes.XLARGE}
 				/>
 			</div>
 		</>

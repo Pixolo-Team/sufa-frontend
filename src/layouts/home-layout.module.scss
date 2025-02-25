@@ -18,7 +18,8 @@
 	right: 0;
 	transform: translateY(100%);
 	background-color: var(--color-background-light-tint);
-	padding: 28px;
+	padding: 32px;
+	border-radius: unset;
 	border-top-left-radius: var(--border-radius-large);
 	border-top-right-radius: var(--border-radius-large);
 	z-index: 9999;
@@ -61,8 +62,11 @@
 	.formModal {
 		height: 100vh;
 		border-radius: unset;
+		border-top-left-radius: var(--border-radius-large);
+		border-bottom-left-radius: var(--border-radius-large);
 		width: 500px;
 		transform: translateX(100%);
+		padding: 46px;
 		&.showPopup {
 			transform: translateX(0);
 		}
