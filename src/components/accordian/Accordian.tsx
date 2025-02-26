@@ -1,5 +1,5 @@
 // REACT //
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // STYLES //
 import styles from "./accordian.module.scss";
@@ -24,12 +24,19 @@ const Accordian: React.FC<AccordianProps> = ({
 	// Navigation and Route Params
 
 	// Define States
+	const answerRef = useRef<HTMLDivElement>(null);
+	const [height, setHeight] = useState<number>(0);
 
 	// Define Refs
 
 	// Helper Functions
 
 	// UseEffect Functions and UseFocusEffect Functions
+	useEffect(() => {
+		if (answerRef.current) {
+			setHeight(isOpen ? answerRef.current.scrollHeight : 0);
+		}
+	}, [isOpen]);
 
 	// View starts here
 	return (
@@ -51,12 +58,16 @@ const Accordian: React.FC<AccordianProps> = ({
 					/>
 				</button>
 			</div>
-			{isOpen && (
-				<div className={styles.answerWrapper}>
-					{/* Description */}
-					<p className={`${styles.description} font-weight-400`}>{description}</p>
-				</div>
-			)}
+			<div
+				className={styles.answerWrapper}
+				ref={answerRef}
+				style={{
+					height: `${height}px`,
+				}}
+			>
+				{/* Description */}
+				<p className={`${styles.description} font-weight-400`}>{description}</p>
+			</div>
 		</div>
 	);
 };

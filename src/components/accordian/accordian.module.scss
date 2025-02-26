@@ -1,5 +1,4 @@
 .accordianItem {
-	padding: var(--padding-medium) var(--padding-large);
 	border-radius: 16px;
 	background-color: var(--color-brand-neutral-light-200);
 
@@ -7,6 +6,7 @@
 		background-color: var(--color-brand-primary-deep);
 
 		.questionWrapper {
+
 			.title {
 				color: var(--color-brand-primary-contrast);
 			}
@@ -21,17 +21,17 @@
 		}
 
 		.answerWrapper {
-			max-width: 90%;
-
 			.description {
 				color: var(--color-brand-neutral-light-200);
 			}
 		}
 	}
 
+
 	.questionWrapper {
 		gap: var(--gap-xlarge);
 		cursor: pointer;
+		padding: var(--padding-medium) var(--padding-large);
 
 		.title {
 			font-size: var(--color-brand-font-size-small);
@@ -52,9 +52,12 @@
 	}
 
 	.answerWrapper {
-		margin-top: var(--margin-regular);
+		overflow: hidden;
+		max-width: 90%;
+		transition: all 0.2s ease-in-out;
 
 		.description {
+			padding: 0 var(--padding-large) var(--padding-medium) var(--padding-large);
 			font-size: var(--color-brand-font-size-xsmall);
 			line-height: 20px;
 		}
@@ -62,15 +65,15 @@
 }
 
 // Mobile Phones
-@media only screen and (min-width: 600px) {
-}
+@media only screen and (min-width: 600px) {}
 
 // Ipad air
 @media only screen and (min-width: 768px) {
 	.accordianItem {
-		padding: var(--padding-xlarge) var(--padding-xxlarge);
 
 		.questionWrapper {
+			padding: var(--padding-xlarge) var(--padding-xxlarge);
+
 			.title {
 				font-size: var(--color-brand-font-size-medium);
 			}
@@ -78,17 +81,16 @@
 
 		.answerWrapper {
 			.description {
-				font-size: var(--color-brand-font-size-small);
-				line-height: 20px;
+				padding: 0 var(--padding-xxlarge) var(--padding-xlarge) var(--padding-xxlarge);
+				font-size: var(--color-brand-font-size-regular);
+				line-height: 25px;
 			}
 		}
 	}
 }
 
 // Ipad Mini
-@media only screen and (min-width: 992px) {
-}
+@media only screen and (min-width: 992px) {}
 
 // Small laptops
-@media only screen and (min-width: 1500px) {
-}
+@media only screen and (min-width: 1500px) {}

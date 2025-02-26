@@ -59,6 +59,9 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 							<div className={styles.scrollingText}>
 								<ChildrenChampionItem color="primary" />
 							</div>
+							<div className={styles.scrollingText}>
+								<ChildrenChampionItem color="primary" />
+							</div>
 						</motion.div>
 					</motion.div>
 				</div>
@@ -69,6 +72,9 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 							className={`${styles.innerTextWrap}`}
 							style={{ x: bottomTextX }}
 						>
+							<div className={styles.scrollingText}>
+								<ChildrenChampionItem color="default" />
+							</div>
 							<div className={styles.scrollingText}>
 								<ChildrenChampionItem color="default" />
 							</div>
