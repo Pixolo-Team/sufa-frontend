@@ -125,7 +125,9 @@ const Coaches: React.FC<unknown> = () => {
 					))}
 				</Slider>
 				{/* Custom slick arrows */}
-				<CustomSlickArrows sliderRef={sliderRef} />
+				<div className={styles.customArrows}>
+					<CustomSlickArrows sliderRef={sliderRef} />
+				</div>
 			</div>
 		</section>
 	);
