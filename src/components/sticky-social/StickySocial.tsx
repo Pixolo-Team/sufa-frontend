@@ -45,7 +45,7 @@ const StickySocial: React.FC<unknown> = () => {
 				<SkorostLogo />
 				<div className={`${styles.socialIconsWrapper} flex align-center`}>
 					{/* Phone */}
-					<a href="/" target="_blank" rel="noreferrer">
+					<a href="tel: 9004453226" target="_blank" rel="noreferrer">
 						<PhoneIcon style={{ color: "white" }} />
 					</a>
 					<div className={styles.line}></div>
