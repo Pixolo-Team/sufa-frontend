@@ -42,6 +42,7 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 			glare={true}
 			maxGlare={0.5}
 			scale={1.5}
+			gyroscope={false}
 		>
 			<div>
 				{/* Course Image */}
