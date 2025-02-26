@@ -33,7 +33,7 @@ const Header: React.FC<unknown> = () => {
 			<div className={styles.headerWrap}>
 				<div className={`${styles.headerMain} flex justify-between align-center`}>
 					{/* Header logo */}
-					<SkorostLogo />
+					<SkorostLogo className={styles.headerLogo} />
 
 					{/* Links */}
 					<nav className={`${styles.pageLinkWrap} font-weight-500 justify-end`}>

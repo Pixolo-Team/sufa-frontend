@@ -26,6 +26,9 @@
 		padding: var(--padding-large) 28px;
 		background-color: var(--color-background-light-tint);
 		border-radius: var(--border-radius-large);
+		.headerLogo {
+			color: var(--color-brand-primary-deep);
+		}
 		.pageLink {
 			font-size: var(--color-brand-font-size-medium);
 			padding: var(--padding-large) 0;
