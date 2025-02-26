@@ -7,7 +7,8 @@
 }
 
 // // When the page is being scrolled Up
-[data-scroll-dir-y="-1"] {
+[data-scroll-dir-y="-1"],
+[data-scroll-dir-y="0"] {
 	.stickySocialWrap {
 		transform: translateY(100%) translateX(-50%);
 		opacity: 0;

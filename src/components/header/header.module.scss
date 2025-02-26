@@ -39,12 +39,16 @@
 		}
 	}
 	.headerDropdown {
+		position: absolute;
+		top: 100%;
+		width: 100%;
 		padding: var(--padding-medium);
 		border-radius: var(--border-radius-large);
 		margin-top: var(--margin-small);
 		background-color: var(--color-background-light-tint);
 		visibility: hidden;
 		opacity: 0;
+		pointer-events: none;
 		transform: translateY(30px);
 		transition: all 0.3s ease-in-out;
 		.pageLink {
@@ -55,6 +59,7 @@
 			visibility: visible;
 			opacity: 1;
 			transform: translateY(0px);
+			pointer-events: all;
 		}
 	}
 }
