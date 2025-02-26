@@ -25,19 +25,25 @@ interface JoinUsProps {
 
 /** Join Us Screen */
 const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
-	const ref = useRef(null);
-	const { scrollYProgress } = useScroll({
-		target: ref,
-		offset: ["start end", "end start"],
-	});
-	const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 	// Navigation and Route Params
 
 	// Define States
 
 	// Define Refs
+	const joinUsSectionRef = useRef(null);
 
 	// Helper Functions
+	// Get the vertical scroll progress relative to the referenced section
+	const { scrollYProgress } = useScroll({
+		target: joinUsSectionRef,
+		offset: ["start end", "end start"],
+	});
+	// Apply a vertical parallax effect based on scroll progress
+	const joinUsSectionStyles = useTransform(
+		scrollYProgress,
+		[0, 1],
+		["-20%", "20%"]
+	);
 
 	// UseEffect Functions and UseFocusEffect Functions
 
@@ -45,10 +51,13 @@ const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
 	return (
 		<section
 			className={`${styles.sectionWrapper} flex justify-center align-center`}
-			ref={ref}
+			ref={joinUsSectionRef}
 		>
 			{/* Join us image */}
-			<motion.div className={styles.imageWrapper} style={{ y }}>
+			<motion.div
+				className={styles.imageWrapper}
+				style={{ y: joinUsSectionStyles }}
+			>
 				<picture>
 					<source media="(min-width: 768px)" srcSet="/images/join-us-desktop.jpg" />
 					<source media="(min-width: 600px)" srcSet="/images/join-us-mobile.jpg" />
