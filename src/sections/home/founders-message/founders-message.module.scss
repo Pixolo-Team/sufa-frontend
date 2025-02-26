@@ -1,6 +1,7 @@
 .contentWrapper {
 	width: 100%;
 	overflow: hidden;
+	padding: 50px 0;
 }
 .founderContentStyles {
 	p {
@@ -9,6 +10,9 @@
 		font-size: var(--color-brand-font-size-regular);
 		text-align: left;
 	}
+}
+.founderSignWrapper {
+	margin-top: 36px;
 }
 .messageWrapper {
 	flex: 1;

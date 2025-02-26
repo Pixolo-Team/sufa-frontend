@@ -57,16 +57,18 @@ const FoundersMessage: React.FC<unknown> = () => {
 								legacy. Welcome to Skorost United. Let’s write history together.
 							</p>
 						</ContentFromCms>
-						{/* Founder sign */}
-						<Image src={FounderSign} alt="sign" className="fade-in-up" />
-						{/* Founder Name */}
-						<p className={`${styles.founderName} font-weight-800 fade-in-up`}>
-							ABHAY AMIN
-						</p>
-						{/* About */}
-						<p className={`${styles.designation} font-weight-700 fade-in-up`}>
-							FOUNDER & OWNER
-						</p>
+						<div className={styles.founderSignWrapper}>
+							{/* Founder sign */}
+							<Image src={FounderSign} alt="sign" className="fade-in-up" />
+							{/* Founder Name */}
+							<p className={`${styles.founderName} font-weight-800 fade-in-up`}>
+								ABHAY AMIN
+							</p>
+							{/* About */}
+							<p className={`${styles.designation} font-weight-700 fade-in-up`}>
+								FOUNDER & OWNER
+							</p>
+						</div>
 					</div>
 				</div>
 				{/* Founder Image */}
