@@ -10,6 +10,7 @@ import { DropdownOptionData } from "@/neevo/types/forms";
 import { ToastTypes } from "@/neevo/enums/toast.enum";
 import { InputTextTypes } from "@/neevo/enums/input.enum";
 import { Colors, Shapes } from "@/neevo/enums/core.enum";
+import { ButtonSizes } from "@/neevo/enums/button.enum";
 
 // STYLES //
 import styles from "./enquire-form.module.scss";
@@ -192,6 +193,7 @@ const EnquiryForm: React.FC = () => {
 						isError={false}
 						isRequired={false}
 						onClear={() => handleOthersChange("message", "")}
+						placeholder="Message"
 					/>
 				</div>
 			</div>
@@ -203,6 +205,7 @@ const EnquiryForm: React.FC = () => {
 					text="Submit"
 					color={Colors.SECONDARY}
 					shape={Shapes.ROUNDED}
+					size={ButtonSizes.XLARGE}
 				/>
 			</div>
 		</>

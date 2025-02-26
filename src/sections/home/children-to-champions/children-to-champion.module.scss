@@ -1,18 +1,52 @@
 .childrenToChampionsWrapper {
-	padding: 15vmin 0;
-	overflow: hidden;
+	padding: 25vmin 0;
 }
 
-.topMarquee {
-	transform: translateY(50%) rotate(5deg) scale(1.1); // Rotates slightly
+.innerTextWrap {
+	display: flex;
+	white-space: nowrap;
+	width: max-content;
+	will-change: transform;
 }
 
-.bottomMarquee {
+.scrollingTextsContainer {
+	position: relative;
+	height: 200px;
+}
+
+.topScrollingTexts {
+	transform: translateY(0%) rotate(5deg) scale(1.1); // Rotates slightly
+	position: absolute;
+	top: 0;
+	width: 100vw;
+
+	.innerTextWrap {
+		transform: translateX(
+			calc(
+				((var(--viewport-y) * 50%) - 50%) + ((var(--viewport-y) * -50vw) + 50vw)
+			)
+		);
+	}
+}
+
+.bottomScrollingTexts {
 	background-color: var(--color-brand-neutral-light-100);
-	transform: translateY(-50%) rotate(-5deg) scale(1.1); // Opposite rotation
+	transform: translateY(0%) rotate(-5deg) scale(1.1); // Opposite rotation
+	position: absolute;
+	top: 0;
+	width: 100vw;
+	right: 0;
+
+	.innerTextWrap {
+		transform: translateX(
+			calc(
+				((var(--viewport-y) * -50%) - 50%) + ((var(--viewport-y) * 50vw) + 50vw)
+			)
+		);
+	}
 }
 
-.marqueeItem {
+.scrollingText {
 	padding: var(--padding-regular);
 }
 

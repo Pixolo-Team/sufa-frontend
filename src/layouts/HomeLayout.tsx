@@ -2,18 +2,15 @@
 // REACT //
 import React, { useEffect, useState } from "react";
 
-// ENUMS //
-import { Sizes } from "@/neevo/enums/core.enum";
-
 // STYLES //
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from "./home-layout.module.scss";
 
 // COMPONENTS //
-import Popup from "@/neevo/components/popup/Popup";
-import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
 import StickySocial from "@/components/sticky-social/StickySocial";
+import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
+import Icon from "@/neevo/components/Icon";
 
 // OTHERS //
 import ScrollOut from "scroll-out";
@@ -42,6 +39,13 @@ const HomeLayout: React.FC<unknown> = () => {
 		ScrollOut({
 			targets: ".fade-in-up",
 			once: true,
+		});
+
+		ScrollOut({
+			targets: ".childrenToChampionsWrapper",
+			cssProps: {
+				viewportY: true,
+			},
 		});
 	}, []);
 
@@ -86,18 +90,24 @@ const HomeLayout: React.FC<unknown> = () => {
 
 			{/* Contact Us popup */}
 			{showEnquiryPopup && (
-				<Popup
-					onCloseClick={() => {
-						setShowEnquiryPopup(false);
-					}}
-					onOverlayClick={() => {
-						setShowEnquiryPopup(false);
-					}}
-					size={Sizes.SMALL}
-				>
-					<EnquiryForm />
-				</Popup>
+				<div
+					className={styles.overlay}
+					onClick={() => setShowEnquiryPopup(false)}
+				></div>
 			)}
+
+			{/* Contact Us modal */}
+			<div
+				className={`${styles.formModal} ${
+					showEnquiryPopup ? styles.showPopup : ""
+				}`}
+			>
+				<div onClick={() => setShowEnquiryPopup(false)}>
+					<Icon iconName={"close"} className={styles.closeIcon} mode="filled" />
+				</div>
+				<h2 className={styles.formTitle}>Book A Trial Now</h2>
+				<EnquiryForm />
+			</div>
 
 			<StickySocial />
 		</div>
