@@ -19,14 +19,6 @@
 	position: absolute;
 	top: 0;
 	width: 100vw;
-
-	.innerTextWrap {
-		transform: translateX(
-			calc(
-				((var(--viewport-y) * 50%) - 50%) + ((var(--viewport-y) * -50vw) + 50vw)
-			)
-		);
-	}
 }
 
 .bottomScrollingTexts {
@@ -36,14 +28,6 @@
 	top: 0;
 	width: 100vw;
 	right: 0;
-
-	.innerTextWrap {
-		transform: translateX(
-			calc(
-				((var(--viewport-y) * -50%) - 50%) + ((var(--viewport-y) * 50vw) + 50vw)
-			)
-		);
-	}
 }
 
 .scrollingText {
@@ -51,17 +35,13 @@
 }
 
 // Mobile Phones
-@media only screen and (min-width: 600px) {
-}
+@media only screen and (min-width: 600px) {}
 
 // Ipad Mini
-@media only screen and (min-width: 768px) {
-}
+@media only screen and (min-width: 768px) {}
 
 // Ipad air
-@media only screen and (min-width: 992px) {
-}
+@media only screen and (min-width: 992px) {}
 
 // Small laptops
-@media only screen and (min-width: 1500px) {
-}
+@media only screen and (min-width: 1500px) {}
