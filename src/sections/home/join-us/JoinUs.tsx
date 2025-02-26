@@ -1,6 +1,7 @@
 "use client";
 // REACT //
 import React, { useRef } from "react";
+import { useScroll, useTransform, motion } from "motion/react";
 
 // ENUMS //
 import { Colors, Shapes } from "@/neevo/enums/core.enum";
@@ -12,9 +13,6 @@ import styles from "./join-us.module.scss";
 // COMPONENTS //
 import Image from "next/image";
 import Button from "@/neevo/components/button/Button";
-
-// OTHERS //
-import { useScroll, useTransform, motion } from "framer-motion";
 
 // IMAGES //
 import FootballImage from "@/../public/images/football.png";

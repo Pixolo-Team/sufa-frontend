@@ -1,14 +1,12 @@
 // REACT //
 import React, { useRef } from "react";
+import { useScroll, useTransform, motion } from "motion/react";
 
 // STYLES //
 import styles from "./established.module.scss";
 
 // COMPONENTS //
 import Image from "next/image";
-
-// OTHERS //
-import { useScroll, useTransform, motion } from "framer-motion";
 
 // IMAGES //
 import SkorostImage from "@/../public/images/skorost.jpg";
