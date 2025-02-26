@@ -30,7 +30,7 @@ const Banner: React.FC<BannerProps> = ({
 	// Navigation and Route Params
 
 	// Define States
-	const [show, setShow] = useState(false);
+	const [animateBanner, setAnimateBanner] = useState(false);
 
 	// Define Refs
 
@@ -38,15 +38,17 @@ const Banner: React.FC<BannerProps> = ({
 
 	// UseEffect Functions and UseFocusEffect Functions
 	useEffect(() => {
-		setShow(true); // Optional initial delay
+		setAnimateBanner(true); // Optional initial delay
 	}, []);
 
 	// View starts here
 	return (
-		<div className={`${styles.bannerWrapper}   flex align-center justify-center`}>
-			<div
-				className={`${styles.imageWrapper} ${show ? styles.revealContainer : ""}`}
-			>
+		<div
+			className={`${styles.bannerWrapper} ${
+				animateBanner ? styles.animateBanner : ""
+			}  flex align-center justify-center`}
+		>
+			<div className={`${styles.imageWrapper}`}>
 				{/* Video / Image Wrapper */}
 				<iframe
 					src="https://www.youtube.com/embed/5xpKumlsud8?playlist=5xpKumlsud8&controls=0&loop=1&autoplay=1&mute=1&rel=0&showinfo=0"
@@ -60,20 +62,28 @@ const Banner: React.FC<BannerProps> = ({
 			</div>
 			{/* Content Wrapper */}
 			<div
-				className={`${styles.textContent} ${
-					show ? styles.showContent : ""
-				} flex align-center justify-center flex-column`}
+				className={`${styles.textContent} flex align-center justify-center flex-column`}
 			>
 				{/* Banner title */}
-				<h1 className={`${styles.bannerTitle} font-weight-700 fade-in-up`}>
-					{bannerTitle}
-				</h1>
+				<div className={`${styles.bannerTitleWrap} ${styles.textContentWrap}`}>
+					<h1
+						className={`${styles.bannerTitle} ${styles.textContentWrapInner} font-weight-700`}
+					>
+						{bannerTitle}
+					</h1>
+				</div>
 				{/* Banner description */}
-				<p className={`${styles.bannerDescription} font-weight-400 fade-in-up`}>
-					{bannerDescription}
-				</p>
+				<div
+					className={`${styles.bannerDescriptionWrap} ${styles.textContentWrap}`}
+				>
+					<p
+						className={`${styles.bannerDescription} ${styles.textContentWrapInner} font-weight-400`}
+					>
+						{bannerDescription}
+					</p>
+				</div>
 				{/* Free Trial Button */}
-				<div className={`${styles.buttonWrapper} fade-in-up`}>
+				<div className={`${styles.buttonWrapper}`}>
 					<Image src={PandaImage} alt="Panda" className={styles.buttonImage} />
 					<Button
 						text={"Book a FREE TRIAL Now"}

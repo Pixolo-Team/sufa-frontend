@@ -1,5 +1,10 @@
 .bannerWrapper {
 	--clip-animation-duration: 0.7s;
+	--clip-animation-after-delay: 0.3s;
+	--translate-text-animation-duration: 0.5s;
+	--translate-text-animation-after-delay: 0.3s;
+	--rotate-text-animation-duration: 0.3s;
+	--rotate-text-in-deg: -6deg;
 	width: 100%;
 	max-height: 100vh;
 	min-height: 600px;
@@ -16,10 +21,6 @@
 		position: relative;
 		clip-path: inset(0 0 100% 0);
 		transition: clip-path var(--clip-animation-duration) ease-out;
-
-		&.revealContainer {
-			clip-path: inset(0 0 0 0); /* Fully visible */
-		}
 
 		iframe {
 			width: 100%;
@@ -48,33 +49,84 @@
 		text-align: center;
 		z-index: 22;
 		color: var(--color-brand-primary-contrast);
-		transform: translateY(400px);
-		transition: all 0.5s ease-out;
-		transition-delay: var(--clip-animation-duration);
 
-		&.showContent {
-			transform: translateY(0);
+		.textContentWrap {
+			transform: rotate(var(--rotate-text-in-deg));
+			transition: all 0.3s ease-out;
+			transition-delay: calc(
+				var(--clip-animation-duration) + var(--translate-text-animation-duration) +
+					var(--translate-text-animation-after-delay)
+			);
+		}
+		.textContentWrapInner {
+			opacity: 0;
+			transition: all var(--translate-text-animation-duration) ease-out;
+			transition-delay: calc(
+				var(--clip-animation-duration) + var(--clip-animation-after-delay)
+			);
 		}
 
-		.bannerTitle {
-			font-size: var(--color-brand-font-size-heading-2);
-			line-height: 40px;
+		.bannerTitleWrap {
+			.bannerTitle {
+				transform: translateX(100%);
+				font-size: var(--color-brand-font-size-heading-2);
+				line-height: 40px;
+			}
 		}
 
-		.bannerDescription {
-			font-size: var(--color-brand-font-size-small);
-			margin: 26px 0 80px 0;
-			line-height: 24px;
+		.bannerDescriptionWrap {
 			max-width: 1200px;
+			margin: 26px 0 80px 0;
+			.bannerDescription {
+				transform: translateX(-100%);
+				font-size: var(--color-brand-font-size-small);
+				line-height: 24px;
+			}
 		}
 
 		.buttonWrapper {
 			position: relative;
+			transform: translateY(100%);
+			opacity: 0;
+			transition: all 0.5s ease-out;
+			transition-delay: calc(
+				var(--clip-animation-duration) + var(--clip-animation-after-delay) +
+					var(--translate-text-animation-duration) +
+					var(--translate-text-animation-after-delay)
+			);
 
 			.buttonImage {
 				position: absolute;
 				top: -50px;
 				right: 0;
+			}
+		}
+	}
+
+	&.animateBanner {
+		.imageWrapper {
+			clip-path: inset(0 0 0 0); /* Fully visible */
+		}
+		.textContent {
+			.bannerTitleWrap {
+				transform: rotate(0deg);
+				.bannerTitle {
+					transform: translateX(0%);
+					opacity: 1;
+				}
+			}
+
+			.bannerDescriptionWrap {
+				transform: rotate(0deg);
+				.bannerDescription {
+					transform: translateX(0%);
+					opacity: 1;
+				}
+			}
+
+			.buttonWrapper {
+				transform: translateY(0%);
+				opacity: 1;
 			}
 		}
 	}
@@ -85,9 +137,10 @@
 	.bannerWrapper {
 		.textContent {
 			padding: var(--padding-xlarge);
-
-			.bannerTitle {
-				font-size: var(--color-brand-font-size-heading-1);
+			.bannerTitleWrap {
+				.bannerTitle {
+					font-size: var(--color-brand-font-size-heading-1);
+				}
 			}
 		}
 	}
@@ -97,15 +150,18 @@
 	.bannerWrapper {
 		.textContent {
 			bottom: 60px;
-
-			.bannerTitle {
-				font-size: var(--color-brand-font-size-5xlarge);
-				line-height: 1;
+			.bannerTitleWrap {
+				.bannerTitle {
+					font-size: var(--color-brand-font-size-5xlarge);
+					line-height: 1;
+				}
 			}
 
-			.bannerDescription {
-				font-size: var(--color-brand-font-size-regular);
+			.bannerDescriptionWrap {
 				width: 80%;
+				.bannerDescription {
+					font-size: var(--color-brand-font-size-regular);
+				}
 			}
 		}
 	}
@@ -114,12 +170,15 @@
 @media only screen and (min-width: 992px) {
 	.bannerWrapper {
 		.textContent {
-			.bannerTitle {
-				font-size: var(--color-brand-font-size-8xlarge);
+			.bannerTitleWrap {
+				.bannerTitle {
+					font-size: var(--color-brand-font-size-8xlarge);
+				}
 			}
-
-			.bannerDescription {
-				font-size: var(--color-brand-font-size-medium);
+			.bannerDescriptionWrap {
+				.bannerDescription {
+					font-size: var(--color-brand-font-size-medium);
+				}
 			}
 		}
 	}
@@ -132,12 +191,10 @@
 		}
 
 		.textContent {
-			.bannerTitle {
-				font-size: var(--color-brand-font-size-9xlarge);
-			}
-
-			.bannerDescription {
-				margin: 26px 0 80px 0;
+			.bannerTitleWrap {
+				.bannerTitle {
+					font-size: var(--color-brand-font-size-9xlarge);
+				}
 			}
 		}
 	}
