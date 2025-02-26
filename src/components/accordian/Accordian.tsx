@@ -24,17 +24,17 @@ const Accordian: React.FC<AccordianProps> = ({
 	// Navigation and Route Params
 
 	// Define States
-	const answerRef = useRef<HTMLDivElement>(null);
-	const [height, setHeight] = useState<number>(0);
+	const [answerHeight, setAnswerHeight] = useState<number>(0);
 
 	// Define Refs
+	const answerRef = useRef<HTMLDivElement>(null);
 
 	// Helper Functions
 
 	// UseEffect Functions and UseFocusEffect Functions
 	useEffect(() => {
 		if (answerRef.current) {
-			setHeight(isOpen ? answerRef.current.scrollHeight : 0);
+			setAnswerHeight(isOpen ? answerRef.current.scrollHeight : 0);
 		}
 	}, [isOpen]);
 
@@ -62,7 +62,7 @@ const Accordian: React.FC<AccordianProps> = ({
 				className={styles.answerWrapper}
 				ref={answerRef}
 				style={{
-					height: `${height}px`,
+					height: `${answerHeight}px`,
 				}}
 			>
 				{/* Description */}
