@@ -11,16 +11,12 @@ import "slick-carousel/slick/slick-theme.css";
 import styles from "./home-layout.module.scss";
 
 // COMPONENTS //
-import Image from "next/image";
 import Popup from "@/neevo/components/popup/Popup";
 import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
 import StickySocial from "@/components/sticky-social/StickySocial";
 
 // OTHERS //
 import ScrollOut from "scroll-out";
-
-// IMAGES //
-import WhatsappImage from "@/../public/images/whatsapp-64.png";
 
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
@@ -87,23 +83,6 @@ const HomeLayout: React.FC<unknown> = () => {
 
 			{/* Contact us Section */}
 			<ContactUs onButtonClick={() => setShowEnquiryPopup(true)} />
-
-			{/* Floating section */}
-			<div
-				className={`${styles.floatingSection} flex justify-center align-center`}
-			>
-				<a
-					href="https://wa.me/919004453226?text=Hi! I would like to know more about your academy."
-					target="_blank"
-					rel="noreferrer"
-				>
-					<Image
-						src={WhatsappImage}
-						alt="whatsapp"
-						className="img-responsive full-width-img"
-					/>
-				</a>
-			</div>
 
 			{/* Contact Us popup */}
 			{showEnquiryPopup && (
