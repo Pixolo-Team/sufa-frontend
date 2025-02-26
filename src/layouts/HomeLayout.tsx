@@ -2,24 +2,18 @@
 // REACT //
 import React, { useEffect, useState } from "react";
 
-// ENUMS //
-import { Sizes } from "@/neevo/enums/core.enum";
-
 // STYLES //
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from "./home-layout.module.scss";
 
 // COMPONENTS //
-import Image from "next/image";
+import StickySocial from "@/components/sticky-social/StickySocial";
 import EnquiryForm from "@/components/enquiry-form/EnquiryForm";
 import Icon from "@/neevo/components/Icon";
 
 // OTHERS //
 import ScrollOut from "scroll-out";
-
-// IMAGES //
-import WhatsappImage from "@/../public/images/whatsapp-64.png";
 
 // SECTIONS //
 import Banner from "@/sections/home/banner/Banner";
@@ -94,28 +88,14 @@ const HomeLayout: React.FC<unknown> = () => {
 			{/* Contact us Section */}
 			<ContactUs onButtonClick={() => setShowEnquiryPopup(true)} />
 
-			{/* Floating section */}
-			<div
-				className={`${styles.floatingSection} flex justify-center align-center`}
-			>
-				<a
-					href="https://wa.me/919004453226?text=Hi! I would like to know more about your academy."
-					target="_blank"
-					rel="noreferrer"
-				>
-					<Image
-						src={WhatsappImage}
-						alt="whatsapp"
-						className="img-responsive full-width-img"
-					/>
-				</a>
-			</div>
+			{/* Contact Us popup */}
 			{showEnquiryPopup && (
 				<div
 					className={styles.overlay}
 					onClick={() => setShowEnquiryPopup(false)}
 				></div>
 			)}
+
 			{/* Contact Us modal */}
 			<div
 				className={`${styles.formModal} ${
@@ -128,6 +108,8 @@ const HomeLayout: React.FC<unknown> = () => {
 				<h2 className={styles.formTitle}>Book A Trial Now</h2>
 				<EnquiryForm />
 			</div>
+
+			<StickySocial />
 		</div>
 	);
 };

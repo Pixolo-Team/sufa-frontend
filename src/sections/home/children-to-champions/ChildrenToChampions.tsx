@@ -1,5 +1,6 @@
 // REACT //
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
 
 // STYLES //
 import styles from "./children-to-champion.module.scss";
@@ -14,6 +15,23 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 	// Define States
 
 	// Define Refs
+	const sectionRef = useRef(null);
+
+	// Define Framer Motion Hooks
+	const { scrollYProgress } = useScroll({
+		target: sectionRef,
+		offset: ["start end", "end start"],
+	});
+
+	// Define Animated Styles
+	const topTextWrapper = useTransform(scrollYProgress, [0, 1], ["100vw", "0vw"]);
+	const topTextX = useTransform(scrollYProgress, [0, 1], ["-100%", "0%"]);
+	const bottomTextX = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
+	const bottomTextWrapper = useTransform(
+		scrollYProgress,
+		[0, 1],
+		["0vw", "100vw"]
+	);
 
 	// Helper Functions
 
@@ -25,28 +43,40 @@ const ChildrenToChampions: React.FC<unknown> = () => {
 			className={`${styles.childrenToChampionsWrapper} childrenToChampionsWrapper section-spacing `}
 		>
 			{/* Scrolling Texts Wrapper */}
-			<div className={`${styles.scrollingTextsContainer}`}>
+			<div className={`${styles.scrollingTextsContainer}`} ref={sectionRef}>
 				{/* Top Scrolling Text */}
 				<div className={`${styles.topScrollingTexts} bg-primary-regular`}>
-					<div className={`${styles.innerTextWrap}`}>
-						<div className={styles.scrollingText}>
-							<ChildrenChampionItem color="primary" />
-						</div>
-						<div className={styles.scrollingText}>
-							<ChildrenChampionItem color="primary" />
-						</div>
-					</div>
+					<motion.div style={{ x: topTextWrapper }}>
+						<motion.div
+							className={`${styles.innerTextWrap}`}
+							style={{
+								x: topTextX,
+							}}
+						>
+							<div className={styles.scrollingText}>
+								<ChildrenChampionItem color="primary" />
+							</div>
+							<div className={styles.scrollingText}>
+								<ChildrenChampionItem color="primary" />
+							</div>
+						</motion.div>
+					</motion.div>
 				</div>
 				{/* Bottom Scrolling Text */}
 				<div className={`${styles.bottomScrollingTexts}`}>
-					<div className={`${styles.innerTextWrap}`}>
-						<div className={styles.scrollingText}>
-							<ChildrenChampionItem color="default" />
-						</div>
-						<div className={styles.scrollingText}>
-							<ChildrenChampionItem color="default" />
-						</div>
-					</div>
+					<motion.div style={{ x: bottomTextWrapper }}>
+						<motion.div
+							className={`${styles.innerTextWrap}`}
+							style={{ x: bottomTextX }}
+						>
+							<div className={styles.scrollingText}>
+								<ChildrenChampionItem color="default" />
+							</div>
+							<div className={styles.scrollingText}>
+								<ChildrenChampionItem color="default" />
+							</div>
+						</motion.div>
+					</motion.div>
 				</div>
 			</div>
 		</section>
