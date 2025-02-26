@@ -1,6 +1,6 @@
 "use client";
 // REACT //
-import React from "react";
+import React, { useRef } from "react";
 
 // ENUMS //
 import { Colors, Shapes } from "@/neevo/enums/core.enum";
@@ -13,6 +13,9 @@ import styles from "./join-us.module.scss";
 import Image from "next/image";
 import Button from "@/neevo/components/button/Button";
 
+// OTHERS //
+import { useScroll, useTransform, motion } from "framer-motion";
+
 // IMAGES //
 import FootballImage from "@/../public/images/football.png";
 
@@ -22,6 +25,12 @@ interface JoinUsProps {
 
 /** Join Us Screen */
 const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
+	const ref = useRef(null);
+	const { scrollYProgress } = useScroll({
+		target: ref,
+		offset: ["start end", "end start"],
+	});
+	const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 	// Navigation and Route Params
 
 	// Define States
@@ -36,9 +45,10 @@ const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
 	return (
 		<section
 			className={`${styles.sectionWrapper} flex justify-center align-center`}
+			ref={ref}
 		>
 			{/* Join us image */}
-			<div className={styles.imageWrapper}>
+			<motion.div className={styles.imageWrapper} style={{ y }}>
 				<picture>
 					<source media="(min-width: 768px)" srcSet="/images/join-us-desktop.jpg" />
 					<source media="(min-width: 600px)" srcSet="/images/join-us-mobile.jpg" />
@@ -49,7 +59,7 @@ const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
 						fill
 					/>
 				</picture>
-			</div>
+			</motion.div>
 			<div className={`${styles.contentWrapper} text-center `}>
 				{/* Title */}
 				<p className={`${styles.title} font-weight-500 fade-in-up`}>
