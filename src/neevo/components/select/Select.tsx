@@ -138,8 +138,7 @@ const Select: React.FC<SelectProps> = ({
 			)}
 			<div className={styles.selectElementWrapper}>
 				{/* Select Element */}
-				<Link
-					href={""}
+				<div
 					onClick={(event) => toggleDropdown(event)}
 					className={styles.selectElement}
 				>
@@ -166,15 +165,14 @@ const Select: React.FC<SelectProps> = ({
 							isDropdownOpen ? styles.dropdownOpen : ""
 						}`}
 					/>
-				</Link>
+				</div>
 
 				{/* Dropdown Options */}
 				{isDropdownOpen && (
 					<div className={styles.dropdownOptionsList}>
 						{/* Loop for the Options */}
 						{options.map((option, index) => (
-							<Link
-								href={""}
+							<div
 								key={`dropdown-option-${convertToKebabCase(label ?? "")}-${index}`}
 								onClick={(event) => {
 									selectDropdownOption(event, option);
@@ -191,7 +189,7 @@ const Select: React.FC<SelectProps> = ({
 								)}
 								{/* Option label */}
 								<p className={styles.selectOptionsValue}>{option.label}</p>
-							</Link>
+							</div>
 						))}
 					</div>
 				)}
