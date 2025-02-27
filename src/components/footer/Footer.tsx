@@ -5,10 +5,15 @@ import React from "react";
 // STYLES //
 import styles from "./footer.module.scss";
 
+// COMPONENTS //
+import Image from "next/image";
+
+// IMAGES //
+import SkorostSchoolLogo from "@/../public/images/skorost-school.png";
+
 // SVG's //
-import InstagramIcon from "@/../public/icons/outline/instagram.svg";
-import FacebookIcon from "@/../public/icons/outline/facebook.svg";
-import YoutubeIcon from "@/../public/icons/outline/youtube.svg";
+import PixoloLogo from "@/../public/images/pixolo-logo.svg";
+import ZizoLogo from "@/../public/images/zizo-logo.svg";
 
 /** Footer Screen */
 const Footer: React.FC<unknown> = () => {
@@ -27,43 +32,35 @@ const Footer: React.FC<unknown> = () => {
 		<footer className={`${styles.footerWrap} bg-primary-deep`}>
 			<div className="container">
 				<div
-					className={`${styles.footerContent}  flex justify-between flex-column`}
+					className={`${styles.footerContentWrapper} flex flex-column align-center`}
 				>
-					{/* Copyright section */}
-					<div className={`${styles.copyrightWrapper}`}>
-						<span> © Skorost United Football Academy 2025. </span>
-						{""}
-						<span> All Rights Reserved </span>
+					<div
+						className={`${styles.footerTopWrap} flex align-center justify-between flex-wrap`}
+					>
+						{/* Logo */}
+						<Image src={SkorostSchoolLogo} alt="skorost football school" />
 					</div>
-					{/* Social media link section */}
-					<div className={`${styles.socialMediaWrap} flex`}>
-						<p>Follow us on</p>
-						<a
-							href="https://www.instagram.com/skorostunitedfootballacademy/"
-							target="_blank"
-							rel="noreferrer"
-						>
-							{/* Instagram Icon */}
-							<InstagramIcon style={{ color: "white" }} />
-						</a>
-						<a
-							href="https://www.facebook.com/profile.php?id=61573394522811/"
-							target="_blank"
-							rel="noreferrer"
-						>
-							{/* Facebook Icon */}
-							<FacebookIcon style={{ color: "white" }} />
-						</a>
-						<a
-							href="https://www.youtube.com/@SkorostUnitedFootballAcademy/"
-							target="_blank"
-							rel="noreferrer"
-						>
-							{/* Youtube Icon */}
-							<YoutubeIcon style={{ color: "white" }} />
-						</a>
+					<div className={`${styles.partnersSection}`}>
+						<p className={`${styles.partnersTitle} font-weight-500`}>
+							We wouldn’t exist if it wasn’t for the constant support from our partners
+						</p>
+						<div className="flex justify-between">
+							{/* Pixolo logo */}
+							<PixoloLogo />
+							{/* Zizo logo */}
+							<ZizoLogo />
+						</div>
+					</div>
+					<div className={styles.fansSection}>
+						<p className={`${styles.fansTitle} font-weight-700`}>
+							Begin Y<span className={styles.highlightedText}>our</span> Journey
+						</p>
 					</div>
 				</div>
+			</div>
+			<div className={`${styles.footerBottomSection}  flex justify-between`}>
+				<p>© Skorost United</p>
+				<p>Privacy Policy</p>
 			</div>
 		</footer>
 	);

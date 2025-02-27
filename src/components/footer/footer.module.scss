@@ -1,16 +1,38 @@
 .footerWrap {
-	padding: 32px;
-	.footerContent {
+	padding: var(--padding-xxlarge);
+	.footerContentWrapper {
+		gap: 40px;
+		margin-bottom: 40px;
+		.footerTopWrap {
+			width: 100%;
+			gap: var(--gap-large);
+		}
+		.partnersSection {
+			max-width: 300px;
+			.partnersTitle {
+				text-align: center;
+				font-size: var(--color-brand-font-size-xsmall);
+				margin-bottom: var(--margin-medium);
+			}
+		}
+		.fansSection {
+			margin-bottom: 24px;
+			.fansTitle {
+				color: var(--color-text-shade);
+				text-transform: uppercase;
+				font-size: 24px;
+				.highlightedText {
+					color: var(--color-brand-primary-contrast);
+				}
+			}
+		}
+	}
+	.footerBottomSection {
 		text-align: center;
 		align-items: center;
 		gap: var(--gap-medium);
 		font-size: var(--color-brand-font-size-small);
-		.copyrightWrapper {
-			line-height: 1.5;
-		}
-		.socialMediaWrap {
-			gap: var(--gap-regular);
-		}
+		line-height: 1.5;
 	}
 }
 // Mobile Phones
@@ -19,13 +41,8 @@
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
-	.footerWrap {
-		.footerContent {
-			flex-direction: row;
-			.copyrightWrapper {
-				text-align: center;
-			}
-		}
+	.footerBottomSection {
+		flex-direction: row;
 	}
 }
 
