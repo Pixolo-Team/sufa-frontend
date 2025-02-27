@@ -123,7 +123,7 @@ const Coaches: React.FC<unknown> = () => {
 										designation={coach.designation}
 										coachImageSrc={coach.coachImageSrc}
 										socialMedia={coach.socialMedia}
-										alt={coach.alt}
+										altTextForImage={coach.alt}
 									/>
 								</div>
 							</div>
