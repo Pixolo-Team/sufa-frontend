@@ -2,32 +2,6 @@
 	border-radius: 16px;
 	background-color: var(--color-brand-neutral-light-200);
 
-	&.active {
-		background-color: var(--color-brand-primary-deep);
-
-		.questionWrapper {
-
-			.title {
-				color: var(--color-brand-primary-contrast);
-			}
-
-			.iconWrapper {
-				background-color: var(--color-brand-primary-contrast);
-
-				.icon {
-					color: var(--color-brand-primary-deep);
-				}
-			}
-		}
-
-		.answerWrapper {
-			.description {
-				color: var(--color-brand-neutral-light-200);
-			}
-		}
-	}
-
-
 	.questionWrapper {
 		gap: var(--gap-xlarge);
 		cursor: pointer;
@@ -35,7 +9,7 @@
 
 		.title {
 			font-size: var(--color-brand-font-size-small);
-			line-height: 20px;
+			line-height: 1.5;
 		}
 
 		.iconWrapper {
@@ -59,18 +33,41 @@
 		.description {
 			padding: 0 var(--padding-large) var(--padding-medium) var(--padding-large);
 			font-size: var(--color-brand-font-size-xsmall);
-			line-height: 20px;
+			line-height: 1.5;
+		}
+	}
+	&.active {
+		background-color: var(--color-brand-primary-deep);
+
+		.questionWrapper {
+			.title {
+				color: var(--color-brand-primary-contrast);
+			}
+
+			.iconWrapper {
+				background-color: var(--color-brand-primary-contrast);
+
+				.icon {
+					color: var(--color-brand-primary-deep);
+				}
+			}
+		}
+
+		.answerWrapper {
+			.description {
+				color: var(--color-brand-neutral-light-200);
+			}
 		}
 	}
 }
 
 // Mobile Phones
-@media only screen and (min-width: 600px) {}
+@media only screen and (min-width: 600px) {
+}
 
 // Ipad air
 @media only screen and (min-width: 768px) {
 	.accordianItem {
-
 		.questionWrapper {
 			padding: var(--padding-xlarge) var(--padding-xxlarge);
 
@@ -81,16 +78,18 @@
 
 		.answerWrapper {
 			.description {
-				padding: 0 var(--padding-xxlarge) var(--padding-xlarge) var(--padding-xxlarge);
+				padding: 0 var(--padding-xxlarge) var(--padding-xlarge)
+					var(--padding-xxlarge);
 				font-size: var(--color-brand-font-size-regular);
-				line-height: 25px;
 			}
 		}
 	}
 }
 
 // Ipad Mini
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+}
 
 // Small laptops
-@media only screen and (min-width: 1500px) {}
+@media only screen and (min-width: 1500px) {
+}

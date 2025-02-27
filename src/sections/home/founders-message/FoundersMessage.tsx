@@ -33,8 +33,8 @@ const FoundersMessage: React.FC<unknown> = () => {
 					<div className="left-container-padding">
 						{/* Quotes svg */}
 						<div className={`${styles.doubleQuotes} flex justify-center`}>
-							<Icon iconName="quote" className={styles.verifiedIcon} mode="filled" />
-							<Icon iconName="quote" className={styles.verifiedIcon} mode="filled" />
+							<Icon iconName="quote" className={styles.quoteIcon} mode="filled" />
+							<Icon iconName="quote" className={styles.quoteIcon} mode="filled" />
 						</div>
 						{/* Founder message */}
 						<ContentFromCms wrapperClassName={styles.founderContentStyles}>

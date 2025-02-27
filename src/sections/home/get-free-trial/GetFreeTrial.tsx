@@ -46,7 +46,9 @@ const GetFreeTrial: React.FC<GetFreeTrialProps> = ({ onButtonClick }) => {
 						</p>
 						{/* Sub heading */}
 						<p className={`${styles.subHeading} font-weight-400 fade-in-up`}>
-							Experience the Skorost way! Join us for a free trial session.
+							Experience our football coaching with a free trial session in Ghatkopar.
+							Whether you're new to the game or looking to refine your skills, our
+							expert trainers offer personalized attention to help you grow.
 						</p>
 						{/* Button for small devices */}
 						<div className={"fade-in-up"}>

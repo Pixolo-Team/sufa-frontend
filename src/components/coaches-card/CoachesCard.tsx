@@ -22,6 +22,7 @@ interface CoachesCardProps {
 	socialMedia?: {
 		instagram?: string;
 	};
+	altTextForImage?: string;
 }
 
 /** Coaches Card Screen */
@@ -32,6 +33,7 @@ const CoachesCard: React.FC<CoachesCardProps> = ({
 	designation = "",
 	coachImageSrc = "",
 	socialMedia = {},
+	altTextForImage = "",
 }) => {
 	// Navigation and Route Params
 
@@ -63,7 +65,7 @@ const CoachesCard: React.FC<CoachesCardProps> = ({
 					<div className={styles.imageWrapper}>
 						<Image
 							src={coachImageSrc}
-							alt={firstName}
+							alt={altTextForImage}
 							width={250}
 							height={250}
 							className="img-responsive full-width-img"
