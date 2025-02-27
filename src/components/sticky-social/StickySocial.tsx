@@ -1,32 +1,50 @@
 // REACT //
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // STYLES //
 import styles from "./sticky-social.module.scss";
 
+// COMPONENTS //
+import Icon from "@/neevo/components/Icon";
+
 // SVG's //
 import SkorostLogo from "@/../public/images/skorost.svg";
-import InstagramIcon from "@/../public/icons/outline/insta.svg";
-import InfoIcon from "@/../public/icons/outline/info.svg";
-import PhoneIcon from "@/../public/icons/outline/phone.svg";
-import WhatsappIcon from "@/../public/icons/outline/whats-app.svg";
 
 /** Sticky Social Component */
 const StickySocial: React.FC<unknown> = () => {
 	// Navigation and Route Params
 
 	// Define States
+	const [isStickySocialVisible, setIsStickySocialVisible] = useState(false);
 
 	// Define Refs
 
 	// Helper Functions
+	/** Function to check scroll position */
+	const checkScrollPosition = () => {
+		setIsStickySocialVisible(window.scrollY > window.innerHeight);
+	};
 
 	// UseEffect Functions and UseFocusEffect Functions
+	useEffect(() => {
+		// Attach event listener
+		window.addEventListener("scroll", checkScrollPosition);
+		// Run once on mount to check initial scroll position
+		checkScrollPosition();
+		// Cleanup event listener on unmount
+		return () => {
+			window.removeEventListener("scroll", checkScrollPosition);
+		};
+	}, []);
 
 	// View starts here
 	return (
 		<div>
-			<div className={`${styles.stickySocialWrap} flex align-center`}>
+			<div
+				className={`${styles.stickySocialWrap} ${
+					isStickySocialVisible ? styles.show : ""
+				} flex align-center`}
+			>
 				<div className={`${styles.socialIconsWrapper} flex align-center`}>
 					{/* Instagram */}
 					<a
@@ -34,19 +52,19 @@ const StickySocial: React.FC<unknown> = () => {
 						target="_blank"
 						rel="noreferrer"
 					>
-						<InstagramIcon style={{ color: "white" }} />
+						<Icon iconName="instagram" className={styles.icon} />
 					</a>
 					<div className={styles.line}></div>
 					{/* Info */}
 					<a href="/" target="_blank" rel="noreferrer">
-						<InfoIcon style={{ color: "white" }} />
+						<Icon iconName="info" className={styles.icon} />
 					</a>
 				</div>
 				<SkorostLogo />
 				<div className={`${styles.socialIconsWrapper} flex align-center`}>
 					{/* Phone */}
-					<a href="tel: 9004453226" target="_blank" rel="noreferrer">
-						<PhoneIcon style={{ color: "white" }} />
+					<a href="tel: 9004453226" target="_self" rel="noreferrer">
+						<Icon iconName="phone" className={styles.icon} />
 					</a>
 					<div className={styles.line}></div>
 					{/* Whatsapp */}
@@ -55,7 +73,7 @@ const StickySocial: React.FC<unknown> = () => {
 						target="_blank"
 						rel="noreferrer"
 					>
-						<WhatsappIcon style={{ color: "white" }} />
+						<Icon iconName="whatsapp" className={styles.icon} />
 					</a>
 				</div>
 			</div>
