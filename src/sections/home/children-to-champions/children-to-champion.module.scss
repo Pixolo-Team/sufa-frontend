@@ -1,5 +1,5 @@
 .childrenToChampionsWrapper {
-	padding: 25vmin 0;
+	padding: 10vmin 0;
 }
 
 .innerTextWrap {
@@ -35,13 +35,20 @@
 }
 
 // Mobile Phones
-@media only screen and (min-width: 600px) {}
+@media only screen and (min-width: 600px) {
+}
 
 // Ipad Mini
-@media only screen and (min-width: 768px) {}
+@media only screen and (min-width: 768px) {
+}
 
 // Ipad air
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+	.childrenToChampionsWrapper {
+		padding: 25vmin 0;
+	}
+}
 
 // Small laptops
-@media only screen and (min-width: 1500px) {}
+@media only screen and (min-width: 1500px) {
+}

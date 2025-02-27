@@ -30,7 +30,7 @@ const Established: React.FC<unknown> = () => {
 	const establishedStyles = useTransform(
 		scrollYProgress,
 		[0, 1],
-		["-40%", "40%"]
+		["-20%", "20%"]
 	);
 
 	// UseEffect Functions and UseFocusEffect Functions
