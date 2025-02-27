@@ -1,25 +1,9 @@
-// When the page is being scrolled Down
-[data-scroll-dir-y="1"] {
-	.stickySocialWrap {
-		transform: translateY(0) translateX(-50%);
-		opacity: 1;
-	}
-}
-
-// // When the page is being scrolled Up
-[data-scroll-dir-y="-1"],
-[data-scroll-dir-y="0"] {
-	.stickySocialWrap {
-		transform: translateY(100%) translateX(-50%);
-		opacity: 0;
-	}
-}
-
 .stickySocialWrap {
 	position: fixed;
 	bottom: 24px;
 	left: 50%;
-	transform: translateX(-50%);
+	opacity: 0;
+	transform: translateX(-50%) translateY(100%);
 	background-color: var(--color-brand-primary-regular);
 	padding: var(--padding-medium) 26px;
 	border-radius: 20px;
@@ -28,6 +12,10 @@
 	z-index: 999;
 	transition: all 0.3s ease-out;
 	gap: 26px;
+	&.show {
+		transform: translateX(-50%) translateY(0);
+		opacity: 1;
+	}
 	.socialIconsWrapper {
 		gap: var(--gap-medium);
 		a {

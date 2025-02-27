@@ -30,7 +30,6 @@ import NotFoundFilled from "@/../public/icons/filled/404.svg";
 import BadRequestFilled from "@/../public/icons/filled/400.svg";
 import InternalServerErrorFilled from "@/../public/icons/filled/500.svg";
 import QuoteFilled from "@/../public/icons/filled/quote.svg";
-
 import ArrowOutline from "@/../public/icons/outline/arrow.svg";
 import BoxMenuOutline from "@/../public/icons/outline/box-menu.svg";
 import CloseOutline from "@/../public/icons/outline/close.svg";
@@ -56,9 +55,11 @@ import PdfOutline from "@/../public/icons/outline/pdf.svg";
 import UploadTrayOutline from "@/../public/icons/outline/upload-tray.svg";
 import InvisibleOutline from "@/../public/icons/outline/invisible.svg";
 import DeleteOutline from "@/../public/icons/outline/delete.svg";
+import PhoneOutline from "@/../public/icons/outline/phone.svg";
 import PlusOutline from "@/../public/icons/outline/plus.svg";
 import MinusOutline from "@/../public/icons/outline/minus.svg";
 import InstagramOutline from "@/../public/icons/outline/instagram.svg";
+import WhatsappOutline from "@/../public/icons/outline/whatsapp.svg";
 
 //TODO : Add SearchOptionFilled
 
@@ -117,6 +118,7 @@ const outline: {
 	logout: LogoutOutline,
 	"mail-open": MailOpenOutline,
 	"more-options": MoreOptionsOutline,
+	phone: PhoneOutline,
 	plus: PlusOutline,
 	"right-arrow": RightArrowOutline,
 	search: SearchOutline,
@@ -130,6 +132,7 @@ const outline: {
 	delete: DeleteOutline,
 	instagram: InstagramOutline,
 	minus: MinusOutline,
+	whatsapp: WhatsappOutline,
 };
 
 const iconMap: {
