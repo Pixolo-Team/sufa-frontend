@@ -15,13 +15,13 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
 	title: "Skorost United Football Academy, Ghatkopar East & West | Free Trial",
 	description:
-		"Skorost United Academy, Ghatkopar: Ages 5-16, expert licensed coaches, specialized goalkeeper training. Renowned football club. Book a free trial session!",
+		"Looking for the Best Football Academy in Ghatkopar East, West, or Mumbai? Our top-rated football coaching offers advanced goalkeeper training, youth programs in Powai and Vikhroli, and personal training for kids and beginners. Join our Football Fitness Programs, After School Classes, and Football Camps in Mumbai. Enjoy a Free Trial Session and kickstart your football journey with professional coaching and holistic sports development for children!",
 	keywords:
-		"Football Academy, Goalkeeper Coaching, Football Coaching, Ghatkopar, Mumbai, Ghatkopar East, Ghatkopar West, Sport Coaching, Personal Training for Football, Kids Football Academy, Youth Football Coaching, Advanced Goalkeeper Training, Football Classes Mumbai, Sports Development for Kids, Football Training for Beginners, Football Programs for Children, Sports for Kids, Holistic Development, Youth Sports Coaching, Football Fitness, Football Camps Mumbai, Football Workshops Ghatkopar, After School Sports Activities, Learn Football Skills, Professional Football Coaching, Top Football Academy Mumbai, Football Coaching Near Me, Free Trial Session",
+		"Best Football Academy in Ghatkopar East,Best Football Academy in Ghatkopar West,Best Football Academy in Mumbai,Top 10 Football Academies in Ghatkopar,Top 10 Football Academies in Mumbai,Kids Football Academy in Ghatkopar,Kids Football Academy in Powai,Football Coaching for Kids in Vikhroli,Football Training Near Ghatkopar East,Football Training Near Ghatkopar West,Professional Football Coaching in Mumbai,Football Coaching for Beginners in Ghatkopar,Youth Football Coaching in Powai,Advanced Goalkeeper Training in Mumbai,Best Sports Coaching for Kids in Ghatkopar,Football Fitness Programs in Mumbai,After School Football Classes in Ghatkopar,Football Camps in Mumbai for Kids,Sports Development for Children,Football Workshops Near Me,Personal Football Training in Ghatkopar,Learn Football Skills in Mumbai,Free Football Trial Session in Ghatkopar",
 	openGraph: {
 		title: "Skorost United Academy, Ghatkopar East & West | Free Trial",
 		description:
-			"Skorost United Academy, Ghatkopar: Ages 5-16, expert licensed coaches, specialized goalkeeper training. Renowned football club. Book a free trial session!",
+			"Looking for the Best Football Academy in Ghatkopar East, West, or Mumbai? Our top-rated football coaching offers advanced goalkeeper training, youth programs in Powai and Vikhroli, and personal training for kids and beginners. Join our Football Fitness Programs, After School Classes, and Football Camps in Mumbai. Enjoy a Free Trial Session and kickstart your football journey with professional coaching and holistic sports development for children!",
 		url: "https://academy.skorostunited.com",
 		images: [
 			{
