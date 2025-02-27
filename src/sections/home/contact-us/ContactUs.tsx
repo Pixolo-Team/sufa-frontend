@@ -16,6 +16,10 @@ import Button from "@/neevo/components/button/Button";
 // IMAGES //
 import FootballImage from "@/../public/images/football-img.png";
 
+// SVG's //
+import HeartIcon from "@/../public/icons/filled/heart.svg";
+import MouseIcon from "@/../public/icons/outline/mouse.svg";
+
 interface ContactUsProps {
 	onButtonClick: () => void;
 }
@@ -39,6 +43,49 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 		>
 			{/* Contact Us Section */}
 			<div className="container">
+				<div className={`${styles.contactUsTextWrapper} flex flex-wrap`}>
+					{/* First text block */}
+					<div className={`${styles.firstTextBlock} font-weight-700`}>
+						<div>
+							<p className={styles.primaryText}>
+								Scrolled{" "}
+								<span>
+									<MouseIcon />
+								</span>
+							</p>
+						</div>
+						<div>
+							<p className={styles.secondaryText}>all the way here ha!</p>
+						</div>
+					</div>
+					{/* Second text block */}
+					<div className={`${styles.secondTextBlock} font-weight-700`}>
+						<div>
+							<p className={styles.secondaryText}>
+								We are assuming you loved{" "}
+								<span>
+									<HeartIcon className={styles.heartIcon} />
+								</span>
+							</p>
+						</div>
+						<div>
+							<p className={`${styles.primaryText} ${styles.rightAlignedText}`}>
+								Our Website
+							</p>
+						</div>
+					</div>
+					{/* Third text block */}
+					<div className={styles.thirdTextBlock}>
+						<div>
+							<p className={`${styles.secondaryText} font-weight-700`}>
+								Imagine the feeling when you see us
+								<span className={`${styles.highlightText} font-weight-800`}>
+									Coach!
+								</span>
+							</p>
+						</div>
+					</div>
+				</div>
 				<div
 					className={`${styles.contactUsInner} flex justify-center align-center`}
 				>

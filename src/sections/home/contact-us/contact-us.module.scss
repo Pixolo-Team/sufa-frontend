@@ -2,6 +2,35 @@
 	overflow: hidden;
 }
 
+.contactUsTextWrapper {
+	gap: 50px;
+	margin-bottom: 70px;
+	.secondTextBlock {
+		width: 100%;
+	}
+	.primaryText {
+		font-size: var(--color-brand-font-size-5xlarge);
+		color: var(--color-brand-primary-deep);
+	}
+	.secondaryText {
+		font-size: var(--color-brand-font-size-medium);
+	}
+	.rightAlignedText {
+		text-align: right;
+	}
+	.highlightText {
+		vertical-align: top;
+		text-transform: uppercase;
+		font-size: var(--color-brand-font-size-7xlarge);
+		color: var(--color-brand-primary-deep);
+		margin-left: var(--margin-medium);
+	}
+	.heartIcon {
+		transform: rotate(10deg);
+		color: var(--color-brand-secondary-regular);
+	}
+}
+
 .contactUsInner {
 	gap: var(--gap-medium);
 
@@ -39,7 +68,8 @@
 }
 
 // Mobile Phones
-@media only screen and (min-width: 600px) {}
+@media only screen and (min-width: 600px) {
+}
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
@@ -76,4 +106,5 @@
 }
 
 // Small laptops
-@media only screen and (min-width: 1500px) {}
+@media only screen and (min-width: 1500px) {
+}

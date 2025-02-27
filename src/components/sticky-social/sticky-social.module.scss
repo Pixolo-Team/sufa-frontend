@@ -21,6 +21,7 @@
 		a {
 			display: flex;
 		}
+
 		.line {
 			height: 12px;
 			width: 2px;
@@ -35,6 +36,20 @@
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
+	.stickySocialWrap {
+		.socialIconsWrapper {
+			gap: var(--gap-large);
+			.icon {
+				width: 30px;
+				height: 30px;
+				transition: all 0.3s ease-out;
+				&:hover {
+					transform-origin: bottom;
+					transform: translateY(-10px);
+				}
+			}
+		}
+	}
 }
 
 // Ipad air
