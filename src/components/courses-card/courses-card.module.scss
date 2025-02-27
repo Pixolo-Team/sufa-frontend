@@ -75,3 +75,10 @@
 // Small laptops
 @media only screen and (min-width: 1500px) {
 }
+
+// Media query for Touch devices
+@media (hover: none) and (pointer: coarse) {
+	.contentWrapper {
+		transform: scale(1) !important;
+	}
+}

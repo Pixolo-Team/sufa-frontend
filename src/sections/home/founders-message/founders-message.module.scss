@@ -17,7 +17,7 @@
 .messageWrapper {
 	flex: 1;
 }
-.verifiedIcon {
+.quoteIcon {
 	width: 20px;
 	height: 34px;
 }
@@ -47,17 +47,17 @@
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
+	.doubleQuotes {
+		justify-content: flex-start;
+	}
+	.quoteIcon {
+		width: 52px;
+		height: 90px;
+	}
 }
 
 // Ipad air
 @media only screen and (min-width: 992px) {
-	.doubleQuotes {
-		justify-content: flex-start;
-	}
-	.verifiedIcon {
-		width: 52px;
-		height: 90px;
-	}
 	.messageWrapper {
 		position: relative;
 		z-index: 2;
