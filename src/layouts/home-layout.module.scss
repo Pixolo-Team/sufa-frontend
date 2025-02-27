@@ -10,6 +10,7 @@
 	bottom: 20px;
 	right: 20px;
 }
+
 .formModal {
 	height: max-content;
 	position: fixed;
@@ -23,20 +24,26 @@
 	border-top-left-radius: var(--border-radius-large);
 	border-top-right-radius: var(--border-radius-large);
 	z-index: 9999;
-	transition: all 0.5s ease-out;
+	transition: all 0.3s ease-out;
+
 	&.showPopup {
 		transform: translateY(0%);
 	}
+
 	.closeIcon {
 		position: absolute;
 		right: 28px;
 		top: 28px;
+		cursor: pointer;
+		color: var(--color-brand-primary-deep);
 	}
+
 	.formTitle {
 		font-size: var(--color-brand-font-size-2xlarge);
 		margin-bottom: var(--margin-xxlarge);
 	}
 }
+
 .overlay {
 	position: fixed;
 	top: 0;
@@ -45,11 +52,11 @@
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.8);
 	z-index: 9998;
+	cursor: pointer;
 }
 
 // Mobile Phones
-@media only screen and (min-width: 600px) {
-}
+@media only screen and (min-width: 600px) {}
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
@@ -59,6 +66,7 @@
 		bottom: 50px;
 		right: 50px;
 	}
+
 	.formModal {
 		height: 100vh;
 		border-radius: unset;
@@ -67,14 +75,15 @@
 		width: 500px;
 		transform: translateX(100%);
 		padding: 46px;
+
 		&.showPopup {
 			transform: translateX(0);
 		}
+
 		.formTitle {
 			font-size: var(--color-brand-font-size-4xlarge);
 		}
 	}
 }
 
-@media only screen and (max-width: 992px) {
-}
+@media only screen and (max-width: 992px) {}
