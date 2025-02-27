@@ -57,7 +57,7 @@ const Established: React.FC<unknown> = () => {
 					>
 						<Image
 							src={SkorostImage}
-							alt="skorost"
+							alt="Football coaching team with young players at the best kids football academy in Ghatkopar since 2003"
 							className={"img-responsive full-width-img"}
 						/>
 					</motion.div>

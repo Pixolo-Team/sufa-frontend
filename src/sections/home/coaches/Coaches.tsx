@@ -46,6 +46,7 @@ const coachesData = [
 		designation: "Head Coach",
 		coachImageSrc: "/images/pandit.jpg",
 		socialMedia: { instagram: "inst" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
 	},
 	{
 		firstName: "Harsh",
@@ -55,6 +56,7 @@ const coachesData = [
 		designation: "Goalkeeper Coach",
 		coachImageSrc: "/images/harsh.jpg",
 		socialMedia: { instagram: "https://www.instagram.com/_harshgk/" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
 	},
 	{
 		firstName: "Dipesh",
@@ -64,6 +66,7 @@ const coachesData = [
 		designation: "Youth Coach",
 		coachImageSrc: "/images/dipesh.jpg",
 		socialMedia: { instagram: "https://www.instagram.com/dipesh_31/" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
 	},
 	{
 		firstName: "Fawaz",
@@ -73,6 +76,7 @@ const coachesData = [
 		designation: "Youth Coach",
 		coachImageSrc: "/images/fawaz.jpg",
 		socialMedia: { instagram: "meera_insta" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
 	},
 	// {
 	// 	firstName: "Sarthak",
@@ -91,6 +95,7 @@ const coachesData = [
 		designation: "Fitness Coach",
 		coachImageSrc: "/images/pradeep.jpg",
 		socialMedia: { instagram: "meera_insta" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
 	},
 ];
 
@@ -118,6 +123,7 @@ const Coaches: React.FC<unknown> = () => {
 										designation={coach.designation}
 										coachImageSrc={coach.coachImageSrc}
 										socialMedia={coach.socialMedia}
+										alt={coach.alt}
 									/>
 								</div>
 							</div>

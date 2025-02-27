@@ -15,6 +15,7 @@ interface CoursesCardProps {
 	courseImageSrc: string;
 	courseTitle: string;
 	onClick: () => void;
+	alt?: string;
 }
 
 /** Courses Card Component */
@@ -23,6 +24,7 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 	courseImageSrc = "",
 	courseTitle = "",
 	onClick,
+	alt = "",
 }) => {
 	// Navigation and Route Params
 
@@ -49,7 +51,7 @@ const CoursesCard: React.FC<CoursesCardProps> = ({
 				<div className={styles.imageContainer}>
 					<Image
 						src={courseImageSrc}
-						alt={courseTitle}
+						alt={alt}
 						className={`${styles.courseImage} img-responsive`}
 						width={640}
 						height={360}

@@ -61,7 +61,7 @@ const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
 					<source media="(min-width: 600px)" srcSet="/images/join-us-mobile.jpg" />
 					<Image
 						src="/images/join-us-mobile.jpg"
-						alt="cta"
+						alt="Developing football skills through structured coaching in Ghatkopar, Mumbai"
 						className={styles.image}
 						fill
 					/>
