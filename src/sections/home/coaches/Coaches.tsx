@@ -75,7 +75,7 @@ const coachesData = [
 			"With rich experience as a senior player and coach, Fawaz Pakkir sharpens young footballers’ skills and game sense—building future champions with every drill.",
 		designation: "Youth Coach",
 		coachImageSrc: "/images/fawaz.jpg",
-		socialMedia: { instagram: "meera_insta" },
+		socialMedia: { instagram: "https://www.instagram.com/fawaz_pakkir/" },
 		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
 	},
 	// {
@@ -85,7 +85,7 @@ const coachesData = [
 	// 		"Sarthak Bhosale leads our senior girls' team with a focus on skill, teamwork, and confidence. His training transforms talent into fierce competitors.",
 	// 	designation: "Women’s Coach",
 	// 	coachImageSrc: "/images/coach.jpg",
-	// 	socialMedia: { instagram: "meera_insta" },
+	// 	socialMedia: { instagram: "https://www.instagram.com/_sarthakbhosle/" },
 	// },
 	{
 		firstName: "Pradeep",
@@ -94,7 +94,7 @@ const coachesData = [
 			"Pradeep Ghavri ensures our players’ peak performance with specialized fitness programs. His training builds strength, prevents injuries, and boosts overall conditioning.",
 		designation: "Fitness Coach",
 		coachImageSrc: "/images/pradeep.jpg",
-		socialMedia: { instagram: "meera_insta" },
+		socialMedia: { instagram: "https://www.instagram.com/pradeepghawri9/" },
 		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
 	},
 ];
