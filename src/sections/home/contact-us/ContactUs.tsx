@@ -48,62 +48,50 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 					<div
 						className={`${styles.firstTextBlock} flex flex-wrap align-center font-weight-700`}
 					>
-						<div>
-							<p className={styles.primaryText}>
-								Scrolled
-								{/* Mouse animation */}
-								<span className={styles.mouse}>
-									<span className={styles.scrollDot}></span>
-								</span>
-							</p>
-						</div>
-						<div>
-							<p className={styles.secondaryText}>all the way here ha!</p>
-						</div>
+						<p className={styles.primaryText}>
+							Scrolled
+							{/* Mouse animation */}
+							<span className={styles.mouse}>
+								<span className={styles.scrollDot}></span>
+							</span>
+						</p>
+						<p className={styles.secondaryText}>all the way here ha!</p>
 					</div>
 					{/* Second text block */}
 					<div className={`${styles.secondTextBlock} font-weight-700`}>
-						<div>
-							<p className={styles.secondaryText}>
-								We are assuming you loved
-								{/* Heart animation */}
-								<span className={styles.heartContainer}>
-									{[...Array(5)].map((_, index) => {
-										const randomDelay = Math.random() * 2; // Random delay between 0s to 2s
-										const randomLeft = Math.random() * 40 - 20; // Random left position (-20px to +20px)
-										const randomRotation = Math.random() * 30 - 15; // Random rotation (-15deg to +15deg)
+						<p className={styles.secondaryText}>
+							We are assuming you loved
+							{/* Heart animation */}
+							<span className={styles.heartContainer}>
+								{[...Array(5)].map((_, index) => {
+									const randomDelay = Math.random() * 2; // Random delay between 0s to 2s
+									const randomLeft = Math.random() * 40 - 20; // Random left position (-20px to +20px)
+									const randomRotation = Math.random() * 30 - 15; // Random rotation (-15deg to +15deg)
 
-										return (
-											<HeartIcon
-												key={index}
-												className={styles.heartIcon}
-												style={{
-													animationDelay: `${randomDelay}s`,
-													left: `${randomLeft}px`,
-													transform: `rotate(${randomRotation}deg)`,
-												}}
-											/>
-										);
-									})}
-								</span>
-							</p>
-						</div>
-						<div>
-							<p className={`${styles.primaryText} ${styles.rightAlignedText}`}>
-								Our Website
-							</p>
-						</div>
+									return (
+										<HeartIcon
+											key={index}
+											className={styles.heartIcon}
+											style={{
+												animationDelay: `${randomDelay}s`,
+												left: `${randomLeft}px`,
+												transform: `rotate(${randomRotation}deg)`,
+											}}
+										/>
+									);
+								})}
+							</span>
+						</p>
+						<p className={`${styles.primaryText} ${styles.rightAlignedText}`}>
+							Our Website
+						</p>
 					</div>
 					{/* Third text block */}
 					<div className={styles.thirdTextBlock}>
-						<div>
-							<p className={`${styles.secondaryText} font-weight-700`}>
-								Imagine the feeling when you see us
-								<span className={`${styles.highlightText} font-weight-800`}>
-									Coach!
-								</span>
-							</p>
-						</div>
+						<p className={`${styles.secondaryText} font-weight-700`}>
+							Imagine the feeling when you see us
+							<span className={`${styles.highlightText} font-weight-800`}>Coach!</span>
+						</p>
 					</div>
 				</div>
 				<div
