@@ -5,6 +5,11 @@
 .contactUsTextWrapper {
 	gap: 50px;
 	margin-bottom: 70px;
+	.firstTextBlock {
+		.primaryText {
+			margin-right: var(--margin-medium);
+		}
+	}
 	.secondTextBlock {
 		width: 100%;
 	}
@@ -141,9 +146,6 @@
 @media only screen and (min-width: 768px) {
 	.contactUsTextWrapper {
 		justify-content: center;
-		.firstTextBlock {
-			gap: var(--gap-medium);
-		}
 		.mouse {
 			height: 68px;
 			width: 42px;

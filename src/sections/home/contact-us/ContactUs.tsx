@@ -18,7 +18,6 @@ import FootballImage from "@/../public/images/football-img.png";
 
 // SVG's //
 import HeartIcon from "@/../public/icons/filled/heart.svg";
-import MouseIcon from "@/../public/icons/outline/mouse.svg";
 
 interface ContactUsProps {
 	onButtonClick: () => void;
