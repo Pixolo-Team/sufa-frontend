@@ -45,12 +45,15 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 			<div className="container">
 				<div className={`${styles.contactUsTextWrapper} flex flex-wrap`}>
 					{/* First text block */}
-					<div className={`${styles.firstTextBlock} font-weight-700`}>
+					<div
+						className={`${styles.firstTextBlock} flex flex-wrap align-center font-weight-700`}
+					>
 						<div>
 							<p className={styles.primaryText}>
-								Scrolled{" "}
-								<span>
-									<MouseIcon />
+								Scrolled
+								{/* Mouse animation */}
+								<span className={styles.mouse}>
+									<span className={styles.scrollDot}></span>
 								</span>
 							</p>
 						</div>
@@ -62,9 +65,12 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 					<div className={`${styles.secondTextBlock} font-weight-700`}>
 						<div>
 							<p className={styles.secondaryText}>
-								We are assuming you loved{" "}
-								<span>
-									<HeartIcon className={styles.heartIcon} />
+								We are assuming you loved
+								{/* Heart animation */}
+								<span className={styles.heartContainer}>
+									{[...Array(5)].map((_, index) => (
+										<HeartIcon key={index} className={styles.heartIcon} />
+									))}
 								</span>
 							</p>
 						</div>
@@ -124,7 +130,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 								onClick={() => {
 									onButtonClick();
 								}}
-								level={ButtonLevels.BLOCK}
+								level={ButtonLevels.INLINE}
 							/>
 						</div>
 					</div>
