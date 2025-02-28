@@ -48,15 +48,15 @@ const Courses: React.FC<unknown> = () => {
 					<CoursesCard
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u11Image.src}
-						courseTitle="Under-11 Boys"
-						onClick={() => console.log("Under-11 Boys")}
+						courseTitle="Under-11 Program"
+						onClick={() => console.log("Under-11 Program")}
 						altTextForImage="Kids enjoying football coaching in Mumbai"
 					/>
 					<CoursesCard
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u15Image.src}
-						courseTitle="Under-15 Boys"
-						onClick={() => console.log("Under-15 Boys")}
+						courseTitle="Under-15 Program"
+						onClick={() => console.log("Under-15 ProgramProgram")}
 						altTextForImage="Football training session for kids at the best football academy in Ghatkopar East"
 					/>
 				</div>

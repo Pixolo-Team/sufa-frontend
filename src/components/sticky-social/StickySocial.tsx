@@ -6,6 +6,7 @@ import styles from "./sticky-social.module.scss";
 
 // COMPONENTS //
 import Icon from "@/neevo/components/Icon";
+import Link from "next/link";
 
 // SVG's //
 import SkorostLogo from "@/../public/images/skorost.svg";
@@ -60,7 +61,9 @@ const StickySocial: React.FC<unknown> = () => {
 						<Icon iconName="info" className={styles.icon} />
 					</a>
 				</div>
-				<SkorostLogo />
+				<Link href="/">
+					<SkorostLogo />
+				</Link>
 				<div className={`${styles.socialIconsWrapper} flex align-center`}>
 					{/* Phone */}
 					<a href="tel: 9004453226" target="_self" rel="noreferrer">
