@@ -68,9 +68,23 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 								We are assuming you loved
 								{/* Heart animation */}
 								<span className={styles.heartContainer}>
-									{[...Array(5)].map((_, index) => (
-										<HeartIcon key={index} className={styles.heartIcon} />
-									))}
+									{[...Array(5)].map((_, index) => {
+										const randomDelay = Math.random() * 2; // Random delay between 0s to 2s
+										const randomLeft = Math.random() * 40 - 20; // Random left position (-20px to +20px)
+										const randomRotation = Math.random() * 30 - 15; // Random rotation (-15deg to +15deg)
+
+										return (
+											<HeartIcon
+												key={index}
+												className={styles.heartIcon}
+												style={{
+													animationDelay: `${randomDelay}s`,
+													left: `${randomLeft}px`,
+													transform: `rotate(${randomRotation}deg)`,
+												}}
+											/>
+										);
+									})}
 								</span>
 							</p>
 						</div>

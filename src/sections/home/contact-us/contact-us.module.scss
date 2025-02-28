@@ -52,21 +52,21 @@
 	.heartIcon {
 		position: absolute;
 		color: var(--color-brand-secondary-regular);
-		animation: heartBeat 2s ease-in infinite;
+		animation: heartBeat 2s linear infinite;
 		&.heartIcon:nth-child(1) {
 			animation-delay: 0s;
 		}
 		&.heartIcon:nth-child(2) {
-			animation-delay: 1s;
+			animation-delay: 0.5s;
 		}
 		&.heartIcon:nth-child(3) {
-			animation-delay: 2s;
+			animation-delay: 1s;
 		}
 		&.heartIcon:nth-child(4) {
-			animation-delay: 3s;
+			animation-delay: 1.5s;
 		}
 		&.heartIcon:nth-child(5) {
-			animation-delay: 4s;
+			animation-delay: 2s;
 		}
 	}
 }
@@ -126,19 +126,19 @@
 // Heart keyframes animation
 @keyframes heartBeat {
 	0% {
-		transform: translateY(0) scale(1) rotate(15deg);
+		transform: translate(0, 0) scale(1) rotate(15deg);
 		opacity: 1;
 	}
 	30% {
-		transform: translateY(-30px) scale(1.2) rotate(-15deg);
+		transform: translate(-10px, -50px) scale(1.2) rotate(-15deg);
 		opacity: 0.9;
 	}
 	60% {
-		transform: translateY(-60px) scale(0.9) rotate(10deg);
+		transform: translate(0, -100px) scale(0.9) rotate(10deg);
 		opacity: 0.6;
 	}
 	100% {
-		transform: translateY(-80px) scale(0.5) rotate(-10deg);
+		transform: translate(10px, -150px) scale(0.5) rotate(-10deg);
 		opacity: 0;
 	}
 }
@@ -179,7 +179,6 @@
 		}
 		.highlightText {
 			vertical-align: middle;
-			font-size: var(--color-brand-font-size-9xlarge);
 		}
 	}
 	.contactUsInner {
@@ -194,6 +193,11 @@
 
 // Ipad air
 @media only screen and (min-width: 992px) {
+	.contactUsTextWrapper {
+		.highlightText {
+			font-size: var(--color-brand-font-size-9xlarge);
+		}
+	}
 	.contactUsInner {
 		.imageWrapper {
 			width: 400px;
