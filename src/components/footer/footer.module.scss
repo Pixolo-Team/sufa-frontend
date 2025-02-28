@@ -1,10 +1,10 @@
 .footerWrap {
-	padding: var(--padding-xxlarge);
+	padding: var(--padding-xxlarge) var(--padding-xxlarge)
+		calc(var(--padding-xxlarge) * 2 + 58px) var(--padding-xxlarge);
 	.footerContentWrapper {
 		gap: 40px;
 		margin-bottom: 40px;
 		.footerTopWrap {
-			width: 100%;
 			gap: var(--gap-large);
 		}
 		.partnersSection {
@@ -13,6 +13,7 @@
 				text-align: center;
 				font-size: var(--color-brand-font-size-xsmall);
 				margin-bottom: var(--margin-medium);
+				line-height: 1.6;
 			}
 		}
 		.fansSection {
@@ -41,8 +42,11 @@
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
-	.footerBottomSection {
-		flex-direction: row;
+	.footerWrap {
+		padding: var(--padding-xxlarge);
+		.footerBottomSection {
+			flex-direction: row;
+		}
 	}
 }
 

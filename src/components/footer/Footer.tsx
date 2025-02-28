@@ -5,13 +5,8 @@ import React from "react";
 // STYLES //
 import styles from "./footer.module.scss";
 
-// COMPONENTS //
-import Image from "next/image";
-
-// IMAGES //
-import SkorostSchoolLogo from "@/../public/images/skorost-school.png";
-
 // SVG's //
+import SkorostSchoolLogo from "@/../public/images/skorost-school.svg";
 import PixoloLogo from "@/../public/images/pixolo-logo.svg";
 import ZizoLogo from "@/../public/images/zizo-logo.svg";
 
@@ -38,7 +33,7 @@ const Footer: React.FC<unknown> = () => {
 						className={`${styles.footerTopWrap} flex align-center justify-between flex-wrap`}
 					>
 						{/* Logo */}
-						<Image src={SkorostSchoolLogo} alt="skorost football school" />
+						<SkorostSchoolLogo />
 					</div>
 					<div className={`${styles.partnersSection}`}>
 						<p className={`${styles.partnersTitle} font-weight-500`}>
