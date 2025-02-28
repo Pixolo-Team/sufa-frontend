@@ -45,7 +45,7 @@ const coachesData = [
 			"A C License coach with passion and experience, he transforms young talents with grit and dedication. Inspiring players to love, play, and own the game, he instills a winning mindset that fuels big dreams and bold play.",
 		designation: "Head Coach",
 		coachImageSrc: "/images/pandit.jpg",
-		socialMedia: { instagram: "inst" },
+		socialMedia: { instagram: "https://www.instagram.com/dinho_10_/" },
 		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
 	},
 	{
