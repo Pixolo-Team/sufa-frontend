@@ -1,6 +1,6 @@
 .footerWrap {
-	padding: var(--padding-xxlarge) var(--padding-xxlarge)
-		calc(var(--padding-xxlarge) * 2 + 58px) var(--padding-xxlarge);
+	padding-top: var(--padding-xxlarge);
+	padding-bottom: 106px;
 	.footerContentWrapper {
 		gap: 40px;
 		margin-bottom: 40px;
@@ -17,11 +17,11 @@
 			}
 		}
 		.fansSection {
-			margin-bottom: 24px;
+			margin-bottom: var(--margin-xxlarge);
 			.fansTitle {
 				color: var(--color-text-shade);
 				text-transform: uppercase;
-				font-size: 24px;
+				font-size: var(--color-brand-font-size-xlarge);
 				.highlightedText {
 					color: var(--color-brand-primary-contrast);
 				}
@@ -29,8 +29,6 @@
 		}
 	}
 	.footerBottomSection {
-		text-align: center;
-		align-items: center;
 		gap: var(--gap-medium);
 		font-size: var(--color-brand-font-size-small);
 		line-height: 1.5;

@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		remotePatterns : [
+		remotePatterns: [
 			{
-				hostname: 'images.pexels.com',
-			}
-		]
+				hostname: "images.pexels.com",
+			},
+		],
 	},
 	webpack(config) {
 		config.module.rules.push({

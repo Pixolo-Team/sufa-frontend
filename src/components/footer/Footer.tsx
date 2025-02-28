@@ -52,10 +52,12 @@ const Footer: React.FC<unknown> = () => {
 						</p>
 					</div>
 				</div>
-			</div>
-			<div className={`${styles.footerBottomSection}  flex justify-between`}>
-				<p>© Skorost United</p>
-				<p>Privacy Policy</p>
+				<div
+					className={`${styles.footerBottomSection}  flex justify-between text-center`}
+				>
+					<p>© Skorost United</p>
+					<p>Privacy Policy</p>
+				</div>
 			</div>
 		</footer>
 	);
