@@ -65,7 +65,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 							<span className={styles.heartContainer}>
 								{[...Array(5)].map((_, index) => {
 									const randomDelay = Math.random() * 2; // Random delay between 0s to 2s
-									const randomLeft = Math.random() * 40 - 20; // Random left position (-20px to +20px)
+									const randomLeft = Math.random() * 100 - 50; // Random left position (-50px to +50px)
 									const randomRotation = Math.random() * 30 - 15; // Random rotation (-15deg to +15deg)
 
 									return (
