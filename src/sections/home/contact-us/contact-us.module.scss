@@ -51,6 +51,7 @@
 	}
 	.heartIcon {
 		position: absolute;
+		bottom: 0;
 		color: var(--color-brand-secondary-regular);
 		animation: heartBeat 2s linear infinite;
 		@for $i from 1 through 5 {
@@ -169,6 +170,9 @@
 		}
 		.highlightText {
 			vertical-align: middle;
+		}
+		.heartIcon {
+			bottom: unset;
 		}
 	}
 	.contactUsInner {
