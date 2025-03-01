@@ -12,9 +12,6 @@ import styles from "./banner.module.scss";
 import Button from "@/neevo/components/button/Button";
 import Image from "next/image";
 
-// IMAGES //
-import PandaImage from "@/../public/images/panda.png";
-
 interface BannerProps {
 	bannerTitle: string;
 	bannerDescription: string;
@@ -84,7 +81,13 @@ const Banner: React.FC<BannerProps> = ({
 				</div>
 				{/* Free Trial Button */}
 				<div className={`${styles.buttonWrapper}`}>
-					<Image src={PandaImage} alt="Panda" className={styles.buttonImage} />
+					<Image
+						src={"/images/panda.svg"}
+						alt="Panda"
+						className={styles.buttonImage}
+						width={84}
+						height={80}
+					/>
 					<Button
 						text={"Book a FREE TRIAL Now"}
 						onClick={() => {
