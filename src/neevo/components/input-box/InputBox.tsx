@@ -33,6 +33,7 @@ interface InputBoxProps {
 	onClear: () => void;
 	onBlur?: () => void;
 	onRightIconClick?: () => void;
+	id?: string;
 }
 
 /** Input Box Component */
@@ -54,6 +55,7 @@ const InputBox: React.FC<InputBoxProps> = ({
 	onClear,
 	onBlur,
 	onRightIconClick,
+	id,
 }) => {
 	// Define States
 
@@ -87,11 +89,11 @@ const InputBox: React.FC<InputBoxProps> = ({
 		<div className={inputClasses}>
 			{/* Label */}
 			{label && (
-				<p className={styles.inputLabel}>
+				<label className={styles.inputLabel} htmlFor={id}>
 					{label}
 					{/* Required field (star)*/}
 					{isRequired && <span className={styles.inputRequired}>*</span>}
-				</p>
+				</label>
 			)}
 
 			<div className={styles.inputWrapper}>
@@ -108,6 +110,7 @@ const InputBox: React.FC<InputBoxProps> = ({
 					disabled={isDisabled}
 					required={isRequired}
 					onBlur={onBlur}
+					id={id}
 				/>
 
 				<span className={styles.rightIconsWrapper}>

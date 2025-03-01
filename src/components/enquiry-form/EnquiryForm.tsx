@@ -140,6 +140,7 @@ const EnquiryForm: React.FC = () => {
 						onChange={(value) => handleInputChange("name", value)}
 						errorMessage={enquiryErrors.name}
 						onClear={() => handleInputChange("name", "")}
+						id="full-name"
 					/>
 				</div>
 				{/* Email Input Box */}
@@ -153,6 +154,7 @@ const EnquiryForm: React.FC = () => {
 						onChange={(value) => handleInputChange("email", value)}
 						errorMessage={enquiryErrors.email}
 						onClear={() => handleInputChange("email", "")}
+						id="email-id"
 					/>
 				</div>
 
@@ -168,6 +170,7 @@ const EnquiryForm: React.FC = () => {
 						onChange={(value) => handleInputChange("phone", value)}
 						errorMessage={enquiryErrors.phone}
 						onClear={() => handleInputChange("phone", "")}
+						id="phone-number"
 					/>
 				</div>
 				{/* Select Subject */}
@@ -194,6 +197,7 @@ const EnquiryForm: React.FC = () => {
 						isRequired={false}
 						onClear={() => handleOthersChange("message", "")}
 						placeholder="Message"
+						id="message-id"
 					/>
 				</div>
 			</div>

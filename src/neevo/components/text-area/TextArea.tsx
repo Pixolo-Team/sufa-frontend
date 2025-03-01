@@ -24,6 +24,7 @@ interface TextAreaProps {
 	onChange: (value: string) => void;
 	onClear: () => void;
 	onBlur?: () => void;
+	id?: string;
 }
 
 /** Textarea Component */
@@ -43,6 +44,7 @@ const TextArea: React.FC<TextAreaProps> = ({
 	onChange,
 	onClear,
 	onBlur,
+	id,
 }) => {
 	// Define States
 
@@ -71,11 +73,11 @@ const TextArea: React.FC<TextAreaProps> = ({
 		<div className={textareaClasses}>
 			{/* Label */}
 			{label && (
-				<p className={styles.textareaLabel}>
+				<label className={styles.textareaLabel} htmlFor={id}>
 					{label}
 					{/* Required field (star)*/}
 					{isRequired && <span className={styles.textareaRequired}>*</span>}
-				</p>
+				</label>
 			)}
 
 			<div className={styles.textareaWrapper}>
@@ -92,6 +94,7 @@ const TextArea: React.FC<TextAreaProps> = ({
 					style={{ height: textAreaHeight }}
 					onBlur={onBlur}
 					rows={numberOfLines}
+					id={id}
 				/>
 
 				<span className={styles.rightIconsWrapper}>
