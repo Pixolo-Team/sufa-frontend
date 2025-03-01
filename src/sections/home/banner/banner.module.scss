@@ -163,6 +163,17 @@
 					font-size: var(--color-brand-font-size-regular);
 				}
 			}
+			.buttonWrapper {
+				.buttonImage {
+					transform: translateY(0);
+					transition: all 0.3s ease-in-out;
+				}
+				&:hover {
+					.buttonImage {
+						transform: translateY(-15%);
+					}
+				}
+			}
 		}
 	}
 }
