@@ -43,7 +43,7 @@ const graduatesList = [
 	{
 		description: "Graduated in 2003 and played in the India League for DK Pharma",
 		graduateName: "Shubham Verma",
-		graduateSrc: "/images/graduate.jpg",
+		graduateSrc: "/images/shubham.jpg",
 	},
 	{
 		description:
@@ -64,7 +64,7 @@ const graduatesList = [
 	{
 		description: "Graduated in 2003 and played in the India League.",
 		graduateName: "Allen Thomas",
-		graduateSrc: "/images/graduate.jpg",
+		graduateSrc: "/images/allen.jpg",
 	},
 ];
 /** Graduates Screen */

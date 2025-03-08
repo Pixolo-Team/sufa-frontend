@@ -14,7 +14,8 @@
 		"xlarge",
 		"xxlarge",
 		"skorost",
-		"ghatkopar"
+		"ghatkopar",
+		"kippax",
 	],
 	"ignoreWords": [],
 	"import": []

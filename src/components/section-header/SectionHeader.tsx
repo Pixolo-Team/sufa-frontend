@@ -1,6 +1,7 @@
 "use client";
 // REACT //
-import React from "react";
+import React, { useRef } from "react";
+import { useScroll, useTransform, motion } from "motion/react";
 
 // STYLES //
 import styles from "./section-header.module.scss";
@@ -25,8 +26,20 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 	// Define States
 
 	// Define Refs
+	const sectionHeaderRef = useRef(null);
 
 	// Helper Functions
+	// Track the vertical scroll progress relative to the referenced section
+	const { scrollYProgress } = useScroll({
+		target: sectionHeaderRef,
+		offset: ["start end", "end start"],
+	});
+	// Apply a scaling effect to the section header based on scroll progress
+	const sectionHeaderStyles = useTransform(
+		scrollYProgress,
+		[0, 0.5, 1],
+		[2, 1.2, 1]
+	);
 
 	// UseEffect Functions and UseFocusEffect Functions
 
@@ -47,10 +60,15 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 					/>
 				</div>
 			)}
-			<div>
+			<div ref={sectionHeaderRef}>
 				{/* Faded text */}
 				{!!fadedText && (
-					<h2 className={`${styles.fadedText} font-weight-800`}>{fadedText}</h2>
+					<motion.h2
+						className={`${styles.fadedText} font-weight-800`}
+						style={{ scale: sectionHeaderStyles }}
+					>
+						{fadedText}
+					</motion.h2>
 				)}
 				{/* Highlighted text */}
 				<h3 className={`${styles.highlightedText} font-weight-700`}>
