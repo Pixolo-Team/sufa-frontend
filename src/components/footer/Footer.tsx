@@ -5,9 +5,6 @@ import React from "react";
 // STYLES //
 import styles from "./footer.module.scss";
 
-// COMPONENTS //
-import Link from "next/link";
-
 // SVG's //
 import SkorostSchoolLogo from "@/../public/images/skorost-school.svg";
 import PixoloLogo from "@/../public/images/pixolo-logo.svg";
@@ -55,13 +52,8 @@ const Footer: React.FC<unknown> = () => {
 						</p>
 					</div>
 				</div>
-				<div
-					className={`${styles.footerBottomSection}  flex justify-between text-center`}
-				>
+				<div className={`${styles.footerBottomSection}`}>
 					<p>© Skorost United</p>
-					<Link href="/">
-						<p>Privacy Policy</p>
-					</Link>
 				</div>
 			</div>
 		</footer>

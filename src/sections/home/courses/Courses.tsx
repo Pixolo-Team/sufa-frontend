@@ -48,16 +48,23 @@ const Courses: React.FC<unknown> = () => {
 					<CoursesCard
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u11Image.src}
-						courseTitle="Under-11 Program"
-						onClick={() => console.log("Under-11 Program")}
+						courseTitle="Under-11"
+						onClick={() => console.log("Under-11")}
 						altTextForImage="Kids enjoying football coaching in Mumbai"
 					/>
 					<CoursesCard
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u15Image.src}
-						courseTitle="Under-15 Program"
-						onClick={() => console.log("Under-15 ProgramProgram")}
+						courseTitle="Under-15"
+						onClick={() => console.log("Under-15")}
 						altTextForImage="Football training session for kids at the best football academy in Ghatkopar East"
+					/>
+					<CoursesCard
+						wrapperClass={`${styles.cardItem}`}
+						courseImageSrc={u15Image.src}
+						courseTitle="Sports Psychology"
+						onClick={() => console.log("Sports Psychology")}
+						altTextForImage="Enhancing mental resilience and performance through sports psychology training for young footballers in Mumbai"
 					/>
 				</div>
 			</div>
