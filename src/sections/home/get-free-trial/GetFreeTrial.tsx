@@ -59,6 +59,7 @@ const GetFreeTrial: React.FC<GetFreeTrialProps> = ({ onButtonClick }) => {
 								size={ButtonSizes.XLARGE}
 								shape={Shapes.ROUNDED}
 								color={Colors.SECONDARY}
+								extraClass="font-weight-600"
 							/>
 						</div>
 					</div>

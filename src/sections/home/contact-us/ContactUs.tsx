@@ -133,6 +133,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 									onButtonClick();
 								}}
 								level={ButtonLevels.INLINE}
+								extraClass="font-weight-600"
 							/>
 						</div>
 					</div>
