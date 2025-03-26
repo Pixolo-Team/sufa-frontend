@@ -38,6 +38,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 	// View starts here
 	return (
 		<section
+			id="contact"
 			className={`section-spacing padding-bottom-0 ${styles.contactUsWrapper}`}
 		>
 			{/* Contact Us Section */}
