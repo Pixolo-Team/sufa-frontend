@@ -4,8 +4,6 @@
 .cardsWrapper {
 	margin-top: 50px;
 	gap: 32px;
-	// flex-wrap: wrap;
-
 	.cardItem {
 		&:nth-child(1) {
 			--card-color: #16db93;
@@ -14,6 +12,12 @@
 			--card-color: #ce6ee0;
 		}
 		&:nth-child(3) {
+			--card-color: #fd7042;
+		}
+		&:nth-child(4) {
+			--card-color: #ce6ee0;
+		}
+		&:nth-child(5) {
 			--card-color: #fd7042;
 		}
 	}

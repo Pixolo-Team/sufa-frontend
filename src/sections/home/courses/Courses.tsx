@@ -68,7 +68,7 @@ const Courses: React.FC<unknown> = () => {
 					/>
 					<CoursesCard
 						wrapperClass={`${styles.cardItem}`}
-						courseImageSrc={u15Image.src}
+						courseImageSrc={gdpImage.src}
 						courseTitle="Goalkeeper Mindset"
 						onClick={() => console.log("Goalkeeper Mindset")}
 						altTextForImage="Football training session for kids at the best football academy in Ghatkopar East"
