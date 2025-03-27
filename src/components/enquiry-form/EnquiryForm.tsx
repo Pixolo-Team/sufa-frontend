@@ -210,6 +210,7 @@ const EnquiryForm: React.FC = () => {
 					color={Colors.SECONDARY}
 					shape={Shapes.ROUNDED}
 					size={ButtonSizes.XLARGE}
+					extraClass="font-weight-600"
 				/>
 			</div>
 		</>

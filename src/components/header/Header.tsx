@@ -2,6 +2,9 @@
 // REACT //
 import React, { useState } from "react";
 
+// TYPES //
+import { HeaderListData } from "@/types/header";
+
 // STYLES //
 import styles from "./header.module.scss";
 
@@ -13,7 +16,10 @@ import Link from "next/link";
 import SkorostLogo from "@/../public/images/skorost.svg";
 
 // Header items
-const headerListItems: string[] = ["Courses", "Contact Us"];
+const headerListItems: HeaderListData[] = [
+	{ label: "Courses", id: "courses" },
+	{ label: "Contact Us", id: "contact" },
+];
 
 /** Header Screen */
 const Header: React.FC<unknown> = () => {
@@ -41,8 +47,8 @@ const Header: React.FC<unknown> = () => {
 					{/* Links */}
 					<nav className={`${styles.pageLinkWrap} font-weight-500 justify-end`}>
 						{headerListItems.map((link, linkIndex) => (
-							<a href="/" key={linkIndex} className={styles.pageLink}>
-								{link}
+							<a href={`#${link.id}`} key={linkIndex} className={styles.pageLink}>
+								{link.label}
 							</a>
 						))}
 					</nav>
@@ -60,8 +66,8 @@ const Header: React.FC<unknown> = () => {
 					}`}
 				>
 					{headerListItems.map((link, linkIndex) => (
-						<a href="/" key={linkIndex} className={styles.pageLink}>
-							{link}
+						<a href={`#${link.id}`} key={linkIndex} className={styles.pageLink}>
+							{link.label}
 						</a>
 					))}
 				</div>

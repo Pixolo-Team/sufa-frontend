@@ -41,30 +41,58 @@ const settings: Settings = {
 // Graduates List data
 const graduatesList = [
 	{
-		description: "Graduated in 2003 and played in the India League for DK Pharma",
+		description:
+			"One of the most prolific striker Mumbai has seen. Went on the play at amazing levels and the highest goalscorer of our Senior Team.",
 		graduateName: "Shubham Verma",
-		graduateSrc: "/images/shubham.jpg",
+		graduateSrc: "/images/graduates/shubham.jpg",
 	},
 	{
 		description:
-			"Graduated in 2003 and played in the India League for DK Pharma. Graduated in 2003 and played in the India.",
-		graduateName: "Harsh Patil",
-		graduateSrc: "/images/graduate.jpg",
-	},
-	{
-		description: "Graduated in 2003 and played in the India League for DK Pharma",
-		graduateName: "Pawan Pattem",
-		graduateSrc: "/images/graduate.jpg",
-	},
-	{
-		description: "Graduated in 2003 and played in the India League.",
-		graduateName: "Karan Jagtap",
-		graduateSrc: "/images/graduate.jpg",
-	},
-	{
-		description: "Graduated in 2003 and played in the India League.",
+			"Selected for the senior team at 17, played Junior I-League, and now leads as Vice-Captain—Allen Thomas, a true Skorost warrior!",
 		graduateName: "Allen Thomas",
-		graduateSrc: "/images/allen.jpg",
+		graduateSrc: "/images/graduates/allen.jpg",
+	},
+	{
+		description:
+			"Showed immense potential from a young age, played ISL & I-League for many team across India, and now gives back as a coach at Skorost Academy",
+		graduateName: "Harsh Patil",
+		graduateSrc: "/images/graduates/harsh.jpg",
+	},
+	{
+		description:
+			"Selected at 16 as sub for our CB, soon made the main team. Played I-League with Kenkre, starred across India, now shining in the Kolkata League!",
+		graduateName: "Pawan Pattem",
+		graduateSrc: "/images/graduates/pawan.jpg",
+	},
+	{
+		description:
+			"Selected at 17, quickly proved his potential. Rose to the top of the senior squad before making his mark in the Junior I-League.",
+		graduateName: "Karan Jagtap",
+		graduateSrc: "/images/graduates/karan.jpg",
+	},
+	{
+		description:
+			"Spotted by Skorost at 14 as a raw talent, he matured into a powerhouse, rising through the ranks to dominate in the I-League.",
+		graduateName: "Jayesh Kurup",
+		graduateSrc: "/images/graduates/jayesh.jpg",
+	},
+	{
+		description:
+			"A relentless worker since 16, he became one of Mumbai’s top attacking mids, captaining his team in the Junior I-League.",
+		graduateName: "Pratamesh Dhumal",
+		graduateSrc: "/images/graduates/pratamesh.jpg",
+	},
+	{
+		description:
+			"Wise beyond his years, he captained the Youth Team, became Senior Team Vice-Captain, and now shines as a regular in his District team.",
+		graduateName: "Atul Ghodke",
+		graduateSrc: "/images/graduates/atul.jpg",
+	},
+	{
+		description:
+			"The young boy from Ghatkopar, the heart of Skorost. A talent from our roots, now the captain of our senior team.",
+		graduateName: "Sarthak Bhosale",
+		graduateSrc: "/images/graduates/sarthak.jpg",
 	},
 ];
 /** Graduates Screen */

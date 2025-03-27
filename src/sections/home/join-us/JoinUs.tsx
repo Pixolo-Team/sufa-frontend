@@ -96,6 +96,7 @@ const JoinUs: React.FC<JoinUsProps> = ({ onButtonClick }) => {
 						onClick={() => {
 							onButtonClick();
 						}}
+						extraClass="font-weight-600"
 					/>
 				</div>
 			</div>

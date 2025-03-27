@@ -27,7 +27,7 @@ const Courses: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<section className="section-spacing">
+		<section id="courses" className="section-spacing">
 			<div className="container">
 				{/* Section header component */}
 				<SectionHeader fadedText="Champions" highlightedText="Courses" />
@@ -56,7 +56,21 @@ const Courses: React.FC<unknown> = () => {
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u15Image.src}
 						courseTitle="Under-15 Program"
-						onClick={() => console.log("Under-15 ProgramProgram")}
+						onClick={() => console.log("Under-15 Program")}
+						altTextForImage="Football training session for kids at the best football academy in Ghatkopar East"
+					/>
+					<CoursesCard
+						wrapperClass={`${styles.cardItem}`}
+						courseImageSrc={u15Image.src}
+						courseTitle="Sports Psychology"
+						onClick={() => console.log("Sports Psychology")}
+						altTextForImage="Football training session for kids at the best football academy in Ghatkopar East"
+					/>
+					<CoursesCard
+						wrapperClass={`${styles.cardItem}`}
+						courseImageSrc={gdpImage.src}
+						courseTitle="Goalkeeper Mindset"
+						onClick={() => console.log("Goalkeeper Mindset")}
 						altTextForImage="Football training session for kids at the best football academy in Ghatkopar East"
 					/>
 				</div>
