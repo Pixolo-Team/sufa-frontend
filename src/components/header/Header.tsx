@@ -2,6 +2,9 @@
 // REACT //
 import React, { useState } from "react";
 
+// TYPES //
+import { HeaderListData } from "@/types/header";
+
 // STYLES //
 import styles from "./header.module.scss";
 
@@ -13,7 +16,7 @@ import Link from "next/link";
 import SkorostLogo from "@/../public/images/skorost.svg";
 
 // Header items
-const headerListItems: { label: string; id: string }[] = [
+const headerListItems: HeaderListData[] = [
 	{ label: "Courses", id: "courses" },
 	{ label: "Contact Us", id: "contact" },
 ];
