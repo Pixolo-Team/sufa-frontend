@@ -10,7 +10,7 @@ import Icon from "@/neevo/components/Icon";
 import ContentFromCms from "@/components/cms/ContentFromCms";
 
 // IMAGES //
-import FounderImage from "@/../public/images/abhay-amin.png";
+import FounderImage from "@/../public/images/abhay-amin-on-touchline.png";
 import FounderSign from "@/../public/images/founder-sign.png";
 
 /** Founders Message Screen */

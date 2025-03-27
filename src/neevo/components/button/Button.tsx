@@ -90,7 +90,7 @@ const Button: React.FC<ButtonProps> = ({
 
 		// Add the extra classes which comes from parent
 		if (extraClass) {
-			classes.push(styles[`${extraClass}`]);
+			classes.push([`${extraClass}`]);
 		}
 
 		// Convert the array into Classes Strings (to put in ClassName)

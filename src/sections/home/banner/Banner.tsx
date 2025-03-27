@@ -97,6 +97,7 @@ const Banner: React.FC<BannerProps> = ({
 						size={ButtonSizes.XLARGE}
 						color={Colors.SECONDARY}
 						level={ButtonLevels.INLINE}
+						extraClass="font-weight-600"
 					/>
 				</div>
 			</div>

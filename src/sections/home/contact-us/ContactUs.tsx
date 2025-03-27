@@ -38,6 +38,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 	// View starts here
 	return (
 		<section
+			id="contact"
 			className={`section-spacing padding-bottom-0 ${styles.contactUsWrapper}`}
 		>
 			{/* Contact Us Section */}
@@ -132,6 +133,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 									onButtonClick();
 								}}
 								level={ButtonLevels.INLINE}
+								extraClass="font-weight-600"
 							/>
 						</div>
 					</div>

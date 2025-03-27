@@ -2,6 +2,9 @@
 // REACT //
 import React, { useState } from "react";
 
+// TYPES //
+import { HeaderListData } from "@/types/header";
+
 // ENUMS //
 import { Colors, Shapes } from "@/neevo/enums/core.enum";
 import { ButtonLevels, ButtonSizes } from "@/neevo/enums/button.enum";
@@ -18,7 +21,10 @@ import Button from "@/neevo/components/button/Button";
 import SkorostLogo from "@/../public/images/skorost.svg";
 
 // Header items
-const headerListItems: string[] = ["Courses", "Contact Us"];
+const headerListItems: HeaderListData[] = [
+	{ label: "Courses", id: "courses" },
+	{ label: "Contact Us", id: "contact" },
+];
 
 /** Header Screen */
 const Header: React.FC<unknown> = () => {
