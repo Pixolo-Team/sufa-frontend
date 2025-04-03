@@ -52,6 +52,13 @@
 			.frontHeading {
 				-webkit-text-stroke: 2px white;
 			}
+			.imageWrapper {
+				height: 100vh;
+				.image {
+					height: 100%;
+					object-fit: cover;
+				}
+			}
 		}
 	}
 }
