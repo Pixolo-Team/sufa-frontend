@@ -9,7 +9,7 @@ import styles from "./established.module.scss";
 import Image from "next/image";
 
 // IMAGES //
-import SkorostImage from "@/../public/images/skorost.jpg";
+import SkorostImage from "@/../public/images/skorost-ghibli.jpg";
 
 /** Established Screen */
 const Established: React.FC<unknown> = () => {
@@ -50,7 +50,7 @@ const Established: React.FC<unknown> = () => {
 					>
 						<p className="fade-in-up">ESTABLISHED IN 2003</p>
 					</div>
-					{/* Images Silder */}
+					{/* Images slider */}
 					<motion.div
 						className={styles.imageWrapper}
 						style={{ y: establishedStyles }}
@@ -58,7 +58,7 @@ const Established: React.FC<unknown> = () => {
 						<Image
 							src={SkorostImage}
 							alt="Football coaching team with young players at the best kids football academy in Ghatkopar since 2003"
-							className={"img-responsive full-width-img"}
+							className={`img-responsive full-width-img ${styles.image}`}
 						/>
 					</motion.div>
 				</div>
