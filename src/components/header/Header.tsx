@@ -5,12 +5,17 @@ import React, { useState } from "react";
 // TYPES //
 import { HeaderListData } from "@/types/header";
 
+// ENUMS //
+import { Colors, Shapes } from "@/neevo/enums/core.enum";
+import { ButtonLevels, ButtonSizes } from "@/neevo/enums/button.enum";
+
 // STYLES //
 import styles from "./header.module.scss";
 
 // COMPONENTS //
 import Hamburger from "@/components/hamburger/Hamburger";
 import Link from "next/link";
+import Button from "@/neevo/components/button/Button";
 
 // SVG's //
 import SkorostLogo from "@/../public/images/skorost.svg";
@@ -46,11 +51,19 @@ const Header: React.FC<unknown> = () => {
 
 					{/* Links */}
 					<nav className={`${styles.pageLinkWrap} font-weight-500 justify-end`}>
-						{headerListItems.map((link, linkIndex) => (
-							<a href={`#${link.id}`} key={linkIndex} className={styles.pageLink}>
-								{link.label}
+						<Button
+							text="Book a Free Trial"
+							onClick={() => console.log()}
+							shape={Shapes.ROUNDED}
+							color={Colors.SECONDARY}
+							size={ButtonSizes.SMALL}
+							level={ButtonLevels.INLINE}
+						/>
+						{/* {headerListItems.map((link, linkIndex) => (
+							<a href="/" key={linkIndex} className={styles.pageLink}>
+								{link}
 							</a>
-						))}
+						))} */}
 					</nav>
 
 					{/* Hamburger Menu */}
@@ -65,11 +78,19 @@ const Header: React.FC<unknown> = () => {
 						isDropdownVisible ? styles.showDropdown : ""
 					}`}
 				>
-					{headerListItems.map((link, linkIndex) => (
-						<a href={`#${link.id}`} key={linkIndex} className={styles.pageLink}>
-							{link.label}
+					<Button
+						text="Book a Free Trial"
+						onClick={() => console.log()}
+						shape={Shapes.ROUNDED}
+						color={Colors.SECONDARY}
+						size={ButtonSizes.SMALL}
+						level={ButtonLevels.INLINE}
+					/>
+					{/* {headerListItems.map((link, linkIndex) => (
+						<a href="/" key={linkIndex} className={styles.pageLink}>
+							{link}
 						</a>
-					))}
+					))} */}
 				</div>
 			</div>
 		</header>
