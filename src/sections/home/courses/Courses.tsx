@@ -13,8 +13,12 @@ import gdpImage from "@/../public/images/courses/gdp.jpg";
 import u11Image from "@/../public/images/courses/u-11.jpg";
 import u15Image from "@/../public/images/courses/u-15.jpg";
 
+interface CoursesProps {
+	onCardClick: () => void;
+}
+
 /** Courses Screen */
-const Courses: React.FC<unknown> = () => {
+const Courses: React.FC<CoursesProps> = ({ onCardClick }) => {
 	// Navigation and Route Params
 
 	// Define States
@@ -42,35 +46,35 @@ const Courses: React.FC<unknown> = () => {
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={gdpImage.src}
 						courseTitle="Goalkeeper Development"
-						onClick={() => console.log("Goalkeeper Development")}
+						onClick={onCardClick}
 						altTextForImage="Professional football coaching for goalkeepers in Ghatkopar, Mumbai"
 					/>
 					<CoursesCard
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u11Image.src}
 						courseTitle="Under-11 Program"
-						onClick={() => console.log("Under-11 Program")}
+						onClick={onCardClick}
 						altTextForImage="Kids enjoying football coaching in Mumbai"
 					/>
 					<CoursesCard
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u15Image.src}
 						courseTitle="Under-15 Program"
-						onClick={() => console.log("Under-15 Program")}
+						onClick={onCardClick}
 						altTextForImage="Football training session for kids at the best football academy in Ghatkopar East"
 					/>
 					<CoursesCard
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={u15Image.src}
 						courseTitle="Sports Psychology"
-						onClick={() => console.log("Sports Psychology")}
+						onClick={onCardClick}
 						altTextForImage="Football training session for kids at the best football academy in Ghatkopar East"
 					/>
 					<CoursesCard
 						wrapperClass={`${styles.cardItem}`}
 						courseImageSrc={gdpImage.src}
 						courseTitle="Goalkeeper Mindset"
-						onClick={() => console.log("Goalkeeper Mindset")}
+						onClick={onCardClick}
 						altTextForImage="Football training session for kids at the best football academy in Ghatkopar East"
 					/>
 				</div>
