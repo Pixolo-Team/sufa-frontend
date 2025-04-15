@@ -2,6 +2,7 @@
 	padding-top: var(--padding-xxlarge);
 	padding-bottom: 106px;
 	.footerContentWrapper {
+		justify-content: center;
 		gap: 40px;
 		margin-bottom: 40px;
 		.footerTopWrap {
@@ -15,16 +16,21 @@
 				margin-bottom: var(--margin-medium);
 				line-height: 1.6;
 			}
+			.partners {
+				gap: 42px;
+			}
 		}
-		.fansSection {
-			margin-bottom: var(--margin-xxlarge);
-			.fansTitle {
-				color: var(--color-text-shade);
-				text-transform: uppercase;
-				font-size: var(--color-brand-font-size-xlarge);
-				.highlightedText {
-					color: var(--color-brand-primary-contrast);
-				}
+	}
+	.fansSection {
+		margin-bottom: var(--margin-xxlarge);
+		text-align: center;
+		.fansTitle {
+			color: var(--color-text-shade);
+			text-transform: uppercase;
+			font-size: var(--color-brand-font-size-6xlarge);
+			line-height: 1;
+			.highlightedText {
+				color: var(--color-brand-primary-contrast);
 			}
 		}
 	}
@@ -36,12 +42,35 @@
 }
 // Mobile Phones
 @media only screen and (min-width: 600px) {
+	.footerWrap {
+		.footerContentWrapper {
+			margin-bottom: 0;
+		}
+		.fansSection {
+			.kitsWrapper {
+				gap: 80px;
+			}
+			.fansTitle {
+				font-size: var(--color-brand-font-size-9xlarge);
+				line-height: 1;
+			}
+		}
+	}
 }
 
 // Ipad Mini
 @media only screen and (min-width: 768px) {
 	.footerWrap {
 		padding: var(--padding-xxlarge);
+		.footerContentWrapper {
+			justify-content: space-between;
+		}
+		.fansSection {
+			.fansTitle {
+				font-size: 100px;
+				line-height: 1;
+			}
+		}
 		.footerBottomSection {
 			flex-direction: row;
 		}
