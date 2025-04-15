@@ -53,7 +53,7 @@ const HomeLayout: React.FC<unknown> = () => {
 		<div className={styles.homeScreen}>
 			{/* Banner Section */}
 			<Banner
-				bannerTitle="Where Little Feet Dream Big"
+				bannerTitle="Where Little Feet Dream Big!!"
 				bannerDescription="At Skorost United Academy, we don’t just train players—we shape champions. With every kick, every sprint, and every lesson, young athletes grow stronger, smarter, and ready to take on the world."
 				onButtonClick={() => setShowEnquiryPopup(true)}
 			/>
