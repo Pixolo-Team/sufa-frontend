@@ -53,9 +53,9 @@ const Select: React.FC<SelectProps> = ({
 }) => {
 	// Define States
 	const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-	const [selectedValue, setSelectedValue] = useState<DropdownOptionData | null>(
-		null
-	);
+	// const [selectedValue, setSelectedValue] = useState<DropdownOptionData | null>(
+	// 	null
+	// );
 
 	// Define Refs
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -90,7 +90,7 @@ const Select: React.FC<SelectProps> = ({
 		option: DropdownOptionData
 	) => {
 		toggleDropdown(event);
-		setSelectedValue(option);
+
 		onChange(option);
 	};
 
@@ -103,13 +103,6 @@ const Select: React.FC<SelectProps> = ({
 			setIsDropdownOpen(false);
 		}
 	};
-
-	useEffect(() => {
-		// Set value of Select to selectedOption prop value.
-		if (selectedOption !== null) {
-			setSelectedValue(selectedOption);
-		}
-	}, [selectedOption]);
 
 	useEffect(() => {
 		// Attach the event listener when the dropdown is open
@@ -146,15 +139,17 @@ const Select: React.FC<SelectProps> = ({
 					{leftIcon.trim() !== "" && (
 						<Icon
 							iconName={
-								selectedValue === null ? leftIcon : selectedValue?.iconName ?? leftIcon
+								selectedOption === null
+									? leftIcon
+									: selectedOption?.iconName ?? leftIcon
 							}
 							mode="outline"
 							className={styles.iconLeft}
 						/>
 					)}
 					{/* Show Placeholder or the Selected Value */}
-					<p className={selectedValue === null ? styles.placeholder : styles.value}>
-						{selectedValue === null ? placeholder : selectedValue.label}
+					<p className={selectedOption === null ? styles.placeholder : styles.value}>
+						{selectedOption === null ? placeholder : selectedOption.label}
 					</p>
 
 					{/* Down arrow for Dropdown */}
@@ -178,7 +173,7 @@ const Select: React.FC<SelectProps> = ({
 									selectDropdownOption(event, option);
 								}}
 								className={`${styles.dropdownOption} ${
-									selectedValue?.value === option.value
+									selectedOption?.value === option.value
 										? styles.neevoSelectOptionSelected
 										: ""
 								}`}
