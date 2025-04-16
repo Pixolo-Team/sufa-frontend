@@ -4,7 +4,7 @@
 
 .contactUsTextWrapper {
 	gap: 50px;
-	margin-bottom: 70px;
+	margin-bottom: 100px;
 	.firstTextBlock {
 		.primaryText {
 			margin-right: var(--margin-medium);
@@ -16,6 +16,11 @@
 	.primaryText {
 		font-size: var(--color-brand-font-size-5xlarge);
 		color: var(--color-brand-primary-deep);
+	}
+	.thirdTextBlock {
+		.textWidth {
+			max-width: 680px;
+		}
 	}
 	.mouse {
 		display: inline-block;
@@ -42,6 +47,9 @@
 	}
 	.rightAlignedText {
 		text-align: right;
+	}
+	.rightSpacing {
+		margin-right: 80px;
 	}
 	.highlightText {
 		vertical-align: top;
@@ -140,34 +148,50 @@
 
 // Mobile Phones
 @media only screen and (min-width: 600px) {
-}
-
-// Ipad Mini
-@media only screen and (min-width: 768px) {
 	.contactUsTextWrapper {
+		.rightSpacing {
+			margin-right: 110px;
+		}
 		justify-content: center;
 		.mouse {
 			height: 68px;
 			width: 42px;
-			border-radius: 50px;
-			border: 2px solid var(--color-brand-neutral-dark-900);
+			margin-left: var(--margin-xlarge);
 		}
 		.scrollDot {
 			height: 10px;
 			width: 4px;
-			border-radius: 4px;
-		}
-		.secondTextBlock {
-			gap: var(--gap-medium);
-			display: flex;
-			justify-content: center;
-			align-items: center;
 		}
 		.primaryText {
 			font-size: var(--color-brand-font-size-7xlarge);
 		}
 		.secondaryText {
 			font-size: var(--color-brand-font-size-xlarge);
+		}
+	}
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+	.contactUsTextWrapper {
+		gap: 80px;
+		justify-content: center;
+		.mouse {
+			height: 100px;
+			width: 62px;
+		}
+		.scrollDot {
+			height: 18px;
+			width: 8px;
+		}
+		.secondTextBlock {
+			gap: var(--gap-medium);
+		}
+		.primaryText {
+			font-size: var(--color-brand-font-size-10xlarge);
+		}
+		.secondaryText {
+			font-size: var(--color-brand-font-size-4xlarge);
 		}
 		.highlightText {
 			vertical-align: middle;
@@ -187,7 +211,10 @@
 @media only screen and (min-width: 992px) {
 	.contactUsTextWrapper {
 		.highlightText {
-			font-size: var(--color-brand-font-size-9xlarge);
+			font-size: 76px; //TODO: Add token
+		}
+		.secondaryText {
+			font-size: var(--color-brand-font-size-6xlarge);
 		}
 	}
 	.contactUsInner {
