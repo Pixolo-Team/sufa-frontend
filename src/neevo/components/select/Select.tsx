@@ -53,9 +53,6 @@ const Select: React.FC<SelectProps> = ({
 }) => {
 	// Define States
 	const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-	// const [selectedValue, setSelectedValue] = useState<DropdownOptionData | null>(
-	// 	null
-	// );
 
 	// Define Refs
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
