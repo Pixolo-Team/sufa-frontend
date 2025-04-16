@@ -65,7 +65,7 @@ const HomeLayout: React.FC<unknown> = () => {
 			<Established />
 
 			{/* Courses Section */}
-			<Courses />
+			<Courses onCardClick={() => setShowEnquiryPopup(true)} />
 
 			{/* Children to champions Section */}
 			<ChildrenToChampions />
@@ -109,7 +109,7 @@ const HomeLayout: React.FC<unknown> = () => {
 				<EnquiryForm />
 			</div>
 
-			<StickySocial />
+			<StickySocial onInfoClick={() => setShowEnquiryPopup(true)} />
 		</div>
 	);
 };

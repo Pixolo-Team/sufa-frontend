@@ -11,8 +11,12 @@ import Link from "next/link";
 // SVG's //
 import SkorostLogo from "@/../public/images/skorost.svg";
 
+interface StickySocialProps {
+	onInfoClick: () => void;
+}
+
 /** Sticky Social Component */
-const StickySocial: React.FC<unknown> = () => {
+const StickySocial: React.FC<StickySocialProps> = ({ onInfoClick }) => {
 	// Navigation and Route Params
 
 	// Define States
@@ -48,36 +52,36 @@ const StickySocial: React.FC<unknown> = () => {
 			>
 				<div className={`${styles.socialIconsWrapper} flex align-center`}>
 					{/* Instagram */}
-					<a
+					<Link
 						href="https://www.instagram.com/skorostunitedfootballacademy/"
 						target="_blank"
 						rel="noreferrer"
 					>
 						<Icon iconName="instagram" className={styles.icon} />
-					</a>
+					</Link>
 					<div className={styles.line}></div>
 					{/* Info */}
-					<a href="/" target="_blank" rel="noreferrer">
+					<div onClick={onInfoClick}>
 						<Icon iconName="info" className={styles.icon} />
-					</a>
+					</div>
 				</div>
 				<Link href="/">
 					<SkorostLogo />
 				</Link>
 				<div className={`${styles.socialIconsWrapper} flex align-center`}>
 					{/* Phone */}
-					<a href="tel: 9004453226" target="_self" rel="noreferrer">
+					<Link href="tel: 9004453226" target="_self" rel="noreferrer">
 						<Icon iconName="phone" className={styles.icon} />
-					</a>
+					</Link>
 					<div className={styles.line}></div>
 					{/* Whatsapp */}
-					<a
+					<Link
 						href="https://wa.me/919004453226?text=Hi! I would like to know more about your academy."
 						target="_blank"
 						rel="noreferrer"
 					>
 						<Icon iconName="whatsapp" className={styles.icon} />
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>
