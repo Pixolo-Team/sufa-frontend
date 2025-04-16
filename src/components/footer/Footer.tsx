@@ -35,7 +35,7 @@ const Footer: React.FC<unknown> = () => {
 		<footer className={`${styles.footerWrap} bg-primary-deep`}>
 			<div className="container">
 				<div
-					className={`${styles.footerContentWrapper} flex flex-row align-center flex-wrap justify-between`}
+					className={`${styles.footerContentWrapper} flex align-center flex-wrap justify-between`}
 				>
 					<div
 						className={`${styles.footerTopWrap} flex align-center justify-between flex-wrap`}
@@ -62,7 +62,7 @@ const Footer: React.FC<unknown> = () => {
 						{/* Home Kit */}
 						<Image src={HomeKit} alt="Home kit" className="img-responsive" />
 						{/* Away Kit */}
-						<Image src={AwayKit} alt="Away kit" className="img-responsive full" />
+						<Image src={AwayKit} alt="Away kit" className="img-responsive" />
 					</div>
 					<p className={`${styles.fansTitle} font-tertiary font-weight-700`}>
 						Begin Y<span className={styles.highlightedText}>our</span> Journey
