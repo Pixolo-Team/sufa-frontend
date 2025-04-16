@@ -30,22 +30,22 @@ import { showToast } from "@/neevo/services/toast.service";
 // UTILS //
 import { validateEmail } from "@/utils/validate-inputs.util";
 
+// Subject Option
+const SUBJECT_OPTIONS: DropdownOptionData[] = [
+	{ label: "Free Session", value: "Free Session" },
+	{ label: "General Enquiry", value: "General Enquiry" },
+];
+
 // Initial form state
 const ENQUIRY_INPUT_INIT = {
 	name: "",
 	email: "",
 	phone: "",
 	other_fields: {
-		subject: "",
+		subject: null,
 		message: "",
 	},
 };
-
-// Subject Option
-const SUBJECT_OPTIONS: DropdownOptionData[] = [
-	{ label: "Free Session", value: "Free Session" },
-	{ label: "General Enquiry", value: "General Enquiry" },
-];
 
 /** Enquiry Form Component */
 const EnquiryForm: React.FC = () => {
@@ -73,7 +73,7 @@ const EnquiryForm: React.FC = () => {
 		}
 
 		// Check if subject is empty
-		if (!enquiryInputs.other_fields.subject.trim()) {
+		if (!enquiryInputs.other_fields.subject) {
 			newErrors["other_fields.subject"] = "Subject is required";
 		}
 
@@ -116,15 +116,18 @@ const EnquiryForm: React.FC = () => {
 	}, []);
 
 	/** Handle Nested Input Change for "others" */
-	const handleOthersChange = useCallback((key: string, value: string) => {
-		setEnquiryInputs((prev) => ({
-			...prev,
-			other_fields: {
-				...prev.other_fields,
-				[key]: value,
-			},
-		}));
-	}, []);
+	const handleOthersChange = useCallback(
+		(key: string, value: string | DropdownOptionData) => {
+			setEnquiryInputs((prev) => ({
+				...prev,
+				other_fields: {
+					...prev.other_fields,
+					[key]: value,
+				},
+			}));
+		},
+		[]
+	);
 
 	return (
 		<>
@@ -179,7 +182,8 @@ const EnquiryForm: React.FC = () => {
 						options={SUBJECT_OPTIONS}
 						isRequired
 						label="Subject"
-						onChange={(item) => handleOthersChange("subject", item.value)}
+						onChange={(item) => handleOthersChange("subject", item)}
+						selectedOption={enquiryInputs.other_fields.subject}
 						placeholder="Select Subject"
 						isError={!!enquiryErrors["other_fields.subject"]}
 						errorMessage={enquiryErrors["other_fields.subject"]}
