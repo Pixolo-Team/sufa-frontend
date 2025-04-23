@@ -111,8 +111,6 @@ const HomeLayout: React.FC<unknown> = () => {
 			</div>
 
 			<StickySocial onInfoClick={() => setShowEnquiryPopup(true)} />
-
-			<Registration />
 		</div>
 	);
 };
