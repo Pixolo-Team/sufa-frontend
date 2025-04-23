@@ -27,6 +27,7 @@ import FoundersMessage from "@/sections/home/founders-message/FoundersMessage";
 import GetFreeTrial from "@/sections/home/get-free-trial/GetFreeTrial";
 import Graduates from "@/sections/home/graduates/Graduates";
 import JoinUs from "@/sections/home/join-us/JoinUs";
+import Registration from "@/sections/home/registration/Registration";
 
 /** Home Screen */
 const HomeLayout: React.FC<unknown> = () => {
@@ -110,6 +111,8 @@ const HomeLayout: React.FC<unknown> = () => {
 			</div>
 
 			<StickySocial onInfoClick={() => setShowEnquiryPopup(true)} />
+
+			<Registration />
 		</div>
 	);
 };
