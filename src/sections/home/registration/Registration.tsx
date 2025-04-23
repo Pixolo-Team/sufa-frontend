@@ -13,36 +13,40 @@ import Image from "next/image";
 import Icon from "@/neevo/components/Icon";
 import IconButton from "@/neevo/components/icon-button/IconButton";
 
+// SVG's //
+import TickIcon from "@/public/images/tick.svg";
+
+// Add tick icon import
+
 const journeyData = [
 	{
-		task: "Form Submitted",
-		date: "12th May 2025",
+		task: "Form Submitted and Under Review",
+		date: "12th May 2025, 10:30 AM",
 		completed: true,
 	},
 	{
-		task: "Photo Captured",
-		date: "12th May 2025",
+		task: "Photo Captured and Verified with Additional Documentation",
+		date: "12th May 2025, 11:45 AM",
 		completed: true,
-		subtitle: "Photo is needed for the ID Card",
 	},
 	{
-		task: "ID Printed",
-		date: "12th May 2025",
+		task: "ID Printed and Ready for Collection at Designated Center",
+		date: "12th May 2025, 02:15 PM",
 		completed: true,
 	},
 	{
 		task: "Kit Ordered",
-		date: "12th May 2025",
+		date: "12th May 2025, 03:30 PM",
 		completed: false,
 	},
 	{
 		task: "Box Prepared",
-		date: "12th May 2025",
+		date: "12th May 2025, 04:45 PM",
 		completed: false,
 	},
 	{
 		task: "Profile Generated",
-		date: "12th May 2025",
+		date: "12th May 2025, 05:00 PM",
 		completed: false,
 	},
 ];
@@ -76,7 +80,7 @@ const RegistrationPage = () => {
 							/>
 						</div>
 						<h2 className={`${styles.subtitle} font-weight-500`}>
-							BEGIN YOUR JOURNEY
+							Begin your journey
 						</h2>
 					</div>
 
@@ -93,16 +97,25 @@ const RegistrationPage = () => {
 								/>
 							</div>
 							<div className={styles.profileInfo}>
-								<h3 className={`${styles.name} font-weight-600`}>Harsh Patil</h3>
-								<p className={styles.details}>Age: 12 • Batch: U-11</p>
-								<p className={styles.details}>Location: Ghatkopar East</p>
+								<h3 className={`${styles.name} font-weight-700`}>Harsh Patil</h3>
+								<div className={styles.details}>
+									<p>
+										Age: <span className="font-weight-700">12</span>
+									</p>
+									<p>
+										Batch: <span className="font-weight-700">U-11</span>
+									</p>
+								</div>
+								<p className={styles.details}>
+									Location: <span className="font-weight-700">Ghatkopar East</span>
+								</p>
 							</div>
 						</div>
 
 						{/* Status Box */}
 						<div className={styles.statusBox}>
-							<h4 className={`${styles.statusTitle} font-weight-600`}>TL;DR</h4>
-							<p>
+							<h4 className={`${styles.statusTitle} font-weight-600`}>TL; DR</h4>
+							<p className={`${styles.statusText} font-weight-500`}>
 								Your Box is being prepared, it is expected to be delivered by 14th May
 								2025
 							</p>
@@ -112,17 +125,21 @@ const RegistrationPage = () => {
 						<div className={styles.journeyList}>
 							{journeyData.map((item, index) => (
 								<div key={index} className={styles.journeyItem}>
-									<Icon
-										iconName={item.completed ? "check" : "disc"}
-										className={`${styles.icon} ${!item.completed ? styles.pending : ""}`}
-										mode="filled"
-									/>
+									<div
+										className={item.completed ? styles.completedIcon : styles.pendingIcon}
+									>
+										{item.completed && (
+											<Image
+												src="./images/tick.svg"
+												alt="tick-mark"
+												width={14}
+												height={14}
+											/>
+										)}
+									</div>
 									<div className={styles.itemContent}>
 										<p className={`${styles.itemTitle} font-weight-500`}>{item.task}</p>
 										<p className={styles.itemDate}>{item.date}</p>
-										{item.subtitle && (
-											<p className={styles.itemSubtitle}>{item.subtitle}</p>
-										)}
 									</div>
 								</div>
 							))}
@@ -131,10 +148,12 @@ const RegistrationPage = () => {
 						{/* Contact Information */}
 						<div className={styles.contactInfo}>
 							<p className={styles.contactText}>
-								Any Questions? Talk to your assigned coordinator
+								<span className="font-weight-700">Any Questions ?</span> Talk to your
+								assigned coordinator
 							</p>
-							<p className={`${styles.contactNumber} font-weight-500`}>
-								Harsh Patil: +91 9820840946
+							<p className={styles.contactNumber}>
+								<span className="font-weight-700">Harsh Patil: </span>
+								+91 9820840946
 							</p>
 						</div>
 					</div>
