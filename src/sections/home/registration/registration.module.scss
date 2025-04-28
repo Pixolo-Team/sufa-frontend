@@ -2,9 +2,6 @@
     padding: var(--padding-medium);
     min-height: 100vh;
     background-color: var(--color-background-light-tint);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
     font-family: var(--font-family-secondary);
 
     .contentBox {
@@ -19,33 +16,29 @@
     .header {
         background-color: var(--color-brand-primary-regular);
         color: var(--color-text-light);
-        padding: 32px 24px 48px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
+        padding: 32px var(--padding-xxlarge) 48px;
+        gap: var(--gap-large);
         position: relative;
         z-index: 1;
 
         .logoWrapper {
             width: 140px;
             height: 46px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: var(--color-brand-neutral-light-100);
 
-            img {
+            .logo {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
                 filter: brightness(0) invert(1);
             }
         }
 
         .subtitle {
-            color: #FFF;
+            color: var(--color-brand-neutral-light-100);
             font-family: var(--font-family-secondary);
-            font-size: 22px;
-            font-weight: 700;
+            font-size: var(--color-brand-font-size-xlarge);
+            font-weight: var(--font-weight-bold);
             line-height: 90%;
             text-transform: uppercase;
         }
@@ -62,7 +55,7 @@
         gap: var(--gap-large);
         margin: 0 32px var(--margin-xlarge) 32px;
         padding: var(--padding-large);
-        background: #FFF;
+        background: var(--color-brand-neutral-light-100);
         border-radius: 14px;
         box-shadow: 0px 4px 11.6px -2px rgba(0, 0, 0, 0.10);
         position: relative;
@@ -96,6 +89,7 @@
                 line-height: 1.5;
                 display: flex;
                 justify-content: space-between;
+                gap: 4px;
             }
         }
     }
@@ -109,9 +103,9 @@
         .statusTitle {
             font-size: var(--color-brand-font-size-small);
             background: #0F9563;
-            border-radius: 8px;
-            color: white;
-            padding: 8px 12px;
+            border-radius: var(--border-radius-medium);
+            color: var(--color-brand-neutral-light-100);
+            padding: var(--padding-small) var(--padding-medium);
             display: inline-block;
             position: relative;
             z-index: 2;
@@ -131,7 +125,7 @@
     .journeyList {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: var(--gap-regular);
         position: relative;
 
         &::before {
@@ -147,20 +141,16 @@
         .journeyItem {
             display: flex;
             align-items: flex-start;
-            gap: 16px;
+            gap: var(--gap-large);
             position: relative;
 
             .completedIcon,
             .pendingIcon {
-                width: 30px;
-                height: 30px;
+                width: 28px;
+                height: 28px;
                 border-radius: 50%;
-                position: relative;
-                display: flex;
-                align-items: center;
-                justify-content: center;
                 z-index: 1;
-                border: 2px solid #FFFFFF;
+                border: 2px solid var(--color-brand-neutral-light-100);
             }
 
             .completedIcon {
@@ -178,14 +168,14 @@
                     font-size: var(--color-brand-font-size-medium);
                     color: var(--color-text-dark);
                     margin-bottom: var(--margin-small);
-                    padding-top: 4px;
+                    padding-top: var(--padding-xsmall);
                 }
 
                 .itemDate {
                     font-size: var(--color-brand-font-size-xsmall);
                     color: var(--color-text-tint);
                     position: relative;
-                    padding-bottom: 16px;
+                    padding-bottom: var(--padding-large);
 
                     &::after {
                         content: '';

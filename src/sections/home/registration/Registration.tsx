@@ -11,12 +11,6 @@ import styles from "./registration.module.scss";
 // COMPONENTS //
 import Image from "next/image";
 import Icon from "@/neevo/components/Icon";
-import IconButton from "@/neevo/components/icon-button/IconButton";
-
-// SVG's //
-import TickIcon from "@/public/images/tick.svg";
-
-// Add tick icon import
 
 const journeyData = [
 	{
@@ -66,17 +60,17 @@ const RegistrationPage = () => {
 	// View starts here
 	return (
 		<section className="section-spacing">
-			<div className={styles.registrationWrapper}>
+			<div className={`${styles.registrationWrapper} flex justify-center`}>
 				<div className={styles.contentBox}>
 					{/* Header */}
-					<div className={styles.header}>
-						<div className={styles.logoWrapper}>
+					<div className={`${styles.header} flex flex-column align-center`}>
+						<div className={`${styles.logoWrapper} flex align-center justify-center`}>
 							<Image
 								src="/images/skorost.svg"
 								alt="Skorost"
 								width={120}
 								height={40}
-								priority
+								className={styles.logo}
 							/>
 						</div>
 						<h2 className={`${styles.subtitle} font-weight-500`}>
@@ -107,7 +101,8 @@ const RegistrationPage = () => {
 									</p>
 								</div>
 								<p className={styles.details}>
-									Location: <span className="font-weight-700">Ghatkopar East</span>
+									Location:
+									<span className="font-weight-700">Ghatkopar East</span>
 								</p>
 							</div>
 						</div>
@@ -126,15 +121,12 @@ const RegistrationPage = () => {
 							{journeyData.map((item, index) => (
 								<div key={index} className={styles.journeyItem}>
 									<div
-										className={item.completed ? styles.completedIcon : styles.pendingIcon}
+										className={`${
+											item.completed ? styles.completedIcon : styles.pendingIcon
+										} flex align-center justify-center`}
 									>
 										{item.completed && (
-											<Image
-												src="./images/tick.svg"
-												alt="tick-mark"
-												width={14}
-												height={14}
-											/>
+											<Icon iconName="tick" className={styles.tickIcon} mode="filled" />
 										)}
 									</div>
 									<div className={styles.itemContent}>

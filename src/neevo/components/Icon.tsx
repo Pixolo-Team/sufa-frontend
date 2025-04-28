@@ -18,6 +18,7 @@ import MoreOptionsFilled from "@/../public/icons/filled/more-options.svg";
 import PlusFilled from "@/../public/icons/filled/plus.svg";
 import RightArrowFilled from "@/../public/icons/filled/right-arrow.svg";
 import SearchFilled from "@/../public/icons/filled/search.svg";
+import TickFilled from "@/../public/icons/filled/tick.svg";
 import LinkArrowFilled from "@/../public/icons/filled/link-arrow.svg";
 import UserCircleFilled from "@/../public/icons/filled/user-circle.svg";
 import UsersFilled from "@/../public/icons/filled/users.svg";
@@ -98,6 +99,7 @@ const filled: {
 	"bad-request": BadRequestFilled,
 	"internal-server-error": InternalServerErrorFilled,
 	quote: QuoteFilled,
+	tick: TickFilled,
 };
 
 const outline: {
