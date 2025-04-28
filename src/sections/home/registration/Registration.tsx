@@ -2,8 +2,8 @@
 // REACT //
 import React from "react";
 
-// ENUMS //
-import { Shapes, Variants, Colors } from "@/neevo/enums/core.enum";
+// TYPES //
+import { ApiResponse, TaskResponse } from "@/types/registration";
 
 // STYLES //
 import styles from "./registration.module.scss";
@@ -12,38 +12,129 @@ import styles from "./registration.module.scss";
 import Image from "next/image";
 import Icon from "@/neevo/components/Icon";
 
-const journeyData = [
-	{
-		task: "Form Submitted and Under Review",
-		date: "12th May 2025, 10:30 AM",
-		completed: true,
+const journeyData = {
+	parentTask: {
+		id: "86cyauhb6",
+		name: "Yug",
+		status: "aiff registration",
+		description:
+			"Yug is a 12 year old boy who is a great player and a great person",
+		creator: {
+			id: 49390702,
+			username: "Jyoti Pandey",
+			email: "jyoti.pixolo@gmail.com",
+		},
+		date_created: "1742379504061",
+		date_closed: null,
+		date_updated: "1744020502159",
+		subtasks: [
+			{
+				id: "86cyauhbc",
+				name: "Add the Parent in Skorost Whatsapp Community",
+				status: "complete",
+				creator: {
+					id: 49390702,
+					username: "Jyoti Pandey",
+					email: "jyoti.pixolo@gmail.com",
+				},
+				date_created: "1742379504484",
+				date_closed: null,
+				date_updated: "1742379504484",
+			},
+			{
+				id: "86cyauhbb",
+				name: "Send the Parent Welcome message",
+				status: "complete",
+				creator: {
+					id: 49390702,
+					username: "Jyoti Pandey",
+					email: "jyoti.pixolo@gmail.com",
+				},
+				date_created: "1742379504480",
+				date_closed: null,
+				date_updated: "1742884936842",
+			},
+			{
+				id: "86cyauhbw",
+				name: "Send the Registration Form to the Player/Parent",
+				status: "complete",
+				creator: {
+					id: 49390702,
+					username: "Jyoti Pandey",
+					email: "jyoti.pixolo@gmail.com",
+				},
+				date_created: "1742379505382",
+				date_closed: null,
+				date_updated: "1742884936842",
+			},
+			{
+				id: "86cyauhd5",
+				name: "Player Photo Shoot",
+				status: "complete",
+				creator: {
+					id: 49390702,
+					username: "Jyoti Pandey",
+					email: "jyoti.pixolo@gmail.com",
+				},
+				date_created: "1742379508991",
+				date_closed: null,
+				date_updated: "1742884933729",
+			},
+			{
+				id: "86cyauhdp",
+				name: "Create player in AIFF CRS portal",
+				status: "enrolled",
+				creator: {
+					id: 49390702,
+					username: "Jyoti Pandey",
+					email: "jyoti.pixolo@gmail.com",
+				},
+				date_created: "1742379510231",
+				date_closed: null,
+				date_updated: "1742379510231",
+			},
+			{
+				id: "86cyauhdm",
+				name: "Generate Player Graphic with FIFA ID and AIFF ID",
+				status: "enrolled",
+				creator: {
+					id: 49390702,
+					username: "Jyoti Pandey",
+					email: "jyoti.pixolo@gmail.com",
+				},
+				date_created: "1742379510234",
+				date_closed: null,
+				date_updated: "1742379510234",
+			},
+			{
+				id: "86cyauhe1",
+				name: "Send the Registration Graphic to the Parent with a Message",
+				status: "enrolled",
+				creator: {
+					id: 49390702,
+					username: "Jyoti Pandey",
+					email: "jyoti.pixolo@gmail.com",
+				},
+				date_created: "1742379511418",
+				date_closed: null,
+				date_updated: "1742379511418",
+			},
+			{
+				id: "86cyauhe2",
+				name: "Add AIFF ID and FIFA ID to Database",
+				status: "enrolled",
+				creator: {
+					id: 49390702,
+					username: "Jyoti Pandey",
+					email: "jyoti.pixolo@gmail.com",
+				},
+				date_created: "1742379511516",
+				date_closed: null,
+				date_updated: "1742379511516",
+			},
+		],
 	},
-	{
-		task: "Photo Captured and Verified with Additional Documentation",
-		date: "12th May 2025, 11:45 AM",
-		completed: true,
-	},
-	{
-		task: "ID Printed and Ready for Collection at Designated Center",
-		date: "12th May 2025, 02:15 PM",
-		completed: true,
-	},
-	{
-		task: "Kit Ordered",
-		date: "12th May 2025, 03:30 PM",
-		completed: false,
-	},
-	{
-		task: "Box Prepared",
-		date: "12th May 2025, 04:45 PM",
-		completed: false,
-	},
-	{
-		task: "Profile Generated",
-		date: "12th May 2025, 05:00 PM",
-		completed: false,
-	},
-];
+};
 
 /** Registration Screen */
 const RegistrationPage = () => {
@@ -54,6 +145,16 @@ const RegistrationPage = () => {
 	// Define Refs
 
 	// Helper Functions
+	const formatDate = (timestamp: string) => {
+		const date = new Date(parseInt(timestamp));
+		return date.toLocaleDateString("en-US", {
+			day: "numeric",
+			month: "long",
+			year: "numeric",
+			hour: "2-digit",
+			minute: "2-digit",
+		});
+	};
 
 	// UseEffect Functions and UseFocusEffect Functions
 
@@ -91,7 +192,9 @@ const RegistrationPage = () => {
 								/>
 							</div>
 							<div className={styles.profileInfo}>
-								<h3 className={`${styles.name} font-weight-700`}>Harsh Patil</h3>
+								<h3 className={`${styles.name} font-weight-700`}>
+									{journeyData.parentTask.name}
+								</h3>
 								<div className={styles.details}>
 									<p>
 										Age: <span className="font-weight-700">12</span>
@@ -109,29 +212,32 @@ const RegistrationPage = () => {
 
 						{/* Status Box */}
 						<div className={styles.statusBox}>
-							<h4 className={`${styles.statusTitle} font-weight-600`}>TL; DR</h4>
+							<h4 className={`${styles.statusTitle} font-weight-600`}>Description</h4>
 							<p className={`${styles.statusText} font-weight-500`}>
-								Your Box is being prepared, it is expected to be delivered by 14th May
-								2025
+								{journeyData.parentTask.description}
 							</p>
 						</div>
 
 						{/* Journey List */}
 						<div className={styles.journeyList}>
-							{journeyData.map((item, index) => (
-								<div key={index} className={styles.journeyItem}>
+							{journeyData.parentTask.subtasks.map((subtask) => (
+								<div key={subtask.id} className={styles.journeyItem}>
 									<div
 										className={`${
-											item.completed ? styles.completedIcon : styles.pendingIcon
+											subtask.status === "complete"
+												? styles.completedIcon
+												: styles.pendingIcon
 										} flex align-center justify-center`}
 									>
-										{item.completed && (
+										{subtask.status === "complete" && (
 											<Icon iconName="tick" className={styles.tickIcon} mode="filled" />
 										)}
 									</div>
 									<div className={styles.itemContent}>
-										<p className={`${styles.itemTitle} font-weight-500`}>{item.task}</p>
-										<p className={styles.itemDate}>{item.date}</p>
+										<p className={`${styles.itemTitle} font-weight-500`}>
+											{subtask.name}
+										</p>
+										<p className={styles.itemDate}>{formatDate(subtask.date_updated)}</p>
 									</div>
 								</div>
 							))}
