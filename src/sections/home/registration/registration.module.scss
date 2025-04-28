@@ -16,7 +16,7 @@
     .header {
         background-color: var(--color-brand-primary-regular);
         color: var(--color-text-light);
-        padding: 32px var(--padding-xxlarge) 48px;
+        padding: 32px var(--padding-xxlarge) 54px;
         gap: var(--gap-large);
         position: relative;
         z-index: 1;
@@ -47,7 +47,7 @@
     .content {
         padding: var(--padding-large);
         position: relative;
-        margin-top: -36px;
+        margin-top: -54px;
     }
 
     .profileSection {
