@@ -237,7 +237,11 @@ const RegistrationPage = () => {
 										<p className={`${styles.itemTitle} font-weight-500`}>
 											{subtask.name}
 										</p>
-										<p className={styles.itemDate}>{formatDate(subtask.date_updated)}</p>
+										{subtask.status === "complete" ? (
+											<p className={styles.itemDate}>{formatDate(subtask.date_updated)}</p>
+										) : (
+											<p className={styles.itemDate} />
+										)}
 									</div>
 								</div>
 							))}
