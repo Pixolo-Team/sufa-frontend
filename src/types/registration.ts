@@ -1,21 +1,17 @@
-export type TaskUser = {
+export type TaskCreatorData = {
 	id: number;
 	username: string;
 	email: string;
 };
 
-export type TaskResponse = {
+export type TaskData = {
 	id: string;
 	name: string;
 	status: string;
-	description: string;
-	creator: TaskUser;
+	description: Record<string, any>;
+	creator: TaskCreatorData;
 	date_created: string;
 	date_closed: string | null;
-	date_updated: string | null;
-	subtasks?: TaskResponse[];
-};
-
-export type ApiResponse = {
-	parentTask: TaskResponse;
+	date_updated: string;
+	subtasks?: TaskData[];
 };

@@ -1,9 +1,12 @@
 "use client";
 // REACT //
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 // TYPES //
-import { ApiResponse, TaskResponse } from "@/types/registration";
+import { TaskData } from "@/types/registration";
+
+// ENUMS //
+import { ToastTypes } from "@/neevo/enums/toast.enum";
 
 // STYLES //
 import styles from "./registration.module.scss";
@@ -12,151 +15,50 @@ import styles from "./registration.module.scss";
 import Image from "next/image";
 import Icon from "@/neevo/components/Icon";
 
-const journeyData = {
-	parentTask: {
-		id: "86cyauhb6",
-		name: "Yug",
-		status: "aiff registration",
-		description:
-			"Yug is a 12 year old boy who is a great player and a great person",
-		creator: {
-			id: 49390702,
-			username: "Jyoti Pandey",
-			email: "jyoti.pixolo@gmail.com",
-		},
-		date_created: "1742379504061",
-		date_closed: null,
-		date_updated: "1744020502159",
-		subtasks: [
-			{
-				id: "86cyauhbc",
-				name: "Add the Parent in Skorost Whatsapp Community",
-				status: "complete",
-				creator: {
-					id: 49390702,
-					username: "Jyoti Pandey",
-					email: "jyoti.pixolo@gmail.com",
-				},
-				date_created: "1742379504484",
-				date_closed: null,
-				date_updated: "1742379504484",
-			},
-			{
-				id: "86cyauhbb",
-				name: "Send the Parent Welcome message",
-				status: "complete",
-				creator: {
-					id: 49390702,
-					username: "Jyoti Pandey",
-					email: "jyoti.pixolo@gmail.com",
-				},
-				date_created: "1742379504480",
-				date_closed: null,
-				date_updated: "1742884936842",
-			},
-			{
-				id: "86cyauhbw",
-				name: "Send the Registration Form to the Player/Parent",
-				status: "complete",
-				creator: {
-					id: 49390702,
-					username: "Jyoti Pandey",
-					email: "jyoti.pixolo@gmail.com",
-				},
-				date_created: "1742379505382",
-				date_closed: null,
-				date_updated: "1742884936842",
-			},
-			{
-				id: "86cyauhd5",
-				name: "Player Photo Shoot",
-				status: "complete",
-				creator: {
-					id: 49390702,
-					username: "Jyoti Pandey",
-					email: "jyoti.pixolo@gmail.com",
-				},
-				date_created: "1742379508991",
-				date_closed: null,
-				date_updated: "1742884933729",
-			},
-			{
-				id: "86cyauhdp",
-				name: "Create player in AIFF CRS portal",
-				status: "enrolled",
-				creator: {
-					id: 49390702,
-					username: "Jyoti Pandey",
-					email: "jyoti.pixolo@gmail.com",
-				},
-				date_created: "1742379510231",
-				date_closed: null,
-				date_updated: "1742379510231",
-			},
-			{
-				id: "86cyauhdm",
-				name: "Generate Player Graphic with FIFA ID and AIFF ID",
-				status: "enrolled",
-				creator: {
-					id: 49390702,
-					username: "Jyoti Pandey",
-					email: "jyoti.pixolo@gmail.com",
-				},
-				date_created: "1742379510234",
-				date_closed: null,
-				date_updated: "1742379510234",
-			},
-			{
-				id: "86cyauhe1",
-				name: "Send the Registration Graphic to the Parent with a Message",
-				status: "enrolled",
-				creator: {
-					id: 49390702,
-					username: "Jyoti Pandey",
-					email: "jyoti.pixolo@gmail.com",
-				},
-				date_created: "1742379511418",
-				date_closed: null,
-				date_updated: "1742379511418",
-			},
-			{
-				id: "86cyauhe2",
-				name: "Add AIFF ID and FIFA ID to Database",
-				status: "enrolled",
-				creator: {
-					id: 49390702,
-					username: "Jyoti Pandey",
-					email: "jyoti.pixolo@gmail.com",
-				},
-				date_created: "1742379511516",
-				date_closed: null,
-				date_updated: "1742379511516",
-			},
-		],
-	},
-};
+// API SERVICES //
+import { getRegistrationStatusRequest } from "@/services/api/registration-status.api.service";
 
-/** Registration Screen */
+// SERVICES //
+import { showToast } from "@/neevo/services/toast.service";
+
+// UTILS //
+import { formatDate } from "@/utils/date.util";
+
+const taskId = "86cyaukrf";
+
+/** Registration Page */
 const RegistrationPage = () => {
 	// Navigation and Route Params
 
 	// Define States
+	const [registrationSteps, setRegistrationSteps] = useState<TaskData>();
 
 	// Define Refs
+	
 
 	// Helper Functions
-	const formatDate = (timestamp: string) => {
-		const date = new Date(parseInt(timestamp));
-		return date.toLocaleDateString("en-US", {
-			day: "numeric",
-			month: "long",
-			year: "numeric",
-			hour: "2-digit",
-			minute: "2-digit",
-		});
-	};
+	const getRegistrationStatus = useCallback(() => {
+		// Make API Call
+		getRegistrationStatusRequest(taskId)
+			.then((response) => {
+				if (response.status_code === 200) {
+					// Set the response data to the state
+					setRegistrationSteps(response.data);
+				} else {
+					showToast(response.message, ToastTypes.WARNING);
+				}
+			})
+			.catch(() => {
+				// Set the error message in the toast
+				showToast("Failed to get Status", ToastTypes.ERROR);
+			});
+	}, [taskId]);
 
 	// UseEffect Functions and UseFocusEffect Functions
+	useEffect(() => {
+		// Get Registration Status
+		getRegistrationStatus();
+	}, [getRegistrationStatus]);
 
 	// View starts here
 	return (
@@ -184,8 +86,8 @@ const RegistrationPage = () => {
 						<div className={styles.profileSection}>
 							<div className={styles.imageWrapper}>
 								<Image
-									src="/images/harsh-profile.jpg"
-									alt="Harsh Profile"
+									src={registrationSteps?.description.student_image}
+									alt={"Student Image"}
 									fill
 									style={{ objectFit: "cover" }}
 									priority
@@ -193,11 +95,11 @@ const RegistrationPage = () => {
 							</div>
 							<div className={styles.profileInfo}>
 								<h3 className={`${styles.name} font-weight-700`}>
-									{journeyData.parentTask.name}
+									{registrationSteps?.name}
 								</h3>
 								<div className={styles.details}>
 									<p>
-										Age: <span className="font-weight-700">12</span>
+										Age: <span className="font-weight-700">{registrationSteps?.description.age}</span>
 									</p>
 									<p>
 										Batch: <span className="font-weight-700">U-11</span>
@@ -214,13 +116,13 @@ const RegistrationPage = () => {
 						<div className={styles.statusBox}>
 							<h4 className={`${styles.statusTitle} font-weight-600`}>Description</h4>
 							<p className={`${styles.statusText} font-weight-500`}>
-								{journeyData.parentTask.description}
+								{registrationSteps?.description.comments}
 							</p>
 						</div>
 
 						{/* Journey List */}
 						<div className={styles.journeyList}>
-							{journeyData.parentTask.subtasks.map((subtask) => (
+							{registrationSteps?.subtasks && registrationSteps?.subtasks.map((subtask) => (
 								<div key={subtask.id} className={styles.journeyItem}>
 									<div
 										className={`${
@@ -254,8 +156,8 @@ const RegistrationPage = () => {
 								assigned coordinator
 							</p>
 							<p className={styles.contactNumber}>
-								<span className="font-weight-700">Harsh Patil: </span>
-								+91 9820840946
+								<span className="font-weight-700">{registrationSteps?.creator.username}: </span>
+								{registrationSteps?.creator.email}
 							</p>
 						</div>
 					</div>
