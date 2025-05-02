@@ -60,6 +60,7 @@ const HomeLayout: React.FC<unknown> = () => {
 				onButtonClick={() => setShowEnquiryPopup(true)}
 			/>
 			<RegistrationPage />
+			
 			{/* Founders Message Section */}
 			<FoundersMessage />
 
