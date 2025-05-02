@@ -34,9 +34,10 @@ const RegistrationPage = () => {
 	const [registrationSteps, setRegistrationSteps] = useState<TaskData>();
 
 	// Define Refs
-	
 
+	
 	// Helper Functions
+	/* Fetches the registration status from the API */
 	const getRegistrationStatus = useCallback(() => {
 		// Make API Call
 		getRegistrationStatusRequest(taskId)
@@ -67,6 +68,7 @@ const RegistrationPage = () => {
 				<div className={styles.contentBox}>
 					{/* Header */}
 					<div className={`${styles.header} flex flex-column align-center`}>
+						{/* Logo */}
 						<div className={`${styles.logoWrapper} flex align-center justify-center`}>
 							<Image
 								src="/images/skorost.svg"
@@ -76,6 +78,7 @@ const RegistrationPage = () => {
 								className={styles.logo}
 							/>
 						</div>
+						{/* Subtitle */}
 						<h2 className={`${styles.subtitle} font-weight-500`}>
 							Begin your journey
 						</h2>
@@ -84,6 +87,7 @@ const RegistrationPage = () => {
 					<div className={styles.content}>
 						{/* Profile Section */}
 						<div className={styles.profileSection}>
+							{/* Student Image */}
 							<div className={styles.imageWrapper}>
 								<Image
 									src={registrationSteps?.description.student_image}
@@ -93,18 +97,25 @@ const RegistrationPage = () => {
 									priority
 								/>
 							</div>
+							{/* Profile Information */}
 							<div className={styles.profileInfo}>
+								{/* Student Name */}
 								<h3 className={`${styles.name} font-weight-700`}>
 									{registrationSteps?.name}
 								</h3>
+								{/* Age and Batch */}
 								<div className={styles.details}>
 									<p>
-										Age: <span className="font-weight-700">{registrationSteps?.description.age}</span>
+										Age:{" "}
+										<span className="font-weight-700">
+											{registrationSteps?.description.age}
+										</span>
 									</p>
 									<p>
 										Batch: <span className="font-weight-700">U-11</span>
 									</p>
 								</div>
+								{/* Location */}
 								<p className={styles.details}>
 									Location:
 									<span className="font-weight-700">Ghatkopar East</span>
@@ -122,31 +133,38 @@ const RegistrationPage = () => {
 
 						{/* Journey List */}
 						<div className={styles.journeyList}>
-							{registrationSteps?.subtasks && registrationSteps?.subtasks.map((subtask) => (
-								<div key={subtask.id} className={styles.journeyItem}>
-									<div
-										className={`${
-											subtask.status === "complete"
-												? styles.completedIcon
-												: styles.pendingIcon
-										} flex align-center justify-center`}
-									>
-										{subtask.status === "complete" && (
-											<Icon iconName="tick" className={styles.tickIcon} mode="filled" />
-										)}
+							{registrationSteps?.subtasks &&
+								registrationSteps?.subtasks.map((subtask) => (
+									<div key={subtask.id} className={styles.journeyItem}>
+										{/* Status Icon */}
+										<div
+											className={`${
+												subtask.status === "complete"
+													? styles.completedIcon
+													: styles.pendingIcon
+											} flex align-center justify-center`}
+										>
+											{subtask.status === "complete" && (
+												<Icon iconName="tick" className={styles.tickIcon} mode="filled" />
+											)}
+										</div>
+										{/* Subtask Content */}
+										<div className={styles.itemContent}>
+											{/* Subtask Name */}
+											<p className={`${styles.itemTitle} font-weight-500`}>
+												{subtask.name}
+											</p>
+											{/* Subtask Date */}
+											{subtask.status === "complete" ? (
+												<p className={styles.itemDate}>
+													{formatDate(subtask.date_updated)}
+												</p>
+											) : (
+												<p className={styles.itemDate} />
+											)}
+										</div>
 									</div>
-									<div className={styles.itemContent}>
-										<p className={`${styles.itemTitle} font-weight-500`}>
-											{subtask.name}
-										</p>
-										{subtask.status === "complete" ? (
-											<p className={styles.itemDate}>{formatDate(subtask.date_updated)}</p>
-										) : (
-											<p className={styles.itemDate} />
-										)}
-									</div>
-								</div>
-							))}
+								))}
 						</div>
 
 						{/* Contact Information */}
@@ -155,8 +173,11 @@ const RegistrationPage = () => {
 								<span className="font-weight-700">Any Questions ?</span> Talk to your
 								assigned coordinator
 							</p>
+							{/* Creator Details */}
 							<p className={styles.contactNumber}>
-								<span className="font-weight-700">{registrationSteps?.creator.username}: </span>
+								<span className="font-weight-700">
+									{registrationSteps?.creator.username}:{" "}
+								</span>
 								{registrationSteps?.creator.email}
 							</p>
 						</div>
