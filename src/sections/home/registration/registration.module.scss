@@ -52,7 +52,7 @@
 
     .profileSection {
         display: flex;
-        gap: var(--gap-large);
+        gap: var(--gap-medium);
         margin: 0 32px var(--margin-xlarge) 32px;
         padding: var(--padding-large);
         background: var(--color-brand-neutral-light-100);
@@ -85,7 +85,7 @@
 
             .details {
                 color: var(--color-text-tint);
-                font-size: var(--color-brand-font-size-small);
+                font-size: var(--color-brand-font-size-xsmall);
                 line-height: 1.5;
                 display: flex;
                 justify-content: space-between;
