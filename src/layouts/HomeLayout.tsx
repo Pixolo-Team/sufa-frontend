@@ -27,8 +27,6 @@ import FoundersMessage from "@/sections/home/founders-message/FoundersMessage";
 import GetFreeTrial from "@/sections/home/get-free-trial/GetFreeTrial";
 import Graduates from "@/sections/home/graduates/Graduates";
 import JoinUs from "@/sections/home/join-us/JoinUs";
-import Registration from "@/sections/home/registration/Registration";
-import RegistrationPage from "@/sections/home/registration/Registration";
 
 /** Home Screen */
 const HomeLayout: React.FC<unknown> = () => {
@@ -59,8 +57,7 @@ const HomeLayout: React.FC<unknown> = () => {
 				bannerDescription="At Skorost United Academy, we don’t just train players—we shape champions. With every kick, every sprint, and every lesson, young athletes grow stronger, smarter, and ready to take on the world."
 				onButtonClick={() => setShowEnquiryPopup(true)}
 			/>
-			<RegistrationPage />
-			
+
 			{/* Founders Message Section */}
 			<FoundersMessage />
 

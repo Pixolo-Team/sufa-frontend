@@ -24,18 +24,19 @@ import { showToast } from "@/neevo/services/toast.service";
 // UTILS //
 import { formatDate } from "@/utils/date.util";
 
-const taskId = "86cyaukrf";
+// NAVIGATION //
+import { useParams } from "next/navigation";
 
 /** Registration Page */
 const RegistrationPage = () => {
 	// Navigation and Route Params
+	const { taskId } = useParams<{ taskId: string }>();
 
 	// Define States
 	const [registrationSteps, setRegistrationSteps] = useState<TaskData>();
 
 	// Define Refs
 
-	
 	// Helper Functions
 	/* Fetches the registration status from the API */
 	const getRegistrationStatus = useCallback(() => {
