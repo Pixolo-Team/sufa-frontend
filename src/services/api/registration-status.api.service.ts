@@ -5,6 +5,9 @@ import axios, { AxiosRequestConfig } from "axios";
 import { ApiResponseData } from "@/types/app";
 import { TaskData } from "@/types/registration";
 
+// CONSTANTS //
+import { CONSTANTS } from "@/infrastructure/constants";
+
 /** Registration status API Call */
 export const getRegistrationStatusRequest = async (
 	taskId: string
@@ -12,7 +15,7 @@ export const getRegistrationStatusRequest = async (
 	// Set up the API Call Config
 	const config: AxiosRequestConfig = {
 		method: "GET",
-		url: `http://10.6.40.105:3000/api/v1/clickup/task/${taskId}`,
+		url: `${CONSTANTS.API_URL}/registrations/track-registration/${taskId}`,
 		headers: {},
 		data: { taskId },
 	};
