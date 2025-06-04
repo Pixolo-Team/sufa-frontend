@@ -5,6 +5,7 @@ const nextConfig = {
 			{
 				hostname: "images.pexels.com",
 			},
+			{ hostname: "i.pinimg.com" },
 		],
 	},
 	webpack(config) {
