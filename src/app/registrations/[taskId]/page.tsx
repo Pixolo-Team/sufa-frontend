@@ -140,12 +140,12 @@ const RegistrationPage = () => {
 										{/* Status Icon */}
 										<div
 											className={`${
-												subtask.status === "complete"
+												subtask.status === "done"
 													? styles.completedIcon
 													: styles.pendingIcon
 											} flex align-center justify-center`}
 										>
-											{subtask.status === "complete" && (
+											{subtask.status === "done" && (
 												<Icon iconName="tick" className={styles.tickIcon} mode="filled" />
 											)}
 										</div>
@@ -156,7 +156,7 @@ const RegistrationPage = () => {
 												{subtask.name}
 											</p>
 											{/* Subtask Date */}
-											{subtask.status === "complete" ? (
+											{subtask.status === "done" ? (
 												<p className={styles.itemDate}>
 													{formatDate(subtask.date_updated)}
 												</p>
