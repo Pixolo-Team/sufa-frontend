@@ -126,7 +126,7 @@ const RegistrationPage = () => {
 
 						{/* Status Box */}
 						<div className={styles.statusBox}>
-							<h4 className={`${styles.statusTitle} font-weight-600`}>Description</h4>
+							<h4 className={`${styles.statusTitle} font-weight-600`}>TL;DR</h4>
 							<p className={`${styles.statusText} font-weight-500`}>
 								{registrationSteps?.description.comments}
 							</p>

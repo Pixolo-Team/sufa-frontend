@@ -53,13 +53,15 @@
     .profileSection {
         display: flex;
         gap: var(--gap-medium);
-        margin: 0 32px var(--margin-xlarge) 32px;
+        margin: 0 auto;
+        margin-bottom: var(--margin-xlarge);
         padding: var(--padding-large);
         background: var(--color-brand-neutral-light-100);
         border-radius: 14px;
         box-shadow: 0px 4px 11.6px -2px rgba(0, 0, 0, 0.10);
         position: relative;
         z-index: 2;
+        width: 90%;
 
         .imageWrapper {
             width: 92px;
@@ -200,53 +202,12 @@
     }
 }
 
-@media only screen and (max-width: 374px) {
+// Mobile phones
+@media only screen and (min-width: 600px) {
     .registrationWrapper {
-        padding: var(--padding-small);
-
-        .header {
-            padding: var(--padding-large) var(--padding-medium);
-
-            .logoWrapper {
-                width: auto;
-                height: 34px;
-            }
-
-            .subtitle {
-                font-size: var(--color-brand-font-size-medium);
-            }
-        }
-
-        .content {
-            padding: var(--padding-medium);
-        }
 
         .profileSection {
-            padding: var(--padding-small);
-            gap: var(--gap-medium);
-
-            .imageWrapper {
-                width: 80px;
-                height: 80px;
-            }
-
-            .profileInfo {
-                .name {
-                    font-size: var(--color-brand-font-size-large);
-                    margin-bottom: var(--margin-xxsmall);
-                }
-            }
-        }
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .registrationWrapper {
-        padding: var(--padding-xlarge);
-        align-items: center;
-
-        .contentBox {
-            margin: 0 auto;
+            width: 80%;
         }
     }
 }
