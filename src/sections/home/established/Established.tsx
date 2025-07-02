@@ -9,7 +9,7 @@ import styles from "./established.module.scss";
 import Image from "next/image";
 
 // IMAGES //
-import SkorostImage from "@/../public/images/skorost-ghibli.jpg";
+import SkorostImage from "@/../public/images/new-skorost.png";
 
 /** Established Screen */
 const Established: React.FC<unknown> = () => {
