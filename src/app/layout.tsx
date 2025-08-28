@@ -54,6 +54,12 @@ const secondaryFont = Montserrat({
 	display: "swap",
 });
 
+const juventus = localFont({
+	src: "../../public/fonts/juventus-fans-bold.ttf",
+	variable: "--font-family-tertiary",
+	display: "swap",
+});
+
 /** Root Layout Screen */
 export default function RootLayout({
 	children,
@@ -77,7 +83,9 @@ export default function RootLayout({
 			className="vertical-side-menu"
 			suppressHydrationWarning
 		>
-			<body className={`${kippaxModern.variable} ${secondaryFont.variable}`}>
+			<body
+				className={`${kippaxModern.variable} ${secondaryFont.variable} ${juventus.variable}`}
+			>
 				{/* Google Analytics */}
 				<GoogleAnalytics gaId="G-V7ETJVBHG2" />
 				<Suspense fallback={<div>Loading...</div>}>

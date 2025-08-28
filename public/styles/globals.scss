@@ -114,10 +114,6 @@ textarea {
 	}
 }
 
-.hide-on-mobile {
-	display: block !important;
-}
-
 .hide-on-desktop {
 	display: none !important;
 }
@@ -204,6 +200,10 @@ textarea {
 
 .full-width-img {
 	width: 100% !important;
+}
+
+.font-tertiary {
+	font-family: var(--font-family-tertiary);
 }
 
 .font-secondary {

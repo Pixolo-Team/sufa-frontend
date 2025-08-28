@@ -7,6 +7,11 @@ import styles from "./footer.module.scss";
 
 // COMPONENTS //
 import Link from "next/link";
+import Image from "next/image";
+
+// IMAGES //
+import HomeKit from "@/../public/images/25-26-home-kit-mockup.png";
+import AwayKit from "@/../public/images/25-26-away-kit-mockup.png";
 
 // SVG's //
 import SkorostSchoolLogo from "@/../public/images/skorost-school.svg";
@@ -30,7 +35,7 @@ const Footer: React.FC<unknown> = () => {
 		<footer className={`${styles.footerWrap} bg-primary-deep`}>
 			<div className="container">
 				<div
-					className={`${styles.footerContentWrapper} flex flex-column align-center`}
+					className={`${styles.footerContentWrapper} flex align-center flex-wrap justify-between`}
 				>
 					<div
 						className={`${styles.footerTopWrap} flex align-center justify-between flex-wrap`}
@@ -39,21 +44,29 @@ const Footer: React.FC<unknown> = () => {
 						<SkorostSchoolLogo />
 					</div>
 					<div className={`${styles.partnersSection}`}>
-						<p className={`${styles.partnersTitle} font-weight-500`}>
+						<p className={`${styles.partnersTitle} font-weight-500 hide-on-desktop`}>
 							We wouldn’t exist if it wasn’t for the constant support from our partners
 						</p>
-						<div className="flex justify-between">
+						<div className={`${styles.partners} flex justify-between`}>
 							{/* Pixolo logo */}
 							<PixoloLogo />
 							{/* Zizo logo */}
 							<ZizoLogo />
 						</div>
 					</div>
-					<div className={styles.fansSection}>
-						<p className={`${styles.fansTitle} font-weight-700`}>
-							Begin Y<span className={styles.highlightedText}>our</span> Journey
-						</p>
+				</div>
+				<div className={`${styles.fansSection} `}>
+					<div
+						className={`${styles.kitsWrapper} hide-on-mobile flex justify-center`}
+					>
+						{/* Home Kit */}
+						<Image src={HomeKit} alt="Home kit" className="img-responsive" />
+						{/* Away Kit */}
+						<Image src={AwayKit} alt="Away kit" className="img-responsive" />
 					</div>
+					<p className={`${styles.fansTitle} font-tertiary font-weight-700`}>
+						Begin Y<span className={styles.highlightedText}>our</span> Journey
+					</p>
 				</div>
 				<div
 					className={`${styles.footerBottomSection}  flex justify-between text-center`}
