@@ -27,9 +27,6 @@ import { createLeadRequest } from "@/services/api/leads.api.service";
 // SERVICES //
 import { showToast } from "@/neevo/services/toast.service";
 
-// UTILS //
-import { validateEmail } from "@/utils/validate-inputs.util";
-
 // Subject Option
 const SUBJECT_OPTIONS: DropdownOptionData[] = [
 	{ label: "Free Session", value: "Free Session" },
@@ -39,8 +36,10 @@ const SUBJECT_OPTIONS: DropdownOptionData[] = [
 // Initial form state
 const ENQUIRY_INPUT_INIT = {
 	name: "",
-	email: "",
+	age: "",
 	phone: "",
+	current_school: "",
+	locality: "",
 	other_fields: {
 		subject: null,
 		message: "",
@@ -60,11 +59,9 @@ const EnquiryForm: React.FC = () => {
 		// Check if name is empty
 		if (!enquiryInputs.name.trim()) newErrors.name = "Full name is required";
 
-		// Check if email is valid and not empty
-		if (!enquiryInputs.email.trim()) {
-			newErrors.email = "Email is required";
-		} else if (!validateEmail(enquiryInputs.email)) {
-			newErrors.email = "Invalid email format";
+		// Check if age is empty
+		if (!enquiryInputs.age.trim()) {
+			newErrors.age = "Age is required";
 		}
 
 		// Check if phone number is empty
@@ -85,26 +82,25 @@ const EnquiryForm: React.FC = () => {
 	}, [enquiryInputs]);
 
 	/** Submit Enquiry form */
-	const submitEnquiryForm = useCallback(() => {
+	const submitEnquiryForm = useCallback(async () => {
 		// If not a valid form then return
 		if (!validateEnquiryForm()) return;
 
-		// Make Api call
-		createLeadRequest(enquiryInputs)
-			.then((response) => {
-				// If success then show a toast and reset form
-				if (response.success) {
-					showToast("Lead created successfully", ToastTypes.SUCCESS);
-					// Reset form
-					setEnquiryInputs(ENQUIRY_INPUT_INIT);
-				} else {
-					showToast("Failed to create lead", ToastTypes.ERROR);
-				}
-			})
+		try {
+			// Make Api call
+			const response = await createLeadRequest(enquiryInputs);
 
-			.catch(() => {
+			// If success then show a toast and reset form
+			if (response.success) {
+				showToast("Lead created successfully", ToastTypes.SUCCESS);
+				// Reset form
+				setEnquiryInputs(ENQUIRY_INPUT_INIT);
+			} else {
 				showToast("Failed to create lead", ToastTypes.ERROR);
-			});
+			}
+		} catch {
+			showToast("Failed to create lead", ToastTypes.ERROR);
+		}
 	}, [enquiryInputs, validateEnquiryForm]);
 
 	/** Update Inputs */
@@ -130,7 +126,7 @@ const EnquiryForm: React.FC = () => {
 	);
 
 	return (
-		<>
+		<div className="">
 			<div className={`flex flex-wrap flex-column ${styles.inputBoxWrapper}`}>
 				{/* Name Input Box */}
 				<div className={styles.inputBox}>
@@ -146,18 +142,19 @@ const EnquiryForm: React.FC = () => {
 						id="full-name"
 					/>
 				</div>
-				{/* Email Input Box */}
+				{/* Age Input Box */}
 				<div className={styles.inputBox}>
 					<InputBox
-						label="Email"
-						placeholder="Enter your Email"
-						value={enquiryInputs.email}
+						label="Age"
+						placeholder="Enter your Age"
+						value={enquiryInputs.age}
+						type={InputTextTypes.NUMBER}
 						isRequired
-						isError={!!enquiryErrors.email}
-						onChange={(value) => handleInputChange("email", value)}
-						errorMessage={enquiryErrors.email}
-						onClear={() => handleInputChange("email", "")}
-						id="email-id"
+						isError={!!enquiryErrors.age}
+						onChange={(value) => handleInputChange("age", value)}
+						errorMessage={enquiryErrors.age}
+						onClear={() => handleInputChange("age", "")}
+						id="age"
 					/>
 				</div>
 
@@ -190,6 +187,36 @@ const EnquiryForm: React.FC = () => {
 					/>
 				</div>
 
+				{/* Current School Input Box */}
+				<div className={styles.inputBox}>
+					<InputBox
+						label="Current School"
+						placeholder="Enter your Current School"
+						value={enquiryInputs.current_school}
+						type={InputTextTypes.TEXT}
+						isError={!!enquiryErrors.current_school}
+						onChange={(value) => handleInputChange("current_school", value)}
+						errorMessage={enquiryErrors.current_school}
+						onClear={() => handleInputChange("current_school", "")}
+						id="current-school"
+					/>
+				</div>
+
+				{/* Locality Input Box */}
+				<div className={styles.inputBox}>
+					<InputBox
+						label="Locality"
+						placeholder="Enter your Locality"
+						value={enquiryInputs.locality}
+						type={InputTextTypes.TEXT}
+						isError={!!enquiryErrors.locality}
+						onChange={(value) => handleInputChange("locality", value)}
+						errorMessage={enquiryErrors.locality}
+						onClear={() => handleInputChange("locality", "")}
+						id="locality"
+					/>
+				</div>
+
 				<div className={styles.textArea}>
 					{/* Message Text area */}
 					<TextArea
@@ -217,7 +244,7 @@ const EnquiryForm: React.FC = () => {
 					extraClass="font-weight-600"
 				/>
 			</div>
-		</>
+		</div>
 	);
 };
 

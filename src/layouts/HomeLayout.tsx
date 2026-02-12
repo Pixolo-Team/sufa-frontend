@@ -49,6 +49,27 @@ const HomeLayout: React.FC<unknown> = () => {
 		});
 	}, []);
 
+	// Handle scroll lock when popup is open
+	useEffect(() => {
+		// If popup is open then lock scroll
+		if (showEnquiryPopup) {
+			const scrollY = window.scrollY;
+
+			// Lock scroll
+			document.body.style.position = "fixed";
+			document.body.style.top = `-${scrollY}px`;
+			document.body.style.width = "100%";
+
+			// Unlock scroll
+			return () => {
+				document.body.style.position = "";
+				document.body.style.top = "";
+				document.body.style.width = "";
+				window.scrollTo(0, scrollY);
+			};
+		}
+	}, [showEnquiryPopup]);
+
 	return (
 		<div className={styles.homeScreen}>
 			{/* Banner Section */}
