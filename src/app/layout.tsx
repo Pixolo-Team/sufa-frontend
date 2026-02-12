@@ -98,6 +98,7 @@ export default function RootLayout({
 									lerp: 0.5,
 									smoothWheel: true,
 									duration: 1.5,
+									allowNestedScroll: true,
 								}}
 							>
 								{children}
