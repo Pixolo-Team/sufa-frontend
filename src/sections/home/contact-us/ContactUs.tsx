@@ -43,11 +43,9 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 		>
 			{/* Contact Us Section */}
 			<div className="container">
-				<div className={`${styles.contactUsTextWrapper} flex flex-wrap`}>
+				<div className={`${styles.contactUsTextWrapper} flex flex-column`}>
 					{/* First text block */}
-					<div
-						className={`${styles.firstTextBlock} flex flex-wrap align-center font-weight-700`}
-					>
+					<div className={`${styles.firstTextBlock} font-weight-700`}>
 						<p className={styles.primaryText}>
 							Scrolled
 							{/* Mouse animation */}
@@ -58,8 +56,10 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 						<p className={styles.secondaryText}>all the way here ha!</p>
 					</div>
 					{/* Second text block */}
-					<div className={`${styles.secondTextBlock} font-weight-700`}>
-						<p className={styles.secondaryText}>
+					<div
+						className={`${styles.secondTextBlock} ${styles.rightAlignedText} font-weight-700`}
+					>
+						<p className={`${styles.secondaryText} ${styles.rightSpacing}`}>
 							We are assuming you loved
 							{/* Heart animation */}
 							<span className={styles.heartContainer}>
@@ -82,13 +82,13 @@ const ContactUs: React.FC<ContactUsProps> = ({ onButtonClick }) => {
 								})}
 							</span>
 						</p>
-						<p className={`${styles.primaryText} ${styles.rightAlignedText}`}>
-							Our Website
-						</p>
+						<p className={styles.primaryText}>Our Website</p>
 					</div>
 					{/* Third text block */}
-					<div className={styles.thirdTextBlock}>
-						<p className={`${styles.secondaryText} font-weight-700`}>
+					<div className={`${styles.thirdTextBlock} flex justify-center`}>
+						<p
+							className={`${styles.secondaryText} ${styles.textWidth} font-weight-700`}
+						>
 							Imagine the feeling when you see us
 							<span className={`${styles.highlightText} font-weight-800`}>Coach!</span>
 						</p>
