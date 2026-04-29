@@ -15,6 +15,7 @@ import { Montserrat } from "next/font/google";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import type { Metadata } from "next";
 
 // FONTS //
 const kippaxModern = localFont({
@@ -53,6 +54,15 @@ const secondaryFont = Montserrat({
 	variable: "--font-family-secondary",
 	display: "swap",
 });
+
+/** Root metadata */
+export const metadata: Metadata = {
+	icons: {
+		icon: [{ url: "/favicon.ico", type: "image/x-icon" }],
+		shortcut: [{ url: "/favicon.ico", type: "image/x-icon" }],
+	},
+	manifest: "/manifest.webmanifest",
+};
 
 /** Root Layout Screen */
 export default function RootLayout({
