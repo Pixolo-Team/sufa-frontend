@@ -1,9 +1,10 @@
 // MODULES //
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
+import type { AxiosRequestConfig } from "axios";
 
 // TYPES //
-import { ApiResponseData } from "@/types/app";
-import { TaskData } from "@/types/registration";
+import type { ApiResponseData } from "@/types/app";
+import type { TaskData } from "@/types/registration";
 
 // CONSTANTS //
 import { CONSTANTS } from "@/infrastructure/constants";

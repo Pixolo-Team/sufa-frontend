@@ -12,7 +12,7 @@
 		}
 	}
 
-	:global(.slick-current) {
+	:global(.splide__slide.is-active) {
 		.cardWrap {
 			:global(.graduate-content) {
 				transition: all 0.5s ease-in-out;
@@ -39,7 +39,7 @@
 		.cardWrap {
 			padding: 60px;
 		}
-		:global(.slick-current) {
+		:global(.splide__slide.is-active) {
 			.cardWrap {
 				.cardWrapInner {
 					transform: scale(1.2);

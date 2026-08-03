@@ -1,0 +1,40 @@
+---
+// STYLES //
+import styles from "./graduates-card.module.scss";
+
+interface Props {
+	graduateImgSrc: string;
+	graduateName: string;
+	description: string;
+}
+
+const {
+	graduateImgSrc = "",
+	graduateName = "",
+	description = "",
+} = Astro.props;
+---
+
+{/* Card Component */}
+<div
+	class={`${styles.cardWrapper} flex justify-center align-center flex-column`}
+>
+	<div class={styles.imageWrapper}>
+		{/* Image */}
+		<img
+			src={graduateImgSrc}
+			class={styles.image}
+			alt={graduateName}
+			width="260"
+			height="360"
+			loading="lazy"
+			decoding="async"
+		/>
+	</div>
+	<div class={`${styles.textWrapper} graduate-content`}>
+		{/* Coach name */}
+		<p class={styles.title}>{graduateName}</p>
+		{/* Description */}
+		<p class={styles.description}>{description}</p>
+	</div>
+</div>

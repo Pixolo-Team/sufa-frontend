@@ -1,0 +1,120 @@
+---
+// STYLES //
+import styles from "./coaches/coaches.module.scss";
+
+// COMPONENTS //
+import CoachesCard from "@/components/coaches-card/CoachesCard.astro";
+import SectionHeader from "@/components/section-header/SectionHeader.astro";
+import CustomSliderArrows from "@/components/custom-slick-arrows/CustomSliderArrows.astro";
+
+// Coaches List data
+const coachesData = [
+	{
+		firstName: "Shubham",
+		lastName: "Pandit",
+		description:
+			"A C License coach with passion and experience, he transforms young talents with grit and dedication. Inspiring players to love, play, and own the game, he instills a winning mindset that fuels big dreams and bold play.",
+		designation: "Head Coach",
+		coachImageSrc: "/images/pandit.jpg",
+		socialMedia: { instagram: "https://www.instagram.com/dinho_10_/" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
+	},
+	{
+		firstName: "Harsh",
+		lastName: "Patil",
+		description:
+			"An I-League goalkeeper, Harsh Patil coaches our U11 and U15 teams. As the head of our Goalkeeper Development Program (GDP), he molds young keepers with agility, tactical awareness, and fearless confidence.",
+		designation: "Goalkeeper Coach",
+		coachImageSrc: "/images/harsh.jpg",
+		socialMedia: { instagram: "https://www.instagram.com/_harshgk/" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
+	},
+	{
+		firstName: "Dipesh",
+		lastName: "Suvarna",
+		description:
+			"Captain of our senior team, Dipesh Suvarna is developing his coaching skills while leading young athletes. His firsthand experience offers invaluable mentorship on and off the pitch.",
+		designation: "Youth Coach",
+		coachImageSrc: "/images/dipesh.jpg",
+		socialMedia: { instagram: "https://www.instagram.com/dipesh_31/" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
+	},
+	{
+		firstName: "Fawaz",
+		lastName: "Pakkir",
+		description:
+			"With rich experience as a senior player and coach, Fawaz Pakkir sharpens young footballers’ skills and game sense—building future champions with every drill.",
+		designation: "Youth Coach",
+		coachImageSrc: "/images/fawaz.jpg",
+		socialMedia: { instagram: "https://www.instagram.com/fawaz_pakkir/" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
+	},
+	{
+		firstName: "Pradeep",
+		lastName: "Ghavri",
+		description:
+			"Pradeep Ghavri ensures our players’ peak performance with specialized fitness programs. His training builds strength, prevents injuries, and boosts overall conditioning.",
+		designation: "Fitness Coach",
+		coachImageSrc: "/images/pradeep.jpg",
+		socialMedia: { instagram: "https://www.instagram.com/pradeepghawri9/" },
+		alt: "Professional coaching team at the best football academy in Ghatkopar under 11, under 15 and under 17",
+	},
+];
+---
+
+<section class="section-spacing">
+	{/* Section Header */}
+	<SectionHeader fadedText="Guruji" highlightedText="Our Coaches" />
+	{/* Coaches slider */}
+	<div class={`${styles.coachesWrapper} container fade-in-up`}>
+		<div class="splide" data-slider="coaches" data-coaches-slider>
+			<div class="splide__track">
+				<ul class="splide__list">
+					{
+						coachesData.map((coach) => (
+							<li class="splide__slide">
+								<div class={styles.cardWrap}>
+									<div class={styles.cardWrapInner}>
+										<CoachesCard
+											firstName={coach.firstName}
+											lastName={coach.lastName}
+											description={coach.description}
+											designation={coach.designation}
+											coachImageSrc={coach.coachImageSrc}
+											socialMedia={coach.socialMedia}
+											altTextForImage={coach.alt}
+										/>
+									</div>
+								</div>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+		{/* Custom slider arrows */}
+		<div class={styles.customArrows}>
+			<CustomSliderArrows sliderName="coaches" />
+		</div>
+	</div>
+</section>
+
+<script>
+	import { initCarousel } from "@/scripts/carousel";
+
+	// Mirrors the previous react-slick config: 3 up on desktop, 2 on tablet, 1 on mobile
+	initCarousel("[data-coaches-slider]", {
+		type: "loop",
+		perPage: 3,
+		perMove: 1,
+		speed: 500,
+		autoplay: true,
+		interval: 3000,
+		arrows: false,
+		pagination: false,
+		breakpoints: {
+			992: { perPage: 2 },
+			600: { perPage: 1 },
+		},
+	});
+</script>

@@ -1,0 +1,81 @@
+---
+// STYLES //
+import styles from "./courses/courses.module.scss";
+
+// COMPONENTS //
+import CoursesCard from "@/components/courses-card/CoursesCard.astro";
+import SectionHeader from "@/components/section-header/SectionHeader.astro";
+
+// Courses List data
+const coursesList = [
+	{
+		courseImageSrc: "/images/courses/gdp.jpg",
+		courseTitle: "Goalkeeper Development",
+		altTextForImage:
+			"Professional football coaching for goalkeepers in Ghatkopar, Mumbai",
+	},
+	{
+		courseImageSrc: "/images/courses/u-11.jpg",
+		courseTitle: "Under-11 Program",
+		altTextForImage: "Kids enjoying football coaching in Mumbai",
+	},
+	{
+		courseImageSrc: "/images/courses/u-15.jpg",
+		courseTitle: "Under-15 Program",
+		altTextForImage:
+			"Football training session for kids at the best football academy in Ghatkopar East",
+	},
+	{
+		courseImageSrc: "/images/courses/u-15.jpg",
+		courseTitle: "Sports Psychology",
+		altTextForImage:
+			"Football training session for kids at the best football academy in Ghatkopar East",
+	},
+	{
+		courseImageSrc: "/images/courses/gdp.jpg",
+		courseTitle: "Goalkeeper Mindset",
+		altTextForImage:
+			"Football training session for kids at the best football academy in Ghatkopar East",
+	},
+];
+---
+
+<section id="courses" class="section-spacing">
+	<div class="container">
+		{/* Section header component */}
+		<SectionHeader fadedText="Champions" highlightedText="Courses" />
+		<p
+			class={`${styles.sectionDescription} text-center font-weight-500 fade-in-up`}
+		>
+			Designed for Excellence!
+		</p>
+		{/* Courses card components */}
+		<div class={`${styles.cardsWrapper} flex flex-column`}>
+			{
+				coursesList.map((course) => (
+					<CoursesCard
+						wrapperClass={styles.cardItem}
+						courseImageSrc={course.courseImageSrc}
+						courseTitle={course.courseTitle}
+						altTextForImage={course.altTextForImage}
+					/>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<script>
+	import VanillaTilt from "vanilla-tilt";
+
+	// Replaces `react-tilty` — same glare/scale configuration as before
+	VanillaTilt.init(
+		Array.from(document.querySelectorAll<HTMLElement>("[data-tilt]")),
+		{
+			glare: true,
+			"max-glare": 0.5,
+			scale: 1.5,
+			gyroscope: false,
+		}
+	);
+</script>

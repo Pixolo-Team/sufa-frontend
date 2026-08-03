@@ -1,0 +1,35 @@
+---
+// STYLES //
+import styles from "./established/established.module.scss";
+---
+
+<section class="section-spacing" data-established-section>
+	<div class={styles.establishedWrapper}>
+		{/* Heading at front */}
+		<div class={`${styles.heading} ${styles.backHeading} font-weight-700`}>
+			<p class="fade-in-up">ESTABLISHED IN 2003</p>
+		</div>
+		<div class={styles.sliderWrapper}>
+			{/* Heading at back */}
+			<div class={`${styles.heading} ${styles.frontHeading} font-weight-700`}>
+				<p class="fade-in-up">ESTABLISHED IN 2003</p>
+			</div>
+			{/* Images slider — vertical parallax driven by the section's scroll progress */}
+			<div
+				class={styles.imageWrapper}
+				data-parallax="y"
+				data-from="-20%"
+				data-to="20%"
+				data-parallax-target="[data-established-section]"
+			>
+				<img
+					src="/images/skorost-ghibli.jpg"
+					alt="Football coaching team with young players at the best kids football academy in Ghatkopar since 2003"
+					class={`img-responsive full-width-img ${styles.image}`}
+					loading="lazy"
+					decoding="async"
+				/>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,119 @@
+---
+// ENUMS //
+import { Colors, Shapes } from "@/neevo/enums/core.enum";
+import { ButtonLevels, ButtonSizes } from "@/neevo/enums/button.enum";
+
+// STYLES //
+import styles from "./contact-us/contact-us.module.scss";
+
+// COMPONENTS //
+import Button from "@/neevo/components/button/Button.astro";
+import Icon from "@/neevo/components/Icon.astro";
+
+// Randomised floating heart offsets, resolved once at build time
+const floatingHearts = Array.from({ length: 5 }, () => ({
+	// Random delay between 0s to 2s
+	delay: Math.random() * 2,
+	// Random left position (-50px to +50px)
+	left: Math.random() * 100 - 50,
+	// Random rotation (-15deg to +15deg)
+	rotation: Math.random() * 30 - 15,
+}));
+---
+
+<section
+	id="contact"
+	class={`section-spacing padding-bottom-0 ${styles.contactUsWrapper}`}
+>
+	{/* Contact Us Section */}
+	<div class="container">
+		<div class={`${styles.contactUsTextWrapper} flex flex-wrap`}>
+			{/* First text block */}
+			<div
+				class={`${styles.firstTextBlock} flex flex-wrap align-center font-weight-700`}
+			>
+				<p class={styles.primaryText}>
+					Scrolled
+					{/* Mouse animation */}
+					<span class={styles.mouse}>
+						<span class={styles.scrollDot}></span>
+					</span>
+				</p>
+				<p class={styles.secondaryText}>all the way here ha!</p>
+			</div>
+			{/* Second text block */}
+			<div class={`${styles.secondTextBlock} font-weight-700`}>
+				<p class={styles.secondaryText}>
+					We are assuming you loved
+					{/* Heart animation */}
+					<span class={styles.heartContainer}>
+						{
+							floatingHearts.map((heart) => (
+								<Icon
+									iconName="heart"
+									mode="filled"
+									class={styles.heartIcon}
+									style={`animation-delay: ${heart.delay}s; left: ${heart.left}px; transform: rotate(${heart.rotation}deg);`}
+								/>
+							))
+						}
+					</span>
+				</p>
+				<p class={`${styles.primaryText} ${styles.rightAlignedText}`}>
+					Our Website
+				</p>
+			</div>
+			{/* Third text block */}
+			<div class={styles.thirdTextBlock}>
+				<p class={`${styles.secondaryText} font-weight-700`}>
+					Imagine the feeling when you see us
+					<span class={`${styles.highlightText} font-weight-800`}>Coach!</span>
+				</p>
+			</div>
+		</div>
+		<div class={`${styles.contactUsInner} flex justify-center align-center`}>
+			<div class={`${styles.imageWrapper} fade-in-up`}>
+				<img
+					src="/images/football-img.png"
+					alt="ftb"
+					class="img-responsive full-width-img"
+					loading="lazy"
+					decoding="async"
+				/>
+			</div>
+			<div class={styles.contentWrapper}>
+				{/* Title */}
+				<p class={`${styles.title} font-weight-700 fade-in-up`}>
+					Still have any Question?
+				</p>
+				{/* Button for small devices */}
+				<div class="hide-on-desktop fade-in-up">
+					<Button
+						text="Contact Us"
+						shape={Shapes.ROUNDED}
+						size={ButtonSizes.LARGE}
+						color={Colors.SECONDARY}
+						level={ButtonLevels.BLOCK}
+						dataAttributes={{ "data-enquiry-trigger": "" }}
+					/>
+				</div>
+				{/* Button for large devices */}
+				<div class="hide-on-mobile fade-in-up">
+					<Button
+						text="Contact Us"
+						shape={Shapes.ROUNDED}
+						size={ButtonSizes.XXLARGE}
+						color={Colors.SECONDARY}
+						level={ButtonLevels.INLINE}
+						extraClass="font-weight-600"
+						dataAttributes={{ "data-enquiry-trigger": "" }}
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+	{/* Bottom image */}
+	<div class={styles.bottomImageWrapper}>
+		<div class={styles.bottomImage}></div>
+	</div>
+</section>

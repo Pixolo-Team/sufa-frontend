@@ -1,0 +1,63 @@
+---
+// ENUMS //
+import { ErrorCodes } from "@/neevo/enums/error.enum";
+import { ButtonSizes } from "@/neevo/enums/button.enum";
+
+// STYLES //
+import styles from "./page-error.module.scss";
+
+// COMPONENTS //
+import Button from "@/neevo/components/button/Button.astro";
+import Icon from "@/neevo/components/Icon.astro";
+
+interface Props {
+	errorTitle: string;
+	errorDescription: string;
+	errorCode: ErrorCodes;
+}
+
+const { errorTitle, errorDescription, errorCode } = Astro.props;
+
+/** Get the icon name matching the error code */
+const ERROR_ICON_NAMES: Record<number, string> = {
+	[ErrorCodes.NOT_FOUND]: "not-found",
+	[ErrorCodes.BAD_REQUEST]: "bad-request",
+	[ErrorCodes.INTERNAL_SERVER_ERROR]: "internal-server-error",
+};
+
+const errorIconName = ERROR_ICON_NAMES[errorCode];
+---
+
+<div class={styles.errorPageWrapper}>
+	{/* Error Image */}
+	<div class={styles.errorImageWrapper}>
+		{
+			errorIconName && (
+				<Icon iconName={errorIconName} class={styles.errorIcon} mode="filled" />
+			)
+		}
+	</div>
+
+	{/* Error Title */}
+	<p class={styles.errorTitle}>{errorTitle}</p>
+
+	{/* Error Description */}
+	<p class={styles.errorDescription}>{errorDescription}</p>
+
+	{/* Button */}
+	<div class={styles.errorButtonWrapper}>
+		<Button
+			text="Back to Home"
+			size={ButtonSizes.XLARGE}
+			dataAttributes={{ "data-back-home": "" }}
+		/>
+	</div>
+</div>
+
+<script>
+	document
+		.querySelector("[data-back-home]")
+		?.addEventListener("click", () => {
+			window.location.href = "/";
+		});
+</script>

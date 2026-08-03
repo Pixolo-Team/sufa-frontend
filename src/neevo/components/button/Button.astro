@@ -1,0 +1,112 @@
+---
+// ENUMS //
+import { Colors, Shapes, Variants } from "@/neevo/enums/core.enum";
+import {
+	ButtonIconPosition,
+	ButtonLevels,
+	ButtonSizes,
+	ButtonTypes,
+} from "@/neevo/enums/button.enum";
+
+// STYLES //
+import styles from "@/neevo/components/button/button.module.scss";
+
+// COMPONENTS //
+import Icon from "@/neevo/components/Icon.astro";
+
+// UTILS //
+import { capitalizeHyphenated } from "@/neevo/utils/string-parser.util";
+
+interface Props {
+	text: string;
+	variant?: Variants;
+	size?: ButtonSizes;
+	color?: Colors;
+	level?: ButtonLevels;
+	leftIcon?: string;
+	rightIcon?: string;
+	iconPosition?: ButtonIconPosition;
+	shape?: Shapes;
+	isDisabled?: boolean;
+	extraClass?: string;
+	type?: ButtonTypes;
+	/** Rendered as-is on the <button>, used to hook up click handlers from scripts */
+	dataAttributes?: Record<string, string>;
+}
+
+const {
+	text,
+	variant = Variants.SOLID,
+	size = ButtonSizes.MEDIUM,
+	color = Colors.PRIMARY,
+	level = ButtonLevels.BLOCK,
+	leftIcon = "",
+	rightIcon = "",
+	iconPosition = ButtonIconPosition.END,
+	shape = Shapes.DEFAULT,
+	isDisabled = false,
+	extraClass = "",
+	type = ButtonTypes.BUTTON,
+	dataAttributes = {},
+} = Astro.props;
+
+/** Combine the base classes and make a collection of class. */
+const buildButtonClassName = () => {
+	// Create array for Classes
+	const classes = [];
+
+	// Push the base class in it
+	classes.push(styles.neevoButton);
+
+	// Check and Add the color and variant classes
+	if (variant && color) {
+		classes.push(
+			styles[`${capitalizeHyphenated(variant)}${capitalizeHyphenated(color)}`]
+		);
+	}
+
+	// Check and add the Size/Shape/Icon Position Classes
+	if (size && shape && iconPosition) {
+		classes.push(
+			styles[
+				`${capitalizeHyphenated(size)}${capitalizeHyphenated(
+					shape
+				)}${capitalizeHyphenated(iconPosition)}`
+			]
+		);
+	}
+
+	// Add the Level Classes
+	if (level) {
+		classes.push(styles[`${capitalizeHyphenated(level)}`]);
+	}
+
+	// Add the extra classes which comes from parent
+	if (extraClass) {
+		classes.push(extraClass);
+	}
+
+	// Convert the array into Classes Strings (to put in class)
+	return classes.join(" ");
+};
+
+const buttonClassName = buildButtonClassName();
+---
+
+<button
+	class={`${buttonClassName} ${isDisabled ? styles.disabled : ""}`}
+	disabled={isDisabled}
+	type={type}
+	{...dataAttributes}
+>
+	<div class={styles.buttonContent}>
+		{/* Icon Left */}
+		{leftIcon && <Icon class={styles.buttonIconLeft} iconName={leftIcon} />}
+
+		{/* Text */}
+		<p class={styles.buttonText}>{text}</p>
+
+		{/* Icon Right */}
+		{rightIcon && <Icon class={styles.buttonIconRight} iconName={rightIcon} />}
+	</div>
+</button>

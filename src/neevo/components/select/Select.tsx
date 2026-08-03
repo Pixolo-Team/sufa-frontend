@@ -1,9 +1,8 @@
-"use client";
 // REACT //
 import React, { useState, useRef, useEffect, useMemo } from "react";
 
 // TYPES //
-import { DropdownOptionData } from "@/neevo/types/forms";
+import type { DropdownOptionData } from "@/neevo/types/forms";
 
 // ENUMS //
 import { Sizes } from "@/neevo/enums/core.enum";
@@ -13,7 +12,6 @@ import styles from "@/neevo/components/select/select.module.scss";
 
 // COMPONENTS //
 import Icon from "@/neevo/components/Icon";
-import Link from "next/link";
 
 // UTILS //
 import {

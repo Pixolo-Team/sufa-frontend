@@ -1,10 +1,9 @@
-"use client";
 
 // REACT //
 import { useState, useCallback } from "react";
 
 // TYPES //
-import { DropdownOptionData } from "@/neevo/types/forms";
+import type { DropdownOptionData } from "@/neevo/types/forms";
 
 // ENUMS //
 import { ToastTypes } from "@/neevo/enums/toast.enum";

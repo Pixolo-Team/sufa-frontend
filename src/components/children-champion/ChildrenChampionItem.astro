@@ -1,0 +1,26 @@
+---
+// STYLES //
+import styles from "./children-champion-item.module.scss";
+
+// COMPONENTS //
+import Icon from "@/neevo/components/Icon.astro";
+
+interface Props {
+	color?: "primary" | "default";
+}
+
+const { color = "default" } = Astro.props;
+---
+
+<div
+	class={`${styles.contentWrapper} flex align-center justify-center ${
+		color === "primary" ? styles.itemPrimary : ""
+	}`}
+>
+	{/* Title */}
+	<p class={`${styles.title} font-weight-700`}>From Children to Champions</p>
+	{/* Icon */}
+	<div>
+		<Icon iconName="cute" class={styles.icon} mode="filled" />
+	</div>
+</div>

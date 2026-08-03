@@ -1,5 +1,6 @@
 // PLUGINS //
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
+import type { AxiosRequestConfig } from "axios";
 
 /** Create Lead API Call */
 export const createLeadRequest = async (data: any) => {
@@ -7,7 +8,7 @@ export const createLeadRequest = async (data: any) => {
 		// Set up the API Call Config
 		const config: AxiosRequestConfig = {
 			method: "post",
-			url: `https://www.privyr.com/api/v1/incoming-leads/${process.env.NEXT_PUBLIC_PRIVYR_API_KEY}`,
+			url: `https://www.privyr.com/api/v1/incoming-leads/${import.meta.env.PUBLIC_PRIVYR_API_KEY}`,
 			headers: {
 				"Content-Type": "application/json",
 			},
