@@ -1,0 +1,94 @@
+---
+// STYLES //
+import styles from "./courses/courses.module.scss";
+
+// COMPONENTS //
+import CoursesCard from "@/components/courses-card/CoursesCard.astro";
+import SectionHeader from "@/components/section-header/SectionHeader.astro";
+
+// Courses List data
+const coursesList = [
+	{
+		courseImageSrc: "/images/courses/gk-development.jpg",
+		courseTitle: "Goalkeeper Development",
+		altTextForImage:
+			"Professional football coaching for goalkeepers in Ghatkopar, Mumbai",
+	},
+	{
+		courseImageSrc: "/images/courses/foundation.jpg",
+		courseTitle: "Foundation Football (Under-8)",
+		altTextForImage:
+			"Foundation football coaching for under-8 kids at the best football academy in Ghatkopar",
+	},
+	{
+		courseImageSrc: "/images/courses/grassroot.jpg",
+		courseTitle: "Grassroot Football (Under-10)",
+		altTextForImage:
+			"Grassroot football coaching for under-10 kids at the best football academy in Ghatkopar",
+	},
+	{
+		courseImageSrc: "/images/courses/youth.jpg",
+		courseTitle: "Youth Football (Under-12)",
+		altTextForImage:
+			"Youth football training for under-12 kids at the best football academy in Ghatkopar East",
+	},
+	{
+		courseImageSrc: "/images/courses/performance.jpg",
+		courseTitle: "Performance Football (Under-16)",
+		altTextForImage:
+			"Performance football training for under-16 players at the best football academy in Ghatkopar East",
+	},
+];
+---
+
+<section id="courses" class="section-spacing">
+	<div class="container">
+		{/* Section header component */}
+		<SectionHeader fadedText="Champions" highlightedText="Courses" />
+		<p
+			class={`${styles.sectionDescription} text-center font-weight-500 fade-in-up`}
+		>
+			Designed for Excellence!
+		</p>
+		{/* Courses card components */}
+		<div class={`${styles.cardsWrapper} flex flex-column`}>
+			{
+				coursesList.map((course) => (
+					<CoursesCard
+						wrapperClass={styles.cardItem}
+						courseImageSrc={course.courseImageSrc}
+						courseTitle={course.courseTitle}
+						altTextForImage={course.altTextForImage}
+					/>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<script>
+	import VanillaTilt from "vanilla-tilt";
+
+	// Replaces `react-tilty`. Note: the cards use `data-course-tilt`, NOT
+	// `data-tilt`. Importing `vanilla-tilt` triggers its built-in auto-load,
+	// which calls `VanillaTilt.init` on every `[data-tilt]` element with
+	// DEFAULT settings and marks them initialised — so a `data-tilt` element
+	// could never receive the settings below (it would be silently skipped).
+	//
+	// `react-tilty` defaults to a 35° max tilt, whereas `vanilla-tilt`
+	// defaults to only 15°, so it must be set explicitly to match the
+	// original 3D tilt strength.
+	VanillaTilt.init(
+		Array.from(document.querySelectorAll<HTMLElement>("[data-course-tilt]")),
+		{
+			// `vanilla-tilt` tilts in the opposite direction to `react-tilty`,
+			// so `reverse` is enabled to keep the original hover behaviour.
+			reverse: true,
+			max: 35,
+			glare: true,
+			"max-glare": 0.5,
+			scale: 1.5,
+			gyroscope: false,
+		}
+	);
+</script>

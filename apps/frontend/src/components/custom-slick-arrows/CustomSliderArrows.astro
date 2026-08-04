@@ -1,0 +1,33 @@
+---
+// COMPONENTS //
+import Icon from "@/neevo/components/Icon.astro";
+
+interface Props {
+	/** Matches the `data-slider` value on the carousel this controls */
+	sliderName: string;
+}
+
+const { sliderName } = Astro.props;
+---
+
+<div
+	class="custom-slick-arrow-wrapper flex justify-center"
+	data-slider-arrows={sliderName}
+>
+	<button
+		class="custom-slick-arrow custom-slick-arrow-left flex align-center justify-center"
+		aria-label="Previous slide"
+		data-slider-prev
+	>
+		{/* Left arrow */}
+		<Icon class="arrow-icon" iconName="link-arrow" mode="filled" />
+	</button>
+	<button
+		class="custom-slick-arrow custom-slick-arrow-right flex align-center justify-center"
+		aria-label="Next slide"
+		data-slider-next
+	>
+		{/* Right arrow */}
+		<Icon class="arrow-icon" iconName="link-arrow" mode="filled" />
+	</button>
+</div>

@@ -1,0 +1,130 @@
+---
+// STYLES //
+import styles from "./graduates/graduates.module.scss";
+
+// COMPONENTS //
+import CustomSliderArrows from "@/components/custom-slick-arrows/CustomSliderArrows.astro";
+import GraduatesCard from "@/components/graduates-card/GraduatesCard.astro";
+import SectionHeader from "@/components/section-header/SectionHeader.astro";
+
+// Graduates List data
+const graduatesList = [
+	{
+		description:
+			"One of the most prolific striker Mumbai has seen. Went on the play at amazing levels and the highest goalscorer of our Senior Team.",
+		graduateName: "Shubham Verma",
+		graduateSrc: "/images/graduates/shubham.jpg",
+	},
+	{
+		description:
+			"Selected for the senior team at 17, played Junior I-League, and now leads as Vice-Captain—Allen Thomas, a true Skorost warrior!",
+		graduateName: "Allen Thomas",
+		graduateSrc: "/images/graduates/allen.jpg",
+	},
+	{
+		description:
+			"Showed immense potential from a young age, played ISL & I-League for many team across India, and now gives back as a coach at Skorost Academy",
+		graduateName: "Harsh Patil",
+		graduateSrc: "/images/graduates/harsh.jpg",
+	},
+	{
+		description:
+			"Selected at 16 as sub for our CB, soon made the main team. Played I-League with Kenkre, starred across India, now shining in the Kolkata League!",
+		graduateName: "Pawan Pattem",
+		graduateSrc: "/images/graduates/pawan.jpg",
+	},
+	{
+		description:
+			"Selected at 17, quickly proved his potential. Rose to the top of the senior squad before making his mark in the Junior I-League.",
+		graduateName: "Karan Jagtap",
+		graduateSrc: "/images/graduates/karan.jpg",
+	},
+	{
+		description:
+			"Spotted by Skorost at 14 as a raw talent, he matured into a powerhouse, rising through the ranks to dominate in the I-League.",
+		graduateName: "Jayesh Kurup",
+		graduateSrc: "/images/graduates/jayesh.jpg",
+	},
+	{
+		description:
+			"A relentless worker since 16, he became one of Mumbai’s top attacking mids, captaining his team in the Junior I-League.",
+		graduateName: "Pratamesh Dhumal",
+		graduateSrc: "/images/graduates/pratamesh.jpg",
+	},
+	{
+		description:
+			"Wise beyond his years, he captained the Youth Team, became Senior Team Vice-Captain, and now shines as a regular in his District team.",
+		graduateName: "Atul Ghodke",
+		graduateSrc: "/images/graduates/atul.jpg",
+	},
+	{
+		description:
+			"The young boy from Ghatkopar, the heart of Skorost. A talent from our roots, now the captain of our senior team.",
+		graduateName: "Sarthak Bhosale",
+		graduateSrc: "/images/graduates/sarthak.jpg",
+	},
+];
+---
+
+<section class="section-spacing">
+	{/* Section Header */}
+	<SectionHeader fadedText="Champs" highlightedText="Meet Our Graduates" />
+	{/* Graduate slider */}
+	<div class={`${styles.graduatesWrapper} fade-in-up`}>
+		<div class="splide" data-slider="graduates" data-graduates-slider>
+			<div class="splide__track">
+				<ul class="splide__list">
+					{
+						graduatesList.map((graduate) => (
+							<li class="splide__slide">
+								<div class={`${styles.cardWrap} flex justify-center`}>
+									<div class={styles.cardWrapInner}>
+										<GraduatesCard
+											description={graduate.description}
+											graduateName={graduate.graduateName}
+											graduateImgSrc={graduate.graduateSrc}
+										/>
+									</div>
+								</div>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+		{/* Custom slider arrows */}
+		<CustomSliderArrows sliderName="graduates" />
+	</div>
+</section>
+
+<script>
+	import { initCarousel } from "@/scripts/carousel";
+
+	// Mirrors the previous react-slick config: centered, variable width, looping autoplay
+	initCarousel("[data-graduates-slider]", {
+		type: "loop",
+		focus: "center",
+		// Apply the `is-active` class at the START of the move (on EVENT_MOVE)
+		// instead of the end, so the centred card's text fades in *during* the
+		// slide transition — matching react-slick's `.slick-current` timing.
+		// Without this the text only starts appearing after the 500ms move,
+		// producing a visible delay.
+		updateOnMove: true,
+		autoWidth: true,
+		perMove: 1,
+		speed: 500,
+		// Match react-slick's default `cssEase: "ease"`. Splide's default
+		// (`cubic-bezier(0.25, 1, 0.5, 1)`) launches fast and decelerates
+		// abruptly, which reads as less smooth and falls out of sync with the
+		// card's `ease-in-out` scale/text transitions.
+		easing: "ease",
+		autoplay: true,
+		interval: 3000,
+		arrows: false,
+		pagination: false,
+		breakpoints: {
+			1200: { autoWidth: false, perPage: 3 },
+			600: { autoWidth: false, perPage: 1 },
+		},
+	});
+</script>

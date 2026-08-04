@@ -1,0 +1,216 @@
+.bannerWrapper {
+	--clip-animation-duration: 0.7s;
+	--clip-animation-after-delay: 0.3s;
+	--translate-text-animation-duration: 0.5s;
+	--translate-text-animation-after-delay: 0.3s;
+	--rotate-text-animation-duration: 0.3s;
+	--rotate-text-in-deg: -6deg;
+	width: 100%;
+	max-height: 100vh;
+	min-height: 600px;
+	aspect-ratio: 16/9;
+	position: relative;
+	background-color: var(--color-brand-primary-deep);
+	border-bottom-left-radius: 3vw;
+	border-bottom-right-radius: 3vw;
+	overflow: hidden;
+
+	.imageWrapper {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		clip-path: inset(0 0 100% 0);
+		transition: clip-path var(--clip-animation-duration) ease-out;
+
+		iframe,
+		video {
+			width: 100%;
+			aspect-ratio: 16/9;
+			object-fit: cover;
+			display: block;
+		}
+
+		.overlay {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(
+				180deg,
+				rgba(1, 100, 162, 0.05) 0%,
+				rgba(15, 149, 99, 0) 45%,
+				var(--color-brand-primary-deep, #0f9563) 92%
+			);
+		}
+	}
+
+	.textContent {
+		position: absolute;
+		bottom: 16px;
+		padding: var(--padding-large);
+		text-align: center;
+		z-index: 22;
+		color: var(--color-brand-primary-contrast);
+
+		.textContentWrap {
+			transform: rotate(var(--rotate-text-in-deg));
+			transition: all 0.3s ease-out;
+			transition-delay: calc(
+				var(--clip-animation-duration) + var(--translate-text-animation-duration) +
+					var(--translate-text-animation-after-delay)
+			);
+		}
+		.textContentWrapInner {
+			opacity: 0;
+			transition: all var(--translate-text-animation-duration) ease-out;
+			transition-delay: calc(
+				var(--clip-animation-duration) + var(--clip-animation-after-delay)
+			);
+		}
+
+		.bannerTitleWrap {
+			.bannerTitle {
+				transform: translateX(100%);
+				font-size: var(--color-brand-font-size-heading-2);
+				line-height: 40px;
+			}
+		}
+
+		.bannerDescriptionWrap {
+			max-width: 1200px;
+			margin: 26px 0 80px 0;
+			.bannerDescription {
+				transform: translateX(-100%);
+				font-size: var(--color-brand-font-size-small);
+				line-height: 24px;
+			}
+		}
+
+		.buttonWrapper {
+			position: relative;
+			transform: translateY(100%);
+			opacity: 0;
+			transition: all 0.5s ease-out;
+			transition-delay: calc(
+				var(--clip-animation-duration) + var(--clip-animation-after-delay) +
+					var(--translate-text-animation-duration) +
+					var(--translate-text-animation-after-delay)
+			);
+
+			.buttonImage {
+				position: absolute;
+				top: -50px;
+				right: 0;
+			}
+		}
+	}
+
+	&.animateBanner {
+		.imageWrapper {
+			clip-path: inset(0 0 0 0); /* Fully visible */
+		}
+		.textContent {
+			.bannerTitleWrap {
+				transform: rotate(0deg);
+				.bannerTitle {
+					transform: translateX(0%);
+					opacity: 1;
+				}
+			}
+
+			.bannerDescriptionWrap {
+				transform: rotate(0deg);
+				.bannerDescription {
+					transform: translateX(0%);
+					opacity: 1;
+				}
+			}
+
+			.buttonWrapper {
+				transform: translateY(0%);
+				opacity: 1;
+			}
+		}
+	}
+}
+
+// Responsive Styling
+@media only screen and (min-width: 600px) {
+	.bannerWrapper {
+		.textContent {
+			padding: var(--padding-xlarge);
+			.bannerTitleWrap {
+				.bannerTitle {
+					font-size: var(--color-brand-font-size-heading-1);
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.bannerWrapper {
+		.textContent {
+			bottom: 60px;
+			.bannerTitleWrap {
+				.bannerTitle {
+					font-size: var(--color-brand-font-size-5xlarge);
+					line-height: 1;
+				}
+			}
+
+			.bannerDescriptionWrap {
+				width: 80%;
+				.bannerDescription {
+					font-size: var(--color-brand-font-size-regular);
+				}
+			}
+			.buttonWrapper {
+				.buttonImage {
+					transform: translateY(0);
+					transition: all 0.3s ease-in-out;
+				}
+				&:hover {
+					.buttonImage {
+						transform: translateY(-15%);
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 992px) {
+	.bannerWrapper {
+		.textContent {
+			.bannerTitleWrap {
+				.bannerTitle {
+					font-size: var(--color-brand-font-size-8xlarge);
+				}
+			}
+			.bannerDescriptionWrap {
+				.bannerDescription {
+					font-size: var(--color-brand-font-size-medium);
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 1500px) {
+	.bannerWrapper {
+		.imageWrapper {
+			width: 100%;
+		}
+
+		.textContent {
+			.bannerTitleWrap {
+				.bannerTitle {
+					font-size: var(--color-brand-font-size-9xlarge);
+				}
+			}
+		}
+	}
+}

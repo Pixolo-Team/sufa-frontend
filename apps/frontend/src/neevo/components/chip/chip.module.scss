@@ -1,0 +1,157 @@
+$colors: (
+	primary: "Primary",
+	secondary: "Secondary",
+	tertiary: "Tertiary",
+	neutral-light: "NeutralLight",
+	neutral-dark: "NeutralDark",
+	error: "Error",
+	warning: "Warning",
+	success: "Success",
+);
+
+$variants: (
+	solid: "Solid",
+	soft: "Soft",
+	outline: "Outline",
+	plain: "Plain",
+);
+
+$sizes: (
+	small: "Small",
+	medium: "Medium",
+	large: "Large",
+);
+
+$shapes: (
+	default: "Default",
+	rounded: "Rounded",
+	squared: "Squared",
+);
+
+// Define base styles for Neevo Chip.
+.neevoChipContainer {
+	display: inline-flex;
+	align-items: center;
+	.chipWrapper {
+		display: flex;
+		align-items: center;
+	}
+	.chipText {
+		line-height: 1.2em;
+	}
+	.chipCloseButton {
+		background-color: transparent;
+	}
+}
+
+// Mixins to generate styles based on Variant and Color
+@mixin color-styles($variant, $color) {
+	background-color: var(--color-chip-background-#{$color}-#{$variant}-default);
+	// Hover state styles
+	&:hover {
+		background-color: var(--color-chip-background-#{$color}-#{$variant}-hover);
+		.chipLeftIcon {
+			path {
+				fill: var(--color-chip-foreground-#{$color}-#{$variant}-hover);
+			}
+		}
+		.chipText {
+			color: var(--color-chip-foreground-#{$color}-#{$variant}-hover);
+		}
+		.chipCloseIcon {
+			path {
+				fill: var(--color-chip-foreground-#{$color}-#{$variant}-hover);
+			}
+		}
+	}
+	// Outline variant specific styles
+	@if $variant == outline {
+		background-color: transparent;
+		border: var(--border-width-sm)
+			solid
+			var(--color-chip-background-#{$color}-#{$variant}-default);
+
+		&:hover {
+			background-color: transparent;
+			border: var(--border-width-sm)
+				solid
+				var(--color-chip-background-#{$color}-#{$variant}-hover);
+		}
+	}
+
+	// Plain variant specific styles
+	@if $variant == plain {
+		background-color: transparent;
+	}
+
+	.chipLeftIcon {
+		path {
+			fill: var(--color-chip-foreground-#{$color}-#{$variant}-default);
+		}
+	}
+	.chipText {
+		color: var(--color-chip-foreground-#{$color}-#{$variant}-default);
+	}
+	.chipCloseIcon {
+		path {
+			fill: var(--color-chip-foreground-#{$color}-#{$variant}-default);
+		}
+	}
+}
+
+// Styles for text ellipsis
+.chipTextEllipses {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 60px;
+}
+
+// Mixin to generate styles based on Size Shape and Icon Position.
+@mixin chip-styles($size, $shape) {
+	border-radius: var(--border-radius-chip-small-#{$shape});
+	padding: var(--padding-chip-vertical-#{$size})
+		var(--padding-chip-horizontal-#{$size});
+	gap: var(--gap-chip-close-#{$size});
+	.chipWrapper {
+		gap: var(--gap-chip-#{$size});
+	}
+	.chipLeftIcon {
+		height: var(--size-chip-icon-#{$size});
+		width: var(--size-chip-icon-#{$size});
+	}
+	.chipText {
+		font-size: var(--font-size-chip-#{$size});
+	}
+	.chipCloseButton {
+		height: calc(var(--size-chip-close-#{$size}) + 2px);
+		width: calc(var(--size-chip-close-#{$size}) + 2px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.chipCloseIcon {
+		height: var(--size-chip-close-#{$size});
+		width: var(--size-chip-close-#{$size});
+	}
+}
+
+// Generate classes for each color variant combination.
+// For example - SolidPrimary, SoftSecondary, OutlinePrimary, PlainPrimary
+@each $variant, $variant-name in $variants {
+	@each $color, $color-name in $colors {
+		.#{$variant-name}#{$color-name} {
+			@include color-styles($variant, $color);
+		}
+	}
+}
+
+// Generate classes for each size and shape position combination.
+// For example - SmallRounded, MediumSquare, LargeDefault
+@each $size, $size-name in $sizes {
+	@each $shape, $shape-name in $shapes {
+		.#{$size-name}#{$shape-name} {
+			@include chip-styles($size, $shape);
+		}
+	}
+}

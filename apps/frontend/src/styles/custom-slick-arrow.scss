@@ -1,0 +1,25 @@
+.custom-slick-arrow-wrapper {
+	width: 100%;
+	gap: 8px;
+	.custom-slick-arrow {
+		width: 38px;
+		height: 38px;
+		border-radius: 100%;
+		background-color: var(--color-background-light-tint);
+		transition: all 0.2s ease-in-out;
+		.arrow-icon {
+			path {
+				fill: var(--color-brand-primary-deep);
+			}
+		}
+		&:hover {
+			transform: scale(1.2);
+			background-color: var(--color-brand-primary-tint);
+		}
+	}
+	.custom-slick-arrow-left {
+		.arrow-icon {
+			transform: rotate(180deg);
+		}
+	}
+}

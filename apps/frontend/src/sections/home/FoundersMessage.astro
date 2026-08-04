@@ -1,0 +1,65 @@
+---
+// STYLES //
+import styles from "./founders-message/founders-message.module.scss";
+
+// COMPONENTS //
+import Icon from "@/neevo/components/Icon.astro";
+import ContentFromCms from "@/components/cms/ContentFromCms.astro";
+---
+
+<section class="section-spacing">
+	<div class={`${styles.contentWrapper} flex`}>
+		<div class={styles.messageWrapper}>
+			<div class="left-container-padding">
+				{/* Quotes svg */}
+				<div class={`${styles.doubleQuotes} flex justify-center`}>
+					<Icon iconName="quote" class={styles.quoteIcon} mode="filled" />
+					<Icon iconName="quote" class={styles.quoteIcon} mode="filled" />
+				</div>
+				{/* Founder message */}
+				<ContentFromCms wrapperClassName={styles.founderContentStyles}>
+					<p class="fade-in-up">
+						At Skorost United Academy, every child who steps onto the field isn’t just
+						a player—we see them as the future of the game, and more importantly, the
+						future of life itself. This academy is built on passion, discipline, and
+						an unbreakable spirit—the same values that have shaped my own journey in
+						football.
+					</p>
+					<p class="fade-in-up">
+						We don’t just teach football; we build character. We create an environment
+						where young athletes grow into strong, confident individuals—ready to take
+						on challenges, both on and off the field. Every drill, every match, every
+						lesson is designed not just to make better players, but to make better
+						people.
+					</p>
+					<p class="fade-in-up">
+						Here, you’re not just joining an academy—you’re becoming part of a legacy.
+						Welcome to Skorost United. Let’s write history together.
+					</p>
+				</ContentFromCms>
+				<div class={styles.founderSignWrapper}>
+					{/* Founder sign */}
+					<img src="/images/founder-sign.png" alt="sign" class="fade-in-up" />
+					{/* Founder Name */}
+					<p class={`${styles.founderName} font-weight-800 fade-in-up`}>
+						ABHAY AMIN
+					</p>
+					{/* About */}
+					<p class={`${styles.designation} font-weight-700 fade-in-up`}>
+						FOUNDER & OWNER
+					</p>
+				</div>
+			</div>
+		</div>
+		{/* Founder Image */}
+		<div class={`${styles.imageWrapper} fade-in-up`}>
+			<img
+				src="/images/abhay-amin-on-touchline.png"
+				alt="founder"
+				width="500"
+				height="500"
+				class={`${styles.founderImage} img-responsive full-width-image`}
+			/>
+		</div>
+	</div>
+</section>
