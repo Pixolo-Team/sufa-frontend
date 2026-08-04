@@ -1,0 +1,16 @@
+.notFoundErrorWrapper {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	.errorType {
+		font-size: var(--font-size-5xlarge);
+	}
+
+	.errorMessage {
+		font-size: var(--font-size-error);
+	}
+}

@@ -1,0 +1,168 @@
+$colors: (
+	primary: "Primary",
+	secondary: "Secondary",
+	tertiary: "Tertiary",
+	"neutral-light": "NeutralLight",
+	"neutral-dark": "NeutralDark",
+	success: "Success",
+	error: "Error",
+	warning: "Warning",
+);
+
+$sizes: (
+	small: "Small",
+	medium: "Medium",
+	large: "Large",
+);
+
+$shapes: (
+	default: "Default",
+	rounded: "Rounded",
+	squared: "Squared",
+);
+
+// Mixin to generate color styles for switch
+@mixin color-styles($color) {
+	// Default state
+	background-color: var(--color-switch-background-#{$color}-solid-default);
+
+	.switchHandle {
+		background-color: var(--color-switch-foreground-#{$color}-solid-default);
+	}
+
+	& + .switchLabel {
+		color: var(--color-switch-label-#{$color}-solid-default);
+	}
+
+	// Selected/Checked state
+	&.checked {
+		background-color: var(--color-switch-background-#{$color}-solid-selected);
+
+		.switchHandle {
+			background-color: var(--color-switch-foreground-#{$color}-solid-selected);
+		}
+
+		& + .switchLabel {
+			color: var(--color-switch-label-#{$color}-solid-selected);
+		}
+	}
+
+	// Hover states
+	&:hover {
+		// Hover on default state
+		background-color: var(
+			--color-switch-background-#{$color}-solid-hovered-default
+		);
+
+		.switchHandle {
+			background-color: var(
+				--color-switch-foreground-#{$color}-solid-hover-default
+			);
+		}
+
+		& + .switchLabel {
+			color: var(--color-switch-label-#{$color}-solid-hovered-default);
+		}
+
+		// Hover on selected state
+		&.checked {
+			background-color: var(
+				--color-switch-background-#{$color}-solid-hovered-selected
+			);
+
+			.switchHandle {
+				background-color: var(
+					--color-switch-foreground-#{$color}-solid-hover-selected
+				);
+			}
+
+			& + .switchLabel {
+				color: var(--color-switch-label-#{$color}-solid-hovered-selected);
+			}
+		}
+	}
+
+	// Disabled state
+	&.disabled {
+		background-color: var(--color-switch-background-#{$color}-solid-disabled);
+
+		.switchHandle {
+			background-color: var(--color-switch-foreground-#{$color}-solid-disabled);
+		}
+
+		& + .switchLabel {
+			color: var(--color-switch-label-#{$color}-solid-disabled);
+		}
+	}
+}
+
+// Mixin to generate size and shape styles for switch
+@mixin size-shape-styles($size, $shape) {
+	// Width and Height
+	width: var(--size-switch-width-#{$size}, 28px);
+	height: var(--size-switch-height-#{$size}, 14px);
+	// Border Radius
+	// TODO: Added 1px just to give proper border radius
+	border-radius: calc(var(--border-radius-switch-#{$shape}-#{$size}, 2px) + 1px);
+	.switchHandle {
+		// Thumb Size
+		width: var(--size-switch-thumb-#{$size}, 12px);
+		height: var(--size-switch-thumb-#{$size}, 12px);
+		// Thumb Border Radius
+		border-radius: var(--border-radius-switch-#{$shape}-#{$size}, 2px);
+	}
+	// Checked State Handle Position
+	&.checked .switchHandle {
+		left: calc(100% - (var(--size-switch-thumb-#{$size}, 12px) + 1px));
+	}
+}
+
+.switchContainer {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.switchLabel {
+	font-size: 0.875rem;
+	transition: color 0.2s ease-in-out;
+}
+
+.switch {
+	position: relative;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	background-color: var(--color-switch-background-primary-solid-default);
+	.switchHandle {
+		position: absolute;
+		top: 50%;
+		left: 1px;
+		background-color: var(--color-switch-foreground-primary-solid-default);
+		transform: translate(0, -50%);
+		transition: all 0.2s ease-in-out;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	}
+}
+
+// Generate color variant classes
+@each $color, $color-name in $colors {
+	.#{$color-name} {
+		@include color-styles($color);
+	}
+}
+
+// Generate size variant classes
+@each $size, $size-name in $sizes {
+	@each $shape, $shape-name in $shapes {
+		.#{$size-name}#{$shape-name} {
+			@include size-shape-styles($size, $shape);
+		}
+	}
+}
+
+// Utility classes
+.disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	pointer-events: none;
+}

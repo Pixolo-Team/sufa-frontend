@@ -1,0 +1,31 @@
+.coachesWrapper {
+	margin-top: 40px;
+	.cardWrap {
+		display: flex;
+		justify-content: center;
+		.cardWrapInner {
+			max-width: 330px;
+		}
+	}
+}
+
+// Mobile Phones
+@media only screen and (min-width: 600px) {
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+	.coachesWrapper {
+		.customArrows {
+			margin-top: 40px;
+		}
+	}
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
+}

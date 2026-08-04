@@ -1,0 +1,41 @@
+.hamburgerWrapper {
+	width: 24px;
+	.line {
+		background-color: var(--color-brand-primary-deep);
+		height: 2px;
+		width: 100%;
+		border-radius: var(--border-radius-medium);
+		transition: all 0.3s ease-in-out;
+		&:not(:last-child) {
+			margin-bottom: 10px;
+		}
+	}
+	&.showDropdown {
+		.line:first-child {
+			transform: translateY(6px) rotate(45deg);
+		}
+
+		.line:nth-child(2) {
+			transform: translateY(-6px) rotate(-45deg);
+		}
+	}
+}
+
+// Mobile Phones
+@media only screen and (min-width: 600px) {
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+	.hamburgerWrapper {
+		display: none;
+	}
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
+}

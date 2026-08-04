@@ -1,0 +1,68 @@
+---
+// STYLES //
+import styles from "./sticky-social.module.scss";
+
+// COMPONENTS //
+import Icon from "@/neevo/components/Icon.astro";
+import InlineSvg from "@/components/inline-svg/InlineSvg.astro";
+---
+
+<div>
+	<div
+		class={`${styles.stickySocialWrap} flex align-center`}
+		data-sticky-social
+		data-show-class={styles.show}
+	>
+		<div class={`${styles.socialIconsWrapper} flex align-center`}>
+			{/* Instagram */}
+			<a
+				href="https://www.instagram.com/skorostunitedfootballacademy/"
+				target="_blank"
+				rel="noreferrer"
+			>
+				<Icon iconName="instagram" class={styles.icon} />
+			</a>
+			<div class={styles.line}></div>
+			{/* Info */}
+			<div data-enquiry-trigger>
+				<Icon iconName="info" class={styles.icon} />
+			</div>
+		</div>
+		<a href="/">
+			<InlineSvg name="skorost" />
+		</a>
+		<div class={`${styles.socialIconsWrapper} flex align-center`}>
+			{/* Phone */}
+			<a href="tel: 9004453226" target="_self" rel="noreferrer">
+				<Icon iconName="phone" class={styles.icon} />
+			</a>
+			<div class={styles.line}></div>
+			{/* Whatsapp */}
+			<a
+				href="https://wa.me/919004453226?text=Hi! I would like to know more about your academy."
+				target="_blank"
+				rel="noreferrer"
+			>
+				<Icon iconName="whatsapp" class={styles.icon} />
+			</a>
+		</div>
+	</div>
+</div>
+
+<script>
+	const stickySocial = document.querySelector<HTMLElement>("[data-sticky-social]");
+	const showClass = stickySocial?.dataset.showClass ?? "";
+
+	/** Function to check scroll position */
+	const checkScrollPosition = () => {
+		stickySocial?.classList.toggle(
+			showClass,
+			window.scrollY > window.innerHeight
+		);
+	};
+
+	// Attach event listener
+	window.addEventListener("scroll", checkScrollPosition);
+	// Run once on mount to check initial scroll position
+	checkScrollPosition();
+</script>

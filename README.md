@@ -1,105 +1,124 @@
-# Project Name
+# Skorost United Football Academy
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+A single page marketing site built with [Astro](https://astro.build/). Every section is authored as
+its own `.astro` component and composed on the home page.
 
 ## Getting Started
 
 First, set up your environment variables:
 
-1. Contact Adarsh Anchan at adarsh.pixolo@gmail.com to obtain the necessary Firebase environment variables
-2. Create a `.env.local` file in the root directory
-3. Add the provided Firebase configuration variables to your `.env.local` file
+1. Create a `.env` file in the root directory
+2. Add the values listed under [Environment Variables](#environment-variables)
 
 Then, run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:4321](http://localhost:4321) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+| Command           | Description                                        |
+| ----------------- | -------------------------------------------------- |
+| `npm run dev`     | Start the dev server on port 4321                  |
+| `npm run build`   | Build the production output into `dist/`           |
+| `npm run preview` | Preview the production build locally               |
+| `npm run check`   | Type check every `.astro`, `.ts` and `.tsx` file   |
 
 ## Project Structure
 
 ```
 ├── public/
+│   ├── fonts/
 │   ├── icons/
-│   ├── images/
-│   ├── styles/
+│   └── images/
 ├── src/
-│   ├── app/
-│   ├── components/
-│   ├── contexts/
-│   └── infrastructure/
-│   └── services/
-│   └── types/
+│   ├── components/     # Shared UI components
+│   ├── enums/
+│   ├── layouts/        # BaseLayout — <head>, header, footer, smooth scroll
+│   ├── neevo/          # Reusable design system
+│   ├── pages/          # Routes: index, 404, setting, registrations/[taskId]
+│   ├── scripts/        # Client side behaviour shared across components
+│   ├── sections/home/  # One file per section of the one pager
+│   ├── services/
+│   ├── styles/         # Global SCSS, design tokens, page level modules
+│   ├── types/
 │   └── utils/
-├── .env.local
+├── .env
 ├── .env.example
-├── .eslintrc.json
-├── .gitignore
+├── astro.config.mjs
 ├── cspell.json
-├── firebase.ts
 ├── LICENSE
-├── next.config
 ├── tsconfig.json
 ├── package.json
 └── README.md
 ```
 
+### Sections
+
+The home page (`src/pages/index.astro`) composes the sections in order:
+
+`Banner` → `FoundersMessage` → `Established` → `Courses` → `ChildrenToChampions` →
+`GetFreeTrial` → `Graduates` → `Coaches` → `Faq` → `JoinUs` → `ContactUs`
+
+Each lives in `src/sections/home/` next to the SCSS module it uses.
+
+### Client side behaviour
+
+Sections are static HTML by default. Interactive behaviour is added with plain TypeScript in
+`<script>` blocks, backed by the helpers in `src/scripts/`:
+
+| Script                 | Responsibility                                                  |
+| ---------------------- | --------------------------------------------------------------- |
+| `smooth-scroll.ts`     | Boots Lenis smooth scrolling                                     |
+| `scroll-animations.ts` | ScrollOut reveals plus the scroll linked parallax transforms     |
+| `carousel.ts`          | Mounts Splide carousels and wires the custom arrows              |
+| `theme.ts`             | Reads, persists and applies the light/dark theme                 |
+
+The only React island is the enquiry form (`src/components/enquiry-form/EnquiryForm.tsx`),
+hydrated with `client:idle`.
+
+### Rendering modes
+
+Every route is prerendered to static HTML except `registrations/[taskId]`, which opts out with
+`export const prerender = false` because the task id is only known at request time. Deployment
+targets Vercel through the `@astrojs/vercel` adapter.
+
 ## Using the Neevo Folder
 
-The Neevo folder contains all core components and functionality that can be easily reused in other projects. To integrate it into your other Next.js project, simply copy the entire Neevo folder into your new project's root directory. Here’s how:
-
-### Folder Structure of Neevo
+The Neevo folder contains core components and functionality that can be reused in other projects.
+Copy the entire folder into the new project's `src/` directory.
 
 ```
 neevo/
-├── assets/
-│   └── icons/
 ├── components/
-├── contexts/
 ├── enums/
-├── infrastructure/
+├── services/
 ├── types/
-└── utils/ 
+└── utils/
 ```
+
+Components exist as `.astro` (for static usage) and, where interactivity inside a React island is
+needed, as `.tsx`.
 
 ## Environment Variables
 
-The following environment variables are required for Firebase configuration:
+Astro only exposes variables to the browser when they are prefixed with `PUBLIC_`.
 
 ```env
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_APP_ID=
+PUBLIC_PRIVYR_API_KEY=
 ```
 
 Contact adarsh.pixolo@gmail.com to obtain these values.
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [Astro Documentation](https://docs.astro.build) — learn about Astro features and APIs
+- [Astro Discord](https://astro.build/chat)
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Pushes to `development` trigger a Vercel deploy hook (see `.github/workflows/vercel-deploy.yml`).

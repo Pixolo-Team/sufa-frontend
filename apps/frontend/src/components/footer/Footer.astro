@@ -1,0 +1,46 @@
+---
+// STYLES //
+import styles from "./footer.module.scss";
+
+// COMPONENTS //
+import InlineSvg from "@/components/inline-svg/InlineSvg.astro";
+---
+
+<footer class={`${styles.footerWrap} bg-primary-deep`}>
+	<div class="container">
+		<div
+			class={`${styles.footerContentWrapper} flex flex-column align-center`}
+		>
+			<div
+				class={`${styles.footerTopWrap} flex align-center justify-between flex-wrap`}
+			>
+				{/* Logo */}
+				<InlineSvg name="skorost-school" />
+			</div>
+			<div class={styles.partnersSection}>
+				<p class={`${styles.partnersTitle} font-weight-500`}>
+					We wouldn’t exist if it wasn’t for the constant support from our partners
+				</p>
+				<div class="flex justify-between">
+					{/* Pixolo logo */}
+					<InlineSvg name="pixolo-logo" />
+					{/* Zizo logo */}
+					<InlineSvg name="zizo-logo" />
+				</div>
+			</div>
+			<div class={styles.fansSection}>
+				<p class={`${styles.fansTitle} font-weight-700`}>
+					Begin Y<span class={styles.highlightedText}>our</span> Journey
+				</p>
+			</div>
+		</div>
+		<div
+			class={`${styles.footerBottomSection}  flex justify-between text-center`}
+		>
+			<p>© Skorost United</p>
+			<a href="/">
+				<p>Privacy Policy</p>
+			</a>
+		</div>
+	</div>
+</footer>

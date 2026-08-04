@@ -1,0 +1,246 @@
+$colors: (
+	primary: "Primary",
+	secondary: "Secondary",
+	tertiary: "Tertiary",
+	neutral-light: "NeutralLight",
+	neutral-dark: "NeutralDark",
+	error: "Error",
+	warning: "Warning",
+	success: "Success",
+);
+
+$variants: (
+	solid: "Solid",
+	soft: "Soft",
+	outline: "Outline",
+	plain: "Plain",
+);
+
+$sizes: (
+	small: "Small",
+	medium: "Medium",
+	large: "Large",
+	xlarge: "Xlarge",
+	xxlarge: "Xxlarge",
+);
+
+$levels: (
+	inline: "Inline",
+	block: "Block",
+);
+
+$shapes: (
+	default: "Default",
+	rounded: "Rounded",
+	squared: "Squared",
+);
+
+$iconPosition: (
+	center: "Center",
+	end: "End",
+);
+
+// Define base styles for Neevo button.
+.neevoButton {
+	// Set default Button properties.
+	background: var(--color-button-background-primary-solid-default);
+	padding: var(--padding-button-medium-vertical)
+		var(--padding-button-medium-horizontal);
+	border-radius: var(--border-radius-button-medium-default);
+	color: var(--color-button-foreground-primary-solid);
+	border: var(--border-width-button-default) solid transparent;
+	transition: all 0.1s ease-in-out;
+	position: relative;
+
+	// Style apply on button hover state.
+	&:hover {
+		background-color: var(--color-button-background-primary-solid-hover);
+		transform: scale(1.05);
+		transform-origin: center;
+	}
+	// Style apply on button active state.
+	&:active {
+		transform: scale(0.95);
+	}
+
+	// Style Button content with flexbox layout.
+	.buttonContent {
+		display: flex;
+		gap: var(--gap-button-medium);
+		align-items: center;
+		justify-content: center;
+		// Define styles for left icon.
+		.buttonIconLeft,
+		.buttonIconRight {
+			width: var(--size-button-icon-medium);
+			height: var(--size-button-icon-medium);
+		}
+		// Define styles for Button text.
+		.buttonText {
+			font-size: var(--font-size-button-medium);
+		}
+	}
+}
+
+// Mixins to generate styles based on Variant and Color
+@mixin color-styles($variant, $color) {
+	background: var(--color-button-background-#{$color}-#{$variant}-default);
+
+	// Style Button content.
+	.buttonContent {
+		.buttonIconLeft,
+		.buttonIconRight {
+			path {
+				fill: var(--color-button-foreground-#{$color}-#{$variant}-default);
+			}
+		}
+		// Style Button text.
+		.buttonText {
+			color: var(--color-button-foreground-#{$color}-#{$variant}-default);
+		}
+	}
+
+	// Style apply on button hover state.
+	&:hover {
+		background-color: var(--color-button-background-#{$color}-#{$variant}-hover);
+
+		// Style Button content.
+		.buttonContent {
+			// Style left icon and right icon.
+			.buttonIconLeft,
+			.buttonIconRight {
+				path {
+					fill: var(--color-button-foreground-#{$color}-#{$variant}-hover);
+				}
+			}
+			// Style Button text.
+			.buttonText {
+				color: var(--color-button-foreground-#{$color}-#{$variant}-hover);
+			}
+		}
+	}
+
+	// Adjust styles for outline variant.
+	@if $variant == outline {
+		background: transparent;
+		border-color: var(--color-button-background-#{$color}-#{$variant}-default);
+		&:hover {
+			background: var(--color-button-background-#{$color}-#{$variant}-hover);
+		}
+	}
+
+	// Adjust styles for plain variant.
+	@if $variant == plain {
+		background: transparent;
+		border-color: transparent;
+		&:hover {
+			background: transparent;
+		}
+	}
+
+	// Style apply on button disabled state.
+	&.disabled {
+		background: var(--color-button-background-#{$color}-#{$variant}-disabled);
+		pointer-events: none;
+		.buttonIconLeft,
+		.buttonIconRight {
+			path {
+				fill: var(--color-button-foreground-#{$color}-#{$variant}-disabled);
+			}
+		}
+		// Style Button text.
+		.buttonText {
+			color: var(--color-button-foreground-#{$color}-#{$variant}-disabled);
+		}
+	}
+}
+
+// Mixin to generate styles based on Size Shape and Icon Position.
+@mixin button-styles($size, $shape, $iconPosition) {
+	padding: var(--padding-button-#{$size}-vertical)
+		var(--padding-button-#{$size}-horizontal);
+	border-radius: var(--border-radius-button-#{$size}-#{$shape});
+
+	// Style Button content.
+	.buttonContent {
+		gap: var(--gap-button-#{$size});
+		// Style left icon.
+		.buttonIconLeft,
+		.buttonIconRight {
+			height: var(--size-button-icon-#{$size});
+			width: var(--size-button-icon-#{$size});
+			position: relative;
+			@if $iconPosition == end {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		}
+		.buttonIconLeft {
+			@if $iconPosition == end {
+				left: var(--padding-button-#{$size}-horizontal);
+			}
+		}
+		.buttonIconRight {
+			font-size: var(--font-size-button-#{$size});
+			@if $iconPosition == end {
+				right: var(--padding-button-#{$size}-horizontal);
+			}
+		}
+		// Style Button text.
+		.buttonText {
+			font-size: var(--font-size-button-#{$size});
+			@if $iconPosition == end {
+				padding: 0 calc(var(--size-button-icon-#{$size}) * 2);
+			}
+		}
+	}
+}
+
+// Mixin to generate styles based on Button level (for eg: inline, block etc.)
+@mixin level-styles($level) {
+	// Adjust styles for block level button.
+	@if $level == block {
+		display: block;
+		width: 100%;
+	}
+}
+
+// Generate classes for each color variant combination.
+// For example - SolidPrimary, SoftSecondary, OutlinePrimary, PlainPrimary
+@each $variant, $variant-name in $variants {
+	@each $color, $color-name in $colors {
+		.#{$variant-name}#{$color-name} {
+			@include color-styles($variant, $color);
+		}
+	}
+}
+
+// Generate classes for each size, shape, and icon position combination.
+// For example - SmallRoundedCenter, MediumSquareEnd, LargeDefaultCenter
+@each $size, $size-name in $sizes {
+	@each $shape, $shape-name in $shapes {
+		@each $iconPosition, $iconPosition-name in $iconPosition {
+			.#{$size-name}#{$shape-name}#{$iconPosition-name} {
+				@include button-styles($size, $shape, $iconPosition);
+			}
+		}
+	}
+}
+
+// Generate classes for each level.
+// For example - Inline, Block
+@each $level, $level-name in $levels {
+	.#{$level-name} {
+		@include level-styles($level);
+	}
+}
+
+// Extra Classes
+.horizontalSpaceNone {
+	padding-left: 0;
+	padding-right: 0;
+	.buttonIconLeft {
+		left: 0 !important;
+	}
+}

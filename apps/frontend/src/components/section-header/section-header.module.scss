@@ -1,0 +1,73 @@
+.wrapper {
+	gap: 0;
+	// Parallax styles
+	&:global(.section-header-parallax) {
+		.highlightedText {
+			transform: translateY(calc((var(--viewport-y) * 50%) - 50%));
+		}
+	}
+}
+
+.fadedText {
+	color: var(--color-brand-primary-deep);
+	font-size: var(--color-brand-font-size-7xlarge);
+	opacity: 0.1;
+	width: 100%;
+	text-transform: uppercase;
+}
+
+.highlightedText {
+	color: var(--color-brand-primary-deep);
+	font-size: var(--color-brand-font-size-large);
+	margin-top: -36px;
+}
+
+.leftImageWrapper {
+	width: 60px;
+}
+
+// Mobile Phones
+@media only screen and (min-width: 600px) {
+	.fadedText {
+		font-size: 60px; // Todo: Add tokens here
+	}
+
+	.highlightedText {
+		font-size: var(--color-brand-font-size-5xlarge);
+	}
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+	.fadedText {
+		font-size: var(--color-brand-font-size-8xlarge);
+	}
+
+	.highlightedText {
+		font-size: var(--color-brand-font-size-6xlarge);
+	}
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+	.wrapper {
+		gap: 20px;
+	}
+
+	.fadedText {
+		font-size: 70px; // Todo: Add tokens here
+	}
+
+	.highlightedText {
+		font-size: var(--color-brand-font-size-8xlarge);
+		margin-top: -50px;
+	}
+
+	.leftImageWrapper {
+		width: 100px;
+	}
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
+}

@@ -1,0 +1,16 @@
+// For Fade In Up animations
+.fade-in-up {
+	&[data-scroll] {
+		transition: all 0.4s ease-out;
+	}
+
+	&[data-scroll="in"] {
+		transform: translateY(0);
+		opacity: 1;
+	}
+
+	&[data-scroll="out"] {
+		transform: translateY(50px);
+		opacity: 0.8;
+	}
+}

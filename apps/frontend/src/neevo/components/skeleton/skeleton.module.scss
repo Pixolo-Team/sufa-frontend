@@ -1,0 +1,19 @@
+/* components/Skeleton.module.scss */
+.skeleton {
+	background-color: var(--color-skeleton-default);
+	animation: skeleton-loading 1.5s infinite linear;
+	display: inline-block;
+}
+
+/* Define the skeleton loading animation */
+@keyframes skeleton-loading {
+	0% {
+		background-color: var(--color-skeleton-default);
+	}
+	50% {
+		background-color: var(--color-skeleton-subtle);
+	}
+	100% {
+		background-color: var(--color-skeleton-default);
+	}
+}

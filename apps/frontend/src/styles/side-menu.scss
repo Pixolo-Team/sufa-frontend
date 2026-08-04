@@ -1,0 +1,431 @@
+.content {
+	flex: 1;
+	transition: all 0.4s ease-in-out;
+	padding-left: 318px;
+}
+.content-active {
+	padding-left: 108px;
+}
+
+// -------------------- SIDE MENU MIXIN--------------------
+// Created this mixins so that same css can be used in two place
+// 1 for open Side-menu, 2 for hovered Side-menu
+@mixin side-menu-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 300px;
+	height: calc(100% - 12px);
+	background-color: var(--color-side-menu-background);
+	padding: var(--padding-side-menu-vertical) var(--padding-side-menu-horizontal);
+	border-radius: var(--border-radius-large);
+	transition: all 0.3s ease-in-out;
+	position: fixed;
+	z-index: 100;
+	top: 6px;
+	left: 6px;
+}
+
+@mixin menu-icon {
+	width: var(--size-side-menu-item-icon-level-1-icon);
+	height: var(--size-side-menu-item-icon-level-1-icon);
+	min-width: var(--size-side-menu-item-icon-level-1-icon);
+	min-height: var(--size-side-menu-item-icon-level-1-icon);
+	path {
+		fill: var(--color-side-menu-item-level-1-foreground-default);
+	}
+}
+
+@mixin menu-wrapper {
+	margin-top: calc(var(--margin-large) * 2);
+	height: 70vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-xxlarge);
+	&::-webkit-scrollbar {
+		width: 2px;
+	}
+	&::-webkit-scrollbar-track {
+		background: var(--color-brand-primary-regular);
+	}
+}
+
+@mixin menu-items-wrapper {
+	margin-top: var(--margin-small);
+}
+
+@mixin menu-title {
+	font-weight: var(--font-weight-side-menu-item-label);
+	color: var(--color-side-menu-foreground);
+	font-size: var(--font-size-side-menu-item-label);
+	margin-bottom: var(--margin-large);
+	opacity: var(--opacity-100);
+	transform-origin: left;
+	transition: opacity 0.3s ease-in-out;
+	position: relative;
+	text-transform: uppercase;
+	&::before {
+		content: "";
+		position: absolute;
+		width: 46px;
+		height: var(--border-width-side-menu-item-label);
+		background-color: var(--border-color-side-menu-item-label);
+		bottom: -6px;
+	}
+}
+
+@mixin menu-item-text {
+	font-weight: var(--font-weight-side-menu-item-title);
+	color: var(--color-side-menu-item-level-1-foreground-default);
+	opacity: var(--opacity-100);
+	transform-origin: left;
+	transition: opacity 0.3s ease-in-out;
+	transform: scaleX(1);
+	white-space: nowrap;
+	font-size: var(--font-size-side-menu-item-title);
+	font-family: var(--font-family-primary);
+}
+
+@mixin logoutText {
+	transform: scaleX(1);
+}
+
+@mixin menuItem {
+	cursor: pointer;
+	background-color: transparent;
+}
+
+@mixin active {
+	background-color: var(--color-side-menu-item-level-1-background-active);
+	border-radius: var(--border-radius-side-menu-item-level-1);
+}
+
+@mixin iconWrapper {
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--color-primary-shade);
+	border-radius: 10px;
+}
+
+@mixin link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--padding-side-menu-item-vertical)
+		var(--padding-side-menu-item-horizontal);
+}
+
+@mixin menu-right-content {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+@mixin down-arrow-icon {
+	width: 12px;
+	height: 12px;
+	transform: rotate(270deg);
+	transition: all 0.3s ease-in-out;
+	path {
+		fill: var(--color-side-menu-item-level-1-foreground-default);
+	}
+}
+
+@mixin down-arrow-icon-rotate {
+	transform: rotate(90deg);
+}
+
+@mixin subMenuItems {
+	padding-left: var(--padding-xxlarge);
+	overflow: hidden;
+	transition: all 0.3s ease-in-out;
+	margin-top: var(--margin-regular);
+}
+
+@mixin subMenu {
+	padding: var(--padding-side-menu-item-vertical)
+		var(--padding-side-menu-item-horizontal);
+	cursor: pointer;
+	margin-bottom: var(--margin-small);
+}
+
+@mixin subMenuActive {
+	background-color: var(--color-side-menu-item-level-2-background-active);
+	border-radius: var(--border-radius-side-menu-item-level-2);
+}
+
+@mixin subMenuWrap {
+	display: flex;
+	align-items: center;
+	gap: var(--gap-medium);
+}
+
+// Side Menu Default
+.vertical-side-menu {
+	#side-menu {
+		position: absolute;
+		z-index: 100;
+		.side-menu-container {
+			@include side-menu-container;
+		}
+
+		.menu-icon {
+			@include menu-icon;
+		}
+		.menu-wrapper {
+			@include menu-wrapper;
+		}
+		.menu-items-wrapper {
+			@include menu-items-wrapper;
+		}
+		.menu-title {
+			@include menu-title;
+		}
+		.menu-item-text {
+			@include menu-item-text;
+		}
+		.logoutText {
+			@include logoutText;
+		}
+		.menuItem {
+			@include menuItem;
+		}
+		.active {
+			@include active;
+		}
+		.iconWrapper {
+			@include iconWrapper;
+		}
+		.link {
+			@include link;
+		}
+		.menu-right-content {
+			@include menu-right-content;
+		}
+		.down-arrow-icon {
+			@include down-arrow-icon;
+		}
+		.down-arrow-icon-rotate {
+			@include down-arrow-icon-rotate;
+		}
+		.subMenuItems {
+			@include subMenuItems;
+		}
+		.subMenu {
+			@include subMenu;
+		}
+		.sub-menu-item-container {
+			display: flex;
+			flex-direction: column;
+			margin-top: var(--margin-small);
+		}
+		.subMenuActive {
+			@include subMenuActive;
+			svg {
+				path {
+					fill: var(--color-side-menu-item-level-2-foreground-active);
+				}
+			}
+			.menu-item-text {
+				color: var(--color-side-menu-item-level-2-foreground-active);
+			}
+		}
+		.subMenuWrap {
+			@include subMenuWrap;
+		}
+		.menu-toggle-arrow-button {
+			position: absolute;
+			top: 40px;
+			right: -12px;
+			width: 32px;
+			height: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: var(--color-brand-primary-regular);
+			border-radius: 50%;
+			cursor: pointer;
+			border: 3px solid var(--color-side-menu-foreground);
+		}
+		.back-arrow-icon {
+			height: 12px;
+			width: 12px;
+			transition: all 0.3s ease-in-out;
+			transform-origin: center;
+			transform: rotate(180deg);
+			path {
+				fill: var(--color-side-menu-foreground);
+			}
+		}
+		.back-arrow-icon-active {
+			transform: rotate(0deg);
+			transition: all 0.3s ease-in-out;
+		}
+	}
+}
+// Side Menu Collapsed
+.side-menu-collapsed {
+	#side-menu {
+		.side-menu-container {
+			width: 96px;
+		}
+		.sub-menu-item-container {
+			align-items: center;
+		}
+
+		.menu-item-text {
+			transform: scaleX(0);
+			width: 0;
+			opacity: 0;
+			white-space: nowrap;
+		}
+		.menuItem {
+			width: 50px;
+			cursor: pointer;
+		}
+		.subMenuItems {
+			display: none;
+			width: 100%;
+		}
+		.menu-right-content {
+			gap: 0;
+		}
+		.down-arrow-icon {
+			display: none;
+		}
+		.menu-title {
+			transform: scaleX(0);
+			width: 0;
+			opacity: 0;
+			position: relative;
+			white-space: nowrap;
+		}
+		.menu-items-wrapper {
+			position: relative;
+			&::before {
+				content: "";
+				position: absolute;
+				width: 46px;
+				height: var(--border-width-side-menu-item-label);
+				background-color: var(--border-color-side-menu-item-label);
+			}
+			&:nth-child(1)::before {
+				height: 0;
+			}
+		}
+		.logoutText {
+			transform: scaleX(0);
+			width: 0;
+		}
+		.link {
+			gap: 0;
+		}
+		.menu-toggle-arrow-button {
+			display: none;
+		}
+	}
+}
+// Side Menu Hovered
+.side-menu-hover {
+	#side-menu {
+		.side-menu-container {
+			@include side-menu-container;
+		}
+		.side-menu {
+			width: 100%;
+		}
+
+		.menuItem {
+			// @include menuItem;
+			width: 100%;
+			display: block;
+		}
+		.menu-title {
+			width: auto;
+			opacity: 1;
+			transform: scaleX(1);
+		}
+		.menu-items-wrapper {
+			&::before {
+				display: none;
+			}
+		}
+		.menu-item-text {
+			@include menu-item-text;
+		}
+		.menu-right-content {
+			@include menu-right-content;
+		}
+		.link {
+			@include link;
+		}
+		.logoutText {
+			transform: scaleX(1);
+			width: 100%;
+		}
+		.menu-toggle-arrow-button {
+			display: flex;
+		}
+		.subMenuItems {
+			display: block;
+		}
+		.down-arrow-icon {
+			display: block;
+		}
+	}
+}
+
+// Small laptops
+@media only screen and (max-width: 1500px) {
+}
+
+//   Ipad air
+@media only screen and (max-width: 992px) {
+	.content {
+		padding-left: 0;
+	}
+	.vertical-side-menu {
+		#side-menu {
+			.side-menu-container {
+				transform: translateX(-100%);
+				height: 100%;
+				top: 0;
+				left: 0;
+			}
+			.overlayActive {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 100%;
+				background-color: rgba(0, 0, 0, 0.5);
+				z-index: 98;
+			}
+			.menu-toggle-arrow-button {
+				display: none;
+			}
+		}
+	}
+	.sideMenuActive {
+		#side-menu {
+			.side-menu-container {
+				transform: translateX(0);
+			}
+			.overlayActive {
+				display: block;
+			}
+		}
+	}
+	.side-menu-collapsed {
+		#side-menu {
+			.side-menu-container {
+				display: none;
+			}
+		}
+	}
+}

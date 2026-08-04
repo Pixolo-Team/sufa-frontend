@@ -1,0 +1,165 @@
+// Width's for Table Rows
+$sizes: 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16, 18, 20, 22, 25, 26, 28, 30, 34, 35,
+	40, 45, 48, 50;
+
+@each $size in $sizes {
+	.tw-#{$size} {
+		width: #{$size + "%"};
+		max-width: #{$size + "%"};
+		flex-basis: #{$size + "%"};
+	}
+}
+
+.table-container {
+	max-height: 60vh;
+	overflow-y: auto;
+}
+
+.table-wrap {
+	width: 100%;
+	.table-head {
+		height: 48px;
+		position: sticky;
+		top: 0;
+		z-index: 2;
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: var(--color-table-head-background);
+			z-index: -1;
+			border-radius: var(--border-radius-table) var(--border-radius-table) 0 0;
+		}
+		.header-title {
+			font-size: var(--font-size-table-head-medium);
+			font-weight: var(--font-weight-bold);
+			color: var(--color-table-head-foreground);
+		}
+	}
+	.cell {
+		padding: calc(var(--padding-regular) + var(--padding-xsmall));
+		&:first-of-type {
+			padding-left: var(--padding-xxlarge) !important;
+		}
+		&:last-of-type {
+			padding-right: var(--padding-xxlarge) !important;
+		}
+	}
+	.table-body-row {
+		cursor: pointer;
+		position: relative;
+		overflow: hidden;
+		&:nth-of-type(odd) {
+			background-color: var(--color-table-row-odd-background-default);
+			&:hover {
+				background-color: var(--color-table-row-odd-background-hover);
+			}
+		}
+		&:nth-of-type(even) {
+			background-color: var(--color-table-row-even-background-default);
+			&:hover {
+				background-color: var(--color-table-row-even-background-hover);
+			}
+		}
+		&::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 1px;
+			background-color: var(--border-color-table-row);
+		}
+	}
+	&.small {
+		.table-head {
+			.header-title {
+				font-size: var(--font-size-table-head-small);
+			}
+		}
+		.cell {
+			padding: var(--padding-regular);
+		}
+	}
+	&.large {
+		.table-head {
+			.header-title {
+				font-size: var(--font-size-table-head-large);
+			}
+		}
+		.cell {
+			padding: var(--padding-medium);
+		}
+	}
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+// For Images
+.circle-image {
+	border-radius: 9999px;
+	object-fit: cover;
+}
+.curved-image {
+	border-radius: var(--border-radius-large);
+	object-fit: cover;
+}
+
+// For Text
+.text-regular {
+	font-size: var(--font-size-regular);
+	font-weight: var(--font-weight-medium);
+}
+.text-small {
+	font-size: var(--font-size-small);
+	font-weight: var(--font-weight-regular);
+	color: var(--color-text-bright);
+	margin-top: var(--margin-xsmall);
+}
+
+.no-data-wrap {
+	&:hover {
+		background-color: var(--color-table-row-odd-background-default) !important;
+	}
+	.no-data {
+		text-align: center;
+		padding: var(--padding-regular);
+		height: 200px;
+		font-size: var(--font-size-medium);
+		color: var(--color-text-regular);
+		font-weight: var(--font-weight-medium);
+	}
+}
+
+// Small laptops (1366 x 768)
+@media only screen and (max-width: 1500px) {
+}
+
+// Ipad air
+@media only screen and (max-width: 992px) {
+}
+
+// Ipad Mini
+@media only screen and (max-width: 768px) {
+}
+
+// Mobile Phones
+@media only screen and (max-width: 600px) {
+	.table-container {
+		width: 100%;
+		.table-wrap {
+			width: 200%;
+			overflow-x: auto;
+		}
+	}
+}
+
+// Small mobiles (iphone 5)
+@media only screen and (max-width: 350px) {
+}

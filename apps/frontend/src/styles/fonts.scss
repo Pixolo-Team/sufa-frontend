@@ -1,0 +1,55 @@
+// Kippax Modern — self hosted brand font (previously loaded through `next/font/local`)
+@font-face {
+	font-family: "Kippax Modern";
+	src: url("/fonts/kippax-modern/Kippax-Modern-Black.woff") format("woff");
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Kippax Modern";
+	src: url("/fonts/kippax-modern/Kippax-Modern-Extra-Bold.woff") format("woff");
+	font-weight: 800;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Kippax Modern";
+	src: url("/fonts/kippax-modern/Kippax-Modern-Bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Kippax Modern";
+	src: url("/fonts/kippax-modern/Kippax-Modern-Medium.woff") format("woff");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Kippax Modern";
+	src: url("/fonts/kippax-modern/Kippax-Modern-Regular.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Kippax Modern";
+	src: url("/fonts/kippax-modern/Kippax-Modern-Thin.woff") format("woff");
+	font-weight: 100;
+	font-style: normal;
+	font-display: swap;
+}
+
+// Font family variables — these were injected by `next/font` on the <body> before
+:root {
+	--font-family-primary: "Kippax Modern", ui-sans-serif, system-ui, sans-serif;
+	--font-family-secondary: "Montserrat Variable", ui-sans-serif, system-ui,
+		sans-serif;
+}

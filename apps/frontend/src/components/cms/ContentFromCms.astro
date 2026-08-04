@@ -1,0 +1,15 @@
+---
+// STYLES //
+import styles from "./content-from-cms.module.scss";
+
+interface Props {
+	wrapperClassName?: string;
+	overrideDefaultStyles?: boolean;
+}
+
+const { wrapperClassName = "", overrideDefaultStyles = true } = Astro.props;
+---
+
+<div class={`${!overrideDefaultStyles ? styles.cmsStyles : ""} ${wrapperClassName}`}>
+	<slot />
+</div>

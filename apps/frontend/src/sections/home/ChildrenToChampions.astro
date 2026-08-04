@@ -1,0 +1,69 @@
+---
+// STYLES //
+import styles from "./children-to-champions/children-to-champion.module.scss";
+
+// COMPONENTS //
+import ChildrenChampionItem from "@/components/children-champion/ChildrenChampionItem.astro";
+---
+
+<section
+	class={`${styles.childrenToChampionsWrapper} childrenToChampionsWrapper section-spacing`}
+>
+	{/* Scrolling Texts Wrapper */}
+	<div class={styles.scrollingTextsContainer} data-scrolling-texts>
+		{/* Top Scrolling Text */}
+		<div class={`${styles.topScrollingTexts} bg-primary-regular`}>
+			<div
+				data-parallax="x"
+				data-from="100vw"
+				data-to="0vw"
+				data-parallax-target="[data-scrolling-texts]"
+			>
+				<div
+					class={styles.innerTextWrap}
+					data-parallax="x"
+					data-from="-100%"
+					data-to="0%"
+					data-parallax-target="[data-scrolling-texts]"
+				>
+					<div class={styles.scrollingText}>
+						<ChildrenChampionItem color="primary" />
+					</div>
+					<div class={styles.scrollingText}>
+						<ChildrenChampionItem color="primary" />
+					</div>
+					<div class={styles.scrollingText}>
+						<ChildrenChampionItem color="primary" />
+					</div>
+				</div>
+			</div>
+		</div>
+		{/* Bottom Scrolling Text */}
+		<div class={styles.bottomScrollingTexts}>
+			<div
+				data-parallax="x"
+				data-from="0vw"
+				data-to="100vw"
+				data-parallax-target="[data-scrolling-texts]"
+			>
+				<div
+					class={styles.innerTextWrap}
+					data-parallax="x"
+					data-from="0%"
+					data-to="-100%"
+					data-parallax-target="[data-scrolling-texts]"
+				>
+					<div class={styles.scrollingText}>
+						<ChildrenChampionItem color="default" />
+					</div>
+					<div class={styles.scrollingText}>
+						<ChildrenChampionItem color="default" />
+					</div>
+					<div class={styles.scrollingText}>
+						<ChildrenChampionItem color="default" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

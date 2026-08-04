@@ -1,0 +1,54 @@
+.childrenToChampionsWrapper {
+	padding: 10vmin 0;
+}
+
+.innerTextWrap {
+	display: flex;
+	white-space: nowrap;
+	width: max-content;
+	will-change: transform;
+}
+
+.scrollingTextsContainer {
+	position: relative;
+	height: 200px;
+}
+
+.topScrollingTexts {
+	transform: translateY(0%) rotate(5deg) scale(1.1); // Rotates slightly
+	position: absolute;
+	top: 0;
+	width: 100vw;
+}
+
+.bottomScrollingTexts {
+	background-color: var(--color-brand-neutral-light-100);
+	transform: translateY(0%) rotate(-5deg) scale(1.1); // Opposite rotation
+	position: absolute;
+	top: 0;
+	width: 100vw;
+	right: 0;
+}
+
+.scrollingText {
+	padding: var(--padding-regular);
+}
+
+// Mobile Phones
+@media only screen and (min-width: 600px) {
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+}
+
+// Ipad air
+@media only screen and (min-width: 992px) {
+	.childrenToChampionsWrapper {
+		padding: 25vmin 0;
+	}
+}
+
+// Small laptops
+@media only screen and (min-width: 1500px) {
+}

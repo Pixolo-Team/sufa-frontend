@@ -1,0 +1,37 @@
+---
+// STYLES //
+import styles from "./accordian.module.scss";
+
+// COMPONENTS //
+import Icon from "@/neevo/components/Icon.astro";
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<div class={styles.accordianItem} data-accordian data-active-class={styles.active}>
+	<div
+		class={`${styles.questionWrapper} flex align-center justify-between`}
+		data-accordian-toggle
+	>
+		{/* Title */}
+		<p class={`${styles.title} font-weight-500`}>{title}</p>
+		<button class={`${styles.iconWrapper} flex align-center justify-center`}>
+			{/* Icon — the closed (plus) and open (minus) states are swapped with CSS */}
+			<span data-accordian-icon="closed">
+				<Icon iconName="plus" class={styles.icon} mode="outline" />
+			</span>
+			<span data-accordian-icon="open" hidden>
+				<Icon iconName="minus" class={styles.icon} mode="outline" />
+			</span>
+		</button>
+	</div>
+	<div class={styles.answerWrapper} style="height: 0px;" data-accordian-answer>
+		{/* Description */}
+		<p class={`${styles.description} font-weight-400`}>{description}</p>
+	</div>
+</div>
