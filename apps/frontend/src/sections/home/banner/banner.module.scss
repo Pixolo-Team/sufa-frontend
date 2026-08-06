@@ -25,7 +25,7 @@
 		iframe,
 		video {
 			width: 100%;
-			aspect-ratio: 16/9;
+			height: 100%;
 			object-fit: cover;
 			display: block;
 		}
@@ -37,12 +37,8 @@
 			left: 0;
 			width: 100%;
 			height: 100%;
-			background: linear-gradient(
-				180deg,
-				rgba(1, 100, 162, 0.05) 0%,
-				rgba(15, 149, 99, 0) 45%,
-				var(--color-brand-primary-deep, #0f9563) 92%
-			);
+			// Even brand tint across the whole video, top to bottom.
+			background: rgba(15, 149, 99, 0.55);
 		}
 	}
 

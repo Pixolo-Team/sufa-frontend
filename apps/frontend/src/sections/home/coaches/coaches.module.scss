@@ -5,6 +5,7 @@
 		justify-content: center;
 		.cardWrapInner {
 			max-width: 330px;
+			width: 100%;
 		}
 	}
 }
@@ -24,6 +25,15 @@
 
 // Ipad air
 @media only screen and (min-width: 992px) {
+	.coachesWrapper {
+		.cardWrap {
+			.cardWrapInner {
+				// Wider cards on desktop so they are shorter and the whole
+				// section fits the viewport better.
+				max-width: 400px;
+			}
+		}
+	}
 }
 
 // Small laptops
