@@ -17,6 +17,7 @@ const coachesData = [
 			"He provides strategic leadership across the club's football programme, overseeing the Senior Team while mentoring the coaching staff to deliver a consistent, player-centred development pathway.",
 		designation: "Head Coach & Head of Coaches",
 		coachImageSrc: "/images/coaches/hp.jpg",
+		imagePosition: "center 24%",
 		socialMedia: { instagram: "https://www.instagram.com/harsh.goalkeepercoach/" },
 		alt: "Coach Harsh Patil at the best football academy in Ghatkopar",
 	},
@@ -28,6 +29,7 @@ const coachesData = [
 			"He brings a modern coaching approach to both the Senior Team and U16s, using his tactical insight, technical knowledge and commitment to continuous learning to develop players on and off the pitch.",
 		designation: "Assistant & Youth Coach",
 		coachImageSrc: "/images/coaches/vs.jpg",
+		imagePosition: "center 24%",
 		alt: "Coach Vipul Shinde at the best football academy in Ghatkopar",
 	},
 	{
@@ -37,6 +39,8 @@ const coachesData = [
 			"An energetic grassroots and youth coach who combines excellent communication with a dynamic coaching style to create engaging and impactful learning environments.",
 		designation: "Grassroot & Youth Coach",
 		coachImageSrc: "/images/coaches/jn.jpg",
+		imagePosition: "center 24%",
+		socialMedia: { instagram: "https://www.instagram.com/jaydeepnadkarni_5/" },
 		alt: "Coach Jaydeep Nadkarni at the best football academy in Ghatkopar",
 	},
 	{
@@ -46,6 +50,7 @@ const coachesData = [
 			"Specialising in grassroots football, he has a keen eye for player development, consistently bringing out the best in every child through thoughtful coaching and individual attention.",
 		designation: "Grassroot Coach",
 		coachImageSrc: "/images/coaches/sp.jpg",
+		imagePosition: "center 24%",
 		alt: "Coach Siddharth Pisal at the best football academy in Ghatkopar",
 	},
 	{
@@ -55,6 +60,7 @@ const coachesData = [
 			"An emerging grassroots coach, recognised for his keen observation skills and his natural ability to build strong connections with young players, creating a positive environment for learning and development.",
 		designation: "Grassroot Coach",
 		coachImageSrc: "/images/coaches/sr.jpg",
+		imagePosition: "center 24%",
 		alt: "Coach Shailesh Raul at the best football academy in Ghatkopar",
 	},
 	{
@@ -65,6 +71,9 @@ const coachesData = [
 			"Sarthak, who is also a player of the senior team at Skorost United, manages the Academy and runs the operations. He makes sure everything is handled smoothly and timely.",
 		designation: "Academy Manager",
 		coachImageSrc: "/images/coaches/sb.jpg",
+		imagePosition: "center 24%",
+		imageScale: 1.38,
+		socialMedia: { instagram: "https://www.instagram.com/_sarthakbhosle/" },
 		alt: "Sarthak Bhosle, Academy Manager at Skorost United",
 	},
 	{
@@ -74,6 +83,8 @@ const coachesData = [
 			"Roshni is the backbone of our operations team, responsible for the registration processes, inventory and all the equipment we have in store at Skorost United.",
 		designation: "Backend Operations",
 		coachImageSrc: "/images/coaches/rp.jpg",
+		imagePosition: "center 24%",
+		imageScale: 1.38,
 		alt: "Roshni Pandey, Backend Operations at Skorost United",
 	},
 	{
@@ -83,6 +94,9 @@ const coachesData = [
 			"Jyoti runs the whole Academy as a unit, keeping everything tightly knit together - the business side, the finance side and the education side. She is a pillar on which the Academy stands.",
 		designation: "Head of Youth Academy",
 		coachImageSrc: "/images/coaches/jp.jpg",
+		imagePosition: "center 24%",
+		imageScale: 1.32,
+		socialMedia: { instagram: "https://www.instagram.com/mysourcecode/" },
 		alt: "Jyoti Pandey, Head of Youth Academy at Skorost United",
 	},
 ];
@@ -108,6 +122,8 @@ const coachesData = [
 											description={coach.description}
 											designation={coach.designation}
 											coachImageSrc={coach.coachImageSrc}
+											imagePosition={coach.imagePosition}
+											imageScale={coach.imageScale}
 											socialMedia={coach.socialMedia}
 											altTextForImage={coach.alt}
 										/>

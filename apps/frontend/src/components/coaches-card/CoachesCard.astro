@@ -16,6 +16,8 @@ interface Props {
 	description: string;
 	designation: string;
 	coachImageSrc: string;
+	imagePosition?: string;
+	imageScale?: number;
 	socialMedia?: {
 		instagram?: string;
 	};
@@ -29,6 +31,8 @@ const {
 	description = "",
 	designation = "",
 	coachImageSrc = "",
+	imagePosition = "center 22%",
+	imageScale = 1.22,
 	socialMedia = {},
 	altTextForImage = "",
 } = Astro.props;
@@ -51,6 +55,7 @@ const {
 					width="250"
 					height="250"
 					class="img-responsive full-width-img"
+					style={`object-position: ${imagePosition}; transform-origin: ${imagePosition}; transform: scale(${imageScale});`}
 					loading="lazy"
 					decoding="async"
 				/>
