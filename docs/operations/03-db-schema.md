@@ -1,34 +1,17 @@
 # 03 - Database Schema
 
-> 🟡 **Partial.** Shape below reflects confirmed decisions. Still blocked on the
-> per-center price/address/timing values and the 6-month plan scope.
+> ⛔ **Superseded.** This file held an early sketch that no longer matches the
+> real model. It described `timings` on the center, a global `per_session_rate`
+> in config, and slug ids - all three are wrong.
+>
+> **The database structure lives in [DATABASE.md](DATABASE.md).**
 
-## Confirmed decisions affecting the schema
+What changed, and why:
 
-- Prices **differ per center** → keep a per-center price table.
-- Payment UPI is **global**, not per-center → no per-center payment table; a
-  single global setting instead.
-- **No storing** of quotes/QR for now → **no `fee_quote` table.** Calculation is
-  ephemeral in the browser.
-- The fee message needs each center's **address + timings** → add those to the
-  center row.
-
-## Entities
-
-- **center** - `id`, `name`, `slug`, `address`, `timings`, `active`.
-  One row per academy center. `address` + `timings` feed the fee message.
-- **plan** - `id`, `name` (e.g. "1-Month 3-Day", "6-Month", "1-Month 2-Day"),
-  `duration_months`, `days_per_week`, `sessions_per_month`, `active`.
-- **center_plan_price** - `center_id`, `plan_id`, `price`. Per-center pricing so
-  the same plan can cost differently by center. Composite PK `(center_id, plan_id)`.
-- **global config** (single row or key/value) - `upi_id`, `payee_name`,
-  `per_session_rate` (₹285). Used by both the global static QR and the dynamic
-  amount QR. Optionally holds `access_pin` if the PIN moves server-side later.
-
-## Not included (deferred)
-
-- `fee_quote` / history - deferred (open question 8 = ephemeral for now).
-- per-center UPI - not needed (global UPI).
-
-Final columns, types, indexes, and seed data land here once the per-center table
-values (Q6) and 6-month scope (Q2) arrive.
+| Early sketch (wrong) | Actual model ([DATABASE.md](DATABASE.md)) |
+| --- | --- |
+| `timings` on the center | Timings live on `batches` - one center runs several |
+| Session days assumed Mon/Wed/Fri | `batch_days` per batch - days vary by center |
+| `per_session_rate` in global config | `per_session_price` on `center_plans`, per center plan |
+| Slug / integer ids | `UUID` primary keys (`gen_random_uuid()`) |
+| No coaches | `coaches` table, used as the fee-structure sender |

@@ -1,0 +1,48 @@
+---
+// STYLES //
+import "@fontsource-variable/montserrat";
+import "@/styles/globals.scss";
+
+// TYPES //
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+{/*
+	Deliberately chrome-free: the staff tool is not part of the public site, so it
+	skips the marketing Header/Footer, the smooth-scroll script and analytics, and
+	tells crawlers to stay away.
+*/}
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, viewport-fit=cover"
+		/>
+		<title>{title}</title>
+
+		<meta name="robots" content="noindex, nofollow" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+		{/*
+			The shared design tokens have no real dark mode - the light and dark
+			token files carry identical values - so pin the scheme to light and let
+			form controls render to match.
+		*/}
+		<meta name="color-scheme" content="light" />
+		<style is:inline>
+			:root {
+				color-scheme: light;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<slot />
+		</main>
+	</body>
+</html>

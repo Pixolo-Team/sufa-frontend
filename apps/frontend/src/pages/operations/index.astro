@@ -1,0 +1,15 @@
+---
+// LAYOUTS //
+import OperationsLayout from "@/layouts/OperationsLayout.astro";
+
+// COMPONENTS //
+import OperationsApp from "@/components/operations/OperationsApp";
+---
+
+<OperationsLayout title="Operations | Skorost United">
+	{/*
+		`client:only` so the PIN gate decides what to render before anything paints -
+		a hydrated island would flash the tools before the gate ran.
+	*/}
+	<OperationsApp client:only="react" />
+</OperationsLayout>

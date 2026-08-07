@@ -15,7 +15,7 @@ tools to solve them, plus the API that backs it.
 
 ## 2. Problems being solved
 
-1. **Fee calculation is manual.** Plans vary by duration (1-month vs 6-month) and
+1. **Fee calculation is manual.** Plans vary by duration (1-month vs 3-month) and
    attendance (2 vs 3 days/week), and new students join mid-month and must be
    pro-rated. Staff currently compute this by hand.
 2. **Sending a fee structure is slow.** When a parent asks for fees, staff should
@@ -133,8 +133,9 @@ timings), plans + per-center prices, coaches, plus global config.
         ],
         "plans": [
           { "id": "<uuid>", "name": "1 Month 3-Day", "durationMonths": 1, "daysPerWeek": 3, "price": 3400, "perSessionPrice": 285 },
-          { "id": "<uuid>", "name": "6 Month",       "durationMonths": 6, "daysPerWeek": 3, "price": 9000, "perSessionPrice": 285 },
-          { "id": "<uuid>", "name": "1 Month 2-Day", "durationMonths": 1, "daysPerWeek": 2, "price": 2280, "perSessionPrice": 285 }
+          { "id": "<uuid>", "name": "1 Month 2-Day", "durationMonths": 1, "daysPerWeek": 2, "price": 2280, "perSessionPrice": 285 },
+          { "id": "<uuid>", "name": "3 Month 3-Day", "durationMonths": 3, "daysPerWeek": 3, "price": 9600, "perSessionPrice": 285 },
+          { "id": "<uuid>", "name": "3 Month 2-Day", "durationMonths": 3, "daysPerWeek": 2, "price": 6500, "perSessionPrice": 285 }
         ]
       }
     ]
@@ -160,13 +161,14 @@ Monorepo with two apps:
 ```
 apps/
 ├── frontend/   # Astro app - the /operations page (BaseLayout + vanilla scripts)
-│   └── src/pages/operations/ , src/services/api/ , src/data/
+│   └── src/pages/operations/ , src/components/operations/ , src/data/
 └── backend/    # API (Hono) + academy DB - /operations/* endpoints
 ```
 
-- **Frontend:** Astro, matching existing conventions (React reserved for the
-  enquiry form; interactivity via `<script>` blocks). QR and the fee-structure
-  image rendered client-side.
+- **Frontend:** Astro route in a chrome-free layout, mounting **one React
+  island** for the tools (the state is interdependent enough that vanilla
+  `<script>` blocks would not hold up - see 05-page-ux.md). QR and the
+  fee-structure image are rendered client-side.
 - **Backend:** extends the existing `api.skorostunited.com` service.
 - **Payment QR** encodes standard UPI: `upi://pay?pa=<upi>&pn=<payee>&am=<amount>&cu=INR`,
   so any UPI app pre-fills the amount on scan.
@@ -185,8 +187,11 @@ needed before go-live:
    partial months, no rounding, editable end date).
 3. **Center + batch + plan data** - for each center: address, coaches, batches
    (timings + session days), and each plan's flat price + per-session price.
-4. **6-month plan scope** - 3-day only? 2-day 6-month? other durations? starts on
-   the 1st or pro-rated?
+4. **3-month plan scope** - confirmed: **two centers**, each selling a 1-month
+   and a 3-month plan at 3-day and 2-day attendance (no 6-month plan). Still to
+   confirm: can a student **join a 3-month plan mid-month**? It is currently
+   treated as a fixed term starting on the 1st, inherited from the retired
+   6-month rule.
 5. **Global UPI ID + payee name** for the payment QRs.
 6. **Fee-structure image content** - layout/branding of the generated image and
    the exact details to show.

@@ -1,0 +1,217 @@
+<style>
+	:root {
+		--bg:#f2f4f6; --card:#ffffff; --ink:#14161a; --line:#14161a; --muted:#5b6168;
+		--mint:#c7f0d4; --blue:#d3e6fb; --amber:#fdeabf; --fill:#eef1f4;
+		--r:18px; --bw:2.5px;
+		--sans:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+		--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+	}
+	@media (prefers-color-scheme:dark){:root{
+		--bg:#14161a;--card:#1e2228;--ink:#eef1f4;--line:#eef1f4;--muted:#9aa2ab;
+		--mint:#2a5a3f;--blue:#274a6b;--amber:#5a4a1e;--fill:#262b31;}}
+	:root[data-theme="light"]{--bg:#f2f4f6;--card:#fff;--ink:#14161a;--line:#14161a;--muted:#5b6168;--mint:#c7f0d4;--blue:#d3e6fb;--amber:#fdeabf;--fill:#eef1f4;}
+	:root[data-theme="dark"]{--bg:#14161a;--card:#1e2228;--ink:#eef1f4;--line:#eef1f4;--muted:#9aa2ab;--mint:#2a5a3f;--blue:#274a6b;--amber:#5a4a1e;--fill:#262b31;}
+
+	*{box-sizing:border-box;} body{margin:0;}
+	.wrap{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.45;padding:clamp(18px,4vw,44px);}
+	.head{max-width:1280px;margin:0 auto 26px;}
+	.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;}
+	.head h1{font-size:clamp(24px,4vw,36px);margin:0 0 8px;font-weight:800;letter-spacing:-.02em;}
+	.head p{margin:0;color:var(--muted);max-width:64ch;}
+	.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px;font-family:var(--mono);font-size:12px;color:var(--muted);}
+	.legend span{display:inline-flex;align-items:center;gap:7px;}
+	.chip{display:inline-block;padding:2px 9px;border:var(--bw) solid var(--line);border-radius:999px;font-weight:700;font-size:11px;}
+	.chip.mint{background:var(--mint);} .chip.blue{background:var(--blue);} .chip.amber{background:var(--amber);}
+
+	.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:clamp(22px,3vw,40px);max-width:1280px;margin:0 auto;align-items:start;}
+	.col{display:flex;flex-direction:column;gap:14px;}
+	.step{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+	.step b{color:var(--ink);}
+
+	/* phone */
+	.phone{background:var(--card);border:var(--bw) solid var(--line);border-radius:30px;padding:14px;}
+	.app{display:flex;flex-direction:column;gap:14px;}
+
+	/* header row */
+	.hrow{display:flex;align-items:center;gap:12px;}
+	.avatar{width:52px;height:52px;border:var(--bw) solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;background:var(--fill);flex:none;}
+	.hrow .who{flex:1;min-width:0;}
+	.hrow .who b{display:block;font-size:18px;font-weight:800;line-height:1.15;}
+	.hrow .who small{color:var(--muted);font-size:12.5px;}
+
+	.banner{border:var(--bw) solid var(--line);border-radius:var(--r);background:var(--amber);padding:12px 14px;font-weight:700;font-size:13.5px;}
+
+	/* big status card */
+	.card{border:var(--bw) solid var(--line);border-radius:var(--r);background:var(--card);padding:16px;}
+	.card .big{font-size:22px;font-weight:800;margin:10px 0 2px;}
+	.card .sub{color:var(--muted);font-size:13px;}
+
+	/* tile grid */
+	.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+	.tile{border:var(--bw) solid var(--line);border-radius:var(--r);background:var(--card);padding:14px;min-height:118px;display:flex;flex-direction:column;}
+	.tile .ic{width:26px;height:26px;margin-bottom:auto;}
+	.tile b{font-size:16px;font-weight:800;margin-top:12px;line-height:1.1;}
+	.tile small{color:var(--muted);font-size:12px;margin-top:3px;}
+	.ic{stroke:var(--ink);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+	/* form bits */
+	.lbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+	.inp{border:var(--bw) solid var(--line);border-radius:12px;background:var(--card);padding:11px 12px;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;}
+	.inp.ph{color:var(--muted);font-weight:500;}
+	.inp.sel::after{content:"▾";}
+	.field{margin-bottom:11px;}
+	.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+	.seg{display:flex;gap:8px;}
+	.seg .o{flex:1;text-align:center;border:var(--bw) solid var(--line);border-radius:12px;padding:9px;font-size:12.5px;font-weight:700;}
+	.seg .o.on{background:var(--mint);}
+	.btn{border:var(--bw) solid var(--line);border-radius:12px;padding:12px;text-align:center;font-weight:800;font-size:14px;background:var(--mint);}
+	.btn.ghost{background:var(--card);}
+	.btnrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+	.result{border:var(--bw) solid var(--line);border-radius:var(--r);overflow:hidden;}
+	.result .t{display:flex;justify-content:space-between;align-items:baseline;padding:12px 14px;background:var(--fill);font-weight:800;}
+	.result .t b{font-size:20px;font-variant-numeric:tabular-nums;}
+	.result .r{display:flex;justify-content:space-between;padding:9px 14px;font-size:12px;color:var(--muted);border-top:var(--bw) solid var(--line);font-variant-numeric:tabular-nums;}
+
+	.previewcard{border:var(--bw) solid var(--line);border-radius:var(--r);padding:13px;}
+	.previewcard .pt{font-weight:800;font-size:13px;margin-bottom:9px;}
+	.pl{height:9px;border-radius:5px;background:var(--fill);margin:7px 0;border:1.5px solid var(--line);}
+	.pl.s{width:52%;}.pl.m{width:76%;}.pl.l{width:92%;}
+
+	.qr{aspect-ratio:1;border:var(--bw) solid var(--line);border-radius:var(--r);background:
+		repeating-linear-gradient(45deg,var(--fill) 0 9px,var(--card) 9px 18px);
+		display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px;}
+
+	.pin{display:flex;gap:14px;justify-content:center;margin:10px 0 18px;}
+	.pin i{width:16px;height:16px;border-radius:50%;border:var(--bw) solid var(--line);}
+	.pin i.f{background:var(--mint);}
+	.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+	.pad b{text-align:center;padding:14px 0;border:var(--bw) solid var(--line);border-radius:12px;font-weight:800;font-variant-numeric:tabular-nums;}
+
+	/* bottom nav */
+	.nav{display:flex;justify-content:space-between;align-items:center;border-top:var(--bw) solid var(--line);padding-top:12px;margin-top:2px;}
+	.nav .n{display:flex;align-items:center;gap:7px;font-weight:800;font-size:13px;color:var(--muted);padding:8px 12px;border-radius:12px;}
+	.nav .n.on{background:var(--blue);color:var(--ink);border:var(--bw) solid var(--line);}
+	.nav .n svg{width:18px;height:18px;stroke:currentColor;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+	.note{border:var(--bw) solid var(--line);border-radius:var(--r);background:var(--card);padding:12px 14px;font-size:12.5px;color:var(--muted);}
+	.note b{color:var(--ink);}
+	.note code{font-family:var(--mono);font-size:11.5px;}
+</style>
+
+<div class="wrap">
+	<header class="head">
+		<p class="eyebrow">Skorost United · Internal tool</p>
+		<h1>/operations — wireframes</h1>
+		<p>Staff-only page in the bold-outline style. A home launcher, a PIN gate, and three tools. Mobile-first — coaches use it on the pitch.</p>
+		<div class="legend">
+			<span><i class="chip mint">pill</i> status / primary action</span>
+			<span><i class="chip blue">pill</i> active nav</span>
+			<span><i class="chip amber">pill</i> notice</span>
+		</div>
+	</header>
+
+	<div class="grid">
+		<!-- HOME -->
+		<div class="col">
+			<div class="step"><b>Home</b> · launcher</div>
+			<div class="phone"><div class="app">
+				<div class="hrow">
+					<div class="avatar">HP</div>
+					<div class="who"><b>Skorost · Ops</b><small>Harsh Patil · Mon, 10 Jun</small></div>
+					<span class="chip mint">Unlocked</span>
+				</div>
+				<div class="banner">Staff tool · not linked from the public site</div>
+				<div class="tiles">
+					<div class="tile">
+						<svg class="ic" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="10" y2="12"/><line x1="14" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="10" y2="16"/></svg>
+						<b>Fee Calculator</b><small>Work out dues</small>
+					</div>
+					<div class="tile">
+						<svg class="ic" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="12" x2="13" y2="12"/></svg>
+						<b>Fee Structure</b><small>Send on WhatsApp</small>
+					</div>
+					<div class="tile">
+						<svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><line x1="14" y1="14" x2="14" y2="21"/><line x1="18" y1="14" x2="21" y2="14"/><line x1="21" y1="18" x2="21" y2="21"/></svg>
+						<b>Payment QR</b><small>Global / student</small>
+					</div>
+					<div class="tile">
+						<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+						<b>Centers</b><small>Prices &amp; timings</small>
+					</div>
+				</div>
+				<div class="nav">
+					<span class="n on"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg>Home</span>
+					<span class="n"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 1112 0c0 5 2 6 2 6H4s2-1 2-6z"/></svg>Activity</span>
+					<span class="n"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/></svg>Profile</span>
+				</div>
+			</div></div>
+			<div class="note"><b>Entry point.</b> Three tool tiles + centers reference. Header shows who's signed in and the lock state.</div>
+		</div>
+
+		<!-- PIN -->
+		<div class="col">
+			<div class="step"><b>Gate</b> · PIN</div>
+			<div class="phone"><div class="app">
+				<div class="hrow"><div class="avatar">?</div><div class="who"><b>Skorost · Ops</b><small>Locked</small></div><span class="chip amber">Locked</span></div>
+				<div class="card">
+					<div class="big">Enter passcode</div>
+					<div class="sub">Shared staff PIN · remembered on this device</div>
+					<div class="pin"><i class="f"></i><i class="f"></i><i></i><i></i></div>
+					<div class="pad"><b>1</b><b>2</b><b>3</b><b>4</b><b>5</b><b>6</b><b>7</b><b>8</b><b>9</b><b>·</b><b>0</b><b>⌫</b></div>
+				</div>
+				<div class="btn">Unlock</div>
+			</div></div>
+			<div class="note">First screen if no unlock flag in <code>localStorage</code>. Correct PIN reveals Home. Light gate — not real security.</div>
+		</div>
+
+		<!-- CALCULATOR -->
+		<div class="col">
+			<div class="step"><b>Tool 1</b> · Fee calculator</div>
+			<div class="phone"><div class="app">
+				<div class="hrow"><div class="avatar">₹</div><div class="who"><b>Fee calculator</b><small>Amount owed, incl. mid-month start</small></div></div>
+				<div class="field"><span class="lbl">Center</span><div class="inp sel">Ghatkopar East</div></div>
+				<div class="field"><span class="lbl">Plan</span><div class="inp sel">1 Month · 3-Day</div></div>
+				<div class="field"><span class="lbl">Days / week</span><div class="seg"><span class="o on">3 days</span><span class="o">2 days</span></div></div>
+				<div class="two"><div class="field"><span class="lbl">Start</span><div class="inp">26 Jul 2025</div></div><div class="field"><span class="lbl">End · editable</span><div class="inp">31 Aug 2025</div></div></div>
+				<div class="btn">Calculate</div>
+				<div class="result">
+					<div class="t"><span>Total due</span><b>₹ 3,970</b></div>
+					<div class="r"><span>26–31 Jul · 2 × ₹285</span><span>₹ 570</span></div>
+					<div class="r"><span>August · full month</span><span>₹ 3,400</span></div>
+				</div>
+			</div></div>
+			<div class="note">Prices &amp; session days from the DB — no hardcoded rate, no rounding. Full month = flat price; partial = <code>sessions × per-session</code>. End date auto-fills, stays editable.</div>
+		</div>
+
+		<!-- FEE STRUCTURE -->
+		<div class="col">
+			<div class="step"><b>Tool 2</b> · Fee structure</div>
+			<div class="phone"><div class="app">
+				<div class="hrow"><div class="avatar">✎</div><div class="who"><b>Send fee structure</b><small>Generate image · send on WhatsApp</small></div></div>
+				<div class="field"><span class="lbl">Center</span><div class="inp sel">Ghatkopar East</div></div>
+				<div class="field"><span class="lbl">Sent by (coach)</span><div class="inp sel">Harsh Patil</div></div>
+				<div class="two"><div class="field"><span class="lbl">Parent name</span><div class="inp ph">optional</div></div><div class="field"><span class="lbl">Phone</span><div class="inp ph">+91 …</div></div></div>
+				<span class="lbl">Preview — generated image</span>
+				<div class="previewcard"><div class="pt">Skorost United · Ghatkopar East</div><div class="pl l"></div><div class="pl m"></div><div class="pl s"></div><div class="pl m" style="margin-top:11px"></div><div class="pl s"></div></div>
+				<div class="btnrow" style="margin-top:12px"><span class="btn ghost">Copy image</span><span class="btn">WhatsApp</span></div>
+			</div></div>
+			<div class="note">Content per center: plans, prices, address, timings. Rendered as an <b>image</b> to copy-paste, plus a <code>wa.me</code> link. No QR here.</div>
+		</div>
+
+		<!-- QR -->
+		<div class="col">
+			<div class="step"><b>Tool 3</b> · Payment QR</div>
+			<div class="phone"><div class="app">
+				<div class="hrow"><div class="avatar">▦</div><div class="who"><b>Payment QR</b><small>Global, or student with amount</small></div></div>
+				<div class="seg" style="margin-bottom:4px"><span class="o">Global QR</span><span class="o on">Student QR</span></div>
+				<div class="field"><span class="lbl">Center</span><div class="inp sel">Ghatkopar East</div></div>
+				<div class="field"><span class="lbl">Plan · days</span><div class="inp sel">1 Month · 3-Day</div></div>
+				<span class="lbl">QR — amount baked in</span>
+				<div class="qr">QR · ₹3,970</div>
+				<div class="btnrow"><span class="btn ghost">Download</span><span class="btn">Share</span></div>
+			</div></div>
+			<div class="note">One global UPI + payee. Global QR = no amount (parent types it). Student QR encodes <code>upi://pay?…&amp;am=&lt;amount&gt;</code> so it's pre-filled on scan.</div>
+		</div>
+	</div>
+</div>

@@ -3,7 +3,7 @@
 ## Problems we are solving
 
 1. **Fee calculation is manual and error-prone.** Plans differ by duration
-   (1-month vs 6-month), by attendance (2 vs 3 days/week), and new students join
+   (1-month vs 3-month), by attendance (2 vs 3 days/week), and new students join
    mid-month and must be pro-rated. Staff currently work this out by hand.
 2. **Sending a fee structure is slow.** When a parent asks for fees, a coach or
    manager should be able to send the right fee structure (which differs by
@@ -14,9 +14,10 @@
 
 ## Known facts (from stakeholder)
 
-- Sessions run **Monday, Wednesday, Friday**.
-- A full month at 3 days/week = **12 sessions** = **₹3,400**.
-- **6 months = ₹9,000**.
+- Sessions run **Monday, Wednesday, Friday** *at the current center*. Days are
+  **not fixed** - each center/batch has its own, read from `batch_days`.
+- A full month at 3 days/week = **12 sessions** = **₹3,400** (this center).
+- Plans are **1 month and 3 months** only. There is **no 6-month plan**.
 - A student attending only **2 of the 3 days** = **8 sessions/month** (`4 × 2`).
 - Billing cycle is the **calendar month** (1st → 30/31).
 - Mid-month joiners are pro-rated. Example given: a student joining **26 July**
@@ -38,60 +39,58 @@
 
 ### Pricing
 
-1. **Per-session rate.** Is a fee simply `sessions × rate`? If yes, what is the
-   rate - ₹3400 ÷ 12 = **₹283.33**, or a rounded figure (₹285 / ₹300)? Or is the
-   2-day plan its own fixed price (if so, what)?
-   - **Answer:** Per-session rate = **₹285** (rounded up from ₹283.33).
-   - ⚠️ **Note / to confirm:** `285 × 12 = ₹3,420`, but a full 3-day month is a
-     flat **₹3,400**. So ₹285 is the rate used for **2-day plans and mid-month
-     pro-rata partials**, while a full 3-day month stays the flat ₹3,400 (not
-     `12 × 285`). Confirm this is the intent.
-     - 2-day full month = `8 × 285` = **₹2,280**.
+1. **Per-session rate.** Is a fee simply `sessions × rate`?
+   - **Answer:** ✅ **Resolved by storing it.** Each center plan stores its own
+     `per_session_price` alongside the flat `price`, so nothing is derived from
+     ₹3400 ÷ 12 and the two never have to agree. A full month always bills the
+     flat price; a partial month bills `sessions × per_session_price`.
+     Ghatkopar East stores ₹285; another center can store anything else.
 
-2. **6-month plan.** Is ₹9,000 for 3-day only? Is there a 6-month price for
-   2-day students? Any other durations (3-month, annual)?
-   - **Answer:** 🔴 DUMMY (assumed): **3-day only, no 2-day 6-month, no other
-     durations, always starts on the 1st (no pro-rata).** Replace when confirmed.
-     See [06-dummy-data.md](06-dummy-data.md).
+2. **Plan durations.** Which durations are sold?
+   - **Answer:** ✅ **1 month and 3 months only**, each at 3-day and 2-day
+     attendance, at **two centers**. No 6-month plan.
+   - ⚠️ **To confirm:** can a student **join a 3-month plan mid-month**? It is
+     currently treated as a fixed term starting on the 1st.
 
 3. **Rounding** on the final amount - nearest ₹1, ₹10, or ₹50?
-   - **Answer:** ✅ **Nearest ₹10, half-down.** Round the final total to the
-     nearest ₹10, but a units digit of exactly 5 rounds **down** (≤5 → down,
-     ≥6 → up). E.g. 285→280, 286→290. Applied once to the grand total. See
-     [02-fee-calculation.md](02-fee-calculation.md#rounding-final-total).
+   - **Answer:** ✅ **No rounding at all.** Superseded by storing the
+     per-session price: the total is stored prices multiplied and summed.
 
 ### Pro-rata (mid-month joiner)
 
 4. Joining 26 Jul → charged "26 Jul - 31 Aug." Confirm the rule:
    **remaining sessions of the joining month (charged per-session) + one full
    next month (flat ₹3,400)**, then the cycle resets to the 1st?
-   Or simply: count every Mon/Wed/Fri from join date to the end date × rate?
+   Or simply: count every session day from join date to the end date × rate?
    - **Answer:** ✅ **Option A.** First payment = (remaining sessions in the
-     joining month × ₹285) **+** one full next month at the flat plan price.
+     joining month × the stored per-session price) **+** one full next month at
+     the flat plan price.
      Cycle then resets to the 1st of the following month. See
      [02-fee-calculation.md](02-fee-calculation.md#pro-rata-algorithm-option-a).
 
 5. When counting sessions, do we **skip public holidays**, or count every
-   Mon/Wed/Fri mechanically?
-   - **Answer:** ✅ **No holiday check.** Count every Mon/Wed/Fri mechanically.
+   session day mechanically?
+   - **Answer:** ✅ **No holiday check.** Count every session day mechanically.
      (Confirmed - do not factor holidays into the formula.)
 
 ### Centers
 
-6. List **all centers**, and for each: 1-month (3-day) price, 6-month price,
-   2-day/per-session rate, plus the **address and timings** (needed for the fee
-   message - see Q7). Prices **differ per center** (confirmed).
-   Payment UPI is **global**, not per-center (see Q9), so no UPI column here.
-   - **Answer:** 🔴 DUMMY table in [06-dummy-data.md](06-dummy-data.md) (3 fake
-     centers, prices differ per center). Replace with real centers.
+6. List **both centers**, and for each: 1-month (3-day) price, 3-month price,
+   2-day price and per-session price, plus the **address**, the **coaches**, and
+   each **batch** (days + timings) - needed for the fee message, see Q7. Prices
+   **differ per center** (confirmed). Payment UPI is **global**, not per-center
+   (see Q9), so no UPI column here.
+   - **Answer:** 🔴 DUMMY data in [06-dummy-data.md](06-dummy-data.md) (2 fake
+     centers, prices and batch days differ per center). Replace with real data.
 
 ### Fee-structure message
 
 7. What should the WhatsApp "fee structure" message contain?
    - **Answer:** ✅ **Fee structure + center details only** - plans & prices,
-     academy **name, address, timings**. **No QR / UPI** in this message.
-     (Payment QR is a separate tool.) Still need one **real example** of the
-     wording + the address/timings per center (see Q6 table).
+     academy **name, address, batch timings**, signed off by the sending coach.
+     **No QR / UPI** in this message (Payment QR is a separate tool). Delivered
+     as **both** a copy-pasteable image and text. Still need one **real example**
+     of the wording + the address/timings per center (see Q6).
    - **Example wording:** 🔴 DUMMY template in
      [06-dummy-data.md](06-dummy-data.md#fee-structure-message-template-dummy-wording).
 
