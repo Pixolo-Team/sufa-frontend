@@ -12,8 +12,9 @@ const coachesData = [
 	{
 		firstName: "Harsh",
 		lastName: "Patil",
+		certifications: "FIFA Elite Youth GK · AFC GK 'C' · AFC 'C' Diploma.",
 		description:
-			"FIFA Elite Youth GK · AFC GK 'C' · AFC 'C' Diploma. He provides strategic leadership across the club's football programme, overseeing the Senior Team while mentoring the coaching staff to deliver a consistent, player-centred development pathway.",
+			"He provides strategic leadership across the club's football programme, overseeing the Senior Team while mentoring the coaching staff to deliver a consistent, player-centred development pathway.",
 		designation: "Head Coach & Head of Coaches",
 		coachImageSrc: "/images/coaches/hp.jpg",
 		socialMedia: { instagram: "https://www.instagram.com/harsh.goalkeepercoach/" },
@@ -22,8 +23,9 @@ const coachesData = [
 	{
 		firstName: "Vipul",
 		lastName: "Shinde",
+		certifications: "AFC 'C' Diploma.",
 		description:
-			"AFC 'C' Diploma. He brings a modern coaching approach to both the Senior Team and U16s, using his tactical insight, technical knowledge and commitment to continuous learning to develop players on and off the pitch.",
+			"He brings a modern coaching approach to both the Senior Team and U16s, using his tactical insight, technical knowledge and commitment to continuous learning to develop players on and off the pitch.",
 		designation: "Assistant & Youth Coach",
 		coachImageSrc: "/images/coaches/vs.jpg",
 		alt: "Coach Vipul Shinde at the best football academy in Ghatkopar",
@@ -58,8 +60,9 @@ const coachesData = [
 	{
 		firstName: "Sarthak",
 		lastName: "Bhosle",
+		certifications: "Engineer from Somaiya University.",
 		description:
-			"Engineer from Somaiya University. Sarthak, who is also a player of the senior team at Skorost United, manages the Academy and runs the operations. He makes sure everything is handled smoothly and timely.",
+			"Sarthak, who is also a player of the senior team at Skorost United, manages the Academy and runs the operations. He makes sure everything is handled smoothly and timely.",
 		designation: "Academy Manager",
 		coachImageSrc: "/images/coaches/sb.jpg",
 		alt: "Sarthak Bhosle, Academy Manager at Skorost United",
@@ -101,6 +104,7 @@ const coachesData = [
 										<CoachesCard
 											firstName={coach.firstName}
 											lastName={coach.lastName}
+											certifications={coach.certifications}
 											description={coach.description}
 											designation={coach.designation}
 											coachImageSrc={coach.coachImageSrc}

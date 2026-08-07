@@ -12,6 +12,7 @@ import Chip from "@/neevo/components/chip/Chip.astro";
 interface Props {
 	firstName: string;
 	lastName: string;
+	certifications?: string;
 	description: string;
 	designation: string;
 	coachImageSrc: string;
@@ -24,6 +25,7 @@ interface Props {
 const {
 	firstName = "",
 	lastName = "",
+	certifications = "",
 	description = "",
 	designation = "",
 	coachImageSrc = "",
@@ -34,19 +36,14 @@ const {
 
 <div class={styles.cardWrapper}>
 	<div class={`${styles.contentWrapper} flex flex-column align-start`}>
-		{/* Card title */}
 		<div class={styles.titleWrapper}>
-			{/* Coach First name */}
 			<p class={`${styles.firstName} font-secondary font-weight-600`}>
 				{firstName}
 			</p>
-			{/* Coach Last name */}
-			<p class={`${styles.lastName} font-secondary font-weight-800`}>
-				{lastName}
-			</p>
+			<p class={`${styles.lastName} font-secondary font-weight-800`}>{lastName}</p>
 		</div>
+
 		<div class={styles.imageDesignationWrapper}>
-			{/* Image */}
 			<div class={styles.imageWrapper}>
 				<img
 					src={coachImageSrc}
@@ -58,7 +55,7 @@ const {
 					decoding="async"
 				/>
 			</div>
-			{/* Button with Social Media Icons or Arrow */}
+
 			{
 				socialMedia?.instagram && (
 					<button class={`${styles.linkButton} flex align-center justify-center`}>
@@ -74,7 +71,6 @@ const {
 				)
 			}
 			<div class={`${styles.chipWrapper} font-secondary font-weight-700`}>
-				{/* Designation */}
 				<Chip
 					text={designation}
 					color={Colors.PRIMARY}
@@ -83,11 +79,18 @@ const {
 				/>
 			</div>
 		</div>
+
 		<div class="flex justify-center">
-			{/* Description */}
-			<p class={`${styles.description} font-secondary font-weight-500`}>
-				{description}
-			</p>
+			<div>
+				{certifications.trim() !== "" && (
+					<p class={`${styles.descriptionLead} font-secondary font-weight-500`}>
+						{certifications}
+					</p>
+				)}
+				<p class={`${styles.description} font-secondary font-weight-500`}>
+					{description}
+				</p>
+			</div>
 		</div>
 	</div>
 </div>
