@@ -47,6 +47,10 @@
 .operationsGate {
 	padding: 0;
 	overflow: hidden;
+	// Own the viewport height once, here, and let the gate fill it via flex so
+	// the height is not defined twice (which caused a sub-pixel scroll).
+	display: flex;
+	flex-direction: column;
 }
 
 .shell {
@@ -772,8 +776,11 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	min-height: 100vh;
-	min-height: 100dvh;
+	// Fill the container (which is already one viewport tall) instead of
+	// declaring another 100vh — avoids the doubled-height scroll.
+	flex: 1;
+	min-height: 0;
+	width: 100%;
 	padding: 24px 20px max(24px, env(safe-area-inset-bottom));
 	box-sizing: border-box;
 	max-width: 320px;

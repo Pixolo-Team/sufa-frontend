@@ -11,13 +11,16 @@ import styles from "./operations.module.scss";
 // COMPONENTS //
 import InputBox from "@/neevo/components/input-box/InputBox";
 import Select from "@/neevo/components/select/Select";
-import Segmented from "./Segmented";
 
 // HOOKS //
 import { WEEKDAY_LABELS, type useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
-import { formatBatchTimings } from "@/utils/operations.util";
+import {
+	formatBatchTimings,
+	formatPlanLabel,
+	getBatchWeekdays,
+} from "@/utils/operations.util";
 
 interface FeeInputFieldsProps {
 	centers: OperationsCenterData[];
@@ -37,13 +40,14 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		inputs,
 		batch,
 		plan,
+		registrationOption,
 		isFixedTerm,
 		billedWeekdays,
 		setBatchId,
+		setPlanId,
+		setRegistrationOptionId,
 		setStartDate,
 		setEndDate,
-		setDurationMonths,
-		setDaysPerWeek,
 		toggleWeekday,
 	} = feeInputs;
 
@@ -51,19 +55,36 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		label: item.name,
 		value: item.id,
 	}));
-
 	const batchOptions: DropdownOptionData[] = (center?.batches ?? []).map((item) => ({
 		label: item.name,
 		value: item.id,
 	}));
+	const planOptions: DropdownOptionData[] = (batch?.plans ?? []).map((item) => ({
+		label: formatPlanLabel(item),
+		value: item.id,
+	}));
+	const registrationOptions: DropdownOptionData[] = [
+		{ label: "No registration", value: "" },
+		...(batch?.registrationOptions ?? []).map((item) => ({
+			label: `${item.name} - Rs ${item.price.toLocaleString("en-IN")}`,
+			value: item.id,
+		})),
+	];
 
 	const selectedCenterOption =
 		centerOptions.find((option) => option.value === center?.id) ?? null;
 	const selectedBatchOption =
 		batchOptions.find((option) => option.value === batch?.id) ?? null;
+	const selectedPlanOption =
+		planOptions.find((option) => option.value === plan?.id) ?? null;
+	const selectedRegistrationOption =
+		registrationOptions.find(
+			(option) => option.value === (registrationOption?.id ?? "")
+		) ?? registrationOptions[0] ?? null;
 
-	const canPickDays = !!batch && inputs.daysPerWeek < batch.days.length;
-	const hasBatchChoice = batchOptions.length > 1;
+	const batchWeekdays = batch ? getBatchWeekdays(batch) : [];
+	const canPickDays =
+		!!plan && plan.daysPerWeek > 0 && plan.daysPerWeek < batchWeekdays.length;
 
 	return (
 		<div className={styles.fieldStack}>
@@ -76,52 +97,49 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 				onChange={(option) => onCenterChange(option.value)}
 			/>
 
-			{hasBatchChoice ? (
-				<Select
-					label="Batch"
-					placeholder="Select batch"
-					options={batchOptions}
-					selectedOption={selectedBatchOption}
-					caption={batch ? formatBatchTimings(batch) : ""}
-					isRequired
-					onChange={(option) => setBatchId(option.value)}
-				/>
-			) : (
-				batch && (
-					<div className={styles.inlineInfo}>
-						<span className={styles.fieldLabel}>Timing</span>
-						<p className={styles.inlineInfoText}>{formatBatchTimings(batch)}</p>
-					</div>
-				)
-			)}
-
-			<Segmented
-				label="Plan"
-				value={inputs.durationMonths}
-				onChange={setDurationMonths}
-				options={[
-					{ label: "1 Month", value: 1 },
-					{ label: "3 Months", value: 3 },
-				]}
+			<Select
+				label="Batch"
+				placeholder="Select batch"
+				options={batchOptions}
+				selectedOption={selectedBatchOption}
+				caption={batch ? formatBatchTimings(batch) : ""}
+				isRequired
+				onChange={(option) => setBatchId(option.value)}
 			/>
 
-			<Segmented
-				label="Days / week"
-				value={inputs.daysPerWeek}
-				onChange={setDaysPerWeek}
-				options={[
-					{ label: "3 days", value: 3 },
-					{ label: "2 days", value: 2 },
-				]}
+			{batch && (
+				<div className={styles.inlineInfo}>
+					<span className={styles.fieldLabel}>Schedule</span>
+					<p className={styles.inlineInfoText}>{formatBatchTimings(batch)}</p>
+				</div>
+			)}
+
+			<Select
+				label="Plan"
+				placeholder={batch ? "Select plan" : "Select batch first"}
+				options={planOptions}
+				selectedOption={selectedPlanOption}
+				isRequired
+				isDisabled={!batch || planOptions.length === 0}
+				onChange={(option) => setPlanId(option.value)}
+			/>
+
+			<Select
+				label="Registration"
+				placeholder={batch ? "Select registration" : "Select batch first"}
+				options={registrationOptions}
+				selectedOption={selectedRegistrationOption}
+				isDisabled={!batch}
+				onChange={(option) => setRegistrationOptionId(option.value)}
 			/>
 
 			{canPickDays && (
 				<div>
 					<span className={styles.fieldLabel}>
-						Which days? (pick {inputs.daysPerWeek})
+						Which days? (pick {plan.daysPerWeek})
 					</span>
 					<div className={styles.dayChips}>
-						{batch.days.map((weekday) => (
+						{batchWeekdays.map((weekday) => (
 							<button
 								key={weekday}
 								type="button"
@@ -148,6 +166,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 					errorMessage=""
 					showClear={false}
 					isRequired
+					isDisabled={!plan}
 					onChange={setStartDate}
 					onClear={() => setStartDate("")}
 				/>
@@ -159,17 +178,23 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 					isError={false}
 					errorMessage=""
 					showClear={false}
-					isDisabled={isFixedTerm}
-					caption={isFixedTerm ? "Fixed term" : "Auto-filled · editable"}
+					isDisabled={!plan || isFixedTerm}
+					caption={isFixedTerm ? "Fixed term" : "Auto-filled | editable"}
 					onChange={setEndDate}
 					onClear={() => setEndDate("")}
 				/>
 			</div>
 
-			{center && !plan && (
+			{center && !batch && (
 				<p className={styles.notice}>
-					{center.name} has no {inputs.durationMonths} month · {inputs.daysPerWeek} day
-					plan. Pick another combination.
+					Select a batch first. Plans, timings and registration are linked to the
+					batch, not the center.
+				</p>
+			)}
+
+			{batch && !plan && (
+				<p className={styles.notice}>
+					{batch.name} has no plans yet. Add plans on the batch to use this tool.
 				</p>
 			)}
 		</div>

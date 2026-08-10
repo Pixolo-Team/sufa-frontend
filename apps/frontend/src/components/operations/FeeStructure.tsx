@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 // TYPES //
 import type { DropdownOptionData } from "@/neevo/types/forms";
 import type {
+	OperationsBatchData,
 	OperationsCenterData,
 	OperationsConfigData,
 } from "@/types/operations";
@@ -30,6 +31,7 @@ import { showToast } from "@/neevo/services/toast.service";
 import { formatRupees } from "@/utils/fee-calculator.util";
 import { renderFeeStructureImage } from "@/utils/fee-structure-image.util";
 import {
+	formatBatchTimingLines,
 	formatBatchTimings,
 	formatPlanLabel,
 } from "@/utils/operations.util";
@@ -43,7 +45,13 @@ interface FeeStructureProps {
 	onCenterChange: (centerId: string) => void;
 }
 
-/** Tool 2 - build the per-center fee structure as an image and a message */
+const buildBatchOptions = (center: OperationsCenterData | undefined) =>
+	(center?.batches ?? []).map((item) => ({
+		label: item.name,
+		value: item.id,
+	}));
+
+/** Tool 2 - build the batch-linked fee structure as an image and a message */
 const FeeStructure: React.FC<FeeStructureProps> = ({
 	centers,
 	center,
@@ -55,6 +63,7 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 	const [phoneError, setPhoneError] = useState("");
 	const [previewMode, setPreviewMode] = useState<PreviewMode>("image");
 	const [senderId, setSenderId] = useState("");
+	const [batchId, setBatchId] = useState("");
 	const [imageBlob, setImageBlob] = useState<Blob | null>(null);
 	const [imageUrl, setImageUrl] = useState("");
 
@@ -62,59 +71,81 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 		label: item.name,
 		value: item.id,
 	}));
-
 	const senderOptions: DropdownOptionData[] = (center?.coaches ?? []).map(
 		(coach) => ({ label: coach.name, value: coach.id })
 	);
+	const batchOptions: DropdownOptionData[] = buildBatchOptions(center);
 
 	const sender =
 		center?.coaches.find((coach) => coach.id === senderId) ?? center?.coaches[0];
-	const feeStructurePlans = useMemo(
-		() => (center?.plans ?? []).filter((plan) => plan.daysPerWeek !== 2),
-		[center]
+	const batch: OperationsBatchData | undefined = useMemo(
+		() => center?.batches.find((item) => item.id === batchId),
+		[center, batchId]
 	);
-
 	const selectedCenterOption =
 		centerOptions.find((option) => option.value === center?.id) ?? null;
 	const selectedSenderOption =
 		senderOptions.find((option) => option.value === sender?.id) ?? null;
+	const selectedBatchOption =
+		batchOptions.find((option) => option.value === batch?.id) ?? null;
+
+	useEffect(() => {
+		setBatchId("");
+	}, [center?.id]);
 
 	const message = useMemo(() => {
-		if (!center) return "";
+		if (!center || !batch) return "";
 
 		const greeting = parentName.trim() ? `Hi ${parentName.trim()}, h` : "H";
-		const planLines = feeStructurePlans
+		const planLines = batch.plans
 			.map((plan) => `- ${formatPlanLabel(plan)}: ${formatRupees(plan.price)}`)
 			.join("\n");
-
-		const timingLines = center.batches
-			.map((batch) => `Timings ${batch.name}: ${formatBatchTimings(batch)}`)
+		const registrationLines =
+			batch.registrationOptions.length > 0
+				? batch.registrationOptions
+						.map((item) => `- ${item.name}: ${formatRupees(item.price)}`)
+						.join("\n")
+				: "";
+		const timingLines = formatBatchTimingLines(batch)
+			.map((line) => `- ${line}`)
 			.join("\n");
 
 		return [
 			`${greeting}ere is the fee structure for ${config.academyName} - ${center.name}:`,
 			"",
+			`Batch: ${batch.name}`,
+			"",
+			"Plans:",
 			planLines,
+			registrationLines ? "" : null,
+			registrationLines ? "Registration:" : null,
+			registrationLines || null,
 			"",
 			`Address: ${center.address}`,
+			"Schedule:",
 			timingLines,
 			"",
 			"For a free trial or to enroll, reply here. See you on the pitch!",
 			sender?.name ? `- ${sender.name}, ${config.academyName}` : "",
 		]
+			.filter((line): line is string => !!line || line === "")
 			.filter((line, index, all) => line !== "" || all[index - 1] !== "")
 			.join("\n");
-	}, [center, feeStructurePlans, parentName, config.academyName, sender]);
+	}, [batch, center, parentName, config.academyName, sender]);
 
 	useEffect(() => {
-		if (!center) return;
+		if (!center || !batch) {
+			setImageBlob(null);
+			setImageUrl("");
+			return;
+		}
 
 		let isActive = true;
 
 		renderFeeStructureImage({
 			academyName: config.academyName,
 			center,
-			plans: feeStructurePlans,
+			batch,
 			senderName: sender?.name,
 		}).then((blob) => {
 			if (!isActive || !blob) return;
@@ -126,7 +157,7 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 		return () => {
 			isActive = false;
 		};
-	}, [center, feeStructurePlans, config.academyName, sender?.name]);
+	}, [batch, center, config.academyName, sender?.name]);
 
 	useEffect(
 		() => () => {
@@ -135,7 +166,7 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 		[imageUrl]
 	);
 
-	const imageFileName = `skorost-fees-${center?.id ?? "center"}.png`;
+	const imageFileName = `skorost-fees-${batch?.id ?? center?.id ?? "batch"}.png`;
 
 	const copyMessage = useCallback(() => {
 		navigator.clipboard
@@ -215,6 +246,17 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 						onChange={(option) => onCenterChange(option.value)}
 					/>
 
+					<Select
+						label="Batch"
+						placeholder="Select batch"
+						options={batchOptions}
+						selectedOption={selectedBatchOption}
+						caption={batch ? formatBatchTimings(batch) : ""}
+						isRequired
+						isDisabled={!center}
+						onChange={(option) => setBatchId(option.value)}
+					/>
+
 					{senderOptions.length > 0 && (
 						<Select
 							label="Sent by (coach)"
@@ -255,7 +297,7 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 				</div>
 			</div>
 
-			{center && (
+			{center && batch ? (
 				<div className={styles.card}>
 					<span className={styles.sectionLabel}>Preview</span>
 
@@ -274,7 +316,7 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 								<img
 									className={styles.previewImage}
 									src={imageUrl}
-									alt={`Fee structure for ${center.name}`}
+									alt={`Fee structure for ${center.name} ${batch.name}`}
 								/>
 							) : (
 								<p className={styles.qrHint}>Drawing image...</p>
@@ -333,6 +375,13 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 							/>
 						</div>
 					)}
+				</div>
+			) : (
+				<div className={styles.card}>
+					<p className={styles.notice}>
+						Select a batch to preview the linked plans, registration fees and daily
+						timings.
+					</p>
 				</div>
 			)}
 		</div>

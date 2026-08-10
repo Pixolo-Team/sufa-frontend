@@ -1,11 +1,13 @@
 // REACT //
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 // TYPES //
 import type {
 	FeeQuoteData,
+	OperationsBatchData,
 	OperationsCenterData,
 	OperationsPlanData,
+	OperationsRegistrationOptionData,
 } from "@/types/operations";
 
 // UTILS //
@@ -15,15 +17,15 @@ import {
 	getFixedTermEndDate,
 	toDateInputValue,
 } from "@/utils/fee-calculator.util";
-import { formatPlanLabel } from "@/utils/operations.util";
+import { formatPlanLabel, getBatchWeekdays } from "@/utils/operations.util";
 
 /** Weekday labels indexed by JS day number */
 export const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 type FeeInputsState = {
 	batchId: string;
-	durationMonths: number;
-	daysPerWeek: number;
+	planId: string;
+	registrationOptionId: string;
 	selectedWeekdays: number[];
 	startDate: string;
 	endDate: string;
@@ -34,48 +36,73 @@ const buildInitialState = (): FeeInputsState => {
 
 	return {
 		batchId: "",
-		durationMonths: 1,
-		daysPerWeek: 3,
+		planId: "",
+		registrationOptionId: "",
 		selectedWeekdays: [],
 		startDate: today,
 		endDate: getDefaultEndDate(today),
 	};
 };
 
+const getInitialPlanId = (batch: OperationsBatchData | undefined): string =>
+	batch?.plans[0]?.id ?? "";
+
+const getBatchDays = (batch: OperationsBatchData | undefined): number[] =>
+	batch ? getBatchWeekdays(batch) : [];
+
+const syncDatesForPlan = (startDate: string, plan: OperationsPlanData | undefined) =>
+	plan && plan.durationMonths > 1
+		? {
+				startDate: `${startDate.slice(0, 8)}01`,
+				endDate: getFixedTermEndDate(
+					`${startDate.slice(0, 8)}01`,
+					plan.durationMonths
+				),
+			}
+		: {
+				startDate,
+				endDate: getDefaultEndDate(startDate),
+			};
+
 export const useFeeInputs = (center: OperationsCenterData | undefined) => {
 	const [inputs, setInputs] = useState<FeeInputsState>(buildInitialState);
 
 	const batch = useMemo(
-		() =>
-			center?.batches.find((item) => item.id === inputs.batchId) ??
-			center?.batches[0],
+		() => center?.batches.find((item) => item.id === inputs.batchId),
 		[center, inputs.batchId]
 	);
 
 	const plan: OperationsPlanData | undefined = useMemo(
-		() =>
-			center?.plans.find(
-				(centerPlan) =>
-					centerPlan.durationMonths === inputs.durationMonths &&
-					centerPlan.daysPerWeek === inputs.daysPerWeek
-			),
-		[center, inputs.durationMonths, inputs.daysPerWeek]
+		() => batch?.plans.find((item) => item.id === inputs.planId) ?? batch?.plans[0],
+		[batch, inputs.planId]
 	);
 
-	const isFixedTerm = inputs.durationMonths > 1;
+	const registrationOption: OperationsRegistrationOptionData | undefined =
+		useMemo(
+			() =>
+				batch?.registrationOptions.find(
+					(item) => item.id === inputs.registrationOptionId
+				),
+			[batch, inputs.registrationOptionId]
+		);
+
+	const batchWeekdays = useMemo(
+		() => (batch ? getBatchWeekdays(batch) : []),
+		[batch]
+	);
+	const isFixedTerm = (plan?.durationMonths ?? 0) > 1;
 
 	const billedWeekdays = useMemo(() => {
-		if (!batch) return [];
+		if (!plan) return [];
+		if (plan.daysPerWeek >= batchWeekdays.length) return batchWeekdays;
 
-		if (inputs.daysPerWeek >= batch.days.length) return batch.days;
-
-		return inputs.selectedWeekdays.length === inputs.daysPerWeek
+		return inputs.selectedWeekdays.length === plan.daysPerWeek
 			? inputs.selectedWeekdays
-			: batch.days.slice(0, inputs.daysPerWeek);
-	}, [batch, inputs.daysPerWeek, inputs.selectedWeekdays]);
+			: batchWeekdays.slice(0, plan.daysPerWeek);
+	}, [batchWeekdays, inputs.selectedWeekdays, plan]);
 
-	const quote: FeeQuoteData | null = useMemo(() => {
-		if (!center || !plan) return null;
+	const baseQuote: FeeQuoteData | null = useMemo(() => {
+		if (!batch || !plan) return null;
 
 		if (isFixedTerm) {
 			return {
@@ -101,7 +128,7 @@ export const useFeeInputs = (center: OperationsCenterData | undefined) => {
 			perSessionPrice: plan.perSessionPrice,
 		});
 	}, [
-		center,
+		batch,
 		plan,
 		isFixedTerm,
 		inputs.startDate,
@@ -109,54 +136,119 @@ export const useFeeInputs = (center: OperationsCenterData | undefined) => {
 		billedWeekdays,
 	]);
 
+	const quote: FeeQuoteData | null = useMemo(() => {
+		if (!baseQuote) return null;
+		if (!registrationOption) return baseQuote;
+
+		return {
+			rows: [
+				...baseQuote.rows,
+				{
+					id: registrationOption.id,
+					label: registrationOption.name,
+					detail: "Registration fee",
+					amount: registrationOption.price,
+					isFullMonth: true,
+				},
+			],
+			total: baseQuote.total + registrationOption.price,
+			sessionCount: baseQuote.sessionCount,
+		};
+	}, [baseQuote, registrationOption]);
+
+	useEffect(() => {
+		setInputs((previous) => {
+			if (!center) return buildInitialState();
+
+			const nextBatchId = center.batches.some((item) => item.id === previous.batchId)
+				? previous.batchId
+				: "";
+			const nextBatch = center.batches.find((item) => item.id === nextBatchId);
+			const nextPlanId =
+				nextBatch?.plans.some((item) => item.id === previous.planId)
+					? previous.planId
+					: getInitialPlanId(nextBatch);
+			const nextRegistrationOptionId =
+				nextBatch?.registrationOptions.some(
+					(item) => item.id === previous.registrationOptionId
+				)
+					? previous.registrationOptionId
+					: "";
+			const nextPlan = nextBatch?.plans.find((item) => item.id === nextPlanId);
+			const nextDates = syncDatesForPlan(previous.startDate, nextPlan);
+
+			return {
+				...previous,
+				batchId: nextBatchId,
+				planId: nextPlanId,
+				registrationOptionId: nextRegistrationOptionId,
+				selectedWeekdays: previous.selectedWeekdays.filter((day) =>
+					getBatchDays(nextBatch).includes(day)
+				),
+				startDate: nextDates.startDate,
+				endDate: nextDates.endDate,
+			};
+		});
+	}, [center]);
+
 	const setBatchId = useCallback((batchId: string) => {
-		setInputs((previous) => ({ ...previous, batchId, selectedWeekdays: [] }));
+		setInputs((previous) => {
+			const nextBatch = center?.batches.find((item) => item.id === batchId);
+			const nextPlanId = getInitialPlanId(nextBatch);
+			const nextPlan = nextBatch?.plans.find((item) => item.id === nextPlanId);
+			const nextDates = syncDatesForPlan(previous.startDate, nextPlan);
+
+			return {
+				...previous,
+				batchId,
+				planId: nextPlanId,
+				registrationOptionId: "",
+				selectedWeekdays: [],
+				startDate: nextDates.startDate,
+				endDate: nextDates.endDate,
+			};
+		});
+	}, [center]);
+
+	const setPlanId = useCallback((planId: string) => {
+		setInputs((previous) => {
+			const nextPlan = batch?.plans.find((item) => item.id === planId);
+			const nextDates = syncDatesForPlan(previous.startDate, nextPlan);
+
+			return {
+				...previous,
+				planId,
+				selectedWeekdays: [],
+				startDate: nextDates.startDate,
+				endDate: nextDates.endDate,
+			};
+		});
+	}, [batch]);
+
+	const setRegistrationOptionId = useCallback((registrationOptionId: string) => {
+		setInputs((previous) => ({ ...previous, registrationOptionId }));
 	}, []);
 
 	const setStartDate = useCallback((startDate: string) => {
-		setInputs((previous) => ({
-			...previous,
-			startDate,
-			endDate:
-				previous.durationMonths > 1
-					? getFixedTermEndDate(startDate, previous.durationMonths)
-					: getDefaultEndDate(startDate),
-		}));
-	}, []);
+		setInputs((previous) => {
+			const nextDates = syncDatesForPlan(startDate, plan);
+
+			return {
+				...previous,
+				startDate: nextDates.startDate,
+				endDate: nextDates.endDate,
+			};
+		});
+	}, [plan]);
 
 	const setEndDate = useCallback((endDate: string) => {
 		setInputs((previous) => ({ ...previous, endDate }));
 	}, []);
 
-	const setDurationMonths = useCallback((durationMonths: number) => {
-		setInputs((previous) => {
-			const startDate =
-				durationMonths > 1
-					? `${previous.startDate.slice(0, 8)}01`
-					: previous.startDate;
-
-			return {
-				...previous,
-				durationMonths,
-				startDate,
-				endDate:
-					durationMonths > 1
-						? getFixedTermEndDate(startDate, durationMonths)
-						: getDefaultEndDate(startDate),
-			};
-		});
-	}, []);
-
-	const setDaysPerWeek = useCallback((daysPerWeek: number) => {
-		setInputs((previous) => ({
-			...previous,
-			daysPerWeek,
-			selectedWeekdays: [],
-		}));
-	}, []);
-
 	const toggleWeekday = useCallback((weekday: number) => {
 		setInputs((previous) => {
+			const daysPerWeek = plan?.daysPerWeek ?? 0;
+
 			if (previous.selectedWeekdays.includes(weekday)) {
 				return {
 					...previous,
@@ -169,24 +261,26 @@ export const useFeeInputs = (center: OperationsCenterData | undefined) => {
 			return {
 				...previous,
 				selectedWeekdays: [...previous.selectedWeekdays, weekday].slice(
-					-previous.daysPerWeek
+					-daysPerWeek
 				),
 			};
 		});
-	}, []);
+	}, [plan]);
 
 	return {
 		inputs,
 		batch,
 		plan,
+		registrationOption,
 		quote,
 		isFixedTerm,
+		batchWeekdays,
 		billedWeekdays,
 		setBatchId,
+		setPlanId,
+		setRegistrationOptionId,
 		setStartDate,
 		setEndDate,
-		setDurationMonths,
-		setDaysPerWeek,
 		toggleWeekday,
 	};
 };

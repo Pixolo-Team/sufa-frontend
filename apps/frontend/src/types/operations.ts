@@ -5,20 +5,14 @@ export type OperationsCoachData = {
 	phone?: string;
 };
 
-/** A scheduled group within a center. Timings and session days live here. */
-export type OperationsBatchData = {
-	id: string;
-	name: string;
+/** One weekday slot inside a batch schedule. */
+export type OperationsBatchTimingData = {
+	day: number;
 	startTime: string;
 	endTime: string;
-	/** Session weekdays as JS day numbers (0 = Sunday). Vary by center/batch. */
-	days: number[];
 };
 
-/**
- * A plan sold at a center. Both prices are stored, so partial months multiply a
- * stored per-session price - there is no rate derivation and no rounding.
- */
+/** A plan sold inside a specific batch. */
 export type OperationsPlanData = {
 	id: string;
 	name: string;
@@ -28,6 +22,22 @@ export type OperationsPlanData = {
 	perSessionPrice: number;
 };
 
+/** Optional registration fee that can be added to the student's total. */
+export type OperationsRegistrationOptionData = {
+	id: string;
+	name: string;
+	price: number;
+};
+
+/** A scheduled group within a center. Schedule, plans and registration live here. */
+export type OperationsBatchData = {
+	id: string;
+	name: string;
+	schedule: OperationsBatchTimingData[];
+	plans: OperationsPlanData[];
+	registrationOptions: OperationsRegistrationOptionData[];
+};
+
 /** A center with everything the tools need */
 export type OperationsCenterData = {
 	id: string;
@@ -35,7 +45,6 @@ export type OperationsCenterData = {
 	address: string;
 	coaches: OperationsCoachData[];
 	batches: OperationsBatchData[];
-	plans: OperationsPlanData[];
 };
 
 /** Values shared across every center */

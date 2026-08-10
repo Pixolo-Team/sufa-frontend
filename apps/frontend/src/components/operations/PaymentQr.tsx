@@ -33,7 +33,6 @@ import { formatRupees } from "@/utils/fee-calculator.util";
 
 type QrMode = "global" | "student";
 
-/** UPI notes are truncated by some apps, so keep it well inside the limit */
 const UPI_NOTE_MAX_LENGTH = 50;
 
 interface PaymentQrProps {
@@ -50,28 +49,17 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	config,
 	onCenterChange,
 }) => {
-	// Define states
 	const [mode, setMode] = useState<QrMode>("global");
 	const [studentName, setStudentName] = useState("");
 	const [studentPhone, setStudentPhone] = useState("");
 	const [qrDataUrl, setQrDataUrl] = useState("");
 
 	const feeInputs = useFeeInputs(center);
-	const { quote } = feeInputs;
+	const { batch, plan, registrationOption, quote } = feeInputs;
 
 	const isStudentMode = mode === "student";
-
-	// The student QR needs an amount before it can encode anything
 	const amount = isStudentMode ? (quote?.total ?? 0) : 0;
 
-	/**
-	 * `upi://pay?…` - scanning it opens the parent's UPI app, amount pre-filled.
-	 *
-	 * `tn` is the UPI transaction note. It carries the student's name into the
-	 * payment so an otherwise anonymous ₹3,400 credit can be tied back to them in
-	 * the settlement report - the only link there is, since no quote is stored.
-	 * Keep it short: some apps truncate it, and the payer can edit it.
-	 */
 	const upiUri = useMemo(() => {
 		const params = new URLSearchParams({
 			pa: config.upiId,
@@ -81,9 +69,14 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 		if (amount > 0) params.set("am", String(amount));
 
-		const note = [studentName.trim(), feeInputs.plan?.name]
+		const note = [
+			studentName.trim(),
+			batch?.name,
+			plan?.name,
+			registrationOption?.name,
+		]
 			.filter(Boolean)
-			.join(" · ")
+			.join(" | ")
 			.slice(0, UPI_NOTE_MAX_LENGTH);
 
 		if (isStudentMode && note) params.set("tn", note);
@@ -95,10 +88,11 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		amount,
 		isStudentMode,
 		studentName,
-		feeInputs.plan?.name,
+		batch?.name,
+		plan?.name,
+		registrationOption?.name,
 	]);
 
-	// Re-render the QR whenever the encoded string changes
 	useEffect(() => {
 		let isActive = true;
 
@@ -115,7 +109,6 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		};
 	}, [upiUri]);
 
-	/** Name the file after the student so staff can find it in the gallery */
 	const fileName = useMemo(() => {
 		if (!isStudentMode) return "skorost-payment-qr.png";
 
@@ -126,16 +119,14 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 			: `skorost-payment-${amount}.png`;
 	}, [isStudentMode, studentName, amount]);
 
-	/** The note that travels with the QR when it is shared */
 	const shareText = useMemo(() => {
-		if (!isStudentMode) return `Pay ${config.payeeName} · ${config.upiId}`;
+		if (!isStudentMode) return `Pay ${config.payeeName} | ${config.upiId}`;
 
-		const who = studentName.trim() ? `${studentName.trim()} · ` : "";
+		const who = studentName.trim() ? `${studentName.trim()} | ` : "";
 
 		return `${who}Fees due ${formatRupees(amount)}. Scan to pay ${config.payeeName}.`;
 	}, [isStudentMode, studentName, amount, config.payeeName, config.upiId]);
 
-	/** Save the QR so staff can send it from their gallery */
 	const downloadQr = useCallback(() => {
 		if (!qrDataUrl) return;
 
@@ -146,7 +137,6 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		link.click();
 	}, [qrDataUrl, fileName]);
 
-	/** Native share sheet where it exists, clipboard everywhere else */
 	const shareQr = useCallback(async () => {
 		try {
 			const blob = await (await fetch(qrDataUrl)).blob();
@@ -158,13 +148,12 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 			}
 
 			await navigator.clipboard.writeText(upiUri);
-			showToast("Sharing unavailable · UPI link copied", ToastTypes.SUCCESS);
+			showToast("Sharing unavailable | UPI link copied", ToastTypes.SUCCESS);
 		} catch {
 			// A cancelled share sheet lands here too, so stay quiet about it
 		}
 	}, [qrDataUrl, fileName, shareText, upiUri]);
 
-	/** Open WhatsApp with the amount pre-written, when a number was entered */
 	const openWhatsApp = useCallback(() => {
 		const digits = studentPhone.replace(/\D/g, "");
 
@@ -180,6 +169,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	}, [studentPhone, shareText]);
 
 	const hasPhone = studentPhone.replace(/\D/g, "").length >= 10;
+	const canUseStudentQr = !!batch && !!plan && amount > 0;
 
 	return (
 		<div className={styles.cardStack}>
@@ -229,7 +219,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						</>
 					) : (
 						<p className={styles.qrHint}>
-							No amount encoded · the parent types what they owe.
+							No amount encoded | the parent types what they owe.
 						</p>
 					)}
 				</div>
@@ -247,16 +237,23 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						}
 					/>
 				) : (
-					<p className={styles.qrHint}>Generating QR…</p>
+					<p className={styles.qrHint}>Generating QR...</p>
 				)}
 
 				<p className={styles.qrCaption}>
 					{isStudentMode && amount > 0 ? formatRupees(amount) : "Any amount"}
 				</p>
 				<p className={styles.qrHint}>
-					{isStudentMode && studentName.trim() ? `${studentName.trim()} · ` : ""}
-					{config.payeeName} · {config.upiId}
+					{isStudentMode && studentName.trim() ? `${studentName.trim()} | ` : ""}
+					{config.payeeName} | {config.upiId}
 				</p>
+
+				{isStudentMode && !canUseStudentQr && (
+					<p className={styles.qrHint}>
+						Select a batch and plan first. The amount is calculated from the
+						batch-linked plan.
+					</p>
+				)}
 
 				<div className={styles.buttonRow} style={{ width: "100%" }}>
 					<Button
@@ -265,7 +262,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						color={Colors.NEUTRAL_DARK}
 						shape={Shapes.ROUNDED}
 						size={ButtonSizes.LARGE}
-						isDisabled={!qrDataUrl}
+						isDisabled={!qrDataUrl || (isStudentMode && !canUseStudentQr)}
 						onClick={downloadQr}
 					/>
 					<Button
@@ -273,7 +270,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						color={Colors.PRIMARY}
 						shape={Shapes.ROUNDED}
 						size={ButtonSizes.LARGE}
-						isDisabled={!qrDataUrl}
+						isDisabled={!qrDataUrl || (isStudentMode && !canUseStudentQr)}
 						onClick={() => {
 							if (hasPhone) {
 								openWhatsApp();

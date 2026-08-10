@@ -1,13 +1,10 @@
 // TYPES //
-import type {
-	OperationsCenterData,
-	OperationsPlanData,
-} from "@/types/operations";
+import type { OperationsBatchData, OperationsCenterData } from "@/types/operations";
 
 // UTILS //
 import { formatRupees } from "@/utils/fee-calculator.util";
 import {
-	formatBatchTimings,
+	formatBatchTimingLines,
 	formatPlanLabel,
 } from "@/utils/operations.util";
 
@@ -23,7 +20,7 @@ const ACCENT = "#16db93";
 type FeeStructureImageInput = {
 	academyName: string;
 	center: OperationsCenterData;
-	plans?: OperationsPlanData[];
+	batch: OperationsBatchData;
 	senderName?: string;
 };
 
@@ -62,7 +59,7 @@ const wrapText = (
 export const renderFeeStructureImage = async ({
 	academyName,
 	center,
-	plans = center.plans,
+	batch,
 	senderName = "",
 }: FeeStructureImageInput): Promise<Blob | null> => {
 	if (document.fonts?.ready) await document.fonts.ready;
@@ -78,12 +75,17 @@ export const renderFeeStructureImage = async ({
 
 	context.font = `400 26px ${body}`;
 	const addressLines = wrapText(context, center.address, contentWidth - 150);
+	const scheduleLines = formatBatchTimingLines(batch);
+	const registrationLines = batch.registrationOptions.map(
+		(item) => `${item.name}: ${formatRupees(item.price)}`
+	);
 
 	const height =
-		560 +
-		plans.length * 86 +
+		620 +
+		batch.plans.length * 86 +
+		registrationLines.length * 46 +
 		addressLines.length * 38 +
-		center.batches.length * 38 +
+		scheduleLines.length * 38 +
 		190;
 
 	const scale = 2;
@@ -114,15 +116,17 @@ export const renderFeeStructureImage = async ({
 
 	context.fillStyle = MUTED;
 	context.font = `700 22px ${body}`;
-	context.letterSpacing = "3px";
 	context.fillText("FEE STRUCTURE", PADDING, y);
-	context.letterSpacing = "0px";
 	y += 56;
 
 	context.fillStyle = INK;
 	context.font = `800 54px ${body}`;
 	context.fillText(center.name, PADDING, y);
-	y += 56;
+	y += 48;
+
+	context.font = `600 30px ${body}`;
+	context.fillText(batch.name, PADDING, y);
+	y += 40;
 
 	context.strokeStyle = LINE;
 	context.lineWidth = 2;
@@ -132,7 +136,7 @@ export const renderFeeStructureImage = async ({
 	context.stroke();
 	y += 62;
 
-	for (const plan of plans) {
+	for (const plan of batch.plans) {
 		context.fillStyle = INK;
 		context.font = `500 30px ${body}`;
 		context.fillText(formatPlanLabel(plan), PADDING, y);
@@ -145,17 +149,29 @@ export const renderFeeStructureImage = async ({
 		context.textAlign = "left";
 
 		y += 30;
-
 		context.strokeStyle = LINE;
 		context.beginPath();
 		context.moveTo(PADDING, y);
 		context.lineTo(WIDTH - PADDING, y);
 		context.stroke();
-
 		y += 56;
 	}
 
-	y += 16;
+	if (registrationLines.length > 0) {
+		context.fillStyle = MUTED;
+		context.font = `700 22px ${body}`;
+		context.fillText("REGISTRATION", PADDING, y);
+		y += 42;
+
+		for (const line of registrationLines) {
+			context.fillStyle = INK;
+			context.font = `400 26px ${body}`;
+			context.fillText(line, PADDING, y);
+			y += 38;
+		}
+
+		y += 20;
+	}
 
 	context.fillStyle = MUTED;
 	context.font = `700 22px ${body}`;
@@ -173,17 +189,13 @@ export const renderFeeStructureImage = async ({
 
 	context.fillStyle = MUTED;
 	context.font = `700 22px ${body}`;
-	context.fillText("TIMINGS", PADDING, y);
+	context.fillText("SCHEDULE", PADDING, y);
 
-	for (const batch of center.batches) {
+	for (const line of scheduleLines) {
 		y += 38;
 		context.fillStyle = INK;
 		context.font = `400 26px ${body}`;
-		context.fillText(
-			`${batch.name} · ${formatBatchTimings(batch)}`,
-			PADDING,
-			y
-		);
+		context.fillText(line, PADDING, y);
 	}
 
 	const footerHeight = 96;
@@ -193,7 +205,7 @@ export const renderFeeStructureImage = async ({
 	context.fillStyle = MUTED;
 	context.font = `500 24px ${body}`;
 	context.fillText(
-		senderName ? `${academyName} · Sent by ${senderName}` : academyName,
+		senderName ? `${academyName} | Sent by ${senderName}` : academyName,
 		PADDING,
 		height - footerHeight / 2 + 9
 	);

@@ -1,47 +1,88 @@
-// DUMMY seed data — see docs/operations/06-dummy-data.md.
-// 🔴 REPLACE with real values before production.
+// DUMMY seed data - replace with real values before production.
 // The scaffold route returns this directly until a real DB is wired.
 
 import type { OperationsData } from "./types";
 
 export const OPERATIONS_SEED: OperationsData = {
 	config: {
-		upiId: "skorost@ybl", // 🔴 dummy
-		payeeName: "Skorost United Football Academy", // 🔴 dummy
-		perSessionRate: 285, // confirmed
+		academyName: "Skorost United Football Academy",
+		upiId: "skorost@ybl",
+		payeeName: "Skorost United Football Academy",
+		staffPin: "1234",
 	},
 	centers: [
 		{
-			id: "ghatkopar-east",
+			id: "0f8c2b14-6d3a-4f21-9c7e-1a5b8d0e3f42",
 			name: "Ghatkopar East",
-			address: "12 MG Road, Ghatkopar East, Mumbai 400077", // 🔴 dummy
-			timings: "Mon/Wed/Fri, 5:00–6:30 PM", // 🔴 dummy
-			plans: [
-				{ id: "1m-3d", name: "1-Month 3-Day", durationMonths: 1, daysPerWeek: 3, sessionsPerMonth: 12, price: 3400 },
-				{ id: "6m-3d", name: "6-Month", durationMonths: 6, daysPerWeek: 3, price: 9000 },
-				{ id: "1m-2d", name: "1-Month 2-Day", durationMonths: 1, daysPerWeek: 2, sessionsPerMonth: 8, price: 2280 },
+			address: "12 MG Road, Ghatkopar East, Mumbai 400077",
+			coaches: [
+				{
+					id: "3a1e7c90-52b4-4d68-8f13-6c9a2e5b7d04",
+					name: "Harsh Patil",
+					phone: "9876543210",
+				},
 			],
-		},
-		{
-			id: "ghatkopar-west",
-			name: "Ghatkopar West",
-			address: "45 LBS Marg, Ghatkopar West, Mumbai 400086", // 🔴 dummy
-			timings: "Mon/Wed/Fri, 6:00–7:30 PM", // 🔴 dummy
-			plans: [
-				{ id: "1m-3d", name: "1-Month 3-Day", durationMonths: 1, daysPerWeek: 3, sessionsPerMonth: 12, price: 3600 },
-				{ id: "6m-3d", name: "6-Month", durationMonths: 6, daysPerWeek: 3, price: 9500 },
-				{ id: "1m-2d", name: "1-Month 2-Day", durationMonths: 1, daysPerWeek: 2, sessionsPerMonth: 8, price: 2400 },
-			],
-		},
-		{
-			id: "powai",
-			name: "Powai",
-			address: "8 Hiranandani Gardens, Powai, Mumbai 400076", // 🔴 dummy
-			timings: "Mon/Wed/Fri, 4:00–5:30 PM", // 🔴 dummy
-			plans: [
-				{ id: "1m-3d", name: "1-Month 3-Day", durationMonths: 1, daysPerWeek: 3, sessionsPerMonth: 12, price: 3800 },
-				{ id: "6m-3d", name: "6-Month", durationMonths: 6, daysPerWeek: 3, price: 10000 },
-				{ id: "1m-2d", name: "1-Month 2-Day", durationMonths: 1, daysPerWeek: 2, sessionsPerMonth: 8, price: 2540 },
+			batches: [
+				{
+					id: "7d4b1a62-9c05-4e37-a1f8-2b6e0d3c5849",
+					name: "Evening Batch",
+					schedule: [
+						{ day: 1, startTime: "18:00", endTime: "19:00" },
+						{ day: 3, startTime: "19:00", endTime: "20:00" },
+						{ day: 5, startTime: "18:30", endTime: "19:30" },
+					],
+					plans: [
+						{
+							id: "east-evening-1m-3d",
+							name: "1 Month - 3 Days",
+							durationMonths: 1,
+							daysPerWeek: 3,
+							price: 3400,
+							perSessionPrice: 285,
+						},
+						{
+							id: "east-evening-3m-3d",
+							name: "3 Months - 3 Days",
+							durationMonths: 3,
+							daysPerWeek: 3,
+							price: 9600,
+							perSessionPrice: 285,
+						},
+						{
+							id: "east-evening-6m-3d",
+							name: "6 Months - 3 Days",
+							durationMonths: 6,
+							daysPerWeek: 3,
+							price: 18600,
+							perSessionPrice: 285,
+						},
+						{
+							id: "east-evening-12m-3d",
+							name: "12 Months - 3 Days",
+							durationMonths: 12,
+							daysPerWeek: 3,
+							price: 34800,
+							perSessionPrice: 285,
+						},
+					],
+					registrationOptions: [
+						{
+							id: "east-evening-registration-package",
+							name: "Registration Package",
+							price: 1160,
+						},
+						{
+							id: "east-evening-starter-package",
+							name: "Starter Package",
+							price: 2150,
+						},
+						{
+							id: "east-evening-player-package",
+							name: "Player Package",
+							price: 3560,
+						},
+					],
+				},
 			],
 		},
 	],

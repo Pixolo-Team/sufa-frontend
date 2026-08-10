@@ -39,7 +39,6 @@ const FeeCalculator: React.FC<FeeCalculatorProps> = ({
 				/>
 			</div>
 
-			{/* The total updates live - there is nothing to submit */}
 			{quote && (
 				<div className={styles.result}>
 					<div className={styles.resultTotal}>
@@ -58,8 +57,8 @@ const FeeCalculator: React.FC<FeeCalculatorProps> = ({
 					))}
 
 					<p className={styles.resultFootnote}>
-						{formatDisplayDate(inputs.startDate)} –{" "}
-						{formatDisplayDate(inputs.endDate)} · prices as stored, no rounding
+						{formatDisplayDate(inputs.startDate)} -{" "}
+						{formatDisplayDate(inputs.endDate)} | prices as stored, no rounding
 					</p>
 				</div>
 			)}
