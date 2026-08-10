@@ -82,9 +82,7 @@ const academyStats = [
 			{
 				featuredPlayers.map((player, index) => (
 					<article
-						class={`${styles.playerCard} ${
-							index === 0 ? styles.playerCardFeatured : ""
-						} fade-in-up`}
+						class={`${styles.playerCard} fade-in-up`}
 						style={`animation-delay:${index * 0.08}s;`}
 					>
 						<div class={styles.playerMedia}>

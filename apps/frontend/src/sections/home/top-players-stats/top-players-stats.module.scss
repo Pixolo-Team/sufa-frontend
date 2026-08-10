@@ -24,7 +24,7 @@
 
 .sectionDescription {
 	margin: 14px auto 0;
-	max-width: 580px;
+	max-width: 560px;
 	font-size: var(--color-brand-font-size-large);
 	line-height: 1.7;
 	color: var(--color-brand-neutral-dark-500);
@@ -91,15 +91,9 @@
 	}
 }
 
-.playerCardFeatured {
-	background:
-		linear-gradient(180deg, rgba(22, 219, 147, 0.05) 0%, rgba(255, 255, 255, 1) 26%),
-		var(--color-background-light-tint);
-}
-
 .playerMedia {
 	position: relative;
-	aspect-ratio: 1.12;
+	aspect-ratio: 4 / 3;
 	background-color: var(--color-brand-neutral-light-300);
 	overflow: hidden;
 }
@@ -121,13 +115,13 @@
 .playerMediaOverlay {
 	position: absolute;
 	inset: auto 0 0;
-	height: 35%;
+	height: 28%;
 	background: linear-gradient(180deg, rgba(15, 28, 20, 0) 0%, rgba(15, 28, 20, 0.18) 100%);
 	pointer-events: none;
 }
 
 .playerContent {
-	padding: 20px 20px 22px;
+	padding: 20px;
 }
 
 .playerTopline {
@@ -198,27 +192,13 @@
 	}
 
 	.playersGrid {
-		grid-template-columns: 1.35fr 1fr 1fr;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		align-items: start;
 	}
+}
 
-	.playerCardFeatured {
-		grid-row: span 2;
-	}
-
-	.playerCardFeatured .playerMedia {
-		aspect-ratio: 0.92;
-	}
-
-	.playerCardFeatured .playerContent {
-		padding: 24px 24px 26px;
-	}
-
-	.playerCardFeatured .playerTopline h3 {
-		font-size: var(--color-brand-font-size-4xlarge);
-	}
-
-	.playerCardFeatured .playerBlurb {
-		font-size: 14px;
+@media only screen and (min-width: 992px) {
+	.playersGrid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 }
