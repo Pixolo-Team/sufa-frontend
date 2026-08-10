@@ -1,12 +1,32 @@
 .section {
-	padding-bottom: 72px;
+	padding-bottom: 88px;
+}
+
+.sectionIntro {
+	margin: 18px auto 0;
+	max-width: 720px;
+}
+
+.sectionKicker {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 32px;
+	padding: 0 14px;
+	border-radius: var(--border-radius-rounded);
+	background-color: rgba(22, 219, 147, 0.12);
+	color: var(--color-brand-primary-deep);
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
 }
 
 .sectionDescription {
 	margin: 14px auto 0;
-	max-width: 540px;
+	max-width: 580px;
 	font-size: var(--color-brand-font-size-large);
-	line-height: 1.65;
+	line-height: 1.7;
 	color: var(--color-brand-neutral-dark-500);
 }
 
@@ -14,27 +34,34 @@
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 14px;
-	margin-top: 32px;
+	margin-top: 34px;
+	padding: 18px;
+	border-radius: calc(var(--border-radius-large) + 6px);
+	background:
+		radial-gradient(circle at top right, rgba(22, 219, 147, 0.12), transparent 34%),
+		linear-gradient(180deg, #10261a 0%, #173424 100%);
+	box-shadow: 0 24px 48px -38px rgba(9, 24, 17, 0.8);
 }
 
 .heroStat {
 	padding: 18px 16px;
 	border-radius: var(--border-radius-large);
-	background-color: var(--color-brand-neutral-light-200);
-	border: 1px solid rgba(0, 0, 0, 0.05);
+	background-color: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.08);
 
 	strong {
 		display: block;
-		color: var(--color-brand-primary-deep);
-		font-size: clamp(24px, 3vw, 34px);
+		color: white;
+		font-size: clamp(26px, 3vw, 36px);
 		font-weight: 800;
 		line-height: 1;
+		letter-spacing: -0.04em;
 	}
 
 	span {
 		display: block;
 		margin-top: 8px;
-		color: var(--color-brand-neutral-dark-500);
+		color: rgba(255, 255, 255, 0.72);
 		font-size: 12.5px;
 		line-height: 1.5;
 	}
@@ -48,25 +75,59 @@
 
 .playerCard {
 	overflow: hidden;
-	border-radius: var(--border-radius-large);
+	border-radius: calc(var(--border-radius-large) + 2px);
 	background-color: var(--color-background-light-tint);
 	border: 1px solid rgba(0, 0, 0, 0.06);
-	box-shadow: 0 12px 24px -22px rgba(0, 0, 0, 0.24);
+	box-shadow: 0 18px 30px -24px rgba(0, 0, 0, 0.22);
+	transition:
+		transform 0.24s ease,
+		box-shadow 0.24s ease,
+		border-color 0.24s ease;
+
+	&:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 28px 42px -28px rgba(0, 0, 0, 0.28);
+		border-color: rgba(22, 219, 147, 0.18);
+	}
+}
+
+.playerCardFeatured {
+	background:
+		linear-gradient(180deg, rgba(22, 219, 147, 0.05) 0%, rgba(255, 255, 255, 1) 26%),
+		var(--color-background-light-tint);
 }
 
 .playerMedia {
-	aspect-ratio: 1.18;
+	position: relative;
+	aspect-ratio: 1.12;
 	background-color: var(--color-brand-neutral-light-300);
+	overflow: hidden;
 }
 
 .playerImage {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	transition:
+		transform 0.45s ease,
+		filter 0.45s ease;
+
+	.playerCard:hover & {
+		transform: scale(1.04);
+		filter: saturate(1.04);
+	}
+}
+
+.playerMediaOverlay {
+	position: absolute;
+	inset: auto 0 0;
+	height: 35%;
+	background: linear-gradient(180deg, rgba(15, 28, 20, 0) 0%, rgba(15, 28, 20, 0.18) 100%);
+	pointer-events: none;
 }
 
 .playerContent {
-	padding: 18px;
+	padding: 20px 20px 22px;
 }
 
 .playerTopline {
@@ -74,19 +135,19 @@
 		margin-top: 8px;
 		color: var(--color-brand-primary-deep);
 		font-size: var(--color-brand-font-size-2xlarge);
-		line-height: 1.1;
+		line-height: 1.08;
 	}
 }
 
 .playerRole {
 	display: inline-block;
-	padding: 5px 10px;
+	padding: 6px 10px;
 	border-radius: var(--border-radius-rounded);
 	background-color: var(--color-brand-primary-light);
 	color: var(--color-brand-primary-deep);
 	font-size: 10px;
 	font-weight: 700;
-	letter-spacing: 0.08em;
+	letter-spacing: 0.1em;
 	text-transform: uppercase;
 }
 
@@ -101,7 +162,7 @@
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 8px;
-	margin-top: 16px;
+	margin-top: 18px;
 }
 
 .statTile {
@@ -133,10 +194,31 @@
 @media only screen and (min-width: 768px) {
 	.heroStats {
 		grid-template-columns: repeat(4, minmax(0, 1fr));
+		padding: 22px;
 	}
 
 	.playersGrid {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-template-columns: 1.35fr 1fr 1fr;
 		align-items: start;
+	}
+
+	.playerCardFeatured {
+		grid-row: span 2;
+	}
+
+	.playerCardFeatured .playerMedia {
+		aspect-ratio: 0.92;
+	}
+
+	.playerCardFeatured .playerContent {
+		padding: 24px 24px 26px;
+	}
+
+	.playerCardFeatured .playerTopline h3 {
+		font-size: var(--color-brand-font-size-4xlarge);
+	}
+
+	.playerCardFeatured .playerBlurb {
+		font-size: 14px;
 	}
 }

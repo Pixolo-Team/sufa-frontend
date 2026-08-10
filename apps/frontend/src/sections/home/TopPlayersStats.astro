@@ -55,13 +55,17 @@ const academyStats = [
 <section class={`section-spacing ${styles.section}`}>
 	<div class="container">
 		<SectionHeader
-			fadedText="Stats"
+			fadedText="Elite"
 			highlightedText="Top Academy Players"
 		/>
 
-		<p class={`${styles.sectionDescription} text-center font-weight-500 fade-in-up`}>
-			A clean snapshot of the players setting the standard at Skorost.
-		</p>
+		<div class={`${styles.sectionIntro} text-center fade-in-up`}>
+			<span class={styles.sectionKicker}>Built In Skorost Colours</span>
+			<p class={`${styles.sectionDescription} font-weight-500`}>
+				The players younger footballers look up to first. Clean numbers, strong
+				presence, and a section that lets the academy's best stand out.
+			</p>
+		</div>
 
 		<div class={`${styles.heroStats} fade-in-up`}>
 			{
@@ -78,7 +82,9 @@ const academyStats = [
 			{
 				featuredPlayers.map((player, index) => (
 					<article
-						class={`${styles.playerCard} fade-in-up`}
+						class={`${styles.playerCard} ${
+							index === 0 ? styles.playerCardFeatured : ""
+						} fade-in-up`}
 						style={`animation-delay:${index * 0.08}s;`}
 					>
 						<div class={styles.playerMedia}>
@@ -89,6 +95,7 @@ const academyStats = [
 								loading="lazy"
 								decoding="async"
 							/>
+							<div class={styles.playerMediaOverlay}></div>
 						</div>
 
 						<div class={styles.playerContent}>
