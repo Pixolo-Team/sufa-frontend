@@ -1,0 +1,142 @@
+.section {
+	padding-bottom: 72px;
+}
+
+.sectionDescription {
+	margin: 14px auto 0;
+	max-width: 540px;
+	font-size: var(--color-brand-font-size-large);
+	line-height: 1.65;
+	color: var(--color-brand-neutral-dark-500);
+}
+
+.heroStats {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 14px;
+	margin-top: 32px;
+}
+
+.heroStat {
+	padding: 18px 16px;
+	border-radius: var(--border-radius-large);
+	background-color: var(--color-brand-neutral-light-200);
+	border: 1px solid rgba(0, 0, 0, 0.05);
+
+	strong {
+		display: block;
+		color: var(--color-brand-primary-deep);
+		font-size: clamp(24px, 3vw, 34px);
+		font-weight: 800;
+		line-height: 1;
+	}
+
+	span {
+		display: block;
+		margin-top: 8px;
+		color: var(--color-brand-neutral-dark-500);
+		font-size: 12.5px;
+		line-height: 1.5;
+	}
+}
+
+.playersGrid {
+	display: grid;
+	gap: 20px;
+	margin-top: 28px;
+}
+
+.playerCard {
+	overflow: hidden;
+	border-radius: var(--border-radius-large);
+	background-color: var(--color-background-light-tint);
+	border: 1px solid rgba(0, 0, 0, 0.06);
+	box-shadow: 0 12px 24px -22px rgba(0, 0, 0, 0.24);
+}
+
+.playerMedia {
+	aspect-ratio: 1.18;
+	background-color: var(--color-brand-neutral-light-300);
+}
+
+.playerImage {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.playerContent {
+	padding: 18px;
+}
+
+.playerTopline {
+	h3 {
+		margin-top: 8px;
+		color: var(--color-brand-primary-deep);
+		font-size: var(--color-brand-font-size-2xlarge);
+		line-height: 1.1;
+	}
+}
+
+.playerRole {
+	display: inline-block;
+	padding: 5px 10px;
+	border-radius: var(--border-radius-rounded);
+	background-color: var(--color-brand-primary-light);
+	color: var(--color-brand-primary-deep);
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.playerBlurb {
+	margin-top: 12px;
+	color: var(--color-brand-neutral-dark-500);
+	font-size: 13px;
+	line-height: 1.65;
+}
+
+.statsList {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.statTile {
+	padding: 12px 10px;
+	border-radius: var(--border-radius-medium);
+	background-color: white;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+
+	span {
+		display: block;
+		color: var(--color-brand-neutral-dark-500);
+		font-size: 10px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		line-height: 1.35;
+	}
+
+	strong {
+		display: block;
+		margin-top: 8px;
+		color: var(--color-brand-primary-deep);
+		font-size: clamp(18px, 2.2vw, 26px);
+		font-weight: 800;
+		line-height: 1;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.heroStats {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.playersGrid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		align-items: start;
+	}
+}

@@ -1,0 +1,118 @@
+---
+// STYLES //
+import styles from "./top-players-stats/top-players-stats.module.scss";
+
+// COMPONENTS //
+import SectionHeader from "@/components/section-header/SectionHeader.astro";
+
+const featuredPlayers = [
+	{
+		name: "Shubham Verma",
+		role: "Striker",
+		image: "/images/graduates/shubham.jpg",
+		blurb:
+			"A natural finisher shaped through the Skorost pathway, known for sharp movement, composure in the box, and decisive final-third impact.",
+		stats: [
+			{ label: "Goals", value: "47" },
+			{ label: "Assists", value: "18" },
+			{ label: "Finals Won", value: "6" },
+		],
+	},
+	{
+		name: "Allen Thomas",
+		role: "Vice-Captain",
+		image: "/images/graduates/allen.jpg",
+		blurb:
+			"An intense, all-action leader whose pressing, discipline, and consistency set the standard for every younger player coming through.",
+		stats: [
+			{ label: "Caps", value: "62" },
+			{ label: "Contributions", value: "29" },
+			{ label: "Captaincies", value: "14" },
+		],
+	},
+	{
+		name: "Harsh Patil",
+		role: "Pro Graduate",
+		image: "/images/graduates/harsh.jpg",
+		blurb:
+			"One of the academy's proud graduates, carrying professional-level experience back into the system and helping raise the bar for the next generation.",
+		stats: [
+			{ label: "Pro Seasons", value: "9" },
+			{ label: "Elite Camps", value: "21" },
+			{ label: "Mentored", value: "120+" },
+		],
+	},
+];
+
+const academyStats = [
+	{ value: "23+", label: "Years of academy culture" },
+	{ value: "300+", label: "Players developed" },
+	{ value: "40+", label: "Players pushed higher" },
+	{ value: "12", label: "Active training batches" },
+];
+---
+
+<section class={`section-spacing ${styles.section}`}>
+	<div class="container">
+		<SectionHeader
+			fadedText="Stats"
+			highlightedText="Top Academy Players"
+		/>
+
+		<p class={`${styles.sectionDescription} text-center font-weight-500 fade-in-up`}>
+			A clean snapshot of the players setting the standard at Skorost.
+		</p>
+
+		<div class={`${styles.heroStats} fade-in-up`}>
+			{
+				academyStats.map((stat) => (
+					<div class={styles.heroStat}>
+						<strong>{stat.value}</strong>
+						<span>{stat.label}</span>
+					</div>
+				))
+			}
+		</div>
+
+		<div class={styles.playersGrid}>
+			{
+				featuredPlayers.map((player, index) => (
+					<article
+						class={`${styles.playerCard} fade-in-up`}
+						style={`animation-delay:${index * 0.08}s;`}
+					>
+						<div class={styles.playerMedia}>
+							<img
+								src={player.image}
+								alt={player.name}
+								class={`${styles.playerImage} img-responsive full-width-img`}
+								loading="lazy"
+								decoding="async"
+							/>
+						</div>
+
+						<div class={styles.playerContent}>
+							<div class={styles.playerTopline}>
+								<span class={styles.playerRole}>{player.role}</span>
+								<h3>{player.name}</h3>
+							</div>
+
+							<p class={styles.playerBlurb}>{player.blurb}</p>
+
+							<div class={styles.statsList}>
+								{
+									player.stats.map((stat) => (
+										<div class={styles.statTile}>
+											<span>{stat.label}</span>
+											<strong>{stat.value}</strong>
+										</div>
+									))
+								}
+							</div>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</div>
+</section>
