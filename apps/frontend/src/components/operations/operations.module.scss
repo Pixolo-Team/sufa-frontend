@@ -741,11 +741,6 @@
 	box-shadow: inset 0 0 0 1px #e4ebf3;
 }
 
-.centerGrid {
-	display: grid;
-	gap: 12px;
-}
-
 .centerBlock {
 	padding: 12px;
 	border-radius: 14px;
@@ -791,16 +786,21 @@
 	}
 }
 
+.priceRowDescription {
+	display: block;
+	margin-top: 2px;
+	color: var(--ops-muted);
+	font-size: 11px;
+	font-weight: 400;
+	line-height: 1.4;
+}
+
 @media only screen and (min-width: 480px) {
 	.centerHeader {
 		flex-direction: row;
 		align-items: flex-start;
 		justify-content: space-between;
 		gap: 16px;
-	}
-
-	.centerGrid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
 

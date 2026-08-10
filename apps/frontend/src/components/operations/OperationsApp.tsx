@@ -48,7 +48,7 @@ const TOOLS: {
 
 /** Staff-only operations tools. Everything is computed and sent in the browser. */
 const OperationsApp: React.FC = () => {
-	const { config, centers } = OPERATIONS_DATA;
+	const { config, centers, registrationOptions } = OPERATIONS_DATA;
 
 	const [isUnlocked, setIsUnlocked] = useState(
 		() => window.localStorage.getItem(UNLOCK_STORAGE_KEY) === "true"
@@ -77,13 +77,27 @@ const OperationsApp: React.FC = () => {
 
 		switch (activeTool) {
 			case "calculator":
-				return <FeeCalculator {...toolProps} />;
+				return <FeeCalculator {...toolProps} registrationOptions={registrationOptions} />;
 			case "structure":
-				return <FeeStructure {...toolProps} config={config} />;
+				return (
+					<FeeStructure
+						{...toolProps}
+						config={config}
+						registrationOptions={registrationOptions}
+					/>
+				);
 			case "qr":
-				return <PaymentQr {...toolProps} config={config} />;
+				return (
+					<PaymentQr
+						{...toolProps}
+						config={config}
+						registrationOptions={registrationOptions}
+					/>
+				);
 			case "centers":
-				return <CentersList centers={centers} />;
+				return (
+					<CentersList centers={centers} registrationOptions={registrationOptions} />
+				);
 			default:
 				return (
 					<div className={styles.tiles}>

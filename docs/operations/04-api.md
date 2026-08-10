@@ -14,24 +14,26 @@ Base URL: `https://api.skorostunited.com/api/skorost` (existing service).
 
 ### `GET /operations/centers`
 
-Active centers with their coaches, batches (days + timings), plans and
-per-center prices, plus global config. Powers every tool on the page.
+Active centers with their batches (days + timings) and plans, per-center
+prices, plus global config and global registration options. Powers every tool
+on the page.
 
 ```jsonc
 {
   "data": {
     "config": { "upiId": "skorost@ybl", "payeeName": "Skorost United Football Academy" },
+    "registrationOptions": [
+      { "id": "<uuid>", "name": "Registration Package", "description": "One-time registration, kit and ID card", "price": 500 },
+      { "id": "<uuid>", "name": "Player Package", "description": "Registration + academy jersey and shorts", "price": 1200 }
+    ],
     "centers": [
       {
         "id": "<uuid>",
         "name": "Ghatkopar East",
         "address": "…",
-        "coaches": [
-          { "id": "<uuid>", "name": "Harsh Patil", "phone": "9876543210" }
-        ],
         "batches": [
-          { "id": "<uuid>", "name": "Evening", "startTime": "17:00", "endTime": "18:30", "days": [1, 3, 5] },
-          { "id": "<uuid>", "name": "Morning", "startTime": "07:00", "endTime": "08:30", "days": [2, 4, 6] }
+          { "id": "<uuid>", "name": "Evening", "ageGroup": "Under-10", "startTime": "17:00", "endTime": "18:30", "days": [1, 3, 5] },
+          { "id": "<uuid>", "name": "Morning", "ageGroup": "Under-16", "startTime": "07:00", "endTime": "08:30", "days": [2, 4, 6] }
         ],
         "plans": [
           { "id": "<uuid>", "name": "1 Month · 3 Days",  "durationMonths": 1, "daysPerWeek": 3, "price": 3400, "perSessionPrice": 285 },
@@ -49,9 +51,12 @@ Notes on the shape:
 
 - `days` uses `0=Sun … 6=Sat`, and lives on the **batch** - session days are not
   fixed to Mon/Wed/Fri and differ per center.
-- **Timings are on the batch**, not the center: one center runs several.
+- **Timings and `ageGroup` are on the batch**, not the center: one center runs
+  several.
 - **Both prices are on the plan.** `perSessionPrice` is stored, not derived, so
   the app performs no rate calculation and no rounding.
+- **`registrationOptions` is global**, not per-batch or per-center - it is not
+  nested under `centers`.
 - `config` holds **only** `upiId` and `payeeName`. There is no global
   per-session rate.
 - Ids are **UUIDs** - not slugs, not integers.

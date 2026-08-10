@@ -77,16 +77,17 @@ switching to the Morning batch changes the same dates from ₹3,970 to ₹4,255.
 
 ## Tool 2 - Send Fee Structure
 
-Inputs: center (required), sent-by coach, parent name (optional), parent phone
-(required for the text route). Action: build the fee structure for that center
-as an image and as text, and hand it to WhatsApp.
+Inputs: center (required), parent name (optional), parent phone (required for
+the text route). Action: build the fee structure for that center as an image
+and as text, and hand it to WhatsApp.
 
 Message content (✅ confirmed): **plans + prices for the chosen center + academy
 name, address, timings. No QR / UPI in this message.** Exact wording + per-center
 address/timings still needed (Q6/Q7).
 
-**As built:** a **Sent by (coach)** picker (from the `coaches` table) that signs
-both the message and the image, and an Image / Message preview toggle:
+**As built:** no coach data is stored (see `DATABASE.md`), so the message and
+image are signed off with the academy name only, no sender picker. An Image /
+Message preview toggle:
 
 - **Image** - the structure drawn to a PNG on a canvas, with **Copy image**
   (clipboard, for pasting into a chat) and **Send image** (the OS share sheet,

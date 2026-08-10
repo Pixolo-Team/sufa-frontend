@@ -1,233 +1,133 @@
-# Operations Database
+# Database Design Documentation
 
-Database structure for the `/operations` tooling: fee calculator, fee
-structure, and payment QR. PostgreSQL is assumed. The frontend reads this data
-through the backend; it does not write to these tables directly.
+## Overview
 
-## Why this model
+This document describes the database architecture for the **`/operations`**
+staff tooling of the Skorost United academy site.
 
-The latest requirement is batch-first, not center-first:
+The tooling is focused primarily on:
+- fee calculation (per batch, with pro-rata support),
+- sending the correct fee structure to a parent,
+- generating payment QR codes,
+- and centre / batch reference data.
 
-- staff selects a `batch`, then sees timings
-- timings can differ by day within the same batch
-- plans belong to the selected batch
-- registration packages also belong to the selected batch
-- payment settings stay global
+The database is designed using **PostgreSQL** (`gen_random_uuid()` from
+`pgcrypto` for keys). The frontend reads this data through the backend; it does
+not write to these tables directly.
 
-Because of that, pricing and schedule logic lives under `batches`, while
-`centers` remain the parent grouping for address and coach assignment.
+Key architectural goals:
+- clean relational structure,
+- a **batch-first** model (staff select a batch, then see its timings and plans),
+- **day-wise timings** (each weekday inside a batch can have its own time),
+- **global payment settings** (payment is not per centre or per batch),
+- **global registration options** (add-ons are not tied to a specific batch),
+- future extensibility.
 
-## Conventions
-
-- Primary keys are `UUID` with `gen_random_uuid()`.
-- Table names are plural.
-- Timestamps use `TIMESTAMPTZ` with `DEFAULT now()`.
-- Currency values are stored as whole rupees in `INTEGER`.
-
-```sql
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-```
-
-## High-level relationships
+Relationships:
 
 ```text
-configs (single row)
-
-centers 1---* center_coaches *---1 coaches
-centers 1---* batches
-batches 1---* batch_timings
-batches 1---* plans
-batches 1---* registration_options
+configs               (single row, standalone)
+centers                1---* batches
+batches                1---* batch_timings
+batches                1---* plans
+registration_options   (global, standalone)
 ```
 
-## Tables
+---
 
-### `configs`
+# CONFIGS
 
-Global academy-wide payment and access settings.
+Single-row, academy-wide settings. Payment is global — not per centre, not per
+batch.
 
-```sql
-CREATE TABLE configs (
-    id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    academy_name TEXT NOT NULL,
-    upi_id       TEXT NOT NULL,
-    payee_name   TEXT NOT NULL,
-    staff_pin    TEXT NOT NULL,
-    created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-```
+| Column | Type | Notes |
+|---|---|---|
+| id | UUID PK | Primary key |
+| academy_name | TEXT | Academy display name |
+| upi_id | TEXT | Global UPI ID used by the payment QR |
+| payee_name | TEXT | UPI payee name |
+| staff_pin | TEXT | Shared staff PIN (checked on the frontend) |
+| created_at | TIMESTAMP | Creation timestamp |
 
-Notes:
+---
 
-- Intended as a single-row table for this feature set.
-- Payment is global, not per center and not per batch.
+# CENTERS
 
-### `centers`
+Top-level locations, e.g. Ghatkopar East / West. Used for grouping and address
+only — no pricing lives here.
 
-Top-level locations such as `Ghatkopar East` or `Ghatkopar West`.
+| Column | Type | Notes |
+|---|---|---|
+| id | UUID PK | Primary key |
+| name | TEXT | Center name |
+| address | TEXT | Full address |
+| is_active | BOOLEAN | Active/inactive status |
+| created_at | TIMESTAMP | Creation timestamp |
 
-```sql
-CREATE TABLE centers (
-    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name       TEXT NOT NULL,
-    address    TEXT NOT NULL,
-    is_active  BOOLEAN NOT NULL DEFAULT true,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-```
+---
 
-### `coaches`
+# BATCHES
 
-Coach master table. Coaches can be mapped to multiple centers.
+Each batch belongs to one center and is the main operational selection unit
+(e.g. `Evening Batch`, `Under-10 Batch`).
 
-```sql
-CREATE TABLE coaches (
-    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name       TEXT NOT NULL,
-    phone      TEXT,
-    is_active  BOOLEAN NOT NULL DEFAULT true,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-```
+| Column | Type | Notes |
+|---|---|---|
+| id | UUID PK | Primary key |
+| center_id | UUID FK | References CENTERS.id |
+| name | TEXT | Batch name |
+| age_group | TEXT | Age group, e.g. "Under-10", "6-8 years" |
+| is_active | BOOLEAN | Active/inactive status |
+| created_at | TIMESTAMP | Creation timestamp |
 
-### `center_coaches`
+---
 
-Join table between centers and coaches.
+# BATCH_TIMINGS
 
-```sql
-CREATE TABLE center_coaches (
-    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    center_id  UUID NOT NULL REFERENCES centers(id),
-    coach_id   UUID NOT NULL REFERENCES coaches(id),
-    is_active  BOOLEAN NOT NULL DEFAULT true,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    UNIQUE (center_id, coach_id)
-);
-```
+Day-wise timing rows for a batch, so Monday and Wednesday can have different
+slots. Unique on `(batch_id, day_of_week, start_time, end_time)`.
 
-### `batches`
+| Column | Type | Notes |
+|---|---|---|
+| id | UUID PK | Primary key |
+| batch_id | UUID FK | References BATCHES.id |
+| day_of_week | SMALLINT | 0 = Sun … 6 = Sat |
+| start_time | TIME | Slot start time |
+| end_time | TIME | Slot end time |
+| created_at | TIMESTAMP | Creation timestamp |
 
-Each batch belongs to one center. This is the main operational selection unit.
+---
 
-```sql
-CREATE TABLE batches (
-    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    center_id  UUID NOT NULL REFERENCES centers(id),
-    name       TEXT NOT NULL,
-    is_active  BOOLEAN NOT NULL DEFAULT true,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-```
+# PLANS
 
-Examples:
+Pricing, linked to a **batch** (not a center). Durations include 1, 3, 6 and 12
+months, at 2 or 3 days/week.
 
-- `Evening Batch`
-- `Morning Batch`
-- `Under-10 Batch`
+| Column | Type | Notes |
+|---|---|---|
+| id | UUID PK | Primary key |
+| batch_id | UUID FK | References BATCHES.id |
+| name | TEXT | Plan name, e.g. "1 Month - 3 Days" |
+| duration_months | SMALLINT | 1, 3, 6, 12 |
+| days_per_week | SMALLINT | 2 or 3 |
+| price | INTEGER | Flat plan price (whole rupees) |
+| per_session_price | INTEGER | Stored per-session price for pro-rata |
+| is_active | BOOLEAN | Active/inactive status |
+| created_at | TIMESTAMP | Creation timestamp |
 
-### `batch_timings`
+---
 
-Stores day-wise timing rows for each batch, so Monday and Wednesday can have
-different time slots.
+# REGISTRATION_OPTIONS
 
-```sql
-CREATE TABLE batch_timings (
-    id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    batch_id    UUID NOT NULL REFERENCES batches(id),
-    day_of_week SMALLINT NOT NULL CHECK (day_of_week BETWEEN 0 AND 6),
-    start_time  TIME NOT NULL,
-    end_time    TIME NOT NULL,
-    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-    UNIQUE (batch_id, day_of_week, start_time, end_time)
-);
-```
+Global, academy-wide add-on packages (e.g. `Registration Package`,
+`Starter Package`, `Player Package`) — not linked to any specific batch. Added
+on top of the selected plan total in the fee calculator.
 
-Examples:
-
-- Monday 6:00 PM - 7:00 PM
-- Wednesday 7:00 PM - 8:00 PM
-
-### `plans`
-
-Plans are batch-linked. This is the key shift from the earlier center-based
-approach.
-
-```sql
-CREATE TABLE plans (
-    id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    batch_id          UUID NOT NULL REFERENCES batches(id),
-    name              TEXT NOT NULL,
-    duration_months   SMALLINT NOT NULL,
-    days_per_week     SMALLINT NOT NULL,
-    price             INTEGER NOT NULL,
-    per_session_price INTEGER NOT NULL,
-    is_active         BOOLEAN NOT NULL DEFAULT true,
-    created_at        TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-```
-
-Recommended examples:
-
-- `1 Month - 3 Days`
-- `3 Months - 3 Days`
-- `6 Months - 3 Days`
-- `12 Months - 3 Days`
-- `1 Month - 2 Days`
-
-Notes:
-
-- `price` is the stored flat price for the plan.
-- `per_session_price` is also stored, not derived.
-- This supports pro-rata calculation for partial joins.
-
-### `registration_options`
-
-Optional add-on package choices tied to a batch.
-
-```sql
-CREATE TABLE registration_options (
-    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    batch_id   UUID NOT NULL REFERENCES batches(id),
-    name       TEXT NOT NULL,
-    price      INTEGER NOT NULL,
-    is_active  BOOLEAN NOT NULL DEFAULT true,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-```
-
-Current package names from the latest reference:
-
-- `Registration Package`
-- `Starter Package`
-- `Player Package`
-
-Notes:
-
-- These are added separately on top of the selected plan total.
-- Different batches may expose different registration options and prices.
-
-## API shape mapping
-
-The frontend currently consumes a nested shape equivalent to:
-
-```text
-config
-centers[]
-  coaches[]
-  batches[]
-    schedule[]
-    plans[]
-    registrationOptions[]
-```
-
-That means SQL rows from `batch_timings`, `plans`, and `registration_options`
-should be grouped under each batch when building the API response.
-
-## Summary
-
-- `centers` are for grouping, address, and coach assignment.
-- `batches` are the real operational unit.
-- `batch_timings` handle different times on different days.
-- `plans` are linked to batches, not centers.
-- `registration_options` are linked to batches, not centers.
-- `configs` holds the shared payment configuration.
+| Column | Type | Notes |
+|---|---|---|
+| id | UUID PK | Primary key |
+| name | TEXT | Option name |
+| description | TEXT | What's included in this registration option |
+| price | INTEGER | Add-on price (whole rupees) |
+| is_active | BOOLEAN | Active/inactive status |
+| created_at | TIMESTAMP | Creation timestamp |

@@ -1,5 +1,9 @@
 // TYPES //
-import type { OperationsBatchData, OperationsCenterData } from "@/types/operations";
+import type {
+	OperationsBatchData,
+	OperationsCenterData,
+	OperationsRegistrationOptionData,
+} from "@/types/operations";
 
 // UTILS //
 import { formatRupees } from "@/utils/fee-calculator.util";
@@ -21,7 +25,7 @@ type FeeStructureImageInput = {
 	academyName: string;
 	center: OperationsCenterData;
 	batch: OperationsBatchData;
-	senderName?: string;
+	registrationOptions: OperationsRegistrationOptionData[];
 };
 
 const loadImage = (src: string): Promise<HTMLImageElement | null> =>
@@ -60,7 +64,7 @@ export const renderFeeStructureImage = async ({
 	academyName,
 	center,
 	batch,
-	senderName = "",
+	registrationOptions,
 }: FeeStructureImageInput): Promise<Blob | null> => {
 	if (document.fonts?.ready) await document.fonts.ready;
 
@@ -76,7 +80,7 @@ export const renderFeeStructureImage = async ({
 	context.font = `400 26px ${body}`;
 	const addressLines = wrapText(context, center.address, contentWidth - 150);
 	const scheduleLines = formatBatchTimingLines(batch);
-	const registrationLines = batch.registrationOptions.map(
+	const registrationLines = registrationOptions.map(
 		(item) => `${item.name}: ${formatRupees(item.price)}`
 	);
 
@@ -204,11 +208,7 @@ export const renderFeeStructureImage = async ({
 
 	context.fillStyle = MUTED;
 	context.font = `500 24px ${body}`;
-	context.fillText(
-		senderName ? `${academyName} | Sent by ${senderName}` : academyName,
-		PADDING,
-		height - footerHeight / 2 + 9
-	);
+	context.fillText(academyName, PADDING, height - footerHeight / 2 + 9);
 
 	return new Promise((resolve) =>
 		canvas.toBlob((blob) => resolve(blob), "image/png")

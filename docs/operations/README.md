@@ -21,7 +21,7 @@ backend endpoints are **not**.
 | [06-dummy-data.md](06-dummy-data.md) | 🔴 Placeholder centers/prices/UPI/PIN/message - REPLACE before prod | 🔴 Dummy |
 
 > **Real values still owed** (currently faked in doc 06): per-center prices and
-> per-session prices, addresses, coaches, batch days + timings, global UPI ID,
+> per-session prices, addresses, batch days + timings, global UPI ID,
 > staff PIN, exact message wording and image branding.
 
 ## The three tools on the page
@@ -29,9 +29,8 @@ backend endpoints are **not**.
 1. **Fee Calculator** - given center, batch, plan (1-month / 3-month),
    days-per-week (2 or 3), and join date, compute the amount owed including
    mid-month pro-rata. Session days come from the **batch**.
-2. **Send Fee Structure** - select a center and the sending coach, then share
-   that center's fee structure as a **copy-pasteable image** or as a pre-filled
-   `wa.me` message.
+2. **Send Fee Structure** - select a center, then share that center's fee
+   structure as a **copy-pasteable image** or as a pre-filled `wa.me` message.
 3. **Payment QR** - a single global static UPI QR to share, plus a per-student
    dynamic UPI QR with the calculated amount pre-filled.
 

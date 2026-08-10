@@ -1,5 +1,8 @@
 // TYPES //
-import type { OperationsCenterData } from "@/types/operations";
+import type {
+	OperationsCenterData,
+	OperationsRegistrationOptionData,
+} from "@/types/operations";
 
 // STYLES //
 import styles from "./operations.module.scss";
@@ -17,6 +20,7 @@ interface FeeCalculatorProps {
 	centers: OperationsCenterData[];
 	center: OperationsCenterData | undefined;
 	onCenterChange: (centerId: string) => void;
+	registrationOptions: OperationsRegistrationOptionData[];
 }
 
 /** Tool 1 - amount owed, including a mid-month start */
@@ -24,8 +28,9 @@ const FeeCalculator: React.FC<FeeCalculatorProps> = ({
 	centers,
 	center,
 	onCenterChange,
+	registrationOptions,
 }) => {
-	const feeInputs = useFeeInputs(center);
+	const feeInputs = useFeeInputs(center, registrationOptions);
 	const { inputs, quote } = feeInputs;
 
 	return (
@@ -35,6 +40,7 @@ const FeeCalculator: React.FC<FeeCalculatorProps> = ({
 					centers={centers}
 					center={center}
 					onCenterChange={onCenterChange}
+					registrationOptions={registrationOptions}
 					feeInputs={feeInputs}
 				/>
 			</div>

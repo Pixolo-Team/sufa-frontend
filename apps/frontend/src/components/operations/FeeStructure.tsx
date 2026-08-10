@@ -7,6 +7,7 @@ import type {
 	OperationsBatchData,
 	OperationsCenterData,
 	OperationsConfigData,
+	OperationsRegistrationOptionData,
 } from "@/types/operations";
 
 // ENUMS //
@@ -42,12 +43,13 @@ interface FeeStructureProps {
 	centers: OperationsCenterData[];
 	center: OperationsCenterData | undefined;
 	config: OperationsConfigData;
+	registrationOptions: OperationsRegistrationOptionData[];
 	onCenterChange: (centerId: string) => void;
 }
 
 const buildBatchOptions = (center: OperationsCenterData | undefined) =>
 	(center?.batches ?? []).map((item) => ({
-		label: item.name,
+		label: `${item.name} (${item.ageGroup})`,
 		value: item.id,
 	}));
 
@@ -56,13 +58,13 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 	centers,
 	center,
 	config,
+	registrationOptions,
 	onCenterChange,
 }) => {
 	const [parentName, setParentName] = useState("");
 	const [phone, setPhone] = useState("");
 	const [phoneError, setPhoneError] = useState("");
 	const [previewMode, setPreviewMode] = useState<PreviewMode>("image");
-	const [senderId, setSenderId] = useState("");
 	const [batchId, setBatchId] = useState("");
 	const [imageBlob, setImageBlob] = useState<Blob | null>(null);
 	const [imageUrl, setImageUrl] = useState("");
@@ -71,21 +73,14 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 		label: item.name,
 		value: item.id,
 	}));
-	const senderOptions: DropdownOptionData[] = (center?.coaches ?? []).map(
-		(coach) => ({ label: coach.name, value: coach.id })
-	);
 	const batchOptions: DropdownOptionData[] = buildBatchOptions(center);
 
-	const sender =
-		center?.coaches.find((coach) => coach.id === senderId) ?? center?.coaches[0];
 	const batch: OperationsBatchData | undefined = useMemo(
 		() => center?.batches.find((item) => item.id === batchId),
 		[center, batchId]
 	);
 	const selectedCenterOption =
 		centerOptions.find((option) => option.value === center?.id) ?? null;
-	const selectedSenderOption =
-		senderOptions.find((option) => option.value === sender?.id) ?? null;
 	const selectedBatchOption =
 		batchOptions.find((option) => option.value === batch?.id) ?? null;
 
@@ -101,8 +96,8 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 			.map((plan) => `- ${formatPlanLabel(plan)}: ${formatRupees(plan.price)}`)
 			.join("\n");
 		const registrationLines =
-			batch.registrationOptions.length > 0
-				? batch.registrationOptions
+			registrationOptions.length > 0
+				? registrationOptions
 						.map((item) => `- ${item.name}: ${formatRupees(item.price)}`)
 						.join("\n")
 				: "";
@@ -126,12 +121,12 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 			timingLines,
 			"",
 			"For a free trial or to enroll, reply here. See you on the pitch!",
-			sender?.name ? `- ${sender.name}, ${config.academyName}` : "",
+			`- ${config.academyName}`,
 		]
 			.filter((line): line is string => !!line || line === "")
 			.filter((line, index, all) => line !== "" || all[index - 1] !== "")
 			.join("\n");
-	}, [batch, center, parentName, config.academyName, sender]);
+	}, [batch, center, parentName, config.academyName, registrationOptions]);
 
 	useEffect(() => {
 		if (!center || !batch) {
@@ -146,7 +141,7 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 			academyName: config.academyName,
 			center,
 			batch,
-			senderName: sender?.name,
+			registrationOptions,
 		}).then((blob) => {
 			if (!isActive || !blob) return;
 
@@ -157,7 +152,7 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 		return () => {
 			isActive = false;
 		};
-	}, [batch, center, config.academyName, sender?.name]);
+	}, [batch, center, config.academyName, registrationOptions]);
 
 	useEffect(
 		() => () => {
@@ -256,16 +251,6 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 						isDisabled={!center}
 						onChange={(option) => setBatchId(option.value)}
 					/>
-
-					{senderOptions.length > 0 && (
-						<Select
-							label="Sent by (coach)"
-							placeholder="Select coach"
-							options={senderOptions}
-							selectedOption={selectedSenderOption}
-							onChange={(option) => setSenderId(option.value)}
-						/>
-					)}
 
 					<InputBox
 						id="parent-name"

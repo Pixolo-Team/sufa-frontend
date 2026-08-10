@@ -24,7 +24,6 @@
 ### Ghatkopar East 🔴
 
 - Address: 12 MG Road, Ghatkopar East, Mumbai 400077
-- Coaches: Harsh Patil (9876543210), Rohan Shetty (9876500011)
 - Batches: **Evening** Mon/Wed/Fri 17:00-18:30 · **Morning** Tue/Thu/Sat 07:00-08:30
 
 | Plan | Duration | Days/wk | Price | Per-session |
@@ -37,7 +36,6 @@
 ### Ghatkopar West 🔴
 
 - Address: 45 LBS Marg, Ghatkopar West, Mumbai 400086
-- Coaches: Amit Nair (9876522233)
 - Batches: **Evening** Mon/Wed/Fri 18:00-19:30
 
 | Plan | Duration | Days/wk | Price | Per-session |
@@ -61,16 +59,16 @@ Hi {parentName}, here is the fee structure for Skorost United Football Academy -
 🕒 {batchName}: {days} · {startTime} - {endTime}     ← one line per batch
 
 For a free trial or to enroll, reply here. See you on the pitch! ⚽
-- {coachName}, Skorost United Football Academy
+- Skorost United Football Academy
 ```
 
 - `{parentName}` is omitted gracefully if no name is entered.
-- The coach sign-off comes from the **Sent by** picker (the `coaches` table).
+- Signed off with the academy name only - no coach data is stored.
 - No UPI/QR in this message (confirmed) - the payment QR is a separate tool.
 - The same content is also rendered as a **shareable PNG** for WhatsApp.
 
 ## Real values still owed
 
-Prices (including every per-session price), addresses, coaches, batch timings
-and days, the global UPI ID + payee name, the staff PIN, and the exact message
-wording and image branding.
+Prices (including every per-session price), addresses, batch timings and days,
+the global UPI ID + payee name, the staff PIN, and the exact message wording
+and image branding.

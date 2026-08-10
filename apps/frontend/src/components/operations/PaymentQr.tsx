@@ -5,7 +5,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import QRCode from "qrcode";
 
 // TYPES //
-import type { OperationsCenterData, OperationsConfigData } from "@/types/operations";
+import type {
+	OperationsCenterData,
+	OperationsConfigData,
+	OperationsRegistrationOptionData,
+} from "@/types/operations";
 
 // ENUMS //
 import { Colors, Shapes, Variants } from "@/neevo/enums/core.enum";
@@ -39,6 +43,7 @@ interface PaymentQrProps {
 	centers: OperationsCenterData[];
 	center: OperationsCenterData | undefined;
 	config: OperationsConfigData;
+	registrationOptions: OperationsRegistrationOptionData[];
 	onCenterChange: (centerId: string) => void;
 }
 
@@ -47,6 +52,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	centers,
 	center,
 	config,
+	registrationOptions,
 	onCenterChange,
 }) => {
 	const [mode, setMode] = useState<QrMode>("global");
@@ -54,7 +60,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	const [studentPhone, setStudentPhone] = useState("");
 	const [qrDataUrl, setQrDataUrl] = useState("");
 
-	const feeInputs = useFeeInputs(center);
+	const feeInputs = useFeeInputs(center, registrationOptions);
 	const { batch, plan, registrationOption, quote } = feeInputs;
 
 	const isStudentMode = mode === "student";
@@ -190,6 +196,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 								centers={centers}
 								center={center}
 								onCenterChange={onCenterChange}
+								registrationOptions={registrationOptions}
 								feeInputs={feeInputs}
 							/>
 

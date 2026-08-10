@@ -1,6 +1,9 @@
 // TYPES //
 import type { DropdownOptionData } from "@/neevo/types/forms";
-import type { OperationsCenterData } from "@/types/operations";
+import type {
+	OperationsCenterData,
+	OperationsRegistrationOptionData,
+} from "@/types/operations";
 
 // ENUMS //
 import { InputTextTypes } from "@/neevo/enums/input.enum";
@@ -26,6 +29,7 @@ interface FeeInputFieldsProps {
 	centers: OperationsCenterData[];
 	center: OperationsCenterData | undefined;
 	onCenterChange: (centerId: string) => void;
+	registrationOptions: OperationsRegistrationOptionData[];
 	feeInputs: ReturnType<typeof useFeeInputs>;
 }
 
@@ -34,6 +38,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 	centers,
 	center,
 	onCenterChange,
+	registrationOptions: globalRegistrationOptions,
 	feeInputs,
 }) => {
 	const {
@@ -56,7 +61,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		value: item.id,
 	}));
 	const batchOptions: DropdownOptionData[] = (center?.batches ?? []).map((item) => ({
-		label: item.name,
+		label: `${item.name} (${item.ageGroup})`,
 		value: item.id,
 	}));
 	const planOptions: DropdownOptionData[] = (batch?.plans ?? []).map((item) => ({
@@ -65,7 +70,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 	}));
 	const registrationOptions: DropdownOptionData[] = [
 		{ label: "No registration", value: "" },
-		...(batch?.registrationOptions ?? []).map((item) => ({
+		...globalRegistrationOptions.map((item) => ({
 			label: `${item.name} - Rs ${item.price.toLocaleString("en-IN")}`,
 			value: item.id,
 		})),
@@ -126,10 +131,9 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 
 			<Select
 				label="Registration"
-				placeholder={batch ? "Select registration" : "Select batch first"}
+				placeholder="Select registration"
 				options={registrationOptions}
 				selectedOption={selectedRegistrationOption}
-				isDisabled={!batch}
 				onChange={(option) => setRegistrationOptionId(option.value)}
 			/>
 
@@ -187,8 +191,8 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 
 			{center && !batch && (
 				<p className={styles.notice}>
-					Select a batch first. Plans, timings and registration are linked to the
-					batch, not the center.
+					Select a batch first. Plans and timings are linked to the batch, not the
+					center.
 				</p>
 			)}
 

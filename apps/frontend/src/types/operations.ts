@@ -1,10 +1,3 @@
-/** A coach at a center - used as the "sent by" on a fee structure */
-export type OperationsCoachData = {
-	id: string;
-	name: string;
-	phone?: string;
-};
-
 /** One weekday slot inside a batch schedule. */
 export type OperationsBatchTimingData = {
 	day: number;
@@ -22,20 +15,21 @@ export type OperationsPlanData = {
 	perSessionPrice: number;
 };
 
-/** Optional registration fee that can be added to the student's total. */
+/** Optional registration fee that can be added to the student's total. Global - not linked to a batch. */
 export type OperationsRegistrationOptionData = {
 	id: string;
 	name: string;
+	description: string;
 	price: number;
 };
 
-/** A scheduled group within a center. Schedule, plans and registration live here. */
+/** A scheduled group within a center. Schedule and plans live here. */
 export type OperationsBatchData = {
 	id: string;
 	name: string;
+	ageGroup: string;
 	schedule: OperationsBatchTimingData[];
 	plans: OperationsPlanData[];
-	registrationOptions: OperationsRegistrationOptionData[];
 };
 
 /** A center with everything the tools need */
@@ -43,7 +37,6 @@ export type OperationsCenterData = {
 	id: string;
 	name: string;
 	address: string;
-	coaches: OperationsCoachData[];
 	batches: OperationsBatchData[];
 };
 
@@ -58,6 +51,7 @@ export type OperationsConfigData = {
 /** The whole payload the page needs - mirrors `GET /operations/centers` */
 export type OperationsData = {
 	config: OperationsConfigData;
+	registrationOptions: OperationsRegistrationOptionData[];
 	centers: OperationsCenterData[];
 };
 

@@ -64,7 +64,10 @@ const syncDatesForPlan = (startDate: string, plan: OperationsPlanData | undefine
 				endDate: getDefaultEndDate(startDate),
 			};
 
-export const useFeeInputs = (center: OperationsCenterData | undefined) => {
+export const useFeeInputs = (
+	center: OperationsCenterData | undefined,
+	registrationOptions: OperationsRegistrationOptionData[]
+) => {
 	const [inputs, setInputs] = useState<FeeInputsState>(buildInitialState);
 
 	const batch = useMemo(
@@ -80,10 +83,10 @@ export const useFeeInputs = (center: OperationsCenterData | undefined) => {
 	const registrationOption: OperationsRegistrationOptionData | undefined =
 		useMemo(
 			() =>
-				batch?.registrationOptions.find(
+				registrationOptions.find(
 					(item) => item.id === inputs.registrationOptionId
 				),
-			[batch, inputs.registrationOptionId]
+			[registrationOptions, inputs.registrationOptionId]
 		);
 
 	const batchWeekdays = useMemo(
@@ -168,12 +171,11 @@ export const useFeeInputs = (center: OperationsCenterData | undefined) => {
 				nextBatch?.plans.some((item) => item.id === previous.planId)
 					? previous.planId
 					: getInitialPlanId(nextBatch);
-			const nextRegistrationOptionId =
-				nextBatch?.registrationOptions.some(
-					(item) => item.id === previous.registrationOptionId
-				)
-					? previous.registrationOptionId
-					: "";
+			const nextRegistrationOptionId = registrationOptions.some(
+				(item) => item.id === previous.registrationOptionId
+			)
+				? previous.registrationOptionId
+				: "";
 			const nextPlan = nextBatch?.plans.find((item) => item.id === nextPlanId);
 			const nextDates = syncDatesForPlan(previous.startDate, nextPlan);
 
@@ -189,7 +191,7 @@ export const useFeeInputs = (center: OperationsCenterData | undefined) => {
 				endDate: nextDates.endDate,
 			};
 		});
-	}, [center]);
+	}, [center, registrationOptions]);
 
 	const setBatchId = useCallback((batchId: string) => {
 		setInputs((previous) => {
@@ -202,7 +204,6 @@ export const useFeeInputs = (center: OperationsCenterData | undefined) => {
 				...previous,
 				batchId,
 				planId: nextPlanId,
-				registrationOptionId: "",
 				selectedWeekdays: [],
 				startDate: nextDates.startDate,
 				endDate: nextDates.endDate,
