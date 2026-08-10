@@ -62,8 +62,7 @@ const academyStats = [
 		<div class={`${styles.sectionIntro} text-center fade-in-up`}>
 			<span class={styles.sectionKicker}>Built In Skorost Colours</span>
 			<p class={`${styles.sectionDescription} font-weight-500`}>
-				The players younger footballers look up to first. Clean numbers, strong
-				presence, and a section that lets the academy's best stand out.
+				The players younger footballers look up to first.
 			</p>
 		</div>
 
@@ -85,31 +84,29 @@ const academyStats = [
 						class={`${styles.playerCard} fade-in-up`}
 						style={`animation-delay:${index * 0.08}s;`}
 					>
-						<div class={styles.playerMedia}>
-							<img
-								src={player.image}
-								alt={player.name}
-								class={`${styles.playerImage} img-responsive full-width-img`}
-								loading="lazy"
-								decoding="async"
-							/>
-							<div class={styles.playerMediaOverlay}></div>
-						</div>
+						<img
+							src={player.image}
+							alt={player.name}
+							class={`${styles.playerImage} img-responsive full-width-img`}
+							loading="lazy"
+							decoding="async"
+						/>
+						<div class={styles.playerScrim}></div>
 
-						<div class={styles.playerContent}>
-							<div class={styles.playerTopline}>
-								<span class={styles.playerRole}>{player.role}</span>
-								<h3>{player.name}</h3>
-							</div>
+						<div class={styles.playerOverlay}>
+							<span class={styles.playerRole}>{player.role}</span>
+							<h3>{player.name}</h3>
 
-							<p class={styles.playerBlurb}>{player.blurb}</p>
+							<p class={styles.playerBlurb}>
+							<span>{player.blurb}</span>
+						</p>
 
 							<div class={styles.statsList}>
 								{
 									player.stats.map((stat) => (
 										<div class={styles.statTile}>
-											<span>{stat.label}</span>
 											<strong>{stat.value}</strong>
+											<span>{stat.label}</span>
 										</div>
 									))
 								}
