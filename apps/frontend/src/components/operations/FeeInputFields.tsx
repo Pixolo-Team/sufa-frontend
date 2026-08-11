@@ -14,16 +14,14 @@ import styles from "./operations.module.scss";
 // COMPONENTS //
 import InputBox from "@/neevo/components/input-box/InputBox";
 import Select from "@/neevo/components/select/Select";
+import Segmented from "./Segmented";
 
 // HOOKS //
 import { WEEKDAY_LABELS, type useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
-import {
-	formatBatchTimings,
-	formatPlanLabel,
-	getBatchWeekdays,
-} from "@/utils/operations.util";
+import { formatRupees } from "@/utils/fee-calculator.util";
+import { formatBatchTimings } from "@/utils/operations.util";
 
 interface FeeInputFieldsProps {
 	centers: OperationsCenterData[];
@@ -47,6 +45,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		plan,
 		registrationOption,
 		isFixedTerm,
+		batchWeekdays,
 		billedWeekdays,
 		setBatchId,
 		setPlanId,
@@ -64,14 +63,32 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		label: `${item.name} (${item.ageGroup})`,
 		value: item.id,
 	}));
-	const planOptions: DropdownOptionData[] = (batch?.plans ?? []).map((item) => ({
-		label: formatPlanLabel(item),
-		value: item.id,
-	}));
-	const registrationOptions: DropdownOptionData[] = [
+	const durationOptions: DropdownOptionData[] = Array.from(
+		new Set((batch?.plans ?? []).map((item) => item.durationMonths))
+	)
+		.sort((left, right) => left - right)
+		.map((months) => ({
+			label: months === 1 ? "1 Month" : `${months} Months`,
+			value: String(months),
+		}));
+	// Keyed by days-per-week, not plan id, so the options keep their identity when
+	// the duration changes and the current choice can carry across.
+	const daysOptions: DropdownOptionData[] = Array.from(
+		new Set(
+			(batch?.plans ?? [])
+				.filter((item) => item.durationMonths === plan?.durationMonths)
+				.map((item) => item.daysPerWeek)
+		)
+	)
+		.sort((left, right) => left - right)
+		.map((days) => ({
+			label: `${days} Days a Week`,
+			value: String(days),
+		}));
+	const registrationOptions = [
 		{ label: "No registration", value: "" },
 		...globalRegistrationOptions.map((item) => ({
-			label: `${item.name} - Rs ${item.price.toLocaleString("en-IN")}`,
+			label: item.name,
 			value: item.id,
 		})),
 	];
@@ -80,14 +97,38 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		centerOptions.find((option) => option.value === center?.id) ?? null;
 	const selectedBatchOption =
 		batchOptions.find((option) => option.value === batch?.id) ?? null;
-	const selectedPlanOption =
-		planOptions.find((option) => option.value === plan?.id) ?? null;
+	const selectedDurationOption =
+		durationOptions.find(
+			(option) => option.value === String(plan?.durationMonths)
+		) ?? null;
+	const selectedDaysOption =
+		daysOptions.find((option) => option.value === String(plan?.daysPerWeek)) ??
+		null;
 	const selectedRegistrationOption =
 		registrationOptions.find(
 			(option) => option.value === (registrationOption?.id ?? "")
 		) ?? registrationOptions[0] ?? null;
 
-	const batchWeekdays = batch ? getBatchWeekdays(batch) : [];
+	/** Resolve a plan from the duration / days pair, keeping the other half fixed */
+	const selectPlan = (months: number, daysPerWeek: number | undefined) => {
+		const candidates = (batch?.plans ?? []).filter(
+			(item) => item.durationMonths === months
+		);
+		const nextPlan =
+			candidates.find((item) => item.daysPerWeek === daysPerWeek) ??
+			candidates[0];
+
+		if (nextPlan) setPlanId(nextPlan.id);
+	};
+
+	// Carry the current days-per-week across, so switching months does not
+	// silently reset a 2-day student back to 3 days.
+	const onDurationChange = (value: string) =>
+		selectPlan(Number(value), plan?.daysPerWeek);
+
+	const onDaysChange = (value: string) =>
+		selectPlan(plan?.durationMonths ?? 0, Number(value));
+
 	const canPickDays =
 		!!plan && plan.daysPerWeek > 0 && plan.daysPerWeek < batchWeekdays.length;
 
@@ -112,30 +153,47 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 				onChange={(option) => setBatchId(option.value)}
 			/>
 
-			{batch && (
-				<div className={styles.inlineInfo}>
-					<span className={styles.fieldLabel}>Schedule</span>
-					<p className={styles.inlineInfoText}>{formatBatchTimings(batch)}</p>
+			{batch && durationOptions.length > 0 && (
+				<div>
+					<span className={styles.fieldLabel}>
+						Number of months<span style={{ color: "#de350b" }}>*</span>
+					</span>
+					<Segmented
+						value={selectedDurationOption?.value ?? ""}
+						onChange={onDurationChange}
+						options={durationOptions}
+						visibleCount={3}
+					/>
 				</div>
 			)}
 
-			<Select
-				label="Plan"
-				placeholder={batch ? "Select plan" : "Select batch first"}
-				options={planOptions}
-				selectedOption={selectedPlanOption}
-				isRequired
-				isDisabled={!batch || planOptions.length === 0}
-				onChange={(option) => setPlanId(option.value)}
-			/>
+			{plan && daysOptions.length > 0 && (
+				<div>
+					<span className={styles.fieldLabel}>
+						Days per week<span style={{ color: "#de350b" }}>*</span>
+					</span>
+					<Segmented
+						value={selectedDaysOption?.value ?? ""}
+						onChange={onDaysChange}
+						options={daysOptions}
+					/>
+				</div>
+			)}
 
-			<Select
-				label="Registration"
-				placeholder="Select registration"
-				options={registrationOptions}
-				selectedOption={selectedRegistrationOption}
-				onChange={(option) => setRegistrationOptionId(option.value)}
-			/>
+			<div>
+				<span className={styles.fieldLabel}>Registration</span>
+				<Segmented
+					value={selectedRegistrationOption?.value ?? ""}
+					onChange={setRegistrationOptionId}
+					options={registrationOptions}
+					visibleCount={2}
+				/>
+				{registrationOption && (
+					<p className={styles.qrHint}>
+						{registrationOption.name} - {formatRupees(registrationOption.price)}
+					</p>
+				)}
+			</div>
 
 			{canPickDays && (
 				<div>

@@ -3,6 +3,12 @@
 A staff-only internal page for the academy's day-to-day operations. The database
 design is in a separate document (`DATABASE.md`).
 
+> ⚠️ **This is the original design proposal, not the current build.** The
+> "three tools" in §3 below were consolidated into **two pages** (Batches,
+> Payments) - see [05-page-ux.md](05-page-ux.md) for what's actually shipped
+> and why. The fee-calculation logic and database shape described here are
+> still accurate.
+
 ---
 
 ## 1. Purpose

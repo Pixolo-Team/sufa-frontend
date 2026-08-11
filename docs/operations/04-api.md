@@ -21,7 +21,7 @@ on the page.
 ```jsonc
 {
   "data": {
-    "config": { "upiId": "skorost@ybl", "payeeName": "Skorost United Football Academy" },
+    "config": { "upiId": "skorostunitedfootballschool@kotak", "payeeName": "Skorost United Football Academy" },
     "registrationOptions": [
       { "id": "<uuid>", "name": "Registration Package", "description": "One-time registration, kit and ID card", "price": 500 },
       { "id": "<uuid>", "name": "Player Package", "description": "Registration + academy jersey and shorts", "price": 1200 }

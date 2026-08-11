@@ -21,11 +21,19 @@ const MUTED = "#6b7a90";
 const LINE = "#e5e9f0";
 const ACCENT = "#16db93";
 
+/** Which blocks to draw - staff share fees, timings, or both */
+export type FeeStructureImageSections = {
+	plans?: boolean;
+	registration?: boolean;
+	schedule?: boolean;
+};
+
 type FeeStructureImageInput = {
 	academyName: string;
 	center: OperationsCenterData;
 	batch: OperationsBatchData;
 	registrationOptions: OperationsRegistrationOptionData[];
+	sections?: FeeStructureImageSections;
 };
 
 const loadImage = (src: string): Promise<HTMLImageElement | null> =>
@@ -65,7 +73,12 @@ export const renderFeeStructureImage = async ({
 	center,
 	batch,
 	registrationOptions,
+	sections,
 }: FeeStructureImageInput): Promise<Blob | null> => {
+	const showPlans = sections?.plans ?? true;
+	const showSchedule = sections?.schedule ?? true;
+	const showRegistration = sections?.registration ?? true;
+
 	if (document.fonts?.ready) await document.fonts.ready;
 
 	const logo = await loadImage(LOGO_SRC);
@@ -80,16 +93,20 @@ export const renderFeeStructureImage = async ({
 	context.font = `400 26px ${body}`;
 	const addressLines = wrapText(context, center.address, contentWidth - 150);
 	const scheduleLines = formatBatchTimingLines(batch);
-	const registrationLines = registrationOptions.map(
-		(item) => `${item.name}: ${formatRupees(item.price)}`
-	);
+	const registrationLines = showRegistration
+		? registrationOptions.map(
+				(item) => `${item.name}: ${formatRupees(item.price)}`
+			)
+		: [];
 
+	// Mirrors the draw order below: each omitted block gives back its heading
+	// allowance too, so a schedule-only card is not mostly whitespace.
 	const height =
 		620 +
-		batch.plans.length * 86 +
-		registrationLines.length * 46 +
+		(showPlans ? batch.plans.length * 86 : -62) +
+		(registrationLines.length > 0 ? registrationLines.length * 46 : -62) +
 		addressLines.length * 38 +
-		scheduleLines.length * 38 +
+		(showSchedule ? scheduleLines.length * 38 : -38) +
 		190;
 
 	const scale = 2;
@@ -120,7 +137,11 @@ export const renderFeeStructureImage = async ({
 
 	context.fillStyle = MUTED;
 	context.font = `700 22px ${body}`;
-	context.fillText("FEE STRUCTURE", PADDING, y);
+	context.fillText(
+		showPlans ? (showSchedule ? "FEES & SCHEDULE" : "FEE STRUCTURE") : "SCHEDULE",
+		PADDING,
+		y
+	);
 	y += 56;
 
 	context.fillStyle = INK;
@@ -129,7 +150,7 @@ export const renderFeeStructureImage = async ({
 	y += 48;
 
 	context.font = `600 30px ${body}`;
-	context.fillText(batch.name, PADDING, y);
+	context.fillText(`${batch.name} (${batch.ageGroup})`, PADDING, y);
 	y += 40;
 
 	context.strokeStyle = LINE;
@@ -140,25 +161,27 @@ export const renderFeeStructureImage = async ({
 	context.stroke();
 	y += 62;
 
-	for (const plan of batch.plans) {
-		context.fillStyle = INK;
-		context.font = `500 30px ${body}`;
-		context.fillText(formatPlanLabel(plan), PADDING, y);
+	if (showPlans) {
+		for (const plan of batch.plans) {
+			context.fillStyle = INK;
+			context.font = `500 30px ${body}`;
+			context.fillText(formatPlanLabel(plan), PADDING, y);
 
-		const price = formatRupees(plan.price);
+			const price = formatRupees(plan.price);
 
-		context.font = `800 34px ${body}`;
-		context.textAlign = "right";
-		context.fillText(price, WIDTH - PADDING, y);
-		context.textAlign = "left";
+			context.font = `800 34px ${body}`;
+			context.textAlign = "right";
+			context.fillText(price, WIDTH - PADDING, y);
+			context.textAlign = "left";
 
-		y += 30;
-		context.strokeStyle = LINE;
-		context.beginPath();
-		context.moveTo(PADDING, y);
-		context.lineTo(WIDTH - PADDING, y);
-		context.stroke();
-		y += 56;
+			y += 30;
+			context.strokeStyle = LINE;
+			context.beginPath();
+			context.moveTo(PADDING, y);
+			context.lineTo(WIDTH - PADDING, y);
+			context.stroke();
+			y += 56;
+		}
 	}
 
 	if (registrationLines.length > 0) {
@@ -191,15 +214,17 @@ export const renderFeeStructureImage = async ({
 
 	y += 58;
 
-	context.fillStyle = MUTED;
-	context.font = `700 22px ${body}`;
-	context.fillText("SCHEDULE", PADDING, y);
+	if (showSchedule) {
+		context.fillStyle = MUTED;
+		context.font = `700 22px ${body}`;
+		context.fillText("SCHEDULE", PADDING, y);
 
-	for (const line of scheduleLines) {
-		y += 38;
-		context.fillStyle = INK;
-		context.font = `400 26px ${body}`;
-		context.fillText(line, PADDING, y);
+		for (const line of scheduleLines) {
+			y += 38;
+			context.fillStyle = INK;
+			context.font = `400 26px ${body}`;
+			context.fillText(line, PADDING, y);
+		}
 	}
 
 	const footerHeight = 96;

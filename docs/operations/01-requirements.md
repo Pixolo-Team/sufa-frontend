@@ -105,6 +105,8 @@
 9. Is there an existing **UPI ID / payee** already in use we should reuse for the
    global QR, or is that per-center only?
    - **Answer:** ✅ **One global common UPI + one global QR** for all centers.
-     Not per-center. Still need the actual **UPI ID + payee name** value.
-   - **Global UPI ID / payee:** 🔴 DUMMY `skorost@ybl` / `Skorost United
-     Football Academy` - see [06-dummy-data.md](06-dummy-data.md). Replace.
+     Not per-center.
+   - **Global UPI ID:** ✅ real value provided - `skorostunitedfootballschool@kotak`.
+   - **Payee name:** 🔴 DUMMY `Skorost United Football Academy` - see
+     [06-dummy-data.md](06-dummy-data.md). Confirm this is the exact name to
+     show in UPI apps.

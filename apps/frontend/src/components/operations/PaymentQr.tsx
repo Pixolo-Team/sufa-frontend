@@ -33,9 +33,9 @@ import { showToast } from "@/neevo/services/toast.service";
 import { useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
-import { formatRupees } from "@/utils/fee-calculator.util";
+import { formatDisplayDate, formatRupees } from "@/utils/fee-calculator.util";
 
-type QrMode = "global" | "student";
+type QrMode = "global" | "payment" | "custom";
 
 const UPI_NOTE_MAX_LENGTH = 50;
 
@@ -58,13 +58,20 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	const [mode, setMode] = useState<QrMode>("global");
 	const [studentName, setStudentName] = useState("");
 	const [studentPhone, setStudentPhone] = useState("");
+	const [customAmount, setCustomAmount] = useState("");
+	const [customDescription, setCustomDescription] = useState("");
 	const [qrDataUrl, setQrDataUrl] = useState("");
 
 	const feeInputs = useFeeInputs(center, registrationOptions);
-	const { batch, plan, registrationOption, quote } = feeInputs;
+	const { inputs, batch, plan, registrationOption, quote } = feeInputs;
 
-	const isStudentMode = mode === "student";
-	const amount = isStudentMode ? (quote?.total ?? 0) : 0;
+	const isPaymentMode = mode === "payment";
+	const isCustomMode = mode === "custom";
+	const amount = isPaymentMode
+		? (quote?.total ?? 0)
+		: isCustomMode
+			? Number(customAmount) || 0
+			: 0;
 
 	const upiUri = useMemo(() => {
 		const params = new URLSearchParams({
@@ -77,23 +84,27 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 		const note = [
 			studentName.trim(),
-			batch?.name,
-			plan?.name,
-			registrationOption?.name,
+			isPaymentMode ? batch?.name : undefined,
+			isPaymentMode ? plan?.name : undefined,
+			isPaymentMode ? registrationOption?.name : undefined,
+			isCustomMode ? customDescription.trim() || "Custom payment" : undefined,
 		]
 			.filter(Boolean)
 			.join(" | ")
 			.slice(0, UPI_NOTE_MAX_LENGTH);
 
-		if (isStudentMode && note) params.set("tn", note);
+		if (mode !== "global" && note) params.set("tn", note);
 
 		return `upi://pay?${params.toString()}`;
 	}, [
 		config.upiId,
 		config.payeeName,
 		amount,
-		isStudentMode,
+		mode,
+		isPaymentMode,
+		isCustomMode,
 		studentName,
+		customDescription,
 		batch?.name,
 		plan?.name,
 		registrationOption?.name,
@@ -116,22 +127,39 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	}, [upiUri]);
 
 	const fileName = useMemo(() => {
-		if (!isStudentMode) return "skorost-payment-qr.png";
+		if (mode === "global") return "skorost-payment-qr.png";
 
 		const slug = studentName.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 		return slug
 			? `skorost-payment-${slug}-${amount}.png`
 			: `skorost-payment-${amount}.png`;
-	}, [isStudentMode, studentName, amount]);
+	}, [mode, studentName, amount]);
 
 	const shareText = useMemo(() => {
-		if (!isStudentMode) return `Pay ${config.payeeName} | ${config.upiId}`;
+		if (mode === "global") return `Pay ${config.payeeName} | ${config.upiId}`;
+
+		if (isCustomMode) {
+			const greeting = studentName.trim() ? `Hi ${studentName.trim()}, h` : "H";
+			const subject = customDescription.trim()
+				? `the payment of your ${customDescription.trim()}`
+				: "your payment";
+
+			return `${greeting}ere is the QR code for ${subject}. Amount: ${formatRupees(amount)}.`;
+		}
 
 		const who = studentName.trim() ? `${studentName.trim()} | ` : "";
 
 		return `${who}Fees due ${formatRupees(amount)}. Scan to pay ${config.payeeName}.`;
-	}, [isStudentMode, studentName, amount, config.payeeName, config.upiId]);
+	}, [
+		mode,
+		isCustomMode,
+		studentName,
+		customDescription,
+		amount,
+		config.payeeName,
+		config.upiId,
+	]);
 
 	const downloadQr = useCallback(() => {
 		if (!qrDataUrl) return;
@@ -175,7 +203,11 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	}, [studentPhone, shareText]);
 
 	const hasPhone = studentPhone.replace(/\D/g, "").length >= 10;
-	const canUseStudentQr = !!batch && !!plan && amount > 0;
+	const canGenerate = isPaymentMode
+		? !!batch && !!plan && amount > 0
+		: isCustomMode
+			? amount > 0
+			: true;
 
 	return (
 		<div className={styles.cardStack}>
@@ -186,23 +218,61 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						onChange={setMode}
 						options={[
 							{ label: "Global QR", value: "global" },
-							{ label: "Student QR", value: "student" },
+							{ label: "Fee Payment", value: "payment" },
+							{ label: "Custom", value: "custom" },
 						]}
 					/>
 
-					{isStudentMode ? (
+					{isPaymentMode && (
+						<FeeInputFields
+							centers={centers}
+							center={center}
+							onCenterChange={onCenterChange}
+							registrationOptions={registrationOptions}
+							feeInputs={feeInputs}
+						/>
+					)}
+
+					{isCustomMode && (
 						<>
-							<FeeInputFields
-								centers={centers}
-								center={center}
-								onCenterChange={onCenterChange}
-								registrationOptions={registrationOptions}
-								feeInputs={feeInputs}
+							<InputBox
+								id="custom-amount"
+								label="Amount"
+								placeholder="e.g. 500"
+								type={InputTextTypes.NUMBER}
+								value={customAmount}
+								isRequired
+								isError={false}
+								errorMessage=""
+								onChange={setCustomAmount}
+								onClear={() => setCustomAmount("")}
 							/>
 
 							<InputBox
+								id="custom-description"
+								label="Description (optional)"
+								placeholder="e.g. Jersey order 2026"
+								value={customDescription}
+								isError={false}
+								errorMessage=""
+								caption="Shown in the message when you share the QR"
+								onChange={setCustomDescription}
+								onClear={() => setCustomDescription("")}
+							/>
+						</>
+					)}
+
+					{mode === "global" && (
+						<p className={styles.qrHint}>
+							No amount encoded | the parent types what they owe.
+						</p>
+					)}
+
+					{mode !== "global" && (
+						<>
+							<InputBox
 								id="student-name"
-								label="Student name (optional)"
+								label="Name (optional)"
 								placeholder="e.g. Aarav"
 								value={studentName}
 								isError={false}
@@ -213,7 +283,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 							<InputBox
 								id="student-phone"
-								label="Parent phone (optional)"
+								label="Phone (optional)"
 								placeholder="98765 43210"
 								type={InputTextTypes.NUMBER}
 								value={studentPhone}
@@ -224,13 +294,33 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 								onClear={() => setStudentPhone("")}
 							/>
 						</>
-					) : (
-						<p className={styles.qrHint}>
-							No amount encoded | the parent types what they owe.
-						</p>
 					)}
 				</div>
 			</div>
+
+			{isPaymentMode && quote && (
+				<div className={styles.result}>
+					<div className={styles.resultTotal}>
+						<span>Total due</span>
+						<b>{formatRupees(quote.total)}</b>
+					</div>
+
+					{quote.rows.map((row) => (
+						<div key={row.id} className={styles.resultRow}>
+							<span className={styles.resultRowLabel}>
+								{row.label}
+								<small>{row.detail}</small>
+							</span>
+							<span>{formatRupees(row.amount)}</span>
+						</div>
+					))}
+
+					<p className={styles.resultFootnote}>
+						{formatDisplayDate(inputs.startDate)} -{" "}
+						{formatDisplayDate(inputs.endDate)} | prices as stored, no rounding
+					</p>
+				</div>
+			)}
 
 			<div className={styles.qrFrame}>
 				{qrDataUrl ? (
@@ -238,7 +328,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						className={styles.qrImage}
 						src={qrDataUrl}
 						alt={
-							isStudentMode
+							mode !== "global"
 								? `Payment QR for ${formatRupees(amount)}`
 								: "Payment QR"
 						}
@@ -248,18 +338,22 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 				)}
 
 				<p className={styles.qrCaption}>
-					{isStudentMode && amount > 0 ? formatRupees(amount) : "Any amount"}
+					{mode !== "global" && amount > 0 ? formatRupees(amount) : "Any amount"}
 				</p>
 				<p className={styles.qrHint}>
-					{isStudentMode && studentName.trim() ? `${studentName.trim()} | ` : ""}
+					{mode !== "global" && studentName.trim() ? `${studentName.trim()} | ` : ""}
 					{config.payeeName} | {config.upiId}
 				</p>
 
-				{isStudentMode && !canUseStudentQr && (
+				{isPaymentMode && !canGenerate && (
 					<p className={styles.qrHint}>
 						Select a batch and plan first. The amount is calculated from the
 						batch-linked plan.
 					</p>
+				)}
+
+				{isCustomMode && !canGenerate && (
+					<p className={styles.qrHint}>Enter an amount to generate the QR.</p>
 				)}
 
 				<div className={styles.buttonRow} style={{ width: "100%" }}>
@@ -269,7 +363,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						color={Colors.NEUTRAL_DARK}
 						shape={Shapes.ROUNDED}
 						size={ButtonSizes.LARGE}
-						isDisabled={!qrDataUrl || (isStudentMode && !canUseStudentQr)}
+						isDisabled={!qrDataUrl || !canGenerate}
 						onClick={downloadQr}
 					/>
 					<Button
@@ -277,7 +371,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						color={Colors.PRIMARY}
 						shape={Shapes.ROUNDED}
 						size={ButtonSizes.LARGE}
-						isDisabled={!qrDataUrl || (isStudentMode && !canUseStudentQr)}
+						isDisabled={!qrDataUrl || !canGenerate}
 						onClick={() => {
 							if (hasPhone) {
 								openWhatsApp();

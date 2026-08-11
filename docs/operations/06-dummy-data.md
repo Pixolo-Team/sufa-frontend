@@ -7,12 +7,12 @@
 > each one is marked 🔴 in a comment. Replacing them there is the whole job -
 > the shape already matches [04-api.md](04-api.md).
 
-## Global config (DUMMY)
+## Global config
 
 | Key | Value |
 | --- | --- |
-| Global UPI ID | `skorost@ybl` 🔴 |
-| Payee name | `Skorost United Football Academy` 🔴 |
+| Global UPI ID | ✅ `skorostunitedfootballschool@kotak` - **real value, confirmed** |
+| Payee name | `Skorost United Football Academy` 🔴 - confirm this is the exact name to show in UPI apps |
 | Staff PIN | `1234` 🔴 |
 | Holidays | ✅ **No holiday check** - count every session day mechanically |
 | Rounding | ✅ **None.** Both prices are stored per plan |
@@ -70,5 +70,6 @@ For a free trial or to enroll, reply here. See you on the pitch! ⚽
 ## Real values still owed
 
 Prices (including every per-session price), addresses, batch timings and days,
-the global UPI ID + payee name, the staff PIN, and the exact message wording
-and image branding.
+the staff PIN, and the exact message wording and image branding. The global
+UPI ID is now real (`skorostunitedfootballschool@kotak`); the payee name
+still needs sign-off.

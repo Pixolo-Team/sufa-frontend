@@ -7,17 +7,15 @@ import styles from "./operations.module.scss";
 // COMPONENTS //
 import OperationsIcon, { type OperationsIconName } from "./OperationsIcon";
 import PinGate from "./PinGate";
-import FeeCalculator from "./FeeCalculator";
-import FeeStructure from "./FeeStructure";
 import PaymentQr from "./PaymentQr";
-import CentersList from "./CentersList";
+import BatchesList from "./BatchesList";
 
 // DATA //
 import { OPERATIONS_DATA } from "@/data/operations.data";
 
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
 
-type ToolId = "calculator" | "structure" | "qr" | "centers";
+type ToolId = "batches" | "qr";
 
 const TOOLS: {
 	id: ToolId;
@@ -26,23 +24,16 @@ const TOOLS: {
 	subtitle: string;
 }[] = [
 	{
-		id: "calculator",
-		icon: "calculator",
-		title: "Fee Calculator",
-		subtitle: "Work out dues",
-	},
-	{
-		id: "structure",
-		icon: "message",
-		title: "Fee Structure",
-		subtitle: "Send on WhatsApp",
-	},
-	{ id: "qr", icon: "qr", title: "Payment QR", subtitle: "Global / student" },
-	{
-		id: "centers",
+		id: "batches",
 		icon: "pin",
-		title: "Centers",
+		title: "Batches",
 		subtitle: "Prices & timings",
+	},
+	{
+		id: "qr",
+		icon: "qr",
+		title: "Payments",
+		subtitle: "QR & fee collection",
 	},
 ];
 
@@ -76,12 +67,10 @@ const OperationsApp: React.FC = () => {
 		const toolProps = { centers, center, onCenterChange: setCenterId };
 
 		switch (activeTool) {
-			case "calculator":
-				return <FeeCalculator {...toolProps} registrationOptions={registrationOptions} />;
-			case "structure":
+			case "batches":
 				return (
-					<FeeStructure
-						{...toolProps}
+					<BatchesList
+						centers={centers}
 						config={config}
 						registrationOptions={registrationOptions}
 					/>
@@ -93,10 +82,6 @@ const OperationsApp: React.FC = () => {
 						config={config}
 						registrationOptions={registrationOptions}
 					/>
-				);
-			case "centers":
-				return (
-					<CentersList centers={centers} registrationOptions={registrationOptions} />
 				);
 			default:
 				return (
@@ -188,7 +173,7 @@ const OperationsApp: React.FC = () => {
 						activeTool === null ? styles.panelHome : ""
 					}`}
 				>
-					{activeTool !== "centers" && (
+					{activeTool !== "batches" && (
 						<p className={styles.notice}>Staff tool. Not linked from the public site.</p>
 					)}
 

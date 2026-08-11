@@ -8,6 +8,11 @@ This folder holds the **planning and design docs** for that work. The page is
 **built** against dummy data (`apps/frontend/src/pages/operations/`); the
 backend endpoints are **not**.
 
+> ⚠️ The built page is being treated as a **wireframe** while the whole
+> `/operations` UI gets redesigned - it has already been reshaped once (see
+> "What changed" in [05-page-ux.md](05-page-ux.md#what-changed-revision-history))
+> and may change again.
+
 ## Documents
 
 | Doc | Purpose | Status |
@@ -17,22 +22,25 @@ backend endpoints are **not**.
 | [DATABASE.md](DATABASE.md) | **The** database structure (PostgreSQL, UUID keys) | 🟢 Shape locked |
 | [03-db-schema.md](03-db-schema.md) | ⛔ Superseded - points at DATABASE.md | ⛔ Retired |
 | [04-api.md](04-api.md) | Backend API the frontend will consume (static config for now) | 🟡 Not built |
-| [05-page-ux.md](05-page-ux.md) | The `/operations` page, three tools, PIN gate | 🟢 Built |
-| [06-dummy-data.md](06-dummy-data.md) | 🔴 Placeholder centers/prices/UPI/PIN/message - REPLACE before prod | 🔴 Dummy |
+| [05-page-ux.md](05-page-ux.md) | The `/operations` page, two pages (Batches, Payments), PIN gate | 🟢 Built |
+| [06-dummy-data.md](06-dummy-data.md) | 🔴 Placeholder centers/prices/PIN/message - REPLACE before prod (UPI ID is now real) | 🔴 Mostly dummy |
 
 > **Real values still owed** (currently faked in doc 06): per-center prices and
-> per-session prices, addresses, batch days + timings, global UPI ID,
-> staff PIN, exact message wording and image branding.
+> per-session prices, addresses, batch days + timings, staff PIN, exact message
+> wording and image branding. The global UPI ID has been set to the real value.
 
-## The three tools on the page
+## The two pages on the site
 
-1. **Fee Calculator** - given center, batch, plan (1-month / 3-month),
-   days-per-week (2 or 3), and join date, compute the amount owed including
-   mid-month pro-rata. Session days come from the **batch**.
-2. **Send Fee Structure** - select a center, then share that center's fee
-   structure as a **copy-pasteable image** or as a pre-filled `wa.me` message.
-3. **Payment QR** - a single global static UPI QR to share, plus a per-student
-   dynamic UPI QR with the calculated amount pre-filled.
+1. **Batches** - centers as tabs, each batch's schedule and its plans in a
+   table. Per batch, share **Timings**, **Fees**, or **Fees + timings** to a
+   parent, as either **text** or a branded **image**.
+2. **Payments** - three tabs:
+   - **Global QR** - one static UPI QR to share with anyone, no amount.
+   - **Fee Payment** - pick center/batch/months/days-per-week (+ optional
+     registration and dates) and get the **month-by-month fees breakdown**
+     plus a payment QR with the computed amount baked in.
+   - **Custom** - a QR for an arbitrary amount not tied to any batch/plan,
+     with a description that reaches the payer's UPI app.
 
 ## Locked decisions
 

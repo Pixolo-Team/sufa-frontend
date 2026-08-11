@@ -17,7 +17,7 @@ const WEEKDAY_LONG = [
 ];
 
 /** Turn a `HH:mm` database time into `5:00 PM` */
-export const formatTime = (value: string): string => {
+const formatTime = (value: string): string => {
 	const [hours, minutes] = value.split(":").map(Number);
 
 	if (Number.isNaN(hours) || Number.isNaN(minutes)) return value;
@@ -28,15 +28,8 @@ export const formatTime = (value: string): string => {
 	return `${hour12}:${`${minutes}`.padStart(2, "0")} ${suffix}`;
 };
 
-/** `Mon / Wed / Fri` from JS day numbers */
-export const formatWeekdays = (days: number[]): string =>
-	Array.from(new Set(days))
-		.sort((a, b) => a - b)
-		.map((day) => WEEKDAY_SHORT[day])
-		.join(" / ");
-
 /** One readable slot, e.g. `Monday 6:00 PM - 7:00 PM`. */
-export const formatTimingSlot = (
+const formatTimingSlot = (
 	slot: OperationsBatchTimingData,
 	useShortDay = false
 ): string =>
@@ -76,6 +69,6 @@ export const formatPlanLabel = (plan: OperationsPlanData): string => {
 			: `${plan.durationMonths} Months`;
 
 	return plan.daysPerWeek === 2
-		? `${durationLabel} · ${plan.daysPerWeek} Days`
+		? `${durationLabel} · ${plan.daysPerWeek} Days a Week`
 		: durationLabel;
 };
