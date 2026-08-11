@@ -62,6 +62,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	const [customAmount, setCustomAmount] = useState("");
 	const [customDescription, setCustomDescription] = useState("");
 	const [qrDataUrl, setQrDataUrl] = useState("");
+	const [isQrFullscreen, setIsQrFullscreen] = useState(false);
 
 	const feeInputs = useFeeInputs(center, registrationOptions);
 	const { inputs, batch, plan, registrationOption, quote } = feeInputs;
@@ -88,7 +89,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 			isPaymentMode ? batch?.name : undefined,
 			isPaymentMode && plan ? formatPlanLabel(plan) : undefined,
 			isPaymentMode ? registrationOption?.name : undefined,
-			isCustomMode ? customDescription.trim() || "Custom payment" : undefined,
+			isCustomMode ? "Custom payment" : undefined,
 		]
 			.filter(Boolean)
 			.join(" | ")
@@ -105,7 +106,6 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		isPaymentMode,
 		isCustomMode,
 		studentName,
-		customDescription,
 		batch?.name,
 		plan,
 		registrationOption?.name,
@@ -126,6 +126,18 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 			isActive = false;
 		};
 	}, [upiUri]);
+
+	useEffect(() => {
+		if (!isQrFullscreen) return;
+
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") setIsQrFullscreen(false);
+		};
+
+		document.addEventListener("keydown", onKeyDown);
+
+		return () => document.removeEventListener("keydown", onKeyDown);
+	}, [isQrFullscreen]);
 
 	const fileName = useMemo(() => {
 		if (mode === "global") return "skorost-payment-qr.png";
@@ -325,15 +337,22 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 			<div className={styles.qrFrame}>
 				{qrDataUrl ? (
-					<img
-						className={styles.qrImage}
-						src={qrDataUrl}
-						alt={
-							mode !== "global"
-								? `Payment QR for ${formatRupees(amount)}`
-								: "Payment QR"
-						}
-					/>
+					<button
+						type="button"
+						className={styles.qrImageButton}
+						aria-label="Open QR full screen"
+						onClick={() => setIsQrFullscreen(true)}
+					>
+						<img
+							className={styles.qrImage}
+							src={qrDataUrl}
+							alt={
+								mode !== "global"
+									? `Payment QR for ${formatRupees(amount)}`
+									: "Payment QR"
+							}
+						/>
+					</button>
 				) : (
 					<p className={styles.qrHint}>Generating QR...</p>
 				)}
@@ -384,6 +403,48 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 					/>
 				</div>
 			</div>
+
+			{isQrFullscreen && qrDataUrl && (
+				<div
+					className={styles.qrFullscreen}
+					role="dialog"
+					aria-modal="true"
+					aria-label="Payment QR full screen"
+					onClick={() => setIsQrFullscreen(false)}
+				>
+					<img
+						className={styles.qrFullscreenLogo}
+						src="/images/skorost.svg"
+						alt="Skorost United Football Academy"
+					/>
+					<img
+						src={qrDataUrl}
+						alt={
+							mode !== "global"
+								? `Payment QR for ${formatRupees(amount)}, enlarged`
+								: "Payment QR, enlarged"
+						}
+					/>
+					<p className={styles.qrFullscreenName}>
+						{mode !== "global" && amount > 0
+							? formatRupees(amount)
+							: "Any amount"}
+					</p>
+					<p className={styles.qrFullscreenHint}>
+						{mode !== "global" && studentName.trim()
+							? `${studentName.trim()} | `
+							: ""}
+						{config.payeeName}
+					</p>
+					<button
+						className={styles.qrFullscreenClose}
+						type="button"
+						aria-label="Close QR full screen"
+					>
+						Tap anywhere to close
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };

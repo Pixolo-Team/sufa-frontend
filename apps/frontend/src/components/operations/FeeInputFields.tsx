@@ -17,7 +17,7 @@ import Select from "@/neevo/components/select/Select";
 import Segmented from "./Segmented";
 
 // HOOKS //
-import { WEEKDAY_LABELS, type useFeeInputs } from "./use-fee-inputs";
+import type { useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
 import { formatRupees } from "@/utils/fee-calculator.util";
@@ -44,15 +44,11 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		batch,
 		plan,
 		registrationOption,
-		isFixedTerm,
-		batchWeekdays,
-		billedWeekdays,
 		setBatchId,
 		setPlanId,
 		setRegistrationOptionId,
 		setStartDate,
 		setEndDate,
-		toggleWeekday,
 	} = feeInputs;
 
 	const centerOptions: DropdownOptionData[] = centers.map((item) => ({
@@ -82,7 +78,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 	)
 		.sort((left, right) => left - right)
 		.map((days) => ({
-			label: `${days} Days a Week`,
+			label: String(days),
 			value: String(days),
 		}));
 	const registrationOptions = [
@@ -128,9 +124,6 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 
 	const onDaysChange = (value: string) =>
 		selectPlan(plan?.durationMonths ?? 0, Number(value));
-
-	const canPickDays =
-		!!plan && plan.daysPerWeek > 0 && plan.daysPerWeek < batchWeekdays.length;
 
 	return (
 		<div className={styles.fieldStack}>
@@ -195,29 +188,6 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 				)}
 			</div>
 
-			{canPickDays && (
-				<div>
-					<span className={styles.fieldLabel}>
-						Which days? (pick {plan.daysPerWeek})
-					</span>
-					<div className={styles.dayChips}>
-						{batchWeekdays.map((weekday) => (
-							<button
-								key={weekday}
-								type="button"
-								aria-pressed={billedWeekdays.includes(weekday)}
-								className={`${styles.dayChip} ${
-									billedWeekdays.includes(weekday) ? styles.dayChipActive : ""
-								}`}
-								onClick={() => toggleWeekday(weekday)}
-							>
-								{WEEKDAY_LABELS[weekday]}
-							</button>
-						))}
-					</div>
-				</div>
-			)}
-
 			<div className={styles.twoUp}>
 				<InputBox
 					id="fee-start-date"
@@ -240,8 +210,8 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 					isError={false}
 					errorMessage=""
 					showClear={false}
-					isDisabled={!plan || isFixedTerm}
-					caption={isFixedTerm ? "Fixed term" : "Auto-filled | editable"}
+					isDisabled={!plan}
+					caption="Auto-filled | editable"
 					onChange={setEndDate}
 					onClear={() => setEndDate("")}
 				/>

@@ -50,9 +50,9 @@
    - **Answer:** ✅ **1, 3, 6 and 12 months**, each at 3-day and 2-day
      attendance, at **two centers**. (Confirmed Aug 2026 - an earlier draft of
      this doc said "1 and 3 months only, no 6-month plan"; that was stale.)
-   - ⚠️ **To confirm:** can a student **join a multi-month plan mid-month**? A
-     plan longer than 1 month is currently treated as a fixed term starting on
-     the 1st, with no pro-rata.
+   - **Mid-month joins:** ✅ All durations use the same rule. A student can join
+     mid-month; the partial joining month is billed per session, then the full
+     selected duration is billed from the next month.
 
 3. **Rounding** on the final amount - nearest ₹1, ₹10, or ₹50?
    - **Answer:** ✅ **No rounding at all.** Superseded by storing the
@@ -60,9 +60,10 @@
 
 ### Pro-rata (mid-month joiner)
 
-4. Joining 26 Jul → charged "26 Jul - 31 Aug." Confirm the rule:
-   **remaining sessions of the joining month (charged per-session) + one full
-   next month (flat ₹3,400)**, then the cycle resets to the 1st?
+4. Joining 26 Jul → charged "26 Jul - 31 Aug" for 1 month. A 3-month plan
+   starting 15 Jul defaults to "15 Jul - 31 Oct." Confirm the rule:
+   **remaining sessions of the joining month (charged per-session) + the full
+   selected duration from the next month**, then the cycle resets to the 1st?
    Or simply: count every session day from join date to the end date × rate?
    - **Answer:** ✅ **Option A.** First payment = (remaining sessions in the
      joining month × the stored per-session price) **+** one full next month at

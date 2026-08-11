@@ -1,5 +1,5 @@
 // REACT //
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 // TYPES //
 import type {
@@ -36,6 +36,11 @@ import {
 } from "@/utils/operations.util";
 
 type ShareFormat = "text" | "image";
+type PendingShare = {
+	batch: OperationsBatchData;
+	sections: FeeStructureImageSections;
+	title: string;
+} | null;
 
 interface BatchesListProps {
 	centers: OperationsCenterData[];
@@ -103,7 +108,7 @@ const BatchesList: React.FC<BatchesListProps> = ({
 	registrationOptions,
 }) => {
 	const [centerId, setCenterId] = useState(centers[0]?.id ?? "");
-	const [format, setFormat] = useState<ShareFormat>("text");
+	const [pendingShare, setPendingShare] = useState<PendingShare>(null);
 
 	const center = centers.find((item) => item.id === centerId) ?? centers[0];
 
@@ -164,10 +169,28 @@ const BatchesList: React.FC<BatchesListProps> = ({
 		[center, config.academyName, registrationOptions]
 	);
 
-	/** One handler for both formats, so the buttons stay identical */
+	useEffect(() => {
+		if (!pendingShare) return;
+
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") setPendingShare(null);
+		};
+
+		window.addEventListener("keydown", onKeyDown);
+
+		return () => window.removeEventListener("keydown", onKeyDown);
+	}, [pendingShare]);
+
+	/** One handler for both formats, so the modal buttons stay identical */
 	const onShare = useCallback(
-		(batch: OperationsBatchData, sections: FeeStructureImageSections) => {
-			if (format === "image") {
+		(
+			batch: OperationsBatchData,
+			sections: FeeStructureImageSections,
+			nextFormat: ShareFormat
+		) => {
+			setPendingShare(null);
+
+			if (nextFormat === "image") {
 				// Registration is a fee, so it rides along with the plans, never with
 				// a timings-only card.
 				void shareImage(batch, { ...sections, registration: sections.plans });
@@ -188,14 +211,18 @@ const BatchesList: React.FC<BatchesListProps> = ({
 
 			void shareText(text);
 		},
-		[
-			format,
-			shareImage,
-			shareText,
-			center,
-			registrationOptions,
-			config.academyName,
-		]
+		[shareImage, shareText, center, registrationOptions, config.academyName]
+	);
+
+	const openSharePicker = useCallback(
+		(
+			batch: OperationsBatchData,
+			sections: FeeStructureImageSections,
+			title: string
+		) => {
+			setPendingShare({ batch, sections, title });
+		},
+		[]
 	);
 
 	return (
@@ -210,18 +237,6 @@ const BatchesList: React.FC<BatchesListProps> = ({
 					}))}
 				/>
 			)}
-
-			<div className={styles.card}>
-				<span className={styles.sectionLabel}>Share as</span>
-				<Segmented
-					value={format}
-					onChange={setFormat}
-					options={[
-						{ label: "Text", value: "text" },
-						{ label: "Image", value: "image" },
-					]}
-				/>
-			</div>
 
 			{center && (
 				<div className={styles.centersList}>
@@ -241,23 +256,26 @@ const BatchesList: React.FC<BatchesListProps> = ({
 										<span className={styles.centerBatchMeta}>{batch.ageGroup}</span>
 									</div>
 
-									<div className={styles.centerScheduleList}>
-										{formatBatchTimingLines(batch).map((line) => (
-											<span
-												key={`${batch.id}-${line}`}
-												className={styles.centerSchedulePill}
-											>
-												{line}
-											</span>
-										))}
+									<div className={styles.centerScheduleBlock}>
+										<span className={styles.centerBlockLabel}>Timings</span>
+										<div className={styles.centerScheduleList}>
+											{formatBatchTimingLines(batch).map((line) => (
+												<span
+													key={`${batch.id}-${line}`}
+													className={styles.centerSchedulePill}
+												>
+													{line}
+												</span>
+											))}
+										</div>
 									</div>
 
 									<div className={styles.centerBlock}>
-										<span className={styles.centerBlockLabel}>Plans</span>
+										<span className={styles.centerBlockLabel}>Fee structure</span>
 										<table className={styles.plansTable}>
 											<thead>
 												<tr>
-													<th>Plan</th>
+													<th>Duration</th>
 													<th>Price</th>
 												</tr>
 											</thead>
@@ -273,9 +291,7 @@ const BatchesList: React.FC<BatchesListProps> = ({
 									</div>
 
 									<div className={styles.shareBlock}>
-										<span className={styles.centerBlockLabel}>
-											Share {format === "image" ? "as image" : "as text"}
-										</span>
+										<span className={styles.centerBlockLabel}>Share</span>
 
 										<div className={styles.buttonRow}>
 											<Button
@@ -285,7 +301,11 @@ const BatchesList: React.FC<BatchesListProps> = ({
 												shape={Shapes.ROUNDED}
 												size={ButtonSizes.LARGE}
 												onClick={() =>
-													onShare(batch, { plans: false, schedule: true })
+													openSharePicker(
+														batch,
+														{ plans: false, schedule: true },
+														"Timings"
+													)
 												}
 											/>
 											<Button
@@ -295,7 +315,11 @@ const BatchesList: React.FC<BatchesListProps> = ({
 												shape={Shapes.ROUNDED}
 												size={ButtonSizes.LARGE}
 												onClick={() =>
-													onShare(batch, { plans: true, schedule: false })
+													openSharePicker(
+														batch,
+														{ plans: true, schedule: false },
+														"Fees"
+													)
 												}
 											/>
 											<Button
@@ -304,13 +328,72 @@ const BatchesList: React.FC<BatchesListProps> = ({
 												shape={Shapes.ROUNDED}
 												size={ButtonSizes.LARGE}
 												onClick={() =>
-													onShare(batch, { plans: true, schedule: true })
+													openSharePicker(
+														batch,
+														{ plans: true, schedule: true },
+														"Fees + timings"
+													)
 												}
 											/>
 										</div>
 									</div>
 								</div>
 							))}
+						</div>
+					</section>
+				</div>
+			)}
+
+			{pendingShare && (
+				<div
+					className={styles.modalOverlay}
+					role="presentation"
+					onClick={() => setPendingShare(null)}
+				>
+					<section
+						className={styles.shareModal}
+						role="dialog"
+						aria-modal="true"
+						aria-labelledby="share-format-title"
+						onClick={(event) => event.stopPropagation()}
+					>
+						<div className={styles.shareModalHeader}>
+							<div>
+								<span className={styles.sectionLabel}>Share as</span>
+								<h2 id="share-format-title">{pendingShare.title}</h2>
+								<p>
+									{pendingShare.batch.name} - {center?.name}
+								</p>
+							</div>
+							<button
+								type="button"
+								className={styles.modalClose}
+								aria-label="Close"
+								onClick={() => setPendingShare(null)}
+							>
+								x
+							</button>
+						</div>
+
+						<div className={styles.shareFormatGrid}>
+							<button
+								type="button"
+								className={styles.shareFormatButton}
+								onClick={() =>
+									onShare(pendingShare.batch, pendingShare.sections, "text")
+								}
+							>
+								Text
+							</button>
+							<button
+								type="button"
+								className={styles.shareFormatButton}
+								onClick={() =>
+									onShare(pendingShare.batch, pendingShare.sections, "image")
+								}
+							>
+								Image
+							</button>
 						</div>
 					</section>
 				</div>
