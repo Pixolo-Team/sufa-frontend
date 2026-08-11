@@ -40,7 +40,7 @@ backend endpoints are **not**.
      registration and dates) and get the **month-by-month fees breakdown**
      plus a payment QR with the computed amount baked in.
    - **Custom** - a QR for an arbitrary amount not tied to any batch/plan,
-     with a description that reaches the payer's UPI app.
+     with an optional description used in the share message only.
 
 ## Locked decisions
 

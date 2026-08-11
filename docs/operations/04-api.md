@@ -98,8 +98,10 @@ required for now.
 
 ## Reconciliation note
 
-Because no quote is stored, a payment arrives as an anonymous credit. The
-student QR puts the student name and plan in the UPI **`tn` (transaction note)**
-so the credit can be matched by hand in the settlement report. If that proves
-insufficient, the fix is a `fee_quotes` history table, not a bigger note - some
-UPI apps let the payer edit `tn`.
+Because no quote is stored, a payment arrives as an anonymous credit. The fee
+payment QR puts the student name and plan in the UPI **`tn` (transaction note)**
+so the credit can be matched by hand in the settlement report. Custom QR
+descriptions are used in the share message only; changing a custom description
+does not change the QR payload. If matching proves insufficient, the fix is a
+`fee_quotes` history table, not a bigger note - some UPI apps let the payer edit
+`tn`.

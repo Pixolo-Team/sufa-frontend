@@ -71,13 +71,13 @@ No registration-options card (removed - not needed here).
 - Centers (`Ghatkopar East` / `Ghatkopar West`) are **tabs**, not a stacked
   list.
 - For the selected center: address, then each batch with its age group,
-  schedule pills (from `formatBatchTimingLines`), and its **plans in a
-  table** (`Plan` / `Price` columns) rather than a flex price-row list.
+  emphasized schedule pills (from `formatBatchTimingLines`), and its **fee
+  structure in a table** (`Duration` / `Price` columns) rather than a flex
+  price-row list.
 
 ### Sharing
 
-A page-level **Share as** toggle (`Text` / `Image`) sets the format once, then
-every batch card carries the same three buttons:
+Every batch card carries three share-scope buttons:
 
 | Button | Sends |
 | --- | --- |
@@ -85,6 +85,8 @@ every batch card carries the same three buttons:
 | **Fees** | Plans + prices, registration options, address |
 | **Fees + timings** | Everything above |
 
+- Tapping one of those buttons opens a small modal asking whether to share as
+  **Text** or **Image**. There is no page-level format toggle.
 - **Text** goes through `navigator.share({ text })`, falling back to a
   clipboard copy when the share sheet is unavailable.
 - **Image** renders the card with `renderFeeStructureImage` and shares the PNG
@@ -125,38 +127,43 @@ Inputs: center, batch, **number of months**, **days per week**, registration
   plan id, so they also keep their identity across a duration change instead
   of remounting.
 - When the plan's days-per-week is fewer than the batch's session days, a
-  day-picker chip row appears below (e.g. batch runs Mon/Wed/Fri, plan is
-  2 days/week → pick which 2).
+  day-picker is **not** shown. The app counts the first `N` configured batch
+  days automatically (e.g. a 2-day plan on Mon/Wed/Fri counts Mon + Wed).
 - **End date auto-fills** from the start date (default rule in
   [02-fee-calculation.md](02-fee-calculation.md#default-end-date)) but is
-  **editable**. A multi-month plan snaps the start to the 1st and pins the
-  end date to the flat term price.
+  **editable for every duration**. All durations follow the same mid-month
+  rule: a 15 Jul start on a 1-month plan defaults to 31 Aug; a 15 Jul start on
+  a 3-month plan defaults to 31 Oct.
 
 Once a batch and plan are picked, two things render below the inputs:
 
-1. **Fees breakdown** - total due, then one row per billed month (e.g.
-   `11-31 Aug: 9 x Rs 285 - part month`, `Sep 2026: full month - flat price`),
-   plus the registration row when one is selected, and the date-range
-   footnote. This is what the old standalone Fee Calculator showed.
+1. **Fees breakdown** - total due, then partial months as plain session rows
+   (e.g. `11-31 Aug: 9 sessions x Rs 285 - part month`). Consecutive full
+   package months are collapsed into one compact row (e.g.
+   `Sep 2026 - Aug 2027: 12 full months - package price`), plus the
+   registration row when one is selected, and the date-range footnote. This is
+   what the old standalone Fee Calculator showed, tightened for long plans.
    There is deliberately **no fee-structure image/message here**: at the point
    of taking payment the parent already has the fee structure, they only need
    to see how the amount was arrived at. Sharing the structure lives on the
    Batches page instead.
 2. **Payment QR** - the computed total (via [02-fee-calculation.md](02-fee-calculation.md))
    baked into `am=`, plus the student name and plan in `tn` (the UPI note) -
-   see [04-api.md](04-api.md#reconciliation-note). Download saves a PNG; with
-   a phone number entered the action becomes WhatsApp, otherwise the native
-   share sheet, falling back to copying the UPI link.
+   see [04-api.md](04-api.md#reconciliation-note). Tapping the QR opens a
+   full-screen white scan view with the Skorost logo above it; tap anywhere or
+   press Escape to close. Download saves a PNG; with a phone number entered the
+   action becomes WhatsApp, otherwise the native share sheet, falling back to
+   copying the UPI link.
 
 ### Custom
 
 For amounts that don't map to a batch/plan (e.g. a jersey order). An amount
 field plus an optional **Description**, with name/phone optional. The
-description goes into **both** the UPI `tn` note (so the payer sees what they
-are paying for in their UPI app, capped at 50 characters) and the share
-message - `Hi Hussain, here is the QR code for the payment of your Jersey
-order 2026. Amount: Rs 500.` Same Download/Share/WhatsApp actions as Fee
-Payment.
+description goes into the share message only - `Hi Hussain, here is the QR code
+for the payment of your Jersey order 2026. Amount: Rs 500.` It does **not**
+change the QR payload or the UPI `tn` note, so editing the description does not
+regenerate the QR. Same Download/Share/WhatsApp actions as Fee Payment,
+including the full-screen QR preview.
 
 > Caveat: some UPI apps let the payer edit `tn`, so treat it as a label, not
 > a guarantee - see [04-api.md](04-api.md#reconciliation-note).
@@ -203,9 +210,11 @@ consolidated to the **two pages** described above:
   parent already has the structure by the time they are paying.
 - Payment QR's "Student QR" tab was renamed **Fee Payment**, and a third
   **Custom** tab was added for amounts not tied to a batch/plan (with a
-  Description that reaches the payer's UPI app).
+  Description used in the share message only).
 - The Plan dropdown became **Number of months** + **Days per week**, first as
   cascading selects, then as one-tap segmented rows.
+- The manual "Which days?" picker was removed; 2-day plans count the first two
+  configured batch days automatically.
 - The Fee Payment tab gained the **fees breakdown** the retired Fee Calculator
   used to show.
 - Every duration now sells both a 2-day and a 3-day plan
