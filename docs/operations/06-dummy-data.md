@@ -21,29 +21,43 @@
 
 ## Centers (DUMMY) - two centers
 
+Prices are **per batch**, not per center. Every duration sells at both 3 and
+2 days a week.
+
 ### Ghatkopar East 🔴
 
-- Address: 12 MG Road, Ghatkopar East, Mumbai 400077
-- Batches: **Evening** Mon/Wed/Fri 17:00-18:30 · **Morning** Tue/Thu/Sat 07:00-08:30
+Address: 12 MG Road, Ghatkopar East, Mumbai 400077
 
-| Plan | Duration | Days/wk | Price | Per-session |
-| --- | --- | --- | --- | --- |
-| 1 Month · 3 Days | 1 | 3 | ₹3,400 | ₹285 |
-| 1 Month · 2 Days | 1 | 2 | ₹2,280 | ₹285 |
-| 3 Months · 3 Days | 3 | 3 | ₹9,600 | ₹285 |
-| 3 Months · 2 Days | 3 | 2 | ₹6,500 | ₹285 |
+**Evening Batch** (Under-14) — Mon 18:00-19:00 · Wed 19:00-20:00 · Fri 18:30-19:30
+
+| Duration | 3 days/wk | 2 days/wk | Per-session |
+| --- | --- | --- | --- |
+| 1 month | ₹3,400 | ₹2,280 | ₹285 |
+| 3 months | ₹9,600 | ₹6,400 | ₹285 |
+| 6 months | ₹18,600 | ₹12,400 | ₹285 |
+| 12 months | ₹34,800 | ₹23,200 | ₹285 |
+
+**Morning Batch** (Under-10) — Tue 07:00-08:00 · Thu 07:30-08:30 · Sat 08:00-09:00
+
+| Duration | 3 days/wk | 2 days/wk | Per-session |
+| --- | --- | --- | --- |
+| 1 month | ₹3,550 | ₹2,370 | ₹300 |
+| 3 months | ₹9,950 | ₹6,650 | ₹300 |
+| 6 months | ₹19,200 | ₹12,800 | ₹300 |
+| 12 months | ₹36,000 | ₹24,000 | ₹300 |
 
 ### Ghatkopar West 🔴
 
-- Address: 45 LBS Marg, Ghatkopar West, Mumbai 400086
-- Batches: **Evening** Mon/Wed/Fri 18:00-19:30
+Address: 45 LBS Marg, Ghatkopar West, Mumbai 400086
 
-| Plan | Duration | Days/wk | Price | Per-session |
-| --- | --- | --- | --- | --- |
-| 1 Month · 3 Days | 1 | 3 | ₹3,600 | ₹300 |
-| 1 Month · 2 Days | 1 | 2 | ₹2,400 | ₹300 |
-| 3 Months · 3 Days | 3 | 3 | ₹10,200 | ₹300 |
-| 3 Months · 2 Days | 3 | 2 | ₹6,900 | ₹300 |
+**Evening Batch** (Under-12) — Mon 17:30-18:30 · Wed 18:30-19:30 · Fri 17:30-18:30
+
+| Duration | 3 days/wk | 2 days/wk | Per-session |
+| --- | --- | --- | --- |
+| 1 month | ₹3,600 | ₹2,400 | ₹300 |
+| 3 months | ₹10,200 | ₹6,800 | ₹300 |
+| 6 months | ₹19,800 | ₹13,200 | ₹300 |
+| 12 months | ₹37,200 | ₹24,800 | ₹300 |
 
 *Prices, per-session prices and batch days deliberately differ between the two
 centers so the per-center and per-batch paths are actually exercised. All fake.*

@@ -53,7 +53,6 @@ export const OPERATIONS_DATA: OperationsData = {
 					plans: [
 						{
 							id: "east-evening-1m-3d",
-							name: "1 Month - 3 Days",
 							durationMonths: 1,
 							daysPerWeek: 3,
 							price: 3400,
@@ -61,7 +60,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-evening-1m-2d",
-							name: "1 Month - 2 Days",
 							durationMonths: 1,
 							daysPerWeek: 2,
 							price: 2280,
@@ -69,7 +67,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-evening-3m-3d",
-							name: "3 Months - 3 Days",
 							durationMonths: 3,
 							daysPerWeek: 3,
 							price: 9600,
@@ -77,7 +74,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-evening-3m-2d",
-							name: "3 Months - 2 Days",
 							durationMonths: 3,
 							daysPerWeek: 2,
 							price: 6400,
@@ -85,7 +81,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-evening-6m-3d",
-							name: "6 Months - 3 Days",
 							durationMonths: 6,
 							daysPerWeek: 3,
 							price: 18600,
@@ -93,7 +88,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-evening-6m-2d",
-							name: "6 Months - 2 Days",
 							durationMonths: 6,
 							daysPerWeek: 2,
 							price: 12400,
@@ -101,7 +95,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-evening-12m-3d",
-							name: "12 Months - 3 Days",
 							durationMonths: 12,
 							daysPerWeek: 3,
 							price: 34800,
@@ -109,7 +102,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-evening-12m-2d",
-							name: "12 Months - 2 Days",
 							durationMonths: 12,
 							daysPerWeek: 2,
 							price: 23200,
@@ -129,7 +121,6 @@ export const OPERATIONS_DATA: OperationsData = {
 					plans: [
 						{
 							id: "east-morning-1m-3d",
-							name: "1 Month - 3 Days",
 							durationMonths: 1,
 							daysPerWeek: 3,
 							price: 3550,
@@ -137,7 +128,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-morning-1m-2d",
-							name: "1 Month - 2 Days",
 							durationMonths: 1,
 							daysPerWeek: 2,
 							price: 2370,
@@ -145,7 +135,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-morning-3m-3d",
-							name: "3 Months - 3 Days",
 							durationMonths: 3,
 							daysPerWeek: 3,
 							price: 9950,
@@ -153,7 +142,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-morning-3m-2d",
-							name: "3 Months - 2 Days",
 							durationMonths: 3,
 							daysPerWeek: 2,
 							price: 6650,
@@ -161,7 +149,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-morning-6m-3d",
-							name: "6 Months - 3 Days",
 							durationMonths: 6,
 							daysPerWeek: 3,
 							price: 19200,
@@ -169,7 +156,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-morning-6m-2d",
-							name: "6 Months - 2 Days",
 							durationMonths: 6,
 							daysPerWeek: 2,
 							price: 12800,
@@ -177,7 +163,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-morning-12m-3d",
-							name: "12 Months - 3 Days",
 							durationMonths: 12,
 							daysPerWeek: 3,
 							price: 36000,
@@ -185,7 +170,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "east-morning-12m-2d",
-							name: "12 Months - 2 Days",
 							durationMonths: 12,
 							daysPerWeek: 2,
 							price: 24000,
@@ -212,7 +196,6 @@ export const OPERATIONS_DATA: OperationsData = {
 					plans: [
 						{
 							id: "west-evening-1m-3d",
-							name: "1 Month - 3 Days",
 							durationMonths: 1,
 							daysPerWeek: 3,
 							price: 3600,
@@ -220,7 +203,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "west-evening-1m-2d",
-							name: "1 Month - 2 Days",
 							durationMonths: 1,
 							daysPerWeek: 2,
 							price: 2400,
@@ -228,7 +210,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "west-evening-3m-3d",
-							name: "3 Months - 3 Days",
 							durationMonths: 3,
 							daysPerWeek: 3,
 							price: 10200,
@@ -236,7 +217,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "west-evening-3m-2d",
-							name: "3 Months - 2 Days",
 							durationMonths: 3,
 							daysPerWeek: 2,
 							price: 6800,
@@ -244,7 +224,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "west-evening-6m-3d",
-							name: "6 Months - 3 Days",
 							durationMonths: 6,
 							daysPerWeek: 3,
 							price: 19800,
@@ -252,7 +231,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "west-evening-6m-2d",
-							name: "6 Months - 2 Days",
 							durationMonths: 6,
 							daysPerWeek: 2,
 							price: 13200,
@@ -260,7 +238,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "west-evening-12m-3d",
-							name: "12 Months - 3 Days",
 							durationMonths: 12,
 							daysPerWeek: 3,
 							price: 37200,
@@ -268,7 +245,6 @@ export const OPERATIONS_DATA: OperationsData = {
 						},
 						{
 							id: "west-evening-12m-2d",
-							name: "12 Months - 2 Days",
 							durationMonths: 12,
 							daysPerWeek: 2,
 							price: 24800,

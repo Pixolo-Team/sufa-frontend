@@ -34,6 +34,7 @@ import { useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
 import { formatDisplayDate, formatRupees } from "@/utils/fee-calculator.util";
+import { formatPlanLabel } from "@/utils/operations.util";
 
 type QrMode = "global" | "payment" | "custom";
 
@@ -85,7 +86,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		const note = [
 			studentName.trim(),
 			isPaymentMode ? batch?.name : undefined,
-			isPaymentMode ? plan?.name : undefined,
+			isPaymentMode && plan ? formatPlanLabel(plan) : undefined,
 			isPaymentMode ? registrationOption?.name : undefined,
 			isCustomMode ? customDescription.trim() || "Custom payment" : undefined,
 		]
@@ -106,7 +107,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		studentName,
 		customDescription,
 		batch?.name,
-		plan?.name,
+		plan,
 		registrationOption?.name,
 	]);
 

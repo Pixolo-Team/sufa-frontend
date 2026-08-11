@@ -24,7 +24,7 @@ differently, and each can carry its own per-session price.
 
 - **Center** and **batch** - the batch supplies the session weekdays
   (`batch_days`), so pro-rata counting follows the batch the student joins.
-- **Plan** - duration (1 month / 3 months) and attendance (3-day / 2-day).
+- **Plan** - duration (1 / 3 / 6 / 12 months) and attendance (3-day / 2-day).
 - **Start date** = join date, **end date** = auto-filled default, **editable**.
 
 ### Default end date
@@ -33,9 +33,9 @@ differently, and each can carry its own per-session price.
 - Start **mid-month** (day > 1) → default end = **last day of the *next* month**
   (bundles the partial joining month with one full month).
 - Staff can override to any later date.
-- A **multi-month plan** pins both dates: it starts on the 1st and runs its full
-  term. ⚠️ Carried over from the retired 6-month rule - confirm whether a
-  3-month plan should instead allow a mid-month start with pro-rata.
+- A **multi-month plan** (3, 6 or 12 months) pins both dates: it starts on the
+  1st and runs its full term at the flat price. ⚠️ Confirm whether a
+  multi-month plan should instead allow a mid-month start with pro-rata.
 
 ## Amount algorithm (month-by-month, editable range)
 

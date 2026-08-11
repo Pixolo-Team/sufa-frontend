@@ -197,11 +197,10 @@ needed before go-live:
 3. **Center + batch + plan data** - for each center: address, batches (age
    group, timings + session days), and each plan's flat price + per-session
    price.
-4. **3-month plan scope** - confirmed: **two centers**, each selling a 1-month
-   and a 3-month plan at 3-day and 2-day attendance (no 6-month plan). Still to
-   confirm: can a student **join a 3-month plan mid-month**? It is currently
-   treated as a fixed term starting on the 1st, inherited from the retired
-   6-month rule.
+4. **Plan scope** - confirmed: **two centers**, each selling **1, 3, 6 and
+   12-month** plans at 3-day and 2-day attendance. Still to confirm: can a
+   student **join a multi-month plan mid-month**? Anything longer than a month
+   is currently treated as a fixed term starting on the 1st, with no pro-rata.
 5. **Global UPI ID + payee name** for the payment QRs.
 6. **Fee-structure image content** - layout/branding of the generated image and
    the exact details to show.

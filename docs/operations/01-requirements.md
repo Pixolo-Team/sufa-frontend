@@ -17,7 +17,7 @@
 - Sessions run **Monday, Wednesday, Friday** *at the current center*. Days are
   **not fixed** - each center/batch has its own, read from `batch_days`.
 - A full month at 3 days/week = **12 sessions** = **₹3,400** (this center).
-- Plans are **1 month and 3 months** only. There is **no 6-month plan**.
+- Plans run **1, 3, 6 and 12 months**, each at 2 or 3 days a week.
 - A student attending only **2 of the 3 days** = **8 sessions/month** (`4 × 2`).
 - Billing cycle is the **calendar month** (1st → 30/31).
 - Mid-month joiners are pro-rated. Example given: a student joining **26 July**
@@ -47,10 +47,12 @@
      Ghatkopar East stores ₹285; another center can store anything else.
 
 2. **Plan durations.** Which durations are sold?
-   - **Answer:** ✅ **1 month and 3 months only**, each at 3-day and 2-day
-     attendance, at **two centers**. No 6-month plan.
-   - ⚠️ **To confirm:** can a student **join a 3-month plan mid-month**? It is
-     currently treated as a fixed term starting on the 1st.
+   - **Answer:** ✅ **1, 3, 6 and 12 months**, each at 3-day and 2-day
+     attendance, at **two centers**. (Confirmed Aug 2026 - an earlier draft of
+     this doc said "1 and 3 months only, no 6-month plan"; that was stale.)
+   - ⚠️ **To confirm:** can a student **join a multi-month plan mid-month**? A
+     plan longer than 1 month is currently treated as a fixed term starting on
+     the 1st, with no pro-rata.
 
 3. **Rounding** on the final amount - nearest ₹1, ₹10, or ₹50?
    - **Answer:** ✅ **No rounding at all.** Superseded by storing the

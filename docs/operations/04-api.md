@@ -32,14 +32,26 @@ on the page.
         "name": "Ghatkopar East",
         "address": "…",
         "batches": [
-          { "id": "<uuid>", "name": "Evening", "ageGroup": "Under-10", "startTime": "17:00", "endTime": "18:30", "days": [1, 3, 5] },
-          { "id": "<uuid>", "name": "Morning", "ageGroup": "Under-16", "startTime": "07:00", "endTime": "08:30", "days": [2, 4, 6] }
-        ],
-        "plans": [
-          { "id": "<uuid>", "name": "1 Month · 3 Days",  "durationMonths": 1, "daysPerWeek": 3, "price": 3400, "perSessionPrice": 285 },
-          { "id": "<uuid>", "name": "1 Month · 2 Days",  "durationMonths": 1, "daysPerWeek": 2, "price": 2280, "perSessionPrice": 285 },
-          { "id": "<uuid>", "name": "3 Months · 3 Days", "durationMonths": 3, "daysPerWeek": 3, "price": 9600, "perSessionPrice": 285 },
-          { "id": "<uuid>", "name": "3 Months · 2 Days", "durationMonths": 3, "daysPerWeek": 2, "price": 6500, "perSessionPrice": 285 }
+          {
+            "id": "<uuid>",
+            "name": "Evening Batch",
+            "ageGroup": "Under-14",
+            "schedule": [
+              { "day": 1, "startTime": "18:00", "endTime": "19:00" },
+              { "day": 3, "startTime": "19:00", "endTime": "20:00" },
+              { "day": 5, "startTime": "18:30", "endTime": "19:30" }
+            ],
+            "plans": [
+              { "id": "<uuid>", "durationMonths": 1,  "daysPerWeek": 3, "price": 3400,  "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 1,  "daysPerWeek": 2, "price": 2280,  "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 3,  "daysPerWeek": 3, "price": 9600,  "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 3,  "daysPerWeek": 2, "price": 6400,  "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 6,  "daysPerWeek": 3, "price": 18600, "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 6,  "daysPerWeek": 2, "price": 12400, "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 12, "daysPerWeek": 3, "price": 34800, "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 12, "daysPerWeek": 2, "price": 23200, "perSessionPrice": 285 }
+            ]
+          }
         ]
       }
     ]
@@ -49,16 +61,26 @@ on the page.
 
 Notes on the shape:
 
-- `days` uses `0=Sun … 6=Sat`, and lives on the **batch** - session days are not
-  fixed to Mon/Wed/Fri and differ per center.
-- **Timings and `ageGroup` are on the batch**, not the center: one center runs
-  several.
+- **`plans` are nested inside each batch, not the center.** Pricing is per
+  batch - the Morning and Evening batches at one center sell different prices.
+  (An earlier draft of this doc put `plans` at center level; that was wrong.)
+- **`schedule` is an array of day-wise slots** on the batch, each with its own
+  `startTime` / `endTime`, because Monday and Wednesday can run at different
+  times. `day` uses `0=Sun … 6=Sat`.
+- **Plans have no `name`.** The label is derived from `durationMonths` +
+  `daysPerWeek` so there is a single source of truth - see
+  [DATABASE.md](DATABASE.md).
+- The `(durationMonths, daysPerWeek)` pair must be **unique within a batch**.
+  The UI resolves a plan from that pair, so a duplicate is unselectable.
 - **Both prices are on the plan.** `perSessionPrice` is stored, not derived, so
   the app performs no rate calculation and no rounding.
 - **`registrationOptions` is global**, not per-batch or per-center - it is not
   nested under `centers`.
-- `config` holds **only** `upiId` and `payeeName`. There is no global
-  per-session rate.
+- `config` holds `academyName`, `upiId` and `payeeName`. There is no global
+  per-session rate. `staffPin` is also served, but see the warning in
+  [DATABASE.md](DATABASE.md) - it is a soft gate, not auth.
+- Return only active rows, already sorted by `sort_order`; the frontend does
+  not filter or sort centers, batches or registration options.
 - Ids are **UUIDs** - not slugs, not integers.
 
 ## Not needed

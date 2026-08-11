@@ -49,6 +49,11 @@ batch.
 | staff_pin | TEXT | Shared staff PIN (checked on the frontend) |
 | created_at | TIMESTAMP | Creation timestamp |
 
+> ⚠️ `staff_pin` is a **soft gate, not authentication.** It is sent to the
+> browser and compared client-side, so anyone who reads the JS can recover it.
+> That is acceptable for an unlisted internal tool, but do not treat it as
+> access control, and do not put anything behind it that a leak would matter for.
+
 ---
 
 # CENTERS
@@ -61,6 +66,7 @@ only — no pricing lives here.
 | id | UUID PK | Primary key |
 | name | TEXT | Center name |
 | address | TEXT | Full address |
+| sort_order | SMALLINT | Display order of the center tabs |
 | is_active | BOOLEAN | Active/inactive status |
 | created_at | TIMESTAMP | Creation timestamp |
 
@@ -77,6 +83,7 @@ Each batch belongs to one center and is the main operational selection unit
 | center_id | UUID FK | References CENTERS.id |
 | name | TEXT | Batch name |
 | age_group | TEXT | Age group, e.g. "Under-10", "6-8 years" |
+| sort_order | SMALLINT | Display order within the center |
 | is_active | BOOLEAN | Active/inactive status |
 | created_at | TIMESTAMP | Creation timestamp |
 
@@ -107,13 +114,26 @@ months, at 2 or 3 days/week.
 |---|---|---|
 | id | UUID PK | Primary key |
 | batch_id | UUID FK | References BATCHES.id |
-| name | TEXT | Plan name, e.g. "1 Month - 3 Days" |
 | duration_months | SMALLINT | 1, 3, 6, 12 |
 | days_per_week | SMALLINT | 2 or 3 |
 | price | INTEGER | Flat plan price (whole rupees) |
 | per_session_price | INTEGER | Stored per-session price for pro-rata |
+| sort_order | SMALLINT | Display order within the batch |
 | is_active | BOOLEAN | Active/inactive status |
 | created_at | TIMESTAMP | Creation timestamp |
+
+**`UNIQUE (batch_id, duration_months, days_per_week)`** — required, not
+optional. Staff pick a plan by choosing a duration and then a days-per-week,
+so the pair must resolve to exactly one row. If duplicates exist the app
+silently takes the first and the others can never be selected.
+
+> **There is deliberately no `name` column.** The plan label is derived from
+> `duration_months` + `days_per_week` (`1 Month`, `3 Months · 2 Days a Week`),
+> so there is one source of truth. An earlier draft stored a name as well,
+> which drifted: the fee card showed the derived label while the UPI
+> transaction note showed the stored one, and a parent could see two different
+> names for the same plan. If a marketing name is ever needed, add it as an
+> explicit display override and make **every** surface honour it.
 
 ---
 
@@ -129,5 +149,20 @@ on top of the selected plan total in the fee calculator.
 | name | TEXT | Option name |
 | description | TEXT | What's included in this registration option |
 | price | INTEGER | Add-on price (whole rupees) |
+| sort_order | SMALLINT | Display order in the registration tabs |
 | is_active | BOOLEAN | Active/inactive status |
 | created_at | TIMESTAMP | Creation timestamp |
+
+---
+
+# NOT IN THIS PHASE (deliberate)
+
+There are **no payment, quote, receipt or student tables**, and that is a
+decision rather than an omission. Fees are calculated in the browser and the
+QR is generated on the spot; nothing about the transaction is persisted.
+
+The consequence to be aware of: a payment arrives as an anonymous bank credit.
+The student name and plan are written into the UPI transaction note so staff
+can match it by hand in the settlement report — but some UPI apps let the payer
+edit that note, so it is a convenience, not a guarantee. If reconciliation
+becomes painful, the fix is a `fee_quotes` history table, not a longer note.
