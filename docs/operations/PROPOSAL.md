@@ -3,6 +3,12 @@
 A staff-only internal page for the academy's day-to-day operations. The database
 design is in a separate document (`DATABASE.md`).
 
+> ⚠️ **This is the original design proposal, not the current build.** The
+> "three tools" in §3 below were consolidated into **two pages** (Batches,
+> Payments) - see [05-page-ux.md](05-page-ux.md) for what's actually shipped
+> and why. The fee-calculation logic and database shape described here are
+> still accurate.
+
 ---
 
 ## 1. Purpose
@@ -34,7 +40,7 @@ A mobile-first, PIN-protected page with three tools:
 | Tool | What it does |
 | --- | --- |
 | **Fee Calculator** | Staff pick center, plan, days/week, start date and (editable) end date → the page returns the amount with a per-month breakdown. |
-| **Send Fee Structure** | Staff pick a center (and sender/coach) → the page renders the fee structure as an **image** that can be copy-pasted into WhatsApp, plus a `wa.me` option to open a chat with the parent. |
+| **Send Fee Structure** | Staff pick a center → the page renders the fee structure as an **image** that can be copy-pasted into WhatsApp, plus a `wa.me` option to open a chat with the parent. |
 | **Payment QR** | A shared **global** UPI QR to send to anyone, plus a **dynamic** QR that encodes the calculated amount for a specific student. |
 
 ---
@@ -74,7 +80,7 @@ Walk every calendar month overlapping `[startDate, endDate]`:
 ```
 For each month M in the range:
   if M is a FULL calendar month inside the range:
-      amount += center_plan.price              # stored flat price
+      amount += package month share           # plan price spread across duration
   else:                                        # partial month
       amount += (session-days of M in range) × center_plan.per_session_price
 
@@ -82,14 +88,17 @@ total = amount                                 # no rounding
 ```
 
 - "session-days" = the center/batch's session weekdays (from `batch_days`) that
-  fall in the range. For a 2-day plan, the student's chosen subset of those days.
+  fall in the range. For a 2-day plan, the first two configured batch days are
+  counted automatically.
 - **No holiday adjustment** - every scheduled session day counts.
 
 **Default end date** (editable by staff)
 
-- Start on the **1st** → default end = last day of that month.
-- Start **mid-month** → default end = last day of the **next** month (bundles the
-  partial joining month with one full month).
+- Start on the **1st** → default end = last day of the selected duration's last
+  month.
+- Start **mid-month** → default end = last day of the month after the selected
+  duration window. Example: 15 Jul on a 1-month plan ends 31 Aug; 15 Jul on a
+  3-month plan ends 31 Oct.
 
 **Worked example** (3-day center, per-session price ₹285, flat ₹3,400)
 
@@ -103,8 +112,8 @@ total = amount                                 # no rounding
 
 ## 6. Database
 
-The data model - `centers`, `coaches`, `batches`, `batch_days`, `plans`,
-`center_plans` (per-center pricing incl. per-session price), and `configs` - is
+The data model - `centers`, `batches` (incl. `age_group`), `batch_timings`,
+`plans`, `registration_options` (global, not per-batch), and `configs` - is
 specified in a **separate document: `DATABASE.md`** (PostgreSQL, UUID keys). No
 history tables in this phase.
 
@@ -116,20 +125,23 @@ Read-only endpoints on the existing service
 (`https://api.skorostunited.com/api/skorost`).
 
 **`GET /operations/centers`** → active centers with their batches (days +
-timings), plans + per-center prices, coaches, plus global config.
+timings), plans + per-center prices, plus global config and global
+registration options.
 
 ```jsonc
 {
   "data": {
     "config": { "upiId": "…", "payeeName": "…" },
+    "registrationOptions": [
+      { "id": "<uuid>", "name": "…", "description": "…", "price": 500 }
+    ],
     "centers": [
       {
         "id": "<uuid>",
         "name": "Ghatkopar East",
         "address": "…",
-        "coaches": [ { "id": "<uuid>", "name": "…", "phone": "…" } ],
         "batches": [
-          { "id": "<uuid>", "name": "Evening", "startTime": "17:00", "endTime": "18:30", "days": [1, 3, 5] }
+          { "id": "<uuid>", "name": "Evening", "ageGroup": "Under-10", "startTime": "17:00", "endTime": "18:30", "days": [1, 3, 5] }
         ],
         "plans": [
           { "id": "<uuid>", "name": "1 Month 3-Day", "durationMonths": 1, "daysPerWeek": 3, "price": 3400, "perSessionPrice": 285 },
@@ -185,13 +197,13 @@ needed before go-live:
    days are chosen.
 2. **Fee logic** - confirm §5 (per-center flat + stored per-session price for
    partial months, no rounding, editable end date).
-3. **Center + batch + plan data** - for each center: address, coaches, batches
-   (timings + session days), and each plan's flat price + per-session price.
-4. **3-month plan scope** - confirmed: **two centers**, each selling a 1-month
-   and a 3-month plan at 3-day and 2-day attendance (no 6-month plan). Still to
-   confirm: can a student **join a 3-month plan mid-month**? It is currently
-   treated as a fixed term starting on the 1st, inherited from the retired
-   6-month rule.
+3. **Center + batch + plan data** - for each center: address, batches (age
+   group, timings + session days), and each plan's flat price + per-session
+   price.
+4. **Plan scope** - confirmed: **two centers**, each selling **1, 3, 6 and
+   12-month** plans at 3-day and 2-day attendance. All durations can start
+   mid-month; the partial joining month is pro-rated and the end date remains
+   editable.
 5. **Global UPI ID + payee name** for the payment QRs.
 6. **Fee-structure image content** - layout/branding of the generated image and
    the exact details to show.

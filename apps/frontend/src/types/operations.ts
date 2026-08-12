@@ -1,31 +1,38 @@
-/** A coach at a center - used as the "sent by" on a fee structure */
-export type OperationsCoachData = {
-	id: string;
-	name: string;
-	phone?: string;
-};
-
-/** A scheduled group within a center. Timings and session days live here. */
-export type OperationsBatchData = {
-	id: string;
-	name: string;
+/** One weekday slot inside a batch schedule. */
+export type OperationsBatchTimingData = {
+	day: number;
 	startTime: string;
 	endTime: string;
-	/** Session weekdays as JS day numbers (0 = Sunday). Vary by center/batch. */
-	days: number[];
 };
 
 /**
- * A plan sold at a center. Both prices are stored, so partial months multiply a
- * stored per-session price - there is no rate derivation and no rounding.
+ * A plan sold inside a specific batch. There is no `name` - the label is
+ * derived from duration + days per week so there is one source of truth.
+ * See DATABASE.md.
  */
 export type OperationsPlanData = {
 	id: string;
-	name: string;
 	durationMonths: number;
 	daysPerWeek: number;
 	price: number;
 	perSessionPrice: number;
+};
+
+/** Optional registration fee that can be added to the student's total. Global - not linked to a batch. */
+export type OperationsRegistrationOptionData = {
+	id: string;
+	name: string;
+	description: string;
+	price: number;
+};
+
+/** A scheduled group within a center. Schedule and plans live here. */
+export type OperationsBatchData = {
+	id: string;
+	name: string;
+	ageGroup: string;
+	schedule: OperationsBatchTimingData[];
+	plans: OperationsPlanData[];
 };
 
 /** A center with everything the tools need */
@@ -33,9 +40,7 @@ export type OperationsCenterData = {
 	id: string;
 	name: string;
 	address: string;
-	coaches: OperationsCoachData[];
 	batches: OperationsBatchData[];
-	plans: OperationsPlanData[];
 };
 
 /** Values shared across every center */
@@ -49,6 +54,7 @@ export type OperationsConfigData = {
 /** The whole payload the page needs - mirrors `GET /operations/centers` */
 export type OperationsData = {
 	config: OperationsConfigData;
+	registrationOptions: OperationsRegistrationOptionData[];
 	centers: OperationsCenterData[];
 };
 

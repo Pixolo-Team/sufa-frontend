@@ -1,6 +1,4 @@
 export type OperationsIconName =
-	| "calculator"
-	| "message"
 	| "qr"
 	| "pin"
 	| "chevron"
@@ -9,23 +7,6 @@ export type OperationsIconName =
 
 /** Stroke paths, drawn on a 24×24 grid in `currentColor` */
 const ICON_PATHS: Record<OperationsIconName, React.ReactNode> = {
-	calculator: (
-		<>
-			<rect x="4" y="3" width="16" height="18" rx="2.5" />
-			<line x1="8" y1="7.5" x2="16" y2="7.5" />
-			<line x1="8.5" y1="12" x2="10.5" y2="12" />
-			<line x1="13.5" y1="12" x2="15.5" y2="12" />
-			<line x1="8.5" y1="16.5" x2="10.5" y2="16.5" />
-			<line x1="13.5" y1="16.5" x2="15.5" y2="16.5" />
-		</>
-	),
-	message: (
-		<>
-			<path d="M4 5.5h16v11H9l-5 4z" />
-			<line x1="8" y1="9.5" x2="16" y2="9.5" />
-			<line x1="8" y1="12.75" x2="13" y2="12.75" />
-		</>
-	),
 	qr: (
 		<>
 			<rect x="3.5" y="3.5" width="7" height="7" rx="1.5" />

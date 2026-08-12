@@ -17,7 +17,7 @@
 - Sessions run **Monday, Wednesday, Friday** *at the current center*. Days are
   **not fixed** - each center/batch has its own, read from `batch_days`.
 - A full month at 3 days/week = **12 sessions** = **₹3,400** (this center).
-- Plans are **1 month and 3 months** only. There is **no 6-month plan**.
+- Plans run **1, 3, 6 and 12 months**, each at 2 or 3 days a week.
 - A student attending only **2 of the 3 days** = **8 sessions/month** (`4 × 2`).
 - Billing cycle is the **calendar month** (1st → 30/31).
 - Mid-month joiners are pro-rated. Example given: a student joining **26 July**
@@ -47,10 +47,12 @@
      Ghatkopar East stores ₹285; another center can store anything else.
 
 2. **Plan durations.** Which durations are sold?
-   - **Answer:** ✅ **1 month and 3 months only**, each at 3-day and 2-day
-     attendance, at **two centers**. No 6-month plan.
-   - ⚠️ **To confirm:** can a student **join a 3-month plan mid-month**? It is
-     currently treated as a fixed term starting on the 1st.
+   - **Answer:** ✅ **1, 3, 6 and 12 months**, each at 3-day and 2-day
+     attendance, at **two centers**. (Confirmed Aug 2026 - an earlier draft of
+     this doc said "1 and 3 months only, no 6-month plan"; that was stale.)
+   - **Mid-month joins:** ✅ All durations use the same rule. A student can join
+     mid-month; the partial joining month is billed per session, then the full
+     selected duration is billed from the next month.
 
 3. **Rounding** on the final amount - nearest ₹1, ₹10, or ₹50?
    - **Answer:** ✅ **No rounding at all.** Superseded by storing the
@@ -58,9 +60,10 @@
 
 ### Pro-rata (mid-month joiner)
 
-4. Joining 26 Jul → charged "26 Jul - 31 Aug." Confirm the rule:
-   **remaining sessions of the joining month (charged per-session) + one full
-   next month (flat ₹3,400)**, then the cycle resets to the 1st?
+4. Joining 26 Jul → charged "26 Jul - 31 Aug" for 1 month. A 3-month plan
+   starting 15 Jul defaults to "15 Jul - 31 Oct." Confirm the rule:
+   **remaining sessions of the joining month (charged per-session) + the full
+   selected duration from the next month**, then the cycle resets to the 1st?
    Or simply: count every session day from join date to the end date × rate?
    - **Answer:** ✅ **Option A.** First payment = (remaining sessions in the
      joining month × the stored per-session price) **+** one full next month at
@@ -105,6 +108,8 @@
 9. Is there an existing **UPI ID / payee** already in use we should reuse for the
    global QR, or is that per-center only?
    - **Answer:** ✅ **One global common UPI + one global QR** for all centers.
-     Not per-center. Still need the actual **UPI ID + payee name** value.
-   - **Global UPI ID / payee:** 🔴 DUMMY `skorost@ybl` / `Skorost United
-     Football Academy` - see [06-dummy-data.md](06-dummy-data.md). Replace.
+     Not per-center.
+   - **Global UPI ID:** ✅ real value provided - `skorostunitedfootballschool@kotak`.
+   - **Payee name:** 🔴 DUMMY `Skorost United Football Academy` - see
+     [06-dummy-data.md](06-dummy-data.md). Confirm this is the exact name to
+     show in UPI apps.

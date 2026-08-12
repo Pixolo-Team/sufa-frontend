@@ -7,12 +7,12 @@
 > each one is marked 🔴 in a comment. Replacing them there is the whole job -
 > the shape already matches [04-api.md](04-api.md).
 
-## Global config (DUMMY)
+## Global config
 
 | Key | Value |
 | --- | --- |
-| Global UPI ID | `skorost@ybl` 🔴 |
-| Payee name | `Skorost United Football Academy` 🔴 |
+| Global UPI ID | ✅ `skorostunitedfootballschool@kotak` - **real value, confirmed** |
+| Payee name | `Skorost United Football Academy` 🔴 - confirm this is the exact name to show in UPI apps |
 | Staff PIN | `1234` 🔴 |
 | Holidays | ✅ **No holiday check** - count every session day mechanically |
 | Rounding | ✅ **None.** Both prices are stored per plan |
@@ -21,31 +21,43 @@
 
 ## Centers (DUMMY) - two centers
 
+Prices are **per batch**, not per center. Every duration sells at both 3 and
+2 days a week.
+
 ### Ghatkopar East 🔴
 
-- Address: 12 MG Road, Ghatkopar East, Mumbai 400077
-- Coaches: Harsh Patil (9876543210), Rohan Shetty (9876500011)
-- Batches: **Evening** Mon/Wed/Fri 17:00-18:30 · **Morning** Tue/Thu/Sat 07:00-08:30
+Address: 12 MG Road, Ghatkopar East, Mumbai 400077
 
-| Plan | Duration | Days/wk | Price | Per-session |
-| --- | --- | --- | --- | --- |
-| 1 Month · 3 Days | 1 | 3 | ₹3,400 | ₹285 |
-| 1 Month · 2 Days | 1 | 2 | ₹2,280 | ₹285 |
-| 3 Months · 3 Days | 3 | 3 | ₹9,600 | ₹285 |
-| 3 Months · 2 Days | 3 | 2 | ₹6,500 | ₹285 |
+**Evening Batch** (Under-14) — Mon 18:00-19:00 · Wed 19:00-20:00 · Fri 18:30-19:30
+
+| Duration | 3 days/wk | 2 days/wk | Per-session |
+| --- | --- | --- | --- |
+| 1 month | ₹3,400 | ₹2,280 | ₹285 |
+| 3 months | ₹9,600 | ₹6,400 | ₹285 |
+| 6 months | ₹18,600 | ₹12,400 | ₹285 |
+| 12 months | ₹34,800 | ₹23,200 | ₹285 |
+
+**Morning Batch** (Under-10) — Tue 07:00-08:00 · Thu 07:30-08:30 · Sat 08:00-09:00
+
+| Duration | 3 days/wk | 2 days/wk | Per-session |
+| --- | --- | --- | --- |
+| 1 month | ₹3,550 | ₹2,370 | ₹300 |
+| 3 months | ₹9,950 | ₹6,650 | ₹300 |
+| 6 months | ₹19,200 | ₹12,800 | ₹300 |
+| 12 months | ₹36,000 | ₹24,000 | ₹300 |
 
 ### Ghatkopar West 🔴
 
-- Address: 45 LBS Marg, Ghatkopar West, Mumbai 400086
-- Coaches: Amit Nair (9876522233)
-- Batches: **Evening** Mon/Wed/Fri 18:00-19:30
+Address: 45 LBS Marg, Ghatkopar West, Mumbai 400086
 
-| Plan | Duration | Days/wk | Price | Per-session |
-| --- | --- | --- | --- | --- |
-| 1 Month · 3 Days | 1 | 3 | ₹3,600 | ₹300 |
-| 1 Month · 2 Days | 1 | 2 | ₹2,400 | ₹300 |
-| 3 Months · 3 Days | 3 | 3 | ₹10,200 | ₹300 |
-| 3 Months · 2 Days | 3 | 2 | ₹6,900 | ₹300 |
+**Evening Batch** (Under-12) — Mon 17:30-18:30 · Wed 18:30-19:30 · Fri 17:30-18:30
+
+| Duration | 3 days/wk | 2 days/wk | Per-session |
+| --- | --- | --- | --- |
+| 1 month | ₹3,600 | ₹2,400 | ₹300 |
+| 3 months | ₹10,200 | ₹6,800 | ₹300 |
+| 6 months | ₹19,800 | ₹13,200 | ₹300 |
+| 12 months | ₹37,200 | ₹24,800 | ₹300 |
 
 *Prices, per-session prices and batch days deliberately differ between the two
 centers so the per-center and per-batch paths are actually exercised. All fake.*
@@ -61,16 +73,17 @@ Hi {parentName}, here is the fee structure for Skorost United Football Academy -
 🕒 {batchName}: {days} · {startTime} - {endTime}     ← one line per batch
 
 For a free trial or to enroll, reply here. See you on the pitch! ⚽
-- {coachName}, Skorost United Football Academy
+- Skorost United Football Academy
 ```
 
 - `{parentName}` is omitted gracefully if no name is entered.
-- The coach sign-off comes from the **Sent by** picker (the `coaches` table).
+- Signed off with the academy name only - no coach data is stored.
 - No UPI/QR in this message (confirmed) - the payment QR is a separate tool.
 - The same content is also rendered as a **shareable PNG** for WhatsApp.
 
 ## Real values still owed
 
-Prices (including every per-session price), addresses, coaches, batch timings
-and days, the global UPI ID + payee name, the staff PIN, and the exact message
-wording and image branding.
+Prices (including every per-session price), addresses, batch timings and days,
+the staff PIN, and the exact message wording and image branding. The global
+UPI ID is now real (`skorostunitedfootballschool@kotak`); the payee name
+still needs sign-off.

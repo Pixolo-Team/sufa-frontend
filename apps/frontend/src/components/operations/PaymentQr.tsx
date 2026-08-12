@@ -5,7 +5,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import QRCode from "qrcode";
 
 // TYPES //
-import type { OperationsCenterData, OperationsConfigData } from "@/types/operations";
+import type {
+	OperationsCenterData,
+	OperationsConfigData,
+	OperationsRegistrationOptionData,
+} from "@/types/operations";
 
 // ENUMS //
 import { Colors, Shapes, Variants } from "@/neevo/enums/core.enum";
@@ -29,17 +33,18 @@ import { showToast } from "@/neevo/services/toast.service";
 import { useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
-import { formatRupees } from "@/utils/fee-calculator.util";
+import { formatDisplayDate, formatRupees } from "@/utils/fee-calculator.util";
+import { formatPlanLabel } from "@/utils/operations.util";
 
-type QrMode = "global" | "student";
+type QrMode = "global" | "payment" | "custom";
 
-/** UPI notes are truncated by some apps, so keep it well inside the limit */
 const UPI_NOTE_MAX_LENGTH = 50;
 
 interface PaymentQrProps {
 	centers: OperationsCenterData[];
 	center: OperationsCenterData | undefined;
 	config: OperationsConfigData;
+	registrationOptions: OperationsRegistrationOptionData[];
 	onCenterChange: (centerId: string) => void;
 }
 
@@ -48,30 +53,28 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	centers,
 	center,
 	config,
+	registrationOptions,
 	onCenterChange,
 }) => {
-	// Define states
 	const [mode, setMode] = useState<QrMode>("global");
 	const [studentName, setStudentName] = useState("");
 	const [studentPhone, setStudentPhone] = useState("");
+	const [customAmount, setCustomAmount] = useState("");
+	const [customDescription, setCustomDescription] = useState("");
 	const [qrDataUrl, setQrDataUrl] = useState("");
+	const [isQrFullscreen, setIsQrFullscreen] = useState(false);
 
-	const feeInputs = useFeeInputs(center);
-	const { quote } = feeInputs;
+	const feeInputs = useFeeInputs(center, registrationOptions);
+	const { inputs, batch, plan, registrationOption, quote } = feeInputs;
 
-	const isStudentMode = mode === "student";
+	const isPaymentMode = mode === "payment";
+	const isCustomMode = mode === "custom";
+	const amount = isPaymentMode
+		? (quote?.total ?? 0)
+		: isCustomMode
+			? Number(customAmount) || 0
+			: 0;
 
-	// The student QR needs an amount before it can encode anything
-	const amount = isStudentMode ? (quote?.total ?? 0) : 0;
-
-	/**
-	 * `upi://pay?…` - scanning it opens the parent's UPI app, amount pre-filled.
-	 *
-	 * `tn` is the UPI transaction note. It carries the student's name into the
-	 * payment so an otherwise anonymous ₹3,400 credit can be tied back to them in
-	 * the settlement report - the only link there is, since no quote is stored.
-	 * Keep it short: some apps truncate it, and the payer can edit it.
-	 */
 	const upiUri = useMemo(() => {
 		const params = new URLSearchParams({
 			pa: config.upiId,
@@ -81,24 +84,33 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 		if (amount > 0) params.set("am", String(amount));
 
-		const note = [studentName.trim(), feeInputs.plan?.name]
+		const note = [
+			studentName.trim(),
+			isPaymentMode ? batch?.name : undefined,
+			isPaymentMode && plan ? formatPlanLabel(plan) : undefined,
+			isPaymentMode ? registrationOption?.name : undefined,
+			isCustomMode ? "Custom payment" : undefined,
+		]
 			.filter(Boolean)
-			.join(" · ")
+			.join(" | ")
 			.slice(0, UPI_NOTE_MAX_LENGTH);
 
-		if (isStudentMode && note) params.set("tn", note);
+		if (mode !== "global" && note) params.set("tn", note);
 
 		return `upi://pay?${params.toString()}`;
 	}, [
 		config.upiId,
 		config.payeeName,
 		amount,
-		isStudentMode,
+		mode,
+		isPaymentMode,
+		isCustomMode,
 		studentName,
-		feeInputs.plan?.name,
+		batch?.name,
+		plan,
+		registrationOption?.name,
 	]);
 
-	// Re-render the QR whenever the encoded string changes
 	useEffect(() => {
 		let isActive = true;
 
@@ -115,27 +127,53 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		};
 	}, [upiUri]);
 
-	/** Name the file after the student so staff can find it in the gallery */
+	useEffect(() => {
+		if (!isQrFullscreen) return;
+
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") setIsQrFullscreen(false);
+		};
+
+		document.addEventListener("keydown", onKeyDown);
+
+		return () => document.removeEventListener("keydown", onKeyDown);
+	}, [isQrFullscreen]);
+
 	const fileName = useMemo(() => {
-		if (!isStudentMode) return "skorost-payment-qr.png";
+		if (mode === "global") return "skorost-payment-qr.png";
 
 		const slug = studentName.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 		return slug
 			? `skorost-payment-${slug}-${amount}.png`
 			: `skorost-payment-${amount}.png`;
-	}, [isStudentMode, studentName, amount]);
+	}, [mode, studentName, amount]);
 
-	/** The note that travels with the QR when it is shared */
 	const shareText = useMemo(() => {
-		if (!isStudentMode) return `Pay ${config.payeeName} · ${config.upiId}`;
+		if (mode === "global") return `Pay ${config.payeeName} | ${config.upiId}`;
 
-		const who = studentName.trim() ? `${studentName.trim()} · ` : "";
+		if (isCustomMode) {
+			const greeting = studentName.trim() ? `Hi ${studentName.trim()}, h` : "H";
+			const subject = customDescription.trim()
+				? `the payment of your ${customDescription.trim()}`
+				: "your payment";
+
+			return `${greeting}ere is the QR code for ${subject}. Amount: ${formatRupees(amount)}.`;
+		}
+
+		const who = studentName.trim() ? `${studentName.trim()} | ` : "";
 
 		return `${who}Fees due ${formatRupees(amount)}. Scan to pay ${config.payeeName}.`;
-	}, [isStudentMode, studentName, amount, config.payeeName, config.upiId]);
+	}, [
+		mode,
+		isCustomMode,
+		studentName,
+		customDescription,
+		amount,
+		config.payeeName,
+		config.upiId,
+	]);
 
-	/** Save the QR so staff can send it from their gallery */
 	const downloadQr = useCallback(() => {
 		if (!qrDataUrl) return;
 
@@ -146,7 +184,6 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		link.click();
 	}, [qrDataUrl, fileName]);
 
-	/** Native share sheet where it exists, clipboard everywhere else */
 	const shareQr = useCallback(async () => {
 		try {
 			const blob = await (await fetch(qrDataUrl)).blob();
@@ -158,13 +195,12 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 			}
 
 			await navigator.clipboard.writeText(upiUri);
-			showToast("Sharing unavailable · UPI link copied", ToastTypes.SUCCESS);
+			showToast("Sharing unavailable | UPI link copied", ToastTypes.SUCCESS);
 		} catch {
 			// A cancelled share sheet lands here too, so stay quiet about it
 		}
 	}, [qrDataUrl, fileName, shareText, upiUri]);
 
-	/** Open WhatsApp with the amount pre-written, when a number was entered */
 	const openWhatsApp = useCallback(() => {
 		const digits = studentPhone.replace(/\D/g, "");
 
@@ -180,6 +216,11 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	}, [studentPhone, shareText]);
 
 	const hasPhone = studentPhone.replace(/\D/g, "").length >= 10;
+	const canGenerate = isPaymentMode
+		? !!batch && !!plan && amount > 0
+		: isCustomMode
+			? amount > 0
+			: true;
 
 	return (
 		<div className={styles.cardStack}>
@@ -190,22 +231,61 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						onChange={setMode}
 						options={[
 							{ label: "Global QR", value: "global" },
-							{ label: "Student QR", value: "student" },
+							{ label: "Fee Payment", value: "payment" },
+							{ label: "Custom", value: "custom" },
 						]}
 					/>
 
-					{isStudentMode ? (
+					{isPaymentMode && (
+						<FeeInputFields
+							centers={centers}
+							center={center}
+							onCenterChange={onCenterChange}
+							registrationOptions={registrationOptions}
+							feeInputs={feeInputs}
+						/>
+					)}
+
+					{isCustomMode && (
 						<>
-							<FeeInputFields
-								centers={centers}
-								center={center}
-								onCenterChange={onCenterChange}
-								feeInputs={feeInputs}
+							<InputBox
+								id="custom-amount"
+								label="Amount"
+								placeholder="e.g. 500"
+								type={InputTextTypes.NUMBER}
+								value={customAmount}
+								isRequired
+								isError={false}
+								errorMessage=""
+								onChange={setCustomAmount}
+								onClear={() => setCustomAmount("")}
 							/>
 
 							<InputBox
+								id="custom-description"
+								label="Description (optional)"
+								placeholder="e.g. Jersey order 2026"
+								value={customDescription}
+								isError={false}
+								errorMessage=""
+								caption="Shown in the message when you share the QR"
+								onChange={setCustomDescription}
+								onClear={() => setCustomDescription("")}
+							/>
+						</>
+					)}
+
+					{mode === "global" && (
+						<p className={styles.qrHint}>
+							No amount encoded | the parent types what they owe.
+						</p>
+					)}
+
+					{mode !== "global" && (
+						<>
+							<InputBox
 								id="student-name"
-								label="Student name (optional)"
+								label="Name (optional)"
 								placeholder="e.g. Aarav"
 								value={studentName}
 								isError={false}
@@ -216,7 +296,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 							<InputBox
 								id="student-phone"
-								label="Parent phone (optional)"
+								label="Phone (optional)"
 								placeholder="98765 43210"
 								type={InputTextTypes.NUMBER}
 								value={studentPhone}
@@ -227,36 +307,74 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 								onClear={() => setStudentPhone("")}
 							/>
 						</>
-					) : (
-						<p className={styles.qrHint}>
-							No amount encoded · the parent types what they owe.
-						</p>
 					)}
 				</div>
 			</div>
 
+			{isPaymentMode && quote && (
+				<div className={styles.result}>
+					<div className={styles.resultTotal}>
+						<span>Total due</span>
+						<b>{formatRupees(quote.total)}</b>
+					</div>
+
+					{quote.rows.map((row) => (
+						<div key={row.id} className={styles.resultRow}>
+							<span className={styles.resultRowLabel}>
+								{row.label}
+								<small>{row.detail}</small>
+							</span>
+							<span>{formatRupees(row.amount)}</span>
+						</div>
+					))}
+
+					<p className={styles.resultFootnote}>
+						{formatDisplayDate(inputs.startDate)} -{" "}
+						{formatDisplayDate(inputs.endDate)} | prices as stored, no rounding
+					</p>
+				</div>
+			)}
+
 			<div className={styles.qrFrame}>
 				{qrDataUrl ? (
-					<img
-						className={styles.qrImage}
-						src={qrDataUrl}
-						alt={
-							isStudentMode
-								? `Payment QR for ${formatRupees(amount)}`
-								: "Payment QR"
-						}
-					/>
+					<button
+						type="button"
+						className={styles.qrImageButton}
+						aria-label="Open QR full screen"
+						onClick={() => setIsQrFullscreen(true)}
+					>
+						<img
+							className={styles.qrImage}
+							src={qrDataUrl}
+							alt={
+								mode !== "global"
+									? `Payment QR for ${formatRupees(amount)}`
+									: "Payment QR"
+							}
+						/>
+					</button>
 				) : (
-					<p className={styles.qrHint}>Generating QR…</p>
+					<p className={styles.qrHint}>Generating QR...</p>
 				)}
 
 				<p className={styles.qrCaption}>
-					{isStudentMode && amount > 0 ? formatRupees(amount) : "Any amount"}
+					{mode !== "global" && amount > 0 ? formatRupees(amount) : "Any amount"}
 				</p>
 				<p className={styles.qrHint}>
-					{isStudentMode && studentName.trim() ? `${studentName.trim()} · ` : ""}
-					{config.payeeName} · {config.upiId}
+					{mode !== "global" && studentName.trim() ? `${studentName.trim()} | ` : ""}
+					{config.payeeName} | {config.upiId}
 				</p>
+
+				{isPaymentMode && !canGenerate && (
+					<p className={styles.qrHint}>
+						Select a batch and plan first. The amount is calculated from the
+						batch-linked plan.
+					</p>
+				)}
+
+				{isCustomMode && !canGenerate && (
+					<p className={styles.qrHint}>Enter an amount to generate the QR.</p>
+				)}
 
 				<div className={styles.buttonRow} style={{ width: "100%" }}>
 					<Button
@@ -265,7 +383,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						color={Colors.NEUTRAL_DARK}
 						shape={Shapes.ROUNDED}
 						size={ButtonSizes.LARGE}
-						isDisabled={!qrDataUrl}
+						isDisabled={!qrDataUrl || !canGenerate}
 						onClick={downloadQr}
 					/>
 					<Button
@@ -273,7 +391,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						color={Colors.PRIMARY}
 						shape={Shapes.ROUNDED}
 						size={ButtonSizes.LARGE}
-						isDisabled={!qrDataUrl}
+						isDisabled={!qrDataUrl || !canGenerate}
 						onClick={() => {
 							if (hasPhone) {
 								openWhatsApp();
@@ -285,6 +403,48 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 					/>
 				</div>
 			</div>
+
+			{isQrFullscreen && qrDataUrl && (
+				<div
+					className={styles.qrFullscreen}
+					role="dialog"
+					aria-modal="true"
+					aria-label="Payment QR full screen"
+					onClick={() => setIsQrFullscreen(false)}
+				>
+					<img
+						className={styles.qrFullscreenLogo}
+						src="/images/skorost.svg"
+						alt="Skorost United Football Academy"
+					/>
+					<img
+						src={qrDataUrl}
+						alt={
+							mode !== "global"
+								? `Payment QR for ${formatRupees(amount)}, enlarged`
+								: "Payment QR, enlarged"
+						}
+					/>
+					<p className={styles.qrFullscreenName}>
+						{mode !== "global" && amount > 0
+							? formatRupees(amount)
+							: "Any amount"}
+					</p>
+					<p className={styles.qrFullscreenHint}>
+						{mode !== "global" && studentName.trim()
+							? `${studentName.trim()} | `
+							: ""}
+						{config.payeeName}
+					</p>
+					<button
+						className={styles.qrFullscreenClose}
+						type="button"
+						aria-label="Close QR full screen"
+					>
+						Tap anywhere to close
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };

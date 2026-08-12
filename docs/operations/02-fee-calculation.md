@@ -24,27 +24,31 @@ differently, and each can carry its own per-session price.
 
 - **Center** and **batch** - the batch supplies the session weekdays
   (`batch_days`), so pro-rata counting follows the batch the student joins.
-- **Plan** - duration (1 month / 3 months) and attendance (3-day / 2-day).
+- **Plan** - duration (1 / 3 / 6 / 12 months) and attendance (3-day / 2-day).
 - **Start date** = join date, **end date** = auto-filled default, **editable**.
 
 ### Default end date
 
-- Start on the **1st** of a month → default end = **last day of that month**.
-- Start **mid-month** (day > 1) → default end = **last day of the *next* month**
-  (bundles the partial joining month with one full month).
-- Staff can override to any later date.
-- A **multi-month plan** pins both dates: it starts on the 1st and runs its full
-  term. ⚠️ Carried over from the retired 6-month rule - confirm whether a
-  3-month plan should instead allow a mid-month start with pro-rata.
+- Start on the **1st** of a month → default end = **last day of the selected
+  duration's last month**. Example: 1 Jul on a 3-month plan ends 30 Sep.
+- Start **mid-month** (day > 1) → default end = **last day of the month after
+  the selected duration window**. Example: 15 Jul on a 1-month plan ends
+  31 Aug; 15 Jul on a 3-month plan ends 31 Oct.
+- Staff can override the end date for **every** duration.
 
 ## Amount algorithm (month-by-month, editable range)
 
 Walk every calendar month that overlaps `[startDate, endDate]`:
 
+- A partial month bills `session count × perSessionPrice`.
+- Full months distribute the selected package `price` across the selected
+  `durationMonths`, so a 3-month package bills the package total across 3 full
+  months instead of repeating the 3-month price each month.
+
 ```
 For each month M overlapping [start, end]:
   if M is fully inside [start, end]:
-      amount += center_plan.price                 # stored flat price
+      amount += package month share              # plan price spread across duration
   else:                                           # partial month
       amount += sessionDaysInRange(M) × center_plan.per_session_price
 
@@ -52,10 +56,11 @@ total = amount                                    # no rounding, ever
 ```
 
 - `sessionDaysInRange(M)` = the batch's session weekdays falling inside
-  `[start, end]` within month `M`. For a 2-day plan, the student's chosen subset
-  of those days.
+  `[start, end]` within month `M`. For a 2-day plan, the first two configured
+  batch days are counted automatically.
 - **No holiday check** - every matching weekday counts.
-- A **full** calendar month always uses the flat price, never `sessions × rate`.
+- A **full** calendar month always uses its package-price share, never
+  `sessions × rate`.
 
 ## Worked examples
 
