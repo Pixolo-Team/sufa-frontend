@@ -1,5 +1,5 @@
 // REACT //
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 // STYLES //
 import styles from "./operations.module.scss";
@@ -10,8 +10,13 @@ import PinGate from "./PinGate";
 import PaymentQr from "./PaymentQr";
 import BatchesList from "./BatchesList";
 
-// DATA //
-import { OPERATIONS_DATA } from "@/data/operations.data";
+// SERVICES //
+import { fetchOperationsData } from "@/services/operations.api.service";
+
+// TYPES //
+import type { OperationsData } from "@/types/operations";
+
+const STAFF_PIN = import.meta.env.PUBLIC_STAFF_PIN ?? "";
 
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
 
@@ -39,29 +44,72 @@ const TOOLS: {
 
 /** Staff-only operations tools. Everything is computed and sent in the browser. */
 const OperationsApp: React.FC = () => {
-	const { config, centers, registrationOptions } = OPERATIONS_DATA;
-
 	const [isUnlocked, setIsUnlocked] = useState(
 		() => window.localStorage.getItem(UNLOCK_STORAGE_KEY) === "true"
 	);
 	const [activeTool, setActiveTool] = useState<ToolId | null>(null);
-	const [centerId, setCenterId] = useState(centers[0]?.id ?? "");
-
-	const center = centers.find((item) => item.id === centerId);
-	const activeToolMeta = TOOLS.find((tool) => tool.id === activeTool);
+	const [centerId, setCenterId] = useState("");
+	const [data, setData] = useState<OperationsData | null>(null);
+	const [loadError, setLoadError] = useState(false);
 
 	const unlock = useCallback(() => {
 		window.localStorage.setItem(UNLOCK_STORAGE_KEY, "true");
 		setIsUnlocked(true);
 	}, []);
 
+	useEffect(() => {
+		if (!isUnlocked) return;
+
+		let isActive = true;
+
+		fetchOperationsData()
+			.then((result) => {
+				if (!isActive) return;
+				setData(result);
+				setCenterId(result.centers[0]?.id ?? "");
+			})
+			.catch(() => {
+				if (isActive) setLoadError(true);
+			});
+
+		return () => {
+			isActive = false;
+		};
+	}, [isUnlocked]);
+
 	if (!isUnlocked) {
 		return (
 			<div className={`${styles.operations} ${styles.operationsGate}`}>
-				<PinGate expectedPin={config.staffPin} onUnlock={unlock} />
+				<PinGate expectedPin={STAFF_PIN} onUnlock={unlock} />
 			</div>
 		);
 	}
+
+	if (loadError) {
+		return (
+			<div className={styles.operations}>
+				<div className={styles.shell}>
+					<p className={styles.notice}>
+						Could not load operations data. Check your connection and reload.
+					</p>
+				</div>
+			</div>
+		);
+	}
+
+	if (!data) {
+		return (
+			<div className={styles.operations}>
+				<div className={styles.shell}>
+					<p className={styles.notice}>Loading...</p>
+				</div>
+			</div>
+		);
+	}
+
+	const { config, centers, registrationOptions } = data;
+	const center = centers.find((item) => item.id === centerId);
+	const activeToolMeta = TOOLS.find((tool) => tool.id === activeTool);
 
 	const renderPanel = () => {
 		const toolProps = { centers, center, onCenterChange: setCenterId };
