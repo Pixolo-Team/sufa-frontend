@@ -36,10 +36,14 @@
 
 		.cardText {
 			// Reads 24px (the heading-4 token) around 992px viewport width,
-			// scaling smoothly up to 28px at 1500px+ where the site's
+			// scaling smoothly up to 26px at 1500px+ where the site's
 			// `.container` caps out at 1440px (globals.scss) and the card
 			// stops growing - instead of holding flat then jumping once.
-			font-size: clamp(24px, 0.79vw + 16.19px, 28px);
+			// Kept modest (not 28px+) and with a tight line-height: this text
+			// panel sits on top of a fixed 16:9 image, so a bigger font on a
+			// 2-line title eats further into the photo, not less.
+			font-size: clamp(24px, 0.39vw + 20.1px, 26px);
+			line-height: 1.15;
 			color: #fff;
 			@include multiline-ellipsis(3);
 		}
@@ -87,7 +91,7 @@
 // at the 992-1500px viewport tier (~296-353px border-box, ~272-329px content-
 // box) needs to stay under this, while the 1500px+ tier - where `.container`
 // caps at 1440px and the card jumps to ~453px border-box/429px content-box -
-// needs to clear it and fall through to the base rule's fluid 24-28px clamp.
+// needs to clear it and fall through to the base rule's fluid 24-26px clamp.
 .contentWrapper {
 	@container (max-width: 380px) {
 		.textWrapper {
@@ -119,20 +123,8 @@
 @media only screen and (min-width: 992px) {
 }
 
-// Small laptops - the site's `.container` caps out at 1440px past this point
-// (globals.scss), so cards stop growing but the fixed 24px title never scaled
-// up to match how much bigger everything else on the page reads at this size.
+// Small laptops
 @media only screen and (min-width: 1500px) {
-	.contentWrapper {
-		.textWrapper {
-			padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
-		}
-
-		.linkButton {
-			width: 44px;
-			height: 44px;
-		}
-	}
 }
 
 // Media query for Touch devices
