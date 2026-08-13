@@ -21,7 +21,7 @@ import type { useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
 import { formatRupees } from "@/utils/fee-calculator.util";
-import { formatBatchTimings } from "@/utils/operations.util";
+import { formatBatchTimings, formatWeekdayShort } from "@/utils/operations.util";
 
 interface FeeInputFieldsProps {
 	centers: OperationsCenterData[];
@@ -44,9 +44,12 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		batch,
 		plan,
 		registrationOption,
+		batchWeekdays,
 		setBatchId,
 		setPlanId,
 		setRegistrationOptionId,
+		setDaysPerWeek,
+		toggleSelectedWeekday,
 		setStartDate,
 		setEndDate,
 	} = feeInputs;
@@ -59,16 +62,22 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		label: `${item.name} (${item.ageGroup})`,
 		value: item.id,
 	}));
+	// 2-day is only an alternate to 3-day - a batch with just a 2-day plan
+	// (e.g. Focus Batch) must keep it as the default, or it becomes unselectable.
+	const hasThreeDayPlans = (batch?.plans ?? []).some(
+		(item) => item.daysPerWeek === 3
+	);
+	const defaultPlans = hasThreeDayPlans
+		? (batch?.plans ?? []).filter((item) => item.daysPerWeek !== 2)
+		: (batch?.plans ?? []);
 	const durationOptions: DropdownOptionData[] = Array.from(
-		new Set((batch?.plans ?? []).map((item) => item.durationMonths))
+		new Set(defaultPlans.map((item) => item.durationMonths))
 	)
 		.sort((left, right) => left - right)
 		.map((months) => ({
-			label: months === 1 ? "1 Month" : `${months} Months`,
+			label: String(months),
 			value: String(months),
 		}));
-	// Keyed by days-per-week, not plan id, so the options keep their identity when
-	// the duration changes and the current choice can carry across.
 	const daysOptions: DropdownOptionData[] = Array.from(
 		new Set(
 			(batch?.plans ?? [])
@@ -82,7 +91,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 			value: String(days),
 		}));
 	const registrationOptions = [
-		{ label: "No registration", value: "" },
+		{ label: "None", value: "" },
 		...globalRegistrationOptions.map((item) => ({
 			label: item.name,
 			value: item.id,
@@ -97,33 +106,28 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 		durationOptions.find(
 			(option) => option.value === String(plan?.durationMonths)
 		) ?? null;
-	const selectedDaysOption =
-		daysOptions.find((option) => option.value === String(plan?.daysPerWeek)) ??
-		null;
 	const selectedRegistrationOption =
 		registrationOptions.find(
 			(option) => option.value === (registrationOption?.id ?? "")
 		) ?? registrationOptions[0] ?? null;
+	const selectedDaysOption =
+		daysOptions.find((option) => option.value === String(plan?.daysPerWeek)) ??
+		null;
 
 	/** Resolve a plan from the duration / days pair, keeping the other half fixed */
-	const selectPlan = (months: number, daysPerWeek: number | undefined) => {
+	const selectPlan = (months: number) => {
 		const candidates = (batch?.plans ?? []).filter(
-			(item) => item.durationMonths === months
+			(item) =>
+				item.durationMonths === months &&
+				(!hasThreeDayPlans || item.daysPerWeek !== 2)
 		);
-		const nextPlan =
-			candidates.find((item) => item.daysPerWeek === daysPerWeek) ??
-			candidates[0];
+		const nextPlan = candidates[0];
 
 		if (nextPlan) setPlanId(nextPlan.id);
 	};
 
-	// Carry the current days-per-week across, so switching months does not
-	// silently reset a 2-day student back to 3 days.
-	const onDurationChange = (value: string) =>
-		selectPlan(Number(value), plan?.daysPerWeek);
-
-	const onDaysChange = (value: string) =>
-		selectPlan(plan?.durationMonths ?? 0, Number(value));
+	const onDurationChange = (value: string) => selectPlan(Number(value));
+	const showScheduleTabs = !!plan && plan.daysPerWeek === 2 && batchWeekdays.length > 0;
 
 	return (
 		<div className={styles.fieldStack}>
@@ -155,7 +159,6 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 						value={selectedDurationOption?.value ?? ""}
 						onChange={onDurationChange}
 						options={durationOptions}
-						visibleCount={3}
 					/>
 				</div>
 			)}
@@ -163,23 +166,47 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 			{plan && daysOptions.length > 0 && (
 				<div>
 					<span className={styles.fieldLabel}>
-						Days per week<span style={{ color: "#de350b" }}>*</span>
+						Number of days a week<span style={{ color: "#de350b" }}>*</span>
 					</span>
 					<Segmented
 						value={selectedDaysOption?.value ?? ""}
-						onChange={onDaysChange}
+						onChange={(value) => setDaysPerWeek(Number(value))}
 						options={daysOptions}
 					/>
+
+					{showScheduleTabs && (
+						<div className={styles.daySelector}>
+							<span className={styles.daySelectorLabel}>
+								Which days? (pick {plan.daysPerWeek})
+							</span>
+							<div className={styles.scheduleTabs}>
+								{batchWeekdays.map((day) => (
+									<button
+										key={day}
+										type="button"
+										className={`${styles.scheduleTab} ${
+											inputs.selectedWeekdays.includes(day)
+												? styles.scheduleTabActive
+												: ""
+										}`}
+										onClick={() => toggleSelectedWeekday(day)}
+									>
+										{formatWeekdayShort(day)}
+									</button>
+								))}
+							</div>
+						</div>
+					)}
 				</div>
 			)}
 
 			<div>
-				<span className={styles.fieldLabel}>Registration</span>
-				<Segmented
-					value={selectedRegistrationOption?.value ?? ""}
-					onChange={setRegistrationOptionId}
+				<Select
+					label="Registration Package"
+					placeholder="None"
 					options={registrationOptions}
-					visibleCount={2}
+					selectedOption={selectedRegistrationOption}
+					onChange={(option) => setRegistrationOptionId(option.value)}
 				/>
 				{registrationOption && (
 					<p className={styles.qrHint}>

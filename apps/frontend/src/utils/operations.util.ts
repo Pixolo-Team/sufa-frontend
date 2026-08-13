@@ -15,6 +15,11 @@ const WEEKDAY_LONG = [
 	"Friday",
 	"Saturday",
 ];
+const STATIC_BATCH_IMAGES = [
+	"/images/operations/ghatkopar-east-foundation.png",
+	"/images/operations/ghatkopar-east-grassroot.png",
+	"/images/operations/ghatkopar-west-performance.png",
+];
 
 /** Turn a `HH:mm` database time into `5:00 PM` */
 const formatTime = (value: string): string => {
@@ -55,11 +60,27 @@ export const formatBatchTimingLines = (batch: OperationsBatchData): string[] =>
 		.sort((left, right) => left.day - right.day)
 		.map((slot) => formatTimingSlot(slot));
 
+export const formatBatchScheduleGrid = (batch: OperationsBatchData) =>
+	batch.schedule
+		.slice()
+		.sort((left, right) => left.day - right.day)
+		.map((slot) => ({
+			day: WEEKDAY_SHORT[slot.day],
+			time: formatTime(slot.startTime),
+			endTime: formatTime(slot.endTime),
+		}));
+
 /** Unique weekdays available in a batch. */
 export const getBatchWeekdays = (batch: OperationsBatchData): number[] =>
 	Array.from(new Set(batch.schedule.map((slot) => slot.day))).sort(
 		(left, right) => left - right
 	);
+
+export const formatWeekdayShort = (day: number): string =>
+	WEEKDAY_SHORT[day] ?? String(day);
+
+export const getStaticBatchImageSrc = (batchIndex: number): string =>
+	STATIC_BATCH_IMAGES[batchIndex % STATIC_BATCH_IMAGES.length];
 
 /** Standard plans show only the duration; 2-day plans keep the exception visible. */
 export const formatPlanLabel = (plan: OperationsPlanData): string => {

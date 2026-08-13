@@ -6,24 +6,77 @@
 // carry identical values), so a page-local palette is the honest way to keep
 // contrast predictable here.
 
+// ---------- Zizo Academy Design System tokens ----------
+// Mapped from the Zizo restyle reference (docs/operations, Aug 2026 pass).
+// Scoped to `.operations` for the same reason as before: the shared token
+// set has no real dark mode, so a page-local palette stays predictable.
+// Primitive values kept alongside their semantic use so a future retheme
+// only has to touch the primitives.
 .operations {
-	--ops-bg: #f4f6f9;
+	// primitives - brand green
+	--ops-green-50: #e6faf0;
+	--ops-green-300: #54d793;
+	--ops-green-500: #00c566;
+	--ops-green-600: #00a857;
+	--ops-green-700: #008a47;
+	--ops-green-bright: #00d873;
+
+	// primitives - neutrals
+	--ops-grey-50: #f7f8f9;
+	--ops-grey-100: #f0f1f3;
+	--ops-grey-150: #e6e8eb;
+	--ops-grey-200: #d6d9dd;
+	--ops-grey-300: #b5bac1;
+	--ops-grey-400: #8a8f98;
+	--ops-grey-500: #6a6f77;
+	--ops-grey-950: #0d0d0d;
+
+	// primitives - status
+	--ops-red-500: #e5484d;
+	--ops-amber-50: #fef4e2;
+	--ops-amber-500: #e8920a;
+	--ops-amber-600: #9a6700;
+
+	// semantic
+	--ops-bg: var(--ops-grey-50);
 	--ops-surface: #ffffff;
-	--ops-ink: #172b4d;
-	--ops-muted: #6b7a90;
-	--ops-line: #e5e9f0;
-	--ops-accent: #0f9563;
-	--ops-accent-bright: #16db93;
-	--ops-accent-soft: rgba(22, 219, 147, 0.12);
-	--ops-shadow: 0 1px 2px rgba(23, 43, 77, 0.06),
-		0 8px 24px -12px rgba(23, 43, 77, 0.18);
+	--ops-surface-sunken: var(--ops-grey-100);
+	--ops-ink: var(--ops-grey-950);
+	--ops-muted: var(--ops-grey-500);
+	--ops-tertiary: var(--ops-grey-400);
+	--ops-line: var(--ops-grey-150);
+	--ops-border-default: var(--ops-grey-200);
+	--ops-border-strong: var(--ops-grey-300);
+	--ops-accent: var(--ops-green-500);
+	--ops-accent-hover: var(--ops-green-600);
+	--ops-accent-pressed: var(--ops-green-700);
+	--ops-accent-bright: var(--ops-green-bright);
+	--ops-accent-soft: var(--ops-green-50);
+	--ops-accent-text: var(--ops-green-700);
+	--ops-accent-border: var(--ops-green-300);
+	--ops-text-on-accent: #04140b;
+	--ops-danger: var(--ops-red-500);
+	--ops-warning: var(--ops-amber-500);
+	--ops-warning-soft: var(--ops-amber-50);
+	--ops-warning-text: var(--ops-amber-600);
+	--ops-shadow: 0 2px 8px rgba(13, 13, 13, 0.08),
+		0 1px 3px rgba(13, 13, 13, 0.06);
+	--ops-shadow-lg: 0 8px 24px rgba(13, 13, 13, 0.12),
+		0 2px 6px rgba(13, 13, 13, 0.08);
+
+	// radii
+	--ops-radius-xs: 8px;
+	--ops-radius-sm: 12px;
+	--ops-radius-md: 16px;
+	--ops-radius-lg: 24px;
+	--ops-radius-full: 999px;
 
 	min-height: 100vh;
 	min-height: 100dvh;
 	padding: 20px 16px calc(40px + env(safe-area-inset-bottom));
 	background-color: var(--ops-bg);
 	color: var(--ops-ink);
-	font-family: var(--font-family-secondary);
+	font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
 	-webkit-font-smoothing: antialiased;
 
 	// Buttons do not inherit colour from their parent - the UA sets `buttontext`,
@@ -56,6 +109,7 @@
 .shell {
 	width: 100%;
 	max-width: 520px;
+	min-height: calc(100dvh - 60px - env(safe-area-inset-bottom));
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
@@ -87,19 +141,12 @@
 	color: var(--ops-ink);
 }
 
-.brandDivider {
-	width: 1px;
-	height: 20px;
+.topBarLogo {
+	width: 36px;
+	height: 36px;
 	flex: none;
-	background-color: #d7dde6;
-}
-
-.brandLabel {
-	color: var(--ops-muted);
-	font-size: 11.5px;
-	font-weight: 700;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
+	margin-left: auto;
+	object-fit: contain;
 }
 
 .backButton {
@@ -120,8 +167,8 @@
 		box-shadow 0.2s ease;
 
 	&:hover {
-		background-color: #f0f3f7;
-		border-color: #cfd8e3;
+		background-color: var(--ops-surface-sunken);
+		border-color: var(--ops-border-strong);
 		box-shadow: 0 8px 20px -16px rgba(23, 43, 77, 0.45);
 	}
 
@@ -136,7 +183,7 @@
 
 	b {
 		display: block;
-		font-family: var(--font-family-primary);
+		font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
 		font-size: 19px;
 		font-weight: 700;
 		line-height: 1.2;
@@ -151,29 +198,33 @@
 	}
 }
 
-.lockChip {
-	display: inline-flex;
+.poweredBy {
+	display: flex;
 	align-items: center;
-	gap: 5px;
-	flex: none;
-	padding: 6px 11px 6px 9px;
-	border-radius: 999px;
-	background-color: var(--ops-accent-soft);
-	color: var(--ops-accent);
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 0.03em;
-	text-transform: uppercase;
+	justify-content: center;
+	gap: 7px;
+	margin: auto 0 8px;
+	color: var(--ops-tertiary);
+	font-size: 12px;
+	font-weight: 600;
+	text-align: center;
+
+	img {
+		width: auto;
+		height: 24px;
+		object-fit: contain;
+	}
 }
 
 .notice {
 	display: flex;
 	align-items: center;
 	gap: 8px;
+	margin: 0 0 12px;
 	padding: 10px 14px;
-	border-radius: 10px;
-	background-color: #fff8e8;
-	color: #8a6417;
+	border-radius: var(--ops-radius-sm);
+	background-color: var(--ops-warning-soft);
+	color: var(--ops-warning-text);
 	font-size: 12.5px;
 	font-weight: 500;
 	line-height: 1.4;
@@ -184,13 +235,9 @@
 		width: 3px;
 		align-self: stretch;
 		flex: none;
-		border-radius: 999px;
-		background-color: #f0b429;
+		border-radius: var(--ops-radius-full);
+		background-color: var(--ops-warning);
 	}
-}
-
-.panelHome .notice {
-	margin-bottom: 6px;
 }
 
 /* ---------- cards ---------- */
@@ -264,8 +311,8 @@
 	animation: opsFadeUp 0.46s ease-out both;
 
 	&:hover {
-		border-color: #cfd8e3;
-		background-color: #fcfdff;
+		border-color: var(--ops-border-strong);
+		background-color: var(--ops-surface);
 		box-shadow: 0 18px 36px -28px rgba(23, 43, 77, 0.4);
 	}
 
@@ -292,7 +339,7 @@
 
 	b {
 		display: block;
-		font-family: var(--font-family-primary);
+		font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
 		font-size: 15.5px;
 		font-weight: 700;
 		line-height: 1.25;
@@ -329,7 +376,7 @@
 
 .tileChevron {
 	flex: none;
-	color: #b6c0ce;
+	color: var(--ops-tertiary);
 	transition:
 		transform 0.2s ease,
 		color 0.2s ease;
@@ -337,7 +384,7 @@
 
 .tile:hover .tileChevron {
 	transform: translateX(2px);
-	color: #94a3b8;
+	color: var(--ops-muted);
 }
 
 /* ---------- form pieces ---------- */
@@ -358,12 +405,19 @@
 
 
 .segmented {
+	position: relative;
+	// Contains the sliding highlight's z-index to this component, so it can
+	// never leak out and out-stack unrelated things later in the DOM (it did -
+	// a Select's open dropdown was rendering underneath a Segmented row below
+	// it, because both used z-index: 1 and this one paints later).
+	isolation: isolate;
 	display: flex;
 	gap: 4px;
 	padding: 4px;
-	border-radius: 12px;
-	background-color: #eef1f6;
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-surface-sunken);
 	overflow-x: auto;
+	scroll-padding-inline: 4px;
 	-webkit-overflow-scrolling: touch;
 	scrollbar-width: none;
 	transition:
@@ -375,22 +429,56 @@
 	}
 }
 
+// The sliding pill behind whichever option is active. Positioned to the
+// active button's own offsetLeft/offsetWidth (see Segmented.tsx) and eased
+// into place instead of popping, so switching reads as one continuous motion.
+.segmentedHighlight {
+	position: absolute;
+	top: 4px;
+	left: 0;
+	bottom: 4px;
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-surface);
+	box-shadow: 0 1px 3px rgba(13, 13, 13, 0.14);
+	pointer-events: none;
+	z-index: 0;
+	transition:
+		transform 0.28s cubic-bezier(0.2, 0, 0, 1),
+		width 0.28s cubic-bezier(0.2, 0, 0, 1);
+	will-change: transform, width;
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+	}
+}
+
 // Sizes each option to a fraction of the row so exactly `--seg-visible` fit,
-// and the rest stay reachable by swiping the row sideways.
+// and the rest stay reachable by swiping the row sideways. Without snap
+// points a swipe could rest halfway between options, showing a sliver of the
+// next one; snapping to each option's edge means a full swipe naturally
+// advances by one screenful (i.e. by `--seg-visible` options at a time).
+.segmentedPeek {
+	scroll-snap-type: x mandatory;
+}
+
 .segmentedPeek .segmentedOption {
 	flex: 0 0
 		calc((100% - (var(--seg-visible) - 1) * 4px) / var(--seg-visible));
 	min-width: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
 }
 
 .segmentedOption {
+	position: relative;
+	z-index: 1;
 	flex: 1 1 0;
 	min-width: max-content;
-	min-height: 40px;
+	min-height: 48px;
 	padding: 0 10px;
-	border-radius: 9px;
+	border-radius: var(--ops-radius-full);
 	background-color: transparent;
 	color: var(--ops-muted);
 	font-size: 13px;
@@ -398,9 +486,7 @@
 	white-space: nowrap;
 	transition:
 		transform 0.18s ease,
-		background-color 0.15s ease,
-		color 0.15s ease,
-		box-shadow 0.15s ease;
+		color 0.2s ease;
 
 	&:hover {
 		color: var(--ops-ink);
@@ -411,11 +497,81 @@
 	}
 }
 
+// The sliding .segmentedHighlight now supplies the surface/shadow; this only
+// needs to flip the text colour once the pill has arrived underneath it.
 .segmentedOptionActive {
+	color: var(--ops-ink);
+}
+
+.optionPanel {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 14px;
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-md);
+	background-color: var(--ops-surface-sunken);
+}
+
+.checkboxRow {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--ops-ink);
+	font-size: 13px;
+	font-weight: 700;
+
+	input {
+		width: 18px;
+		height: 18px;
+		accent-color: var(--ops-accent);
+	}
+}
+
+.daySelector {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-top: 10px;
+}
+
+.daySelectorLabel {
+	color: var(--ops-ink);
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.scheduleTabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.scheduleTab {
+	min-width: 54px;
+	min-height: 38px;
+	padding: 0 14px;
+	border: 1px solid var(--ops-border-default);
+	border-radius: var(--ops-radius-sm);
 	background-color: var(--ops-surface);
 	color: var(--ops-ink);
-	box-shadow: 0 1px 3px rgba(23, 43, 77, 0.14);
-	animation: opsPopIn 0.2s ease-out;
+	font-size: 12px;
+	font-weight: 600;
+	transition:
+		transform 0.14s ease,
+		background-color 0.16s ease,
+		border-color 0.16s ease,
+		color 0.16s ease;
+
+	&:active {
+		transform: scale(0.97);
+	}
+}
+
+.scheduleTabActive {
+	border-color: var(--ops-accent);
+	background-color: var(--ops-accent-soft);
+	color: var(--ops-ink);
 }
 
 .dayChips {
@@ -426,10 +582,10 @@
 
 .dayChip {
 	min-width: 60px;
-	min-height: 44px;
+	min-height: 48px;
 	padding: 0 14px;
 	border: 1px solid var(--ops-line);
-	border-radius: 12px;
+	border-radius: var(--ops-radius-sm);
 	background-color: var(--ops-surface);
 	color: var(--ops-muted);
 	font-size: 13px;
@@ -442,7 +598,7 @@
 		box-shadow 0.15s ease;
 
 	&:hover {
-		border-color: #cfd8e3;
+		border-color: var(--ops-border-strong);
 		box-shadow: 0 10px 18px -18px rgba(23, 43, 77, 0.45);
 	}
 
@@ -471,28 +627,87 @@
 	margin-top: 18px;
 }
 
+/* ---------- neevo Button override ----------
+   Button has no className prop, only extraClass - so these compose onto its
+   own CSS-module classes. Scoped under .operations (specificity 0,2,0) so
+   they win over the neevo module's single-class rules regardless of the
+   bundler's stylesheet order, without editing neevo/button.module.scss
+   itself (that file is shared with the public marketing site).
+
+   The button's text and icon colour are NOT set on the <button> root - they
+   live on .buttonText and .buttonIconLeft/Right path, both private classes
+   hashed inside button.module.scss's own CSS module, unreachable from here
+   by class selector. But those rules read `var(--color-button-foreground-
+   ...)`, and custom properties cascade through the DOM regardless of which
+   stylesheet/module declared the rule - so redefining the same variable
+   names on this ancestor repaints them without touching neevo's source. */
+.operations {
+	--color-button-background-primary-solid-default: var(--ops-accent);
+	--color-button-background-primary-solid-hover: var(--ops-accent-hover);
+	--color-button-foreground-primary-solid: var(--ops-text-on-accent);
+	--color-button-foreground-primary-solid-default: var(--ops-text-on-accent);
+	--color-button-foreground-primary-solid-hover: var(--ops-text-on-accent);
+
+	--color-button-background-neutral-dark-outline-default: var(--ops-border-default);
+	--color-button-background-neutral-dark-outline-hover: var(--ops-border-strong);
+	--color-button-foreground-neutral-dark-outline-default: var(--ops-ink);
+	--color-button-foreground-neutral-dark-outline-hover: var(--ops-ink);
+}
+
+.operations .opsButtonOverride {
+	min-height: 56px;
+	border-radius: var(--ops-radius-full);
+	font-weight: 600;
+	box-shadow: none;
+	transition:
+		transform 0.12s ease,
+		background-color 0.18s ease,
+		border-color 0.18s ease;
+
+	// These buttons run edge-to-edge with little surrounding margin, so the
+	// base Button component's 5% hover grow (button.module.scss) pushes them
+	// past the card/viewport edge. Keep a little lift, just not that much.
+	&:hover:not(:disabled) {
+		transform: scale(1.015);
+	}
+
+	&:active:not(:disabled) {
+		transform: scale(0.97);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+
+		&:active:not(:disabled) {
+			transform: none;
+		}
+	}
+}
+
+.operations .opsButtonOutline {
+	background-color: var(--ops-surface) !important;
+}
+
 /* ---------- result ---------- */
 
 .result {
 	padding: 20px;
-	border: 1px solid #d9e3ef;
-	border-radius: 16px;
-	background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-md);
+	background-color: var(--ops-bg);
 	color: var(--ops-ink);
-	box-shadow: 0 14px 30px -24px rgba(23, 43, 77, 0.18);
 	animation: opsFadeUp 0.52s ease-out both;
 }
 
 .resultTotal {
 	display: flex;
-	align-items: baseline;
+	align-items: flex-start;
 	justify-content: space-between;
 	gap: 12px;
 	padding-bottom: 14px;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 
 	span {
-		color: #6e7f97;
+		color: var(--ops-muted);
 		font-size: 12px;
 		font-weight: 600;
 		letter-spacing: 0.06em;
@@ -500,12 +715,11 @@
 	}
 
 	b {
-		font-family: var(--font-family-primary);
-		font-size: 30px;
-		font-weight: 800;
+		font-size: 40px;
+		font-weight: 700;
 		line-height: 1;
-		letter-spacing: -0.03em;
-		color: #245f53;
+		letter-spacing: -0.02em;
+		color: var(--ops-accent-text);
 		font-variant-numeric: tabular-nums;
 	}
 }
@@ -533,7 +747,7 @@
 	gap: 2px;
 
 	small {
-		color: #6f8097;
+		color: var(--ops-muted);
 		font-size: 11.5px;
 	}
 }
@@ -541,8 +755,8 @@
 .resultFootnote {
 	margin-top: 16px;
 	padding-top: 12px;
-	border-top: 1px solid rgba(23, 43, 77, 0.1);
-	color: #708199;
+	border-top: 1px solid var(--ops-border-default);
+	color: var(--ops-tertiary);
 	font-size: 11.5px;
 }
 
@@ -600,12 +814,21 @@
 
 .qrCaption {
 	margin-top: 16px;
-	font-family: var(--font-family-primary);
+	font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
 	font-size: 26px;
 	font-weight: 800;
 	letter-spacing: -0.02em;
 	text-align: center;
 	font-variant-numeric: tabular-nums;
+}
+
+.qrPayeeName {
+	margin: 6px 0 0;
+	color: var(--ops-ink);
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.25;
+	text-align: center;
 }
 
 .qrHint {
@@ -614,6 +837,24 @@
 	font-size: 12px;
 	line-height: 1.5;
 	text-align: center;
+}
+
+.copyIconButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	margin-left: 6px;
+	border: 0;
+	border-radius: 0;
+	background-color: transparent;
+	color: var(--ops-ink);
+	vertical-align: middle;
+}
+
+.fullWidthButton {
+	grid-column: 1 / -1;
 }
 
 // White full-screen QR view mirrors rmb-event-app: the brighter field helps
@@ -628,9 +869,12 @@
 	justify-content: center;
 	gap: 14px;
 	padding: 24px;
-	background-color: #ffffff;
-	color: #0b1220;
+	background-color: var(--ops-surface);
+	color: var(--ops-ink);
 	cursor: pointer;
+	overflow: hidden;
+	overscroll-behavior: contain;
+	touch-action: none;
 	animation: opsQrFullscreenIn 0.2s ease-out both;
 
 	img {
@@ -650,8 +894,8 @@
 
 .qrFullscreenName {
 	margin: 0;
-	color: #0b1220;
-	font-family: var(--font-family-primary);
+	color: var(--ops-ink);
+	font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
 	font-size: 28px;
 	font-weight: 800;
 	letter-spacing: -0.02em;
@@ -662,7 +906,7 @@
 .qrFullscreenHint {
 	max-width: 320px;
 	margin: 0;
-	color: #48566d;
+	color: var(--ops-muted);
 	font-size: 13px;
 	font-weight: 600;
 	line-height: 1.4;
@@ -673,7 +917,7 @@
 	margin-top: 4px;
 	border: 0;
 	background: none;
-	color: #64748b;
+	color: var(--ops-tertiary);
 	font-size: 12.5px;
 	font-weight: 600;
 	cursor: pointer;
@@ -689,15 +933,14 @@
 
 .centerItem {
 	padding: 20px;
-	border: 1px solid #dfe7f1;
-	border-radius: 20px;
-	background:
-		linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, #f9fbfe 100%);
-	box-shadow: 0 18px 36px -32px rgba(23, 43, 77, 0.38);
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-md);
+	background-color: var(--ops-surface);
+	box-shadow: var(--ops-shadow);
 	animation: opsFadeUp 0.42s ease-out both;
 
 	b {
-		font-family: var(--font-family-primary);
+		font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
 		font-size: 17px;
 		font-weight: 700;
 		line-height: 1.2;
@@ -721,39 +964,87 @@
 .centerSections {
 	display: flex;
 	flex-direction: column;
-	gap: 14px;
+	gap: 18px;
 	margin-top: 16px;
 }
 
 .centerBatch {
 	display: flex;
 	flex-direction: column;
-	gap: 12px;
-	padding: 14px;
+	gap: 0;
+	padding: 0;
 	border: 1px solid #e5ebf3;
-	border-radius: 16px;
-	background-color: rgba(244, 248, 252, 0.9);
+	border-radius: 20px;
+	background-color: rgba(244, 248, 252, 0.7);
+	overflow: hidden;
 }
 
-.centerBatchHeader {
+.batchAccordionTrigger {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 12px;
-	flex-wrap: wrap;
+	gap: 14px;
+	width: 100%;
+	min-height: 72px;
+	padding: 16px 18px;
+	border: 0;
+	background-color: transparent;
+	text-align: left;
 
 	strong {
+		display: block;
 		color: var(--ops-ink);
-		font-size: 14px;
+		font-size: 15px;
 		font-weight: 700;
+		line-height: 1.25;
 	}
+
+	small {
+		display: inline-flex;
+		margin-top: 8px;
+	}
+}
+
+.batchAccordionArrow {
+	flex: none;
+	color: var(--ops-muted);
+	transition: transform 0.18s ease;
+}
+
+.batchAccordionArrowOpen {
+	transform: rotate(90deg);
+}
+
+// Grid-rows collapse: 0fr->1fr animates height without measuring it in JS.
+// The inner `overflow: hidden` is what actually clips the content while the
+// row is collapsing/expanding.
+.batchAccordionPanelWrap {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.batchAccordionPanelWrapOpen {
+	grid-template-rows: 1fr;
+}
+
+.batchAccordionPanelInner {
+	min-height: 0;
+	overflow: hidden;
+}
+
+.batchAccordionPanel {
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+	padding: 0 18px 18px;
 }
 
 .centerBatchMeta {
 	padding: 5px 12px;
-	border-radius: 999px;
-	background-color: rgba(22, 219, 147, 0.12);
-	color: var(--ops-accent);
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-accent-soft);
+	color: var(--ops-accent-text);
 	font-size: 11px;
 	font-weight: 700;
 	letter-spacing: 0.02em;
@@ -761,44 +1052,61 @@
 }
 
 .centerScheduleBlock {
-	padding: 12px;
-	border: 1px solid #dce7f2;
-	border-radius: 14px;
-	background-color: #f8fbff;
+	padding: 0 0 20px;
+	border-bottom: 1px solid var(--ops-line);
+	background-color: transparent;
 }
 
-.centerScheduleList {
+.timingGrid {
+	display: grid;
+	grid-template-columns: repeat(var(--timing-cols, 3), minmax(0, 1fr));
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-md);
+	overflow: hidden;
+	background-color: var(--ops-surface);
+}
+
+.timingCell {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
-}
-
-.centerSchedulePill {
-	display: inline-flex;
+	flex-direction: column;
 	align-items: center;
-	min-height: 38px;
-	padding: 8px 12px;
-	border: 1px solid #cbd9ea;
-	border-radius: 12px;
-	background-color: #ffffff;
-	color: #29476f;
-	font-size: 12.5px;
-	font-weight: 700;
-	line-height: 1.4;
-	box-shadow: 0 8px 18px -18px rgba(23, 43, 77, 0.35);
+	gap: 8px;
+	padding: 12px 8px;
+	border-right: 1px solid var(--ops-line);
+	text-align: center;
+
+	&:last-child {
+		border-right: 0;
+	}
+
+	strong {
+		color: var(--ops-muted);
+		font-size: 12px;
+		font-weight: 800;
+		text-transform: uppercase;
+	}
+
+	span {
+		color: var(--ops-ink);
+		font-size: 14px;
+		font-weight: 700;
+	}
 }
 
 .centerBlock {
-	padding: 12px;
-	border-radius: 14px;
-	background-color: #ffffff;
-	box-shadow: inset 0 0 0 1px #e9eef5;
+	padding: 0;
+	background-color: transparent;
+	box-shadow: none;
+
+	.checkboxRow {
+		margin-top: 12px;
+	}
 }
 
 .centerBlockLabel {
 	display: inline-block;
 	margin-bottom: 8px;
-	color: #6d7f99;
+	color: var(--ops-muted);
 	font-size: 11px;
 	font-weight: 700;
 	letter-spacing: 0.08em;
@@ -807,14 +1115,17 @@
 
 
 .shareBlock {
-	padding: 12px;
-	border-radius: 14px;
-	background-color: #ffffff;
-	box-shadow: inset 0 0 0 1px #e9eef5;
+	padding: 2px 0 0;
 
 	// The label already sits above, so the row needs no extra top gap
 	.buttonRow {
-		margin-top: 0;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		margin-top: 2px;
+		gap: 8px;
+
+		> * {
+			min-width: 0;
+		}
 
 		// Three buttons in a two-column grid leave the last one alone on its own
 		// row, where the longest label wraps. Let it span the full width instead.
@@ -822,18 +1133,70 @@
 			grid-column: 1 / -1;
 		}
 	}
+
+	.opsButtonOverride {
+		width: 100%;
+		min-width: 0;
+		min-height: 50px;
+	}
+
+	.opsButtonOutline {
+		background-color: transparent !important;
+	}
+}
+
+.emptyState {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 360px;
+	padding: 48px 28px;
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-md);
+	background-color: var(--ops-surface);
+	text-align: center;
+	box-shadow: var(--ops-shadow);
+
+	h3 {
+		margin: 22px 0 0;
+		color: var(--ops-ink);
+		font-size: 26px;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		line-height: 1.15;
+	}
+
+	p {
+		max-width: 360px;
+		margin: 14px 0 0;
+		color: var(--ops-muted);
+		font-size: 17px;
+		line-height: 1.45;
+	}
+}
+
+.emptyStateIcon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 92px;
+	height: 92px;
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-surface-sunken);
+	color: var(--ops-tertiary);
 }
 
 .plansTable {
 	width: 100%;
 	border-collapse: collapse;
-	font-size: 12.5px;
+	font-size: 13px;
 
 	th,
 	td {
 		padding: 8px 4px;
 		text-align: left;
-		border-bottom: 1px solid #e9eef5;
+		border-bottom: 1px solid var(--ops-line);
 	}
 
 	th {
@@ -849,15 +1212,20 @@
 	}
 
 	td:first-child {
-		color: #334866;
-		font-weight: 600;
+		color: var(--ops-muted);
+		font-weight: 500;
 	}
 
 	th:last-child,
 	td:last-child {
 		text-align: right;
+		color: var(--ops-ink);
 		font-weight: 700;
 		font-variant-numeric: tabular-nums;
+	}
+
+	th:last-child {
+		color: var(--ops-muted);
 	}
 
 	tbody tr:last-child td {
@@ -873,19 +1241,26 @@
 	align-items: flex-end;
 	justify-content: center;
 	padding: 16px;
-	background-color: rgba(8, 18, 34, 0.45);
+	background-color: rgba(13, 13, 13, 0.45);
 	backdrop-filter: blur(6px);
+	overflow: hidden;
+	overscroll-behavior: contain;
+	touch-action: none;
 	animation: opsFadeIn 0.16s ease-out both;
 }
 
 .shareModal {
+	position: relative;
 	width: 100%;
 	max-width: 420px;
-	padding: 18px;
-	border: 1px solid #dfe7f1;
-	border-radius: 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 24px 20px 32px;
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-lg);
 	background-color: var(--ops-surface);
-	box-shadow: 0 24px 60px -28px rgba(8, 18, 34, 0.48);
+	box-shadow: var(--ops-shadow-lg);
 	animation: opsModalUp 0.22s ease-out both;
 }
 
@@ -893,51 +1268,53 @@
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;
-	gap: 14px;
-	margin-bottom: 16px;
+	gap: 12px;
 
 	.sectionLabel {
-		margin-bottom: 6px;
+		margin-bottom: 8px;
 	}
 
 	h2 {
 		margin: 0;
 		color: var(--ops-ink);
-		font-family: var(--font-family-primary);
-		font-size: 22px;
-		font-weight: 800;
-		letter-spacing: -0.02em;
-		line-height: 1.15;
+		font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
+		font-size: 28px;
+		font-weight: 700;
+		letter-spacing: -0.3px;
+		line-height: 36px;
 	}
 
 	p {
-		margin: 5px 0 0;
+		margin: 4px 0 0;
 		color: var(--ops-muted);
-		font-size: 12.5px;
-		line-height: 1.4;
+		font-size: 16px;
+		line-height: 24px;
 	}
 }
 
 .modalClose {
-	width: 38px;
-	height: 38px;
 	flex: none;
-	border: 1px solid var(--ops-line);
-	border-radius: 12px;
-	background-color: #f6f8fb;
-	color: var(--ops-muted);
-	font-size: 17px;
-	font-weight: 700;
-	line-height: 1;
-	text-transform: uppercase;
+	width: 48px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	border-radius: var(--ops-radius-sm);
+	background-color: var(--ops-surface-sunken);
+	color: var(--ops-ink);
 	transition:
 		transform 0.16s ease,
 		background-color 0.16s ease,
 		color 0.16s ease;
 
+	svg {
+		width: 20px;
+		height: 20px;
+	}
+
 	&:hover {
-		background-color: #eef2f7;
-		color: var(--ops-ink);
+		background-color: var(--ops-line);
 	}
 
 	&:active {
@@ -946,34 +1323,30 @@
 }
 
 .shareFormatGrid {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 10px;
+	display: flex;
+	gap: 12px;
 }
 
 .shareFormatButton {
-	min-height: 58px;
-	border: 1px solid #dbe4ef;
-	border-radius: 14px;
-	background-color: #f8fbff;
+	flex: 1;
+	min-height: 56px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1.5px solid var(--ops-line);
+	border-radius: var(--ops-radius-sm);
+	background-color: var(--ops-surface-sunken);
 	color: var(--ops-ink);
-	font-family: var(--font-family-primary);
+	font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
 	font-size: 16px;
-	font-weight: 800;
+	font-weight: 600;
 	transition:
 		transform 0.16s ease,
 		background-color 0.16s ease,
-		border-color 0.16s ease,
-		box-shadow 0.16s ease;
-
-	&:hover {
-		border-color: #cbd8e8;
-		background-color: #ffffff;
-		box-shadow: 0 14px 28px -24px rgba(23, 43, 77, 0.4);
-	}
+		border-color 0.16s ease;
 
 	&:active {
-		transform: translateY(1px) scale(0.985);
+		transform: scale(0.97);
 	}
 }
 
@@ -990,6 +1363,7 @@
 /* ---------- PIN gate ---------- */
 
 .gate {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -1010,11 +1384,28 @@
 	display: block;
 	height: 38px;
 	width: auto;
-	margin: 0 auto 20px;
+	margin: -18px auto 20px;
+}
+
+.gatePoweredBy {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: max(34px, env(safe-area-inset-bottom));
+	margin: 0;
+
+	span {
+		line-height: 1;
+	}
+
+	img {
+		height: 30px;
+		transform: translateY(-1px);
+	}
 }
 
 .gateTitle {
-	font-family: var(--font-family-primary);
+	font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
 	font-size: 21px;
 	font-weight: 700;
 	letter-spacing: -0.015em;
@@ -1051,14 +1442,14 @@
 }
 
 .pinDotError {
-	border-color: #de350b;
-	background-color: #de350b;
+	border-color: var(--ops-danger);
+	background-color: var(--ops-danger);
 }
 
 .gateError {
 	min-height: 20px;
 	margin-bottom: 14px;
-	color: #de350b;
+	color: var(--ops-danger);
 	font-size: 12.5px;
 	font-weight: 600;
 	transition:
@@ -1110,7 +1501,7 @@
 	border-radius: 14px;
 	background-color: var(--ops-surface);
 	color: var(--ops-ink);
-	font-family: var(--font-family-primary);
+	font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
 	font-size: 21px;
 	font-weight: 600;
 	box-shadow: 0 1px 2px rgba(23, 43, 77, 0.05);
@@ -1121,13 +1512,13 @@
 		box-shadow 0.16s ease;
 
 	&:hover {
-		border-color: #cfd8e3;
+		border-color: var(--ops-border-strong);
 		box-shadow: 0 10px 18px -18px rgba(23, 43, 77, 0.4);
 	}
 
 	&:active {
 		transform: scale(0.98);
-		background-color: #eef1f6;
+		background-color: var(--ops-surface-sunken);
 	}
 }
 
@@ -1142,6 +1533,13 @@
 
 .rail {
 	display: none;
+}
+
+.panel {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-height: 0;
 }
 
 .panelHome {
@@ -1167,7 +1565,7 @@
 		box-shadow 0.15s ease;
 
 	&:hover {
-		background-color: #f0f3f7;
+		background-color: var(--ops-surface-sunken);
 		color: var(--ops-ink);
 		transform: translateX(2px);
 	}
@@ -1274,19 +1672,32 @@
 
 // Tablets and up - persistent tool rail beside the panel
 @media only screen and (min-width: 992px) {
+	.segmentedPeek .segmentedOption {
+		flex-basis: calc(
+			(100% - (var(--seg-visible-desktop) - 1) * 4px) /
+				var(--seg-visible-desktop)
+		);
+	}
+
 	.operations {
-		padding: 40px 24px;
+		padding: 32px 32px calc(32px + env(safe-area-inset-bottom));
 	}
 
 	.shell {
 		display: grid;
-		grid-template-columns: 236px minmax(0, 1fr);
+		grid-template-columns: 224px minmax(0, 700px);
 		grid-template-areas:
 			"bar bar"
 			"rail panel";
+		grid-template-rows: auto auto;
 		align-items: start;
-		gap: 24px;
-		max-width: 1160px;
+		align-content: start;
+		justify-content: center;
+		column-gap: 28px;
+		row-gap: 34px;
+		max-width: 980px;
+		min-height: 0;
+		box-sizing: border-box;
 	}
 
 	.topBar {
@@ -1294,41 +1705,72 @@
 		position: sticky;
 		top: 0;
 		z-index: 20;
-		padding: 14px 0 16px;
+		padding: 10px 0 18px;
+		// Matches --ops-bg (#f7f8f9) - was hardcoded to the pre-Zizo background
+		// and had drifted out of sync, showing a visible seam as content
+		// scrolled underneath it.
 		background: linear-gradient(
 			180deg,
-			rgba(244, 246, 249, 0.98) 0%,
-			rgba(244, 246, 249, 0.92) 72%,
-			rgba(244, 246, 249, 0) 100%
+			rgba(247, 248, 249, 0.98) 0%,
+			rgba(247, 248, 249, 0.92) 72%,
+			rgba(247, 248, 249, 0) 100%
 		);
 		backdrop-filter: blur(10px);
+	}
+
+	.brandLogo {
+		height: 36px;
+	}
+
+	.topBarLogo {
+		width: 42px;
+		height: 42px;
 	}
 
 	.rail {
 		grid-area: rail;
 		position: sticky;
-		top: 92px;
+		top: 98px;
 		display: flex;
 		flex-direction: column;
-		gap: 2px;
-		padding: 10px;
+		gap: 6px;
+		padding: 14px;
 		border: 1px solid var(--ops-line);
-		border-radius: 16px;
+		border-radius: var(--ops-radius-lg);
 		background-color: var(--ops-surface);
 		box-shadow: var(--ops-shadow);
+	}
+
+	.railItem {
+		min-height: 54px;
+		padding: 0 14px;
+		border-radius: var(--ops-radius-sm);
+		font-size: 15px;
 	}
 
 	.panel {
 		grid-area: panel;
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
+		gap: 18px;
+		align-self: start;
 		min-width: 0;
-		max-width: 880px;
+		min-height: 0;
+		max-width: 700px;
 	}
 
 	.panelHome {
-		max-width: 940px;
+		max-width: 700px;
+	}
+
+	.cardStack {
+		gap: 20px;
+	}
+
+	.notice {
+		margin-bottom: 4px;
+		padding: 12px 18px;
+		font-size: 13.5px;
 	}
 
 	.panelHome .notice {
@@ -1337,19 +1779,129 @@
 
 	.panelHome .tiles {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 14px;
+		gap: 18px;
 		align-items: stretch;
 	}
 
 	.panelHome .tile {
-		min-height: 92px;
+		min-height: 104px;
+		padding: 22px;
+		border-radius: var(--ops-radius-lg);
 	}
 
 	.panelHome .tileText b {
-		font-size: 16px;
+		font-size: 20px;
 	}
 
 	.panelHome .tileText small {
-		font-size: 13px;
+		margin-top: 5px;
+		font-size: 15px;
+	}
+
+	.panelHome .tileIcon {
+		width: 56px;
+		height: 56px;
+		border-radius: var(--ops-radius-md);
+	}
+
+	.panelHome .poweredBy {
+		margin-top: 34px;
+		margin-bottom: 0;
+		padding-top: 0;
+	}
+
+	.card {
+		padding: 24px;
+		border-radius: var(--ops-radius-lg);
+	}
+
+	.qrFrame {
+		padding: 28px;
+		border-radius: var(--ops-radius-lg);
+	}
+
+	.qrImageButton {
+		max-width: 260px;
+	}
+
+	.result {
+		padding: 24px;
+		border-radius: var(--ops-radius-lg);
+	}
+
+	.centerItem {
+		padding: 24px;
+		border-radius: var(--ops-radius-lg);
+	}
+
+	.centerSections {
+		gap: 20px;
+		margin-top: 20px;
+	}
+
+	.centerBatch {
+		border-radius: var(--ops-radius-lg);
+	}
+
+	.batchAccordionTrigger {
+		min-height: 80px;
+		padding: 18px 22px;
+	}
+
+	.batchAccordionPanel {
+		padding: 0 22px 22px;
+	}
+}
+
+// Wide desktops - keep the app feeling like a focused tool instead of a sparse
+// full-bleed page.
+@media only screen and (min-width: 1280px) {
+	.operations {
+		padding-top: 44px;
+	}
+
+	.shell {
+		grid-template-columns: 232px minmax(0, 860px);
+		column-gap: 32px;
+		max-width: 1160px;
+	}
+
+	.panel,
+	.panelHome {
+		max-width: 860px;
+	}
+}
+
+@media only screen and (min-width: 1280px) and (min-height: 820px) {
+	.shell {
+		grid-template-rows: auto minmax(0, 1fr);
+		min-height: calc(100dvh - 88px - env(safe-area-inset-bottom));
+	}
+
+	.panel {
+		align-self: stretch;
+	}
+
+	.panelHome .poweredBy {
+		margin-top: auto;
+		padding-top: 56px;
+	}
+
+	.brandLogo {
+		height: 44px;
+	}
+
+	.topBarLogo {
+		width: 52px;
+		height: 52px;
+	}
+
+	.panelHome .poweredBy {
+		gap: 10px;
+		font-size: 14px;
+	}
+
+	.panelHome .poweredBy img {
+		height: 34px;
 	}
 }
