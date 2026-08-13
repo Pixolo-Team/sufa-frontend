@@ -58,6 +58,13 @@ $sizes: (
 				color: var(--color-input-box-placeholder);
 				opacity: 1;
 			}
+			// Hide the native number spinner (up/down) arrows
+			-moz-appearance: textfield;
+			&::-webkit-outer-spin-button,
+			&::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
 		}
 		.rightIconsWrapper {
 			position: absolute;
