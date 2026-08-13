@@ -3,6 +3,12 @@
 
 .contentWrapper {
 	width: 100%;
+	// The title panel's crowding with the corner button depends on how wide
+	// this card actually renders, not the viewport - the grid puts this card
+	// at 100% width on mobile and at 30% width on desktop (courses.module.scss),
+	// so a container query catches both narrow cases instead of guessing
+	// viewport breakpoints.
+	container-type: inline-size;
 	border: 12px solid var(--card-color, #16db93); //TODO: Add token
 	border-radius: 20px;
 	overflow: hidden;
@@ -29,7 +35,11 @@
 		bottom: 0;
 
 		.cardText {
-			font-size: var(--color-brand-font-size-heading-4);
+			// Reads 24px (the heading-4 token) around 992px viewport width,
+			// scaling smoothly up to 28px at 1500px+ where the site's
+			// `.container` caps out at 1440px (globals.scss) and the card
+			// stops growing - instead of holding flat then jumping once.
+			font-size: clamp(24px, 0.79vw + 16.19px, 28px);
 			color: #fff;
 			@include multiline-ellipsis(3);
 		}
@@ -61,6 +71,42 @@
 	}
 }
 
+// Narrow card - the title panel is absolutely positioned over the image, so
+// at the desktop font-size a 3-line title grows tall enough to crowd the
+// corner button and cover most of the photo. Shrink it down here instead.
+// Triggers on card width, so it applies equally to a full-width mobile card
+// and a 30%-width desktop card (see courses.module.scss's 992px breakpoint).
+//
+// Nested under .contentWrapper to match (not lose to) the base rules' equal
+// specificity - a flat `.textWrapper .cardText` selector here loses the
+// cascade to the base `.contentWrapper .textWrapper .cardText` rule even
+// when this query matches, since specificity is compared before source order.
+//
+// 380px, not 400px: container queries measure the container's content-box
+// (this element's border-box minus its 12px border), so the 30%-width card
+// at the 992-1500px viewport tier (~296-353px border-box, ~272-329px content-
+// box) needs to stay under this, while the 1500px+ tier - where `.container`
+// caps at 1440px and the card jumps to ~453px border-box/429px content-box -
+// needs to clear it and fall through to the base rule's fluid 24-28px clamp.
+.contentWrapper {
+	@container (max-width: 380px) {
+		.textWrapper {
+			max-width: 66%;
+			padding: var(--spacing-8, 8px) var(--spacing-12, 12px);
+
+			.cardText {
+				font-size: var(--font-size-md, 16px);
+				line-height: 1.25;
+			}
+		}
+
+		.linkButton {
+			width: 32px;
+			height: 32px;
+		}
+	}
+}
+
 // Mobile Phones
 @media only screen and (min-width: 600px) {
 }
@@ -73,8 +119,20 @@
 @media only screen and (min-width: 992px) {
 }
 
-// Small laptops
+// Small laptops - the site's `.container` caps out at 1440px past this point
+// (globals.scss), so cards stop growing but the fixed 24px title never scaled
+// up to match how much bigger everything else on the page reads at this size.
 @media only screen and (min-width: 1500px) {
+	.contentWrapper {
+		.textWrapper {
+			padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+		}
+
+		.linkButton {
+			width: 44px;
+			height: 44px;
+		}
+	}
 }
 
 // Media query for Touch devices

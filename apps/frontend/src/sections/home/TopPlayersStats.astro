@@ -7,74 +7,68 @@ import SectionHeader from "@/components/section-header/SectionHeader.astro";
 
 const featuredPlayers = [
 	{
-		name: "Shubham Verma",
-		role: "Striker",
-		image: "/images/graduates/shubham.jpg",
+		name: "Kaairav Patel",
+		role: "Grassroot",
+		image: "/images/stats/kaairav-patel.jpeg",
 		blurb:
-			"A natural finisher shaped through the Skorost pathway, known for sharp movement, composure in the box, and decisive final-third impact.",
+			"Developing his game with bright energy, steady effort, and the confidence to keep trying in match moments.",
 		stats: [
-			{ label: "Goals", value: "47" },
-			{ label: "Assists", value: "18" },
-			{ label: "Finals Won", value: "6" },
+			{ label: "Matches", value: "17" },
+			{ label: "Goals", value: "3" },
+			{ label: "Assists", value: "2" },
 		],
 	},
 	{
-		name: "Allen Thomas",
-		role: "Vice-Captain",
-		image: "/images/graduates/allen.jpg",
+		name: "Veer Shah",
+		role: "Grassroot",
+		image: "/images/stats/veer-shah.jpeg",
 		blurb:
-			"An intense, all-action leader whose pressing, discipline, and consistency set the standard for every younger player coming through.",
+			"A sharp young footballer with good awareness, quick decisions, and a calm eye for the next pass.",
 		stats: [
-			{ label: "Caps", value: "62" },
-			{ label: "Contributions", value: "29" },
-			{ label: "Captaincies", value: "14" },
+			{ label: "Matches", value: "17" },
+			{ label: "Goals", value: "1" },
+			{ label: "Assists", value: "3" },
 		],
 	},
 	{
-		name: "Harsh Patil",
-		role: "Pro Graduate",
-		image: "/images/graduates/harsh.jpg",
+		name: "Harsh Borkhatariya",
+		role: "Grassroot",
+		image: "/images/stats/harsh-borkhatariya.jpeg",
 		blurb:
-			"One of the academy's proud graduates, carrying professional-level experience back into the system and helping raise the bar for the next generation.",
+			"Brings discipline to training and works hard for the team across every match-day opportunity.",
 		stats: [
-			{ label: "Pro Seasons", value: "9" },
-			{ label: "Elite Camps", value: "21" },
-			{ label: "Mentored", value: "120+" },
+			{ label: "Matches", value: "14" },
+			{ label: "Goals", value: "0" },
+			{ label: "Assists", value: "2" },
 		],
 	},
-];
-
-const academyStats = [
-	{ value: "23+", label: "Years of academy culture" },
-	{ value: "300+", label: "Players developed" },
-	{ value: "40+", label: "Players pushed higher" },
-	{ value: "12", label: "Active training batches" },
+	{
+		name: "Taksh Shah",
+		role: "Foundation",
+		image: "/images/stats/taksh-shah.jpeg",
+		blurb:
+			"Building his basics with courage, curiosity, and a growing feel for the game.",
+		stats: [
+			{ label: "Matches", value: "7" },
+			{ label: "Goals", value: "1" },
+			{ label: "Assists", value: "1" },
+		],
+	},
 ];
 ---
 
-<section class={`section-spacing ${styles.section}`}>
+<section id="stats" class={`section-spacing ${styles.section}`}>
 	<div class="container">
 		<SectionHeader
-			fadedText="Elite"
+			fadedText="Stats"
 			highlightedText="Top Academy Players"
 		/>
 
 		<div class={`${styles.sectionIntro} text-center fade-in-up`}>
 			<span class={styles.sectionKicker}>Built In Skorost Colours</span>
 			<p class={`${styles.sectionDescription} font-weight-500`}>
-				The players younger footballers look up to first.
+				Match-day numbers from our own academy students, tracked as they grow through the Skorost pathway.
 			</p>
-		</div>
-
-		<div class={`${styles.heroStats} fade-in-up`}>
-			{
-				academyStats.map((stat) => (
-					<div class={styles.heroStat}>
-						<strong>{stat.value}</strong>
-						<span>{stat.label}</span>
-					</div>
-				))
-			}
 		</div>
 
 		<div class={styles.playersGrid}>
@@ -98,8 +92,8 @@ const academyStats = [
 							<h3>{player.name}</h3>
 
 							<p class={styles.playerBlurb}>
-							<span>{player.blurb}</span>
-						</p>
+								<span>{player.blurb}</span>
+							</p>
 
 							<div class={styles.statsList}>
 								{
