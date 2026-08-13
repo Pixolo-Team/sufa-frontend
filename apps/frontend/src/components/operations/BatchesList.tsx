@@ -32,6 +32,7 @@ import {
 	buildShareLetterheadLines,
 	formatBatchScheduleGrid,
 	formatBatchTimingLines,
+	formatDurationEmoji,
 	formatPlanLabel,
 	SHARE_DIVIDER,
 } from "@/utils/operations.util";
@@ -61,8 +62,8 @@ const buildHeaderLines = (
 ): string[] => [
 	...buildShareLetterheadLines(academyName),
 	"",
-	`${center.name} Centre`,
-	`*${batch.name}* · ${batch.ageGroup}`,
+	`📍 ${center.name} Centre`,
+	`🏃 *${batch.name}* · ${batch.ageGroup}`,
 ];
 
 const buildFeeLines = (
@@ -80,14 +81,15 @@ const buildFeeLines = (
 		"💰 *FEE STRUCTURE*",
 		"",
 		...visiblePlans.map(
-			(plan) => `- ${formatPlanLabel(plan)} — *${formatRupees(plan.price)}*`
+			(plan) =>
+				`${formatDurationEmoji(plan.durationMonths)} ${formatPlanLabel(plan)} — *${formatRupees(plan.price)}*`
 		),
 		hasThreeDayPlans && batch.plans.some((plan) => plan.daysPerWeek === 2)
-			? "\n2 Days per Week pricing is available for the 12-month plan on request."
+			? "\nℹ️ 2 Days per Week pricing is available for the 12-month plan on request."
 			: null,
 		registrationOptions.length > 0 ? "\n🎽 *REGISTRATION PACKAGES*\n" : null,
 		...registrationOptions.map(
-			(item) => `- ${item.name} — ${formatRupees(item.price)}`
+			(item) => `🔹 ${item.name} — ${formatRupees(item.price)}`
 		),
 	].filter((line): line is string => line !== null);
 };
