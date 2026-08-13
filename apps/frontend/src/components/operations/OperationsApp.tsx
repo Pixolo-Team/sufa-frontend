@@ -19,6 +19,7 @@ import type { OperationsData } from "@/types/operations";
 const STAFF_PIN = import.meta.env.PUBLIC_STAFF_PIN ?? "";
 
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
+const UNLOCK_TTL_MS = 24 * 60 * 60 * 1000;
 
 type ToolId = "batches" | "qr";
 
@@ -44,16 +45,25 @@ const TOOLS: {
 
 /** Staff-only operations tools. Everything is computed and sent in the browser. */
 const OperationsApp: React.FC = () => {
-	const [isUnlocked, setIsUnlocked] = useState(
-		() => window.localStorage.getItem(UNLOCK_STORAGE_KEY) === "true"
-	);
+	const [isUnlocked, setIsUnlocked] = useState(() => {
+		const storedValue = window.sessionStorage.getItem(UNLOCK_STORAGE_KEY);
+		const expiresAt = storedValue ? Number(storedValue) : 0;
+
+		if (expiresAt > Date.now()) return true;
+
+		window.sessionStorage.removeItem(UNLOCK_STORAGE_KEY);
+		return false;
+	});
 	const [activeTool, setActiveTool] = useState<ToolId | null>(null);
 	const [centerId, setCenterId] = useState("");
 	const [data, setData] = useState<OperationsData | null>(null);
 	const [loadError, setLoadError] = useState(false);
 
 	const unlock = useCallback(() => {
-		window.localStorage.setItem(UNLOCK_STORAGE_KEY, "true");
+		window.sessionStorage.setItem(
+			UNLOCK_STORAGE_KEY,
+			String(Date.now() + UNLOCK_TTL_MS)
+		);
 		setIsUnlocked(true);
 	}, []);
 
@@ -189,15 +199,16 @@ const OperationsApp: React.FC = () => {
 								width="71"
 								height="34"
 							/>
-							<span className={styles.brandDivider} aria-hidden="true" />
-							<span className={styles.brandLabel}>Ops</span>
 						</span>
 					)}
 
-					<span className={styles.lockChip}>
-						<OperationsIcon name="lock" size={12} />
-						Unlocked
-					</span>
+					<img
+						className={styles.topBarLogo}
+						src="/images/brand/zizo.svg"
+						alt="Zizo"
+						width="34"
+						height="34"
+					/>
 				</div>
 
 				<nav className={styles.rail}>
@@ -226,6 +237,13 @@ const OperationsApp: React.FC = () => {
 					)}
 
 					{renderPanel()}
+
+					{activeTool === null && (
+						<p className={styles.poweredBy}>
+							<span>Powered by</span>
+							<img src="/images/brand/zizo.svg" alt="Zizo" width="40" height="16" />
+						</p>
+					)}
 				</div>
 			</div>
 		</div>

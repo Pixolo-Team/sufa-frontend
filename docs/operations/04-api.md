@@ -44,11 +44,11 @@ on the page.
             "plans": [
               { "id": "<uuid>", "durationMonths": 1,  "daysPerWeek": 3, "price": 3400,  "perSessionPrice": 285 },
               { "id": "<uuid>", "durationMonths": 1,  "daysPerWeek": 2, "price": 2280,  "perSessionPrice": 285 },
-              { "id": "<uuid>", "durationMonths": 3,  "daysPerWeek": 3, "price": 9600,  "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 3,  "daysPerWeek": 3, "price": 9000,  "perSessionPrice": 285 },
               { "id": "<uuid>", "durationMonths": 3,  "daysPerWeek": 2, "price": 6400,  "perSessionPrice": 285 },
-              { "id": "<uuid>", "durationMonths": 6,  "daysPerWeek": 3, "price": 18600, "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 6,  "daysPerWeek": 3, "price": 18000, "perSessionPrice": 285 },
               { "id": "<uuid>", "durationMonths": 6,  "daysPerWeek": 2, "price": 12400, "perSessionPrice": 285 },
-              { "id": "<uuid>", "durationMonths": 12, "daysPerWeek": 3, "price": 34800, "perSessionPrice": 285 },
+              { "id": "<uuid>", "durationMonths": 12, "daysPerWeek": 3, "price": 35500, "perSessionPrice": 285 },
               { "id": "<uuid>", "durationMonths": 12, "daysPerWeek": 2, "price": 23200, "perSessionPrice": 285 }
             ]
           }

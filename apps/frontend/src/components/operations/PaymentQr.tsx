@@ -13,7 +13,7 @@ import type {
 
 // ENUMS //
 import { Colors, Shapes, Variants } from "@/neevo/enums/core.enum";
-import { ButtonSizes } from "@/neevo/enums/button.enum";
+import { ButtonIconPosition, ButtonSizes } from "@/neevo/enums/button.enum";
 import { InputTextTypes } from "@/neevo/enums/input.enum";
 import { ToastTypes } from "@/neevo/enums/toast.enum";
 
@@ -34,11 +34,20 @@ import { useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
 import { formatDisplayDate, formatRupees } from "@/utils/fee-calculator.util";
-import { formatPlanLabel } from "@/utils/operations.util";
+import {
+	buildShareFooterLines,
+	buildShareLetterheadLines,
+	formatPlanLabel,
+	SHARE_DIVIDER,
+} from "@/utils/operations.util";
 
 type QrMode = "global" | "payment" | "custom";
 
 const UPI_NOTE_MAX_LENGTH = 50;
+// Branded photo card - download/share only, never shown inline.
+const STATIC_GLOBAL_QR_SRC = "/images/operations/skorost-qr-payment.png";
+// Logo-watermarked QR - what Global QR mode actually displays on screen.
+const STATIC_GLOBAL_QR_DISPLAY_SRC = "/images/operations/skorost-qr-global.png";
 
 interface PaymentQrProps {
 	centers: OperationsCenterData[];
@@ -69,6 +78,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 	const isPaymentMode = mode === "payment";
 	const isCustomMode = mode === "custom";
+	const isGlobalMode = mode === "global";
 	const amount = isPaymentMode
 		? (quote?.total ?? 0)
 		: isCustomMode
@@ -111,8 +121,15 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		registrationOption?.name,
 	]);
 
+	// Global mode always shows the static logo QR - payment/custom modes
+	// generate a fresh amount-baked QR.
 	useEffect(() => {
 		let isActive = true;
+
+		if (isGlobalMode) {
+			setQrDataUrl(STATIC_GLOBAL_QR_DISPLAY_SRC);
+			return;
+		}
 
 		QRCode.toDataURL(upiUri, { margin: 1, width: 512 })
 			.then((dataUrl) => {
@@ -125,7 +142,11 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		return () => {
 			isActive = false;
 		};
-	}, [upiUri]);
+	}, [isGlobalMode, upiUri]);
+
+	// Global mode downloads/shares the branded photo card; every other mode
+	// downloads/shares the same generated QR shown on screen.
+	const downloadSrc = isGlobalMode ? STATIC_GLOBAL_QR_SRC : qrDataUrl;
 
 	useEffect(() => {
 		if (!isQrFullscreen) return;
@@ -139,6 +160,14 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		return () => document.removeEventListener("keydown", onKeyDown);
 	}, [isQrFullscreen]);
 
+	const openQrFullscreen = useCallback(
+		(event: React.MouseEvent<HTMLButtonElement>) => {
+			event.currentTarget.blur();
+			setIsQrFullscreen(true);
+		},
+		[]
+	);
+
 	const fileName = useMemo(() => {
 		if (mode === "global") return "skorost-payment-qr.png";
 
@@ -150,20 +179,63 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	}, [mode, studentName, amount]);
 
 	const shareText = useMemo(() => {
-		if (mode === "global") return `Pay ${config.payeeName} | ${config.upiId}`;
-
-		if (isCustomMode) {
-			const greeting = studentName.trim() ? `Hi ${studentName.trim()}, h` : "H";
-			const subject = customDescription.trim()
-				? `the payment of your ${customDescription.trim()}`
-				: "your payment";
-
-			return `${greeting}ere is the QR code for ${subject}. Amount: ${formatRupees(amount)}.`;
+		if (mode === "global") {
+			return [
+				...buildShareLetterheadLines(config.payeeName),
+				"",
+				"Please scan the QR code and enter the payable amount.",
+				"",
+				`💳 *UPI ID:* ${config.upiId}`,
+				"",
+				...buildShareFooterLines(),
+			].join("\n");
 		}
 
-		const who = studentName.trim() ? `${studentName.trim()} | ` : "";
+		if (isCustomMode) {
+			const subject = customDescription.trim()
+				? customDescription.trim()
+				: "Custom payment";
 
-		return `${who}Fees due ${formatRupees(amount)}. Scan to pay ${config.payeeName}.`;
+			return [
+				...buildShareLetterheadLines(config.payeeName),
+				"",
+				studentName.trim() ? `👤 *Student:* ${studentName.trim()}` : null,
+				studentName.trim() ? "" : null,
+				SHARE_DIVIDER,
+				"",
+				`*${subject}*`,
+				`💳 *Amount:* ${formatRupees(amount)}`,
+				"",
+				SHARE_DIVIDER,
+				"",
+				"Please scan the attached QR code to complete the payment.",
+				"",
+				...buildShareFooterLines(),
+			]
+				.filter((line): line is string => line !== null)
+				.join("\n");
+		}
+
+		return [
+			...buildShareLetterheadLines(config.payeeName),
+			"",
+			studentName.trim() ? `👤 *Student:* ${studentName.trim()}` : null,
+			batch ? `🏃 *Batch:* ${batch.name} (${batch.ageGroup})` : null,
+			plan ? `📦 *Package:* ${formatPlanLabel(plan)}` : null,
+			registrationOption ? `🎽 *Registration:* ${registrationOption.name}` : null,
+			"",
+			SHARE_DIVIDER,
+			"",
+			`💳 *Amount Due:* ${formatRupees(amount)}`,
+			"",
+			SHARE_DIVIDER,
+			"",
+			"Please scan the attached QR code to complete the payment.",
+			"",
+			...buildShareFooterLines(),
+		]
+			.filter((line): line is string => line !== null)
+			.join("\n");
 	}, [
 		mode,
 		isCustomMode,
@@ -172,50 +244,83 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		amount,
 		config.payeeName,
 		config.upiId,
+		batch,
+		plan,
+		registrationOption,
 	]);
 
 	const downloadQr = useCallback(() => {
-		if (!qrDataUrl) return;
+		if (!downloadSrc) return;
 
 		const link = document.createElement("a");
 
-		link.href = qrDataUrl;
+		link.href = downloadSrc;
 		link.download = fileName;
 		link.click();
-	}, [qrDataUrl, fileName]);
+	}, [downloadSrc, fileName]);
 
-	const shareQr = useCallback(async () => {
+	const copyText = useCallback(async (text: string, successMessage: string) => {
 		try {
-			const blob = await (await fetch(qrDataUrl)).blob();
+			await navigator.clipboard.writeText(text);
+			showToast(successMessage, ToastTypes.SUCCESS);
+		} catch {
+			showToast("Could not copy. Please copy manually.", ToastTypes.ERROR);
+		}
+	}, []);
+
+	const copyUpiId = useCallback(() => {
+		void copyText(config.upiId, "UPI ID copied");
+	}, [config.upiId, copyText]);
+
+	const copyPaymentUrl = useCallback(() => {
+		void copyText(upiUri, "Payment URL copied");
+	}, [copyText, upiUri]);
+
+	// This can pre-fill text but never a file, and it can target a specific
+	// number but the OS share sheet can't - so which one runs depends on
+	// whether a number was typed in. Either way the QR image still gets to the
+	// chat: attached directly via the share sheet, or downloaded for staff to
+	// attach by hand when a specific number pins us to the text-only deep link.
+	// api.whatsapp.com, not wa.me - the wa.me short-link redirect strips
+	// 4-byte UTF-8 (i.e. every emoji) on desktop before WhatsApp gets it.
+	const openWhatsApp = useCallback(async () => {
+		const digits = studentPhone.replace(/\D/g, "");
+		const waNumber = digits.length >= 10 ? `91${digits.slice(-10)}` : "";
+		const message = `${shareText}\n${upiUri}`;
+
+		if (waNumber) {
+			downloadQr();
+			window.open(
+				`https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(message)}`,
+				"_blank",
+				"noopener"
+			);
+			showToast("QR downloaded | attach it in the chat", ToastTypes.SUCCESS);
+			return;
+		}
+
+		try {
+			const blob = await (await fetch(downloadSrc)).blob();
 			const file = new File([blob], fileName, { type: "image/png" });
 
 			if (navigator.canShare?.({ files: [file] })) {
-				await navigator.share({ files: [file], text: shareText });
+				await navigator.share({ files: [file], text: message });
 				return;
 			}
-
-			await navigator.clipboard.writeText(upiUri);
-			showToast("Sharing unavailable | UPI link copied", ToastTypes.SUCCESS);
-		} catch {
-			// A cancelled share sheet lands here too, so stay quiet about it
+		} catch (error) {
+			if (error instanceof DOMException && error.name === "AbortError") {
+				return;
+			}
 		}
-	}, [qrDataUrl, fileName, shareText, upiUri]);
 
-	const openWhatsApp = useCallback(() => {
-		const digits = studentPhone.replace(/\D/g, "");
-
-		if (digits.length < 10) return;
-
-		const waNumber = digits.length === 10 ? `91${digits}` : digits;
-
+		downloadQr();
 		window.open(
-			`https://wa.me/${waNumber}?text=${encodeURIComponent(shareText)}`,
+			`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`,
 			"_blank",
 			"noopener"
 		);
-	}, [studentPhone, shareText]);
-
-	const hasPhone = studentPhone.replace(/\D/g, "").length >= 10;
+		showToast("QR downloaded | attach it in the chat", ToastTypes.SUCCESS);
+	}, [studentPhone, shareText, upiUri, downloadSrc, fileName, downloadQr]);
 	const canGenerate = isPaymentMode
 		? !!batch && !!plan && amount > 0
 		: isCustomMode
@@ -275,12 +380,6 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						</>
 					)}
 
-					{mode === "global" && (
-						<p className={styles.qrHint}>
-							No amount encoded | the parent types what they owe.
-						</p>
-					)}
-
 					{mode !== "global" && (
 						<>
 							<InputBox
@@ -330,7 +429,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 					<p className={styles.resultFootnote}>
 						{formatDisplayDate(inputs.startDate)} -{" "}
-						{formatDisplayDate(inputs.endDate)} | prices as stored, no rounding
+						{formatDisplayDate(inputs.endDate)}
 					</p>
 				</div>
 			)}
@@ -341,7 +440,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 						type="button"
 						className={styles.qrImageButton}
 						aria-label="Open QR full screen"
-						onClick={() => setIsQrFullscreen(true)}
+						onClick={openQrFullscreen}
 					>
 						<img
 							className={styles.qrImage}
@@ -358,12 +457,40 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 				)}
 
 				<p className={styles.qrCaption}>
-					{mode !== "global" && amount > 0 ? formatRupees(amount) : "Any amount"}
+					{mode !== "global" && amount > 0
+						? formatRupees(amount)
+						: isCustomMode
+							? ""
+							: config.academyName}
 				</p>
-				<p className={styles.qrHint}>
-					{mode !== "global" && studentName.trim() ? `${studentName.trim()} | ` : ""}
-					{config.payeeName} | {config.upiId}
-				</p>
+				{mode !== "global" && (
+					<p className={styles.qrPayeeName}>{config.academyName}</p>
+				)}
+				{mode === "global" && (
+					<p className={styles.qrHint}>
+						<span>{config.upiId}</span>
+						<button
+							type="button"
+							className={styles.copyIconButton}
+							aria-label="Copy UPI ID"
+							onClick={copyUpiId}
+						>
+							<svg
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							>
+								<rect x="9" y="9" width="11" height="11" rx="2" />
+								<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+							</svg>
+						</button>
+					</p>
+				)}
 
 				{isPaymentMode && !canGenerate && (
 					<p className={styles.qrHint}>
@@ -377,29 +504,38 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 				)}
 
 				<div className={styles.buttonRow} style={{ width: "100%" }}>
+					{mode !== "global" && (
+						<Button
+							text="Copy URL"
+							variant={Variants.OUTLINE}
+							color={Colors.NEUTRAL_DARK}
+							shape={Shapes.ROUNDED}
+							size={ButtonSizes.LARGE}
+							isDisabled={!canGenerate}
+							extraClass={`${styles.opsButtonOverride} ${styles.opsButtonOutline} ${styles.fullWidthButton}`}
+							onClick={copyPaymentUrl}
+						/>
+					)}
 					<Button
 						text="Download"
 						variant={Variants.OUTLINE}
 						color={Colors.NEUTRAL_DARK}
 						shape={Shapes.ROUNDED}
 						size={ButtonSizes.LARGE}
+						leftIcon="download-tray"
+						iconPosition={ButtonIconPosition.CENTER}
 						isDisabled={!qrDataUrl || !canGenerate}
+						extraClass={`${styles.opsButtonOverride} ${styles.opsButtonOutline}`}
 						onClick={downloadQr}
 					/>
 					<Button
-						text={hasPhone ? "WhatsApp" : "Share"}
+						text="WhatsApp"
 						color={Colors.PRIMARY}
 						shape={Shapes.ROUNDED}
 						size={ButtonSizes.LARGE}
 						isDisabled={!qrDataUrl || !canGenerate}
-						onClick={() => {
-							if (hasPhone) {
-								openWhatsApp();
-								return;
-							}
-
-							void shareQr();
-						}}
+						extraClass={styles.opsButtonOverride}
+						onClick={openWhatsApp}
 					/>
 				</div>
 			</div>
@@ -428,13 +564,12 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 					<p className={styles.qrFullscreenName}>
 						{mode !== "global" && amount > 0
 							? formatRupees(amount)
-							: "Any amount"}
+							: config.academyName}
 					</p>
 					<p className={styles.qrFullscreenHint}>
-						{mode !== "global" && studentName.trim()
-							? `${studentName.trim()} | `
-							: ""}
-						{config.payeeName}
+						{mode === "global"
+							? config.upiId
+							: studentName.trim() || config.payeeName}
 					</p>
 					<button
 						className={styles.qrFullscreenClose}

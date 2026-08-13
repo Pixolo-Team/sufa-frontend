@@ -1,6 +1,9 @@
 ---
 // STYLES //
-import "@fontsource-variable/montserrat";
+// DM Sans, not Montserrat - the operations page runs its own palette scoped
+// to `.operations` (see operations.module.scss), and Zizo specifies DM Sans.
+// Montserrat is not loaded here since nothing on this page uses it.
+import "@fontsource-variable/dm-sans";
 import "@/styles/globals.scss";
 
 // TYPES //

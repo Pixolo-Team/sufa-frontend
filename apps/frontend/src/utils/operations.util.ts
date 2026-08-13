@@ -15,6 +15,11 @@ const WEEKDAY_LONG = [
 	"Friday",
 	"Saturday",
 ];
+const STATIC_BATCH_IMAGES = [
+	"/images/operations/ghatkopar-east-foundation.png",
+	"/images/operations/ghatkopar-east-grassroot.png",
+	"/images/operations/ghatkopar-west-performance.png",
+];
 
 /** Turn a `HH:mm` database time into `5:00 PM` */
 const formatTime = (value: string): string => {
@@ -48,18 +53,66 @@ export const formatBatchTimings = (batch: OperationsBatchData): string =>
 		.map((slot) => formatTimingSlot(slot, true))
 		.join(" | ");
 
-/** Long-form schedule lines for cards, previews and messages. */
+/** WhatsApp share line for one slot, e.g. `MON 🕕 6:00 PM – 7:00 PM`. */
+const formatTimingShareLine = (slot: OperationsBatchTimingData): string =>
+	`${WEEKDAY_SHORT[slot.day].toUpperCase()} 🕕 ${formatTime(
+		slot.startTime
+	)} – ${formatTime(slot.endTime)}`;
+
+/** Schedule lines for the WhatsApp share text. */
 export const formatBatchTimingLines = (batch: OperationsBatchData): string[] =>
 	batch.schedule
 		.slice()
 		.sort((left, right) => left.day - right.day)
-		.map((slot) => formatTimingSlot(slot));
+		.map((slot) => formatTimingShareLine(slot));
+
+export const formatBatchScheduleGrid = (batch: OperationsBatchData) =>
+	batch.schedule
+		.slice()
+		.sort((left, right) => left.day - right.day)
+		.map((slot) => ({
+			day: WEEKDAY_SHORT[slot.day],
+			time: formatTime(slot.startTime),
+			endTime: formatTime(slot.endTime),
+		}));
 
 /** Unique weekdays available in a batch. */
 export const getBatchWeekdays = (batch: OperationsBatchData): number[] =>
 	Array.from(new Set(batch.schedule.map((slot) => slot.day))).sort(
 		(left, right) => left - right
 	);
+
+export const formatWeekdayShort = (day: number): string =>
+	WEEKDAY_SHORT[day] ?? String(day);
+
+export const getStaticBatchImageSrc = (batchIndex: number): string =>
+	STATIC_BATCH_IMAGES[batchIndex % STATIC_BATCH_IMAGES.length];
+
+const DIGIT_KEYCAPS = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
+
+/** WhatsApp share bullet for a plan duration - keycap digit, 🔟, or 📅 beyond that. */
+export const formatDurationEmoji = (months: number): string => {
+	if (months >= 0 && months <= 9) return DIGIT_KEYCAPS[months];
+	if (months === 10) return "🔟";
+
+	return "📅";
+};
+
+const SHARE_HEAVY_RULE = "━".repeat(24);
+export const SHARE_DIVIDER = "─".repeat(20);
+
+/** Letterhead framing the academy name at the top of every WhatsApp share. */
+export const buildShareLetterheadLines = (academyName: string): string[] => [
+	SHARE_HEAVY_RULE,
+	`⚽ *${academyName.toUpperCase()}*`,
+	SHARE_HEAVY_RULE,
+];
+
+/** Closing sign-off shown at the bottom of every WhatsApp share. */
+export const buildShareFooterLines = (): string[] => [
+	SHARE_DIVIDER,
+	"✨ _For queries, just reply to this message!_ ✨",
+];
 
 /** Standard plans show only the duration; 2-day plans keep the exception visible. */
 export const formatPlanLabel = (plan: OperationsPlanData): string => {

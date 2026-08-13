@@ -146,7 +146,7 @@ registration options.
         "plans": [
           { "id": "<uuid>", "name": "1 Month 3-Day", "durationMonths": 1, "daysPerWeek": 3, "price": 3400, "perSessionPrice": 285 },
           { "id": "<uuid>", "name": "1 Month 2-Day", "durationMonths": 1, "daysPerWeek": 2, "price": 2280, "perSessionPrice": 285 },
-          { "id": "<uuid>", "name": "3 Month 3-Day", "durationMonths": 3, "daysPerWeek": 3, "price": 9600, "perSessionPrice": 285 },
+          { "id": "<uuid>", "name": "3 Month 3-Day", "durationMonths": 3, "daysPerWeek": 3, "price": 9000, "perSessionPrice": 285 },
           { "id": "<uuid>", "name": "3 Month 2-Day", "durationMonths": 3, "daysPerWeek": 2, "price": 6500, "perSessionPrice": 285 }
         ]
       }

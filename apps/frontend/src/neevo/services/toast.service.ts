@@ -11,8 +11,9 @@ export const showToast = (message: string, type: ToastTypes) => {
 	// Append the toast element to the body
 	document.body.appendChild(toastElement);
 
-	// Set a timer to remove the toast after 3 seconds
+	// Fade out, then remove once the exit transition finishes
 	setTimeout(() => {
-		document.body.removeChild(toastElement);
+		toastElement.classList.add("toast-exit");
+		setTimeout(() => toastElement.remove(), 250);
 	}, 3000); // 3000 milliseconds (3 seconds)
 };

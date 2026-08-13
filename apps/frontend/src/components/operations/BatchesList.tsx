@@ -20,6 +20,7 @@ import styles from "./operations.module.scss";
 // COMPONENTS //
 import Button from "@/neevo/components/button/Button";
 import Segmented from "./Segmented";
+import OperationsIcon from "./OperationsIcon";
 
 // SERVICES //
 import { showToast } from "@/neevo/services/toast.service";
@@ -27,18 +28,24 @@ import { showToast } from "@/neevo/services/toast.service";
 // UTILS //
 import { formatRupees } from "@/utils/fee-calculator.util";
 import {
-	renderFeeStructureImage,
-	type FeeStructureImageSections,
-} from "@/utils/fee-structure-image.util";
-import {
+	buildShareFooterLines,
+	buildShareLetterheadLines,
+	formatBatchScheduleGrid,
 	formatBatchTimingLines,
+	formatDurationEmoji,
 	formatPlanLabel,
+	SHARE_DIVIDER,
 } from "@/utils/operations.util";
 
-type ShareFormat = "text" | "image";
+type ShareFormat = "text" | "copy-image";
+type ShareSections = {
+	plans?: boolean;
+	registration?: boolean;
+	schedule?: boolean;
+};
 type PendingShare = {
 	batch: OperationsBatchData;
-	sections: FeeStructureImageSections;
+	sections: ShareSections;
 	title: string;
 } | null;
 
@@ -48,19 +55,73 @@ interface BatchesListProps {
 	registrationOptions: OperationsRegistrationOptionData[];
 }
 
+const buildHeaderLines = (
+	center: OperationsCenterData,
+	batch: OperationsBatchData,
+	academyName: string
+): string[] => [
+	...buildShareLetterheadLines(academyName),
+	"",
+	`📍 ${center.name} Centre`,
+	`🏃 *${batch.name}* · ${batch.ageGroup}`,
+];
+
+const buildFeeLines = (
+	batch: OperationsBatchData,
+	registrationOptions: OperationsRegistrationOptionData[]
+): string[] => {
+	// 2-day is only an alternate to 3-day - a batch with just a 2-day plan
+	// (e.g. Focus Batch) must show it, not hide it behind an "on request" line.
+	const hasThreeDayPlans = batch.plans.some((plan) => plan.daysPerWeek === 3);
+	const visiblePlans = hasThreeDayPlans
+		? batch.plans.filter((plan) => plan.daysPerWeek !== 2)
+		: batch.plans;
+
+	return [
+		"💰 *FEE STRUCTURE*",
+		"",
+		...visiblePlans.map(
+			(plan) =>
+				`${formatDurationEmoji(plan.durationMonths)} ${formatPlanLabel(plan)} — *${formatRupees(plan.price)}*`
+		),
+		hasThreeDayPlans && batch.plans.some((plan) => plan.daysPerWeek === 2)
+			? "\nℹ️ 2 Days per Week pricing is available for the 12-month plan on request."
+			: null,
+		registrationOptions.length > 0 ? "\n🎽 *REGISTRATION PACKAGES*\n" : null,
+		...registrationOptions.map(
+			(item) => `🔹 ${item.name} — ${formatRupees(item.price)}`
+		),
+	].filter((line): line is string => line !== null);
+};
+
+const buildTimingsLines = (batch: OperationsBatchData): string[] => [
+	"🗓️ *TRAINING TIMINGS*",
+	"",
+	...formatBatchTimingLines(batch),
+];
+
+const buildVenueLines = (center: OperationsCenterData): string[] => [
+	"📌 *TRAINING VENUE*",
+	center.address,
+];
+
 const buildScheduleText = (
 	center: OperationsCenterData,
 	batch: OperationsBatchData,
 	academyName: string
 ): string =>
 	[
-		`${academyName} - ${center.name}`,
-		`${batch.name} (${batch.ageGroup})`,
+		...buildHeaderLines(center, batch, academyName),
 		"",
-		"Schedule:",
-		...formatBatchTimingLines(batch).map((line) => `- ${line}`),
+		SHARE_DIVIDER,
 		"",
-		`Address: ${center.address}`,
+		...buildTimingsLines(batch),
+		"",
+		SHARE_DIVIDER,
+		"",
+		...buildVenueLines(center),
+		"",
+		...buildShareFooterLines(),
 	].join("\n");
 
 const buildFeeStructureText = (
@@ -70,23 +131,18 @@ const buildFeeStructureText = (
 	academyName: string
 ): string =>
 	[
-		`${academyName} - ${center.name}`,
-		`Batch: ${batch.name} (${batch.ageGroup})`,
+		...buildHeaderLines(center, batch, academyName),
 		"",
-		"Plans:",
-		...batch.plans.map(
-			(plan) => `- ${formatPlanLabel(plan)}: ${formatRupees(plan.price)}`
-		),
-		registrationOptions.length > 0 ? "" : null,
-		registrationOptions.length > 0 ? "Registration:" : null,
-		...registrationOptions.map(
-			(item) => `- ${item.name}: ${formatRupees(item.price)}`
-		),
+		SHARE_DIVIDER,
 		"",
-		`Address: ${center.address}`,
-	]
-		.filter((line): line is string => line !== null)
-		.join("\n");
+		...buildFeeLines(batch, registrationOptions),
+		"",
+		SHARE_DIVIDER,
+		"",
+		...buildVenueLines(center),
+		"",
+		...buildShareFooterLines(),
+	].join("\n");
 
 const buildBothText = (
 	center: OperationsCenterData,
@@ -95,11 +151,35 @@ const buildBothText = (
 	academyName: string
 ): string =>
 	[
-		buildFeeStructureText(center, batch, registrationOptions, academyName),
+		...buildHeaderLines(center, batch, academyName),
 		"",
-		"Schedule:",
-		...formatBatchTimingLines(batch).map((line) => `- ${line}`),
+		SHARE_DIVIDER,
+		"",
+		...buildFeeLines(batch, registrationOptions),
+		"",
+		SHARE_DIVIDER,
+		"",
+		...buildTimingsLines(batch),
+		"",
+		SHARE_DIVIDER,
+		"",
+		...buildVenueLines(center),
+		"",
+		...buildShareFooterLines(),
 	].join("\n");
+
+const buildShareText = (
+	center: OperationsCenterData,
+	batch: OperationsBatchData,
+	registrationOptions: OperationsRegistrationOptionData[],
+	academyName: string,
+	sections: ShareSections
+): string =>
+	sections.plans && sections.schedule
+		? buildBothText(center, batch, registrationOptions, academyName)
+		: sections.plans
+			? buildFeeStructureText(center, batch, registrationOptions, academyName)
+			: buildScheduleText(center, batch, academyName);
 
 /** All batches, timings and plans - grouped by center tabs */
 const BatchesList: React.FC<BatchesListProps> = ({
@@ -109,65 +189,50 @@ const BatchesList: React.FC<BatchesListProps> = ({
 }) => {
 	const [centerId, setCenterId] = useState(centers[0]?.id ?? "");
 	const [pendingShare, setPendingShare] = useState<PendingShare>(null);
+	const [openBatchId, setOpenBatchId] = useState(centers[0]?.batches[0]?.id ?? "");
+	const [showTwoDayFees, setShowTwoDayFees] = useState<Record<string, boolean>>({});
 
 	const center = centers.find((item) => item.id === centerId) ?? centers[0];
 
-	const shareText = useCallback(async (text: string) => {
-		try {
-			if (navigator.share) {
-				await navigator.share({ text });
-				return;
-			}
+	useEffect(() => {
+		setOpenBatchId(center?.batches[0]?.id ?? "");
+		setShowTwoDayFees({});
+	}, [center?.id, center?.batches]);
 
-			await navigator.clipboard.writeText(text);
-			showToast("Sharing unavailable | text copied", ToastTypes.SUCCESS);
-		} catch {
-			// A cancelled share sheet lands here too, so stay quiet about it
-		}
+	// No number to open a DM with here (unlike Payments, this share is not tied
+	// to one parent) - with no phone param this opens WhatsApp's own contact
+	// picker. api.whatsapp.com, not wa.me - the wa.me short-link redirect
+	// strips 4-byte UTF-8 (i.e. every emoji) on desktop before WhatsApp gets it.
+	const shareText = useCallback((text: string) => {
+		window.open(
+			`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`,
+			"_blank",
+			"noopener"
+		);
 	}, []);
 
-	const shareImage = useCallback(
-		async (batch: OperationsBatchData, sections: FeeStructureImageSections) => {
-			if (!center) return;
+	// Just puts the image on the clipboard - staff paste it wherever they want
+	// (WhatsApp or otherwise) by hand. No auto-share, no auto-download.
+	const copyImage = useCallback(async (batch: OperationsBatchData) => {
+		const imageSrc = batch.imageSrc;
 
-			const blob = await renderFeeStructureImage({
-				academyName: config.academyName,
-				center,
-				batch,
-				registrationOptions,
-				sections,
-			});
+		if (!imageSrc) {
+			showToast("No batch image found.", ToastTypes.WARNING);
+			return;
+		}
 
-			if (!blob) {
-				showToast("Could not draw the image", ToastTypes.ERROR);
-				return;
-			}
+		try {
+			const response = await fetch(imageSrc);
+			const blob = await response.blob();
 
-			const fileName = `skorost-${batch.id}.png`;
-			const file = new File([blob], fileName, { type: "image/png" });
-
-			if (navigator.canShare?.({ files: [file] })) {
-				try {
-					await navigator.share({ files: [file] });
-				} catch {
-					// A cancelled share sheet lands here too
-				}
-				return;
-			}
-
-			// No share sheet for files - fall back to a download so it is still sendable
-			const url = URL.createObjectURL(blob);
-			const link = document.createElement("a");
-
-			link.href = url;
-			link.download = fileName;
-			link.click();
-			URL.revokeObjectURL(url);
-
-			showToast("Sharing unavailable. Image downloaded.", ToastTypes.WARNING);
-		},
-		[center, config.academyName, registrationOptions]
-	);
+			await navigator.clipboard.write([
+				new ClipboardItem({ [blob.type || "image/png"]: blob }),
+			]);
+			showToast("Image Copied", ToastTypes.SUCCESS);
+		} catch {
+			showToast("Could not copy the image", ToastTypes.ERROR);
+		}
+	}, []);
 
 	useEffect(() => {
 		if (!pendingShare) return;
@@ -185,41 +250,39 @@ const BatchesList: React.FC<BatchesListProps> = ({
 	const onShare = useCallback(
 		(
 			batch: OperationsBatchData,
-			sections: FeeStructureImageSections,
+			sections: ShareSections,
 			nextFormat: ShareFormat
 		) => {
 			setPendingShare(null);
 
-			if (nextFormat === "image") {
-				// Registration is a fee, so it rides along with the plans, never with
-				// a timings-only card.
-				void shareImage(batch, { ...sections, registration: sections.plans });
+			if (nextFormat === "copy-image") {
+				void copyImage(batch);
 				return;
 			}
 
-			const text =
-				sections.plans && sections.schedule
-					? buildBothText(center!, batch, registrationOptions, config.academyName)
-					: sections.plans
-						? buildFeeStructureText(
-								center!,
-								batch,
-								registrationOptions,
-								config.academyName
-							)
-						: buildScheduleText(center!, batch, config.academyName);
+			const text = buildShareText(
+				center!,
+				batch,
+				registrationOptions,
+				config.academyName,
+				sections
+			);
 
-			void shareText(text);
+			shareText(text);
 		},
-		[shareImage, shareText, center, registrationOptions, config.academyName]
+		[copyImage, shareText, center, registrationOptions, config.academyName]
 	);
 
 	const openSharePicker = useCallback(
 		(
 			batch: OperationsBatchData,
-			sections: FeeStructureImageSections,
+			sections: ShareSections,
 			title: string
 		) => {
+			if (document.activeElement instanceof HTMLElement) {
+				document.activeElement.blur();
+			}
+
 			setPendingShare({ batch, sections, title });
 		},
 		[]
@@ -249,96 +312,193 @@ const BatchesList: React.FC<BatchesListProps> = ({
 						</div>
 
 						<div className={styles.centerSections}>
-							{center.batches.map((batch) => (
-								<div key={batch.id} className={styles.centerBatch}>
-									<div className={styles.centerBatchHeader}>
-										<strong>{batch.name}</strong>
-										<span className={styles.centerBatchMeta}>{batch.ageGroup}</span>
-									</div>
-
-									<div className={styles.centerScheduleBlock}>
-										<span className={styles.centerBlockLabel}>Timings</span>
-										<div className={styles.centerScheduleList}>
-											{formatBatchTimingLines(batch).map((line) => (
-												<span
-													key={`${batch.id}-${line}`}
-													className={styles.centerSchedulePill}
-												>
-													{line}
-												</span>
-											))}
-										</div>
-									</div>
-
-									<div className={styles.centerBlock}>
-										<span className={styles.centerBlockLabel}>Fee structure</span>
-										<table className={styles.plansTable}>
-											<thead>
-												<tr>
-													<th>Duration</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												{batch.plans.map((plan) => (
-													<tr key={plan.id}>
-														<td>{formatPlanLabel(plan)}</td>
-														<td>{formatRupees(plan.price)}</td>
-													</tr>
-												))}
-											</tbody>
-										</table>
-									</div>
-
-									<div className={styles.shareBlock}>
-										<span className={styles.centerBlockLabel}>Share</span>
-
-										<div className={styles.buttonRow}>
-											<Button
-												text="Timings"
-												variant={Variants.OUTLINE}
-												color={Colors.NEUTRAL_DARK}
-												shape={Shapes.ROUNDED}
-												size={ButtonSizes.LARGE}
-												onClick={() =>
-													openSharePicker(
-														batch,
-														{ plans: false, schedule: true },
-														"Timings"
-													)
-												}
-											/>
-											<Button
-												text="Fees"
-												variant={Variants.OUTLINE}
-												color={Colors.NEUTRAL_DARK}
-												shape={Shapes.ROUNDED}
-												size={ButtonSizes.LARGE}
-												onClick={() =>
-													openSharePicker(
-														batch,
-														{ plans: true, schedule: false },
-														"Fees"
-													)
-												}
-											/>
-											<Button
-												text="Fees + timings"
-												color={Colors.PRIMARY}
-												shape={Shapes.ROUNDED}
-												size={ButtonSizes.LARGE}
-												onClick={() =>
-													openSharePicker(
-														batch,
-														{ plans: true, schedule: true },
-														"Fees + timings"
-													)
-												}
-											/>
-										</div>
-									</div>
+							{center.batches.length === 0 ? (
+								<div className={styles.emptyState}>
+									<span className={styles.emptyStateIcon}>
+										<OperationsIcon name="pin" size={42} />
+									</span>
+									<h3>No batches yet</h3>
+									<p>
+										Batches for this center will appear here once they are
+										added in the academy data.
+									</p>
 								</div>
-							))}
+							) : (
+								center.batches.map((batch) => {
+									const isOpen = openBatchId === batch.id;
+									const scheduleGrid = formatBatchScheduleGrid(batch);
+									const hasThreeDayFees = batch.plans.some(
+										(plan) => plan.daysPerWeek === 3
+									);
+									// A checkbox-gated toggle only makes sense when 2-day is an
+									// alternate to a 3-day plan - a batch with only a 2-day plan
+									// (e.g. Focus Batch) must always show it.
+									const hasTwoDayFees =
+										hasThreeDayFees &&
+										batch.plans.some((plan) => plan.daysPerWeek === 2);
+									const shouldShowTwoDayFees = showTwoDayFees[batch.id] ?? false;
+
+									return (
+										<div key={batch.id} className={styles.centerBatch}>
+											<button
+												type="button"
+												className={styles.batchAccordionTrigger}
+												aria-expanded={isOpen}
+												onClick={() =>
+													setOpenBatchId((previous) =>
+														previous === batch.id ? "" : batch.id
+													)
+												}
+											>
+												<span>
+													<strong>{batch.name}</strong>
+													<small className={styles.centerBatchMeta}>
+														{batch.ageGroup}
+													</small>
+												</span>
+												<OperationsIcon
+													name="chevron"
+													size={18}
+													className={`${styles.batchAccordionArrow} ${
+														isOpen ? styles.batchAccordionArrowOpen : ""
+													}`}
+												/>
+											</button>
+
+											<div
+												className={`${styles.batchAccordionPanelWrap} ${
+													isOpen ? styles.batchAccordionPanelWrapOpen : ""
+												}`}
+											>
+												<div className={styles.batchAccordionPanelInner}>
+												<div className={styles.batchAccordionPanel}>
+													<div className={styles.centerScheduleBlock}>
+														<span className={styles.centerBlockLabel}>
+															Timings
+														</span>
+														<div
+															className={styles.timingGrid}
+															style={
+																{
+																	"--timing-cols": scheduleGrid.length,
+																} as React.CSSProperties
+															}
+														>
+															{scheduleGrid.map((slot) => (
+																<div
+																	key={`${batch.id}-${slot.day}-${slot.time}`}
+																	className={styles.timingCell}
+																>
+																	<strong>{slot.day}</strong>
+																	<span>{slot.time}</span>
+																</div>
+															))}
+														</div>
+													</div>
+
+													<div className={styles.centerBlock}>
+														<span className={styles.centerBlockLabel}>
+															Fee structure
+														</span>
+														<table className={styles.plansTable}>
+															<thead>
+																<tr>
+																	<th>Duration</th>
+																	<th>Price</th>
+																</tr>
+															</thead>
+															<tbody>
+																{batch.plans
+																	.filter(
+																		(plan) =>
+																			plan.daysPerWeek !== 2 ||
+																			!hasThreeDayFees ||
+																			shouldShowTwoDayFees
+																	)
+																	.map((plan) => (
+																		<tr key={plan.id}>
+																			<td>{formatPlanLabel(plan)}</td>
+																			<td>{formatRupees(plan.price)}</td>
+																		</tr>
+																	))}
+															</tbody>
+														</table>
+														{hasTwoDayFees && (
+															<label className={styles.checkboxRow}>
+																<input
+																	type="checkbox"
+																	checked={shouldShowTwoDayFees}
+																	onChange={(event) =>
+																		setShowTwoDayFees((previous) => ({
+																			...previous,
+																			[batch.id]: event.currentTarget.checked,
+																		}))
+																	}
+																/>
+																<span>Show 2 Days per Week Pricing</span>
+															</label>
+														)}
+													</div>
+
+													<div className={styles.shareBlock}>
+														<span className={styles.centerBlockLabel}>
+															Share
+														</span>
+
+														<div className={styles.buttonRow}>
+															<Button
+																text="Timings"
+																variant={Variants.OUTLINE}
+																color={Colors.NEUTRAL_DARK}
+																shape={Shapes.ROUNDED}
+																size={ButtonSizes.LARGE}
+																extraClass={`${styles.opsButtonOverride} ${styles.opsButtonOutline}`}
+																onClick={() =>
+																	openSharePicker(
+																		batch,
+																		{ plans: false, schedule: true },
+																		"Timings"
+																	)
+																}
+															/>
+															<Button
+																text="Fees"
+																variant={Variants.OUTLINE}
+																color={Colors.NEUTRAL_DARK}
+																shape={Shapes.ROUNDED}
+																size={ButtonSizes.LARGE}
+																extraClass={`${styles.opsButtonOverride} ${styles.opsButtonOutline}`}
+																onClick={() =>
+																	openSharePicker(
+																		batch,
+																		{ plans: true, schedule: false },
+																		"Fees"
+																	)
+																}
+															/>
+															<Button
+																text="Fees + timings"
+																color={Colors.PRIMARY}
+																shape={Shapes.ROUNDED}
+																size={ButtonSizes.LARGE}
+																extraClass={styles.opsButtonOverride}
+																onClick={() =>
+																	openSharePicker(
+																		batch,
+																		{ plans: true, schedule: true },
+																		"Fees + timings"
+																	)
+																}
+															/>
+														</div>
+													</div>
+												</div>
+												</div>
+											</div>
+											</div>
+									);
+								})
+							)}
 						</div>
 					</section>
 				</div>
@@ -371,7 +531,18 @@ const BatchesList: React.FC<BatchesListProps> = ({
 								aria-label="Close"
 								onClick={() => setPendingShare(null)}
 							>
-								x
+								<svg
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<path d="M18 6 6 18M6 6l12 12" />
+								</svg>
 							</button>
 						</div>
 
@@ -389,10 +560,14 @@ const BatchesList: React.FC<BatchesListProps> = ({
 								type="button"
 								className={styles.shareFormatButton}
 								onClick={() =>
-									onShare(pendingShare.batch, pendingShare.sections, "image")
+									onShare(
+										pendingShare.batch,
+										pendingShare.sections,
+										"copy-image"
+									)
 								}
 							>
-								Image
+								Copy Image
 							</button>
 						</div>
 					</section>

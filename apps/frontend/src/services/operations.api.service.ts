@@ -5,6 +5,9 @@ import { supabase } from "./supabase.client";
 import type { OperationsData } from "@/types/operations";
 import type { Database } from "@/types/supabase";
 
+// UTILS //
+import { getStaticBatchImageSrc } from "@/utils/operations.util";
+
 type ConfigRow = Database["public"]["Tables"]["configs"]["Row"];
 type CenterRow = Database["public"]["Tables"]["centers"]["Row"];
 type BatchRow = Database["public"]["Tables"]["batches"]["Row"];
@@ -75,6 +78,8 @@ export const fetchOperationsData = async (): Promise<OperationsData> => {
 	const timings: BatchTimingRow[] = timingsResult.data;
 	const plans: PlanRow[] = plansResult.data;
 
+	let batchImageIndex = 0;
+
 	return {
 		config: {
 			academyName: config.academy_name,
@@ -89,27 +94,34 @@ export const fetchOperationsData = async (): Promise<OperationsData> => {
 			address: center.address,
 			batches: batches
 				.filter((batch) => batch.center_id === center.id)
-				.map((batch) => ({
-					id: batch.id,
-					name: batch.name,
-					ageGroup: batch.age_group,
-					schedule: timings
-						.filter((timing) => timing.batch_id === batch.id)
-						.map((timing) => ({
-							day: timing.day_of_week,
-							startTime: timing.start_time,
-							endTime: timing.end_time,
-						})),
-					plans: plans
-						.filter((plan) => plan.batch_id === batch.id)
-						.map((plan) => ({
-							id: plan.id,
-							durationMonths: plan.duration_months,
-							daysPerWeek: plan.days_per_week,
-							price: plan.price,
-							perSessionPrice: plan.per_session_price,
-						})),
-				})),
+				.map((batch) => {
+					const imageSrc = getStaticBatchImageSrc(batchImageIndex);
+
+					batchImageIndex += 1;
+
+					return {
+						id: batch.id,
+						name: batch.name,
+						ageGroup: batch.age_group,
+						imageSrc,
+						schedule: timings
+							.filter((timing) => timing.batch_id === batch.id)
+							.map((timing) => ({
+								day: timing.day_of_week,
+								startTime: timing.start_time,
+								endTime: timing.end_time,
+							})),
+						plans: plans
+							.filter((plan) => plan.batch_id === batch.id)
+							.map((plan) => ({
+								id: plan.id,
+								durationMonths: plan.duration_months,
+								daysPerWeek: plan.days_per_week,
+								price: plan.price,
+								perSessionPrice: plan.per_session_price,
+							})),
+					};
+				}),
 		})),
 	};
 };

@@ -127,7 +127,7 @@ const getFullMonthDetail = (count: number): string =>
  * Walk every calendar month overlapping [start, end].
  * A month fully inside the range bills the flat price; a partial month bills
  * `session days in range × the stored per-session price`. No holiday
- * adjustment, and no rounding - both prices come from the database.
+ * adjustment; both prices come from the database.
  */
 export const calculateFeeQuote = ({
 	startDate,
@@ -142,6 +142,26 @@ export const calculateFeeQuote = ({
 
 	// Nothing to bill for an incomplete or backwards range
 	if (!start || !end || end < start) return null;
+
+	if (start.getDate() === 1 && endDate === getDefaultEndDate(startDate, durationMonths)) {
+		return {
+			rows: [
+				{
+					id: `${durationMonths}-month-package`,
+					label:
+						durationMonths === 1
+							? "1 Month Package"
+							: `${durationMonths} Month Package`,
+					detail: "Fixed package price",
+					amount: monthlyPrice,
+					isFullMonth: true,
+				},
+			],
+			total: monthlyPrice,
+			sessionCount: countSessionDays(start, end, sessionWeekdays),
+			isExactPackage: true,
+		};
+	}
 
 	const rows: FeeBreakdownRowData[] = [];
 	let total = 0;
@@ -234,7 +254,7 @@ export const calculateFeeQuote = ({
 
 	flushFullMonthGroup();
 
-	return { rows, total, sessionCount };
+	return { rows, total, sessionCount, isExactPackage: false };
 };
 
 /** Format an amount the way staff read it out, e.g. `₹3,970` */

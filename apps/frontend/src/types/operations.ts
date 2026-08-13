@@ -33,6 +33,7 @@ export type OperationsBatchData = {
 	ageGroup: string;
 	schedule: OperationsBatchTimingData[];
 	plans: OperationsPlanData[];
+	imageSrc?: string;
 };
 
 /** A center with everything the tools need */
@@ -72,4 +73,5 @@ export type FeeQuoteData = {
 	rows: FeeBreakdownRowData[];
 	total: number;
 	sessionCount: number;
+	isExactPackage: boolean;
 };

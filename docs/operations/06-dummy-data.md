@@ -1,11 +1,11 @@
 # 06 - Dummy Data (placeholder)
 
-> 🔴 **DUMMY - REPLACE BEFORE PRODUCTION.** Every value here is a placeholder so
-> the page can be built and demoed.
+> ✅ East pricing/batches below are real. 🔴 West pricing is still a placeholder
+> (kept structurally different on purpose so per-center paths get exercised).
 >
-> These values are mirrored in `apps/frontend/src/data/operations.data.ts`, where
-> each one is marked 🔴 in a comment. Replacing them there is the whole job -
-> the shape already matches [04-api.md](04-api.md).
+> Source of truth is [seed.sql](seed.sql) - run it in the Supabase SQL editor.
+> There is no `apps/frontend/src/data/operations.data.ts` mirror file; the app
+> reads Supabase directly (see [schema.sql](schema.sql) header comment).
 
 ## Global config
 
@@ -15,52 +15,70 @@
 | Payee name | `Skorost United Football Academy` 🔴 - confirm this is the exact name to show in UPI apps |
 | Staff PIN | `1234` 🔴 |
 | Holidays | ✅ **No holiday check** - count every session day mechanically |
-| Rounding | ✅ **None.** Both prices are stored per plan |
+| Rounding | ✅ Per-session price is derived from the 3-day package price
+(`price ÷ (months × 12)`), then rounded to the nearest ₹10 (< 5 rounds down,
+≥ 5 rounds up). The 2-day price is that rounded per-session rate × (months × 8). |
 
-> There is **no global per-session rate.** It is stored per center plan, below.
+> There is **no global per-session rate.** It is stored per plan, derived as above.
 
-## Centers (DUMMY) - two centers
+## Centers - two centers, five batches each
 
 Prices are **per batch**, not per center. Every duration sells at both 3 and
-2 days a week.
+2 days a week, except Focus Batch which only has one plan.
 
-### Ghatkopar East 🔴
+### Ghatkopar East ✅
 
 Address: 12 MG Road, Ghatkopar East, Mumbai 400077
 
-**Evening Batch** (Under-14) — Mon 18:00-19:00 · Wed 19:00-20:00 · Fri 18:30-19:30
+**Foundation Batch** (Under-8) — Mon/Wed/Fri 18:00-19:00
+**Grassroot Batch** (Under-10) — Mon/Wed/Fri 18:00-19:00
+**Youth Batch** (Under-12) — Mon/Wed 19:00-20:00 · Fri 18:00-19:00
+**Performance Batch** (Under-16) — Mon/Wed/Fri 20:00-21:00
+
+All four share the same fee table:
 
 | Duration | 3 days/wk | 2 days/wk | Per-session |
 | --- | --- | --- | --- |
-| 1 month | ₹3,400 | ₹2,280 | ₹285 |
-| 3 months | ₹9,600 | ₹6,400 | ₹285 |
-| 6 months | ₹18,600 | ₹12,400 | ₹285 |
-| 12 months | ₹34,800 | ₹23,200 | ₹285 |
+| 1 month | ₹3,400 | ₹2,240 | ₹280 |
+| 3 months | ₹9,000 | ₹6,000 | ₹250 |
+| 6 months | ₹18,000 | ₹12,000 | ₹250 |
+| 12 months | ₹35,500 | ₹24,000 | ₹250 |
 
-**Morning Batch** (Under-10) — Tue 07:00-08:00 · Thu 07:30-08:30 · Sat 08:00-09:00
+**Focus Batch** (Mixed Age) — Mon/Wed 19:00-20:00
 
-| Duration | 3 days/wk | 2 days/wk | Per-session |
-| --- | --- | --- | --- |
-| 1 month | ₹3,550 | ₹2,370 | ₹300 |
-| 3 months | ₹9,950 | ₹6,650 | ₹300 |
-| 6 months | ₹19,200 | ₹12,800 | ₹300 |
-| 12 months | ₹36,000 | ₹24,000 | ₹300 |
+| Duration | 2 days/wk | Per-session |
+| --- | --- | --- |
+| 1 month | ₹1,600 | ₹200 |
 
 ### Ghatkopar West 🔴
 
 Address: 45 LBS Marg, Ghatkopar West, Mumbai 400086
 
-**Evening Batch** (Under-12) — Mon 17:30-18:30 · Wed 18:30-19:30 · Fri 17:30-18:30
+Same batches and durations as East, days shifted Mon→Tue, Wed→Thu, Fri→Sat
+(same clock times):
+
+**Foundation Batch** (Under-8) — Tue/Thu/Sat 18:00-19:00
+**Grassroot Batch** (Under-10) — Tue/Thu/Sat 18:00-19:00
+**Youth Batch** (Under-12) — Tue/Thu 19:00-20:00 · Sat 18:00-19:00
+**Performance Batch** (Under-16) — Tue/Thu/Sat 20:00-21:00
+
+All four share the same fee table:
 
 | Duration | 3 days/wk | 2 days/wk | Per-session |
 | --- | --- | --- | --- |
-| 1 month | ₹3,600 | ₹2,400 | ₹300 |
-| 3 months | ₹10,200 | ₹6,800 | ₹300 |
-| 6 months | ₹19,800 | ₹13,200 | ₹300 |
-| 12 months | ₹37,200 | ₹24,800 | ₹300 |
+| 1 month | ₹3,800 | ₹2,560 | ₹320 |
+| 3 months | ₹10,200 | ₹6,720 | ₹280 |
+| 6 months | ₹20,400 | ₹13,440 | ₹280 |
+| 12 months | ₹40,300 | ₹26,880 | ₹280 |
 
-*Prices, per-session prices and batch days deliberately differ between the two
-centers so the per-center and per-batch paths are actually exercised. All fake.*
+**Focus Batch** (Mixed Age) — Tue/Thu 19:00-20:00
+
+| Duration | 2 days/wk | Per-session |
+| --- | --- | --- |
+| 1 month | ₹1,800 | ₹230 |
+
+*West prices deliberately differ from East so the per-center path is actually
+exercised. West numbers are still placeholders.*
 
 ## Fee-structure message template (DUMMY wording)
 
@@ -83,7 +101,5 @@ For a free trial or to enroll, reply here. See you on the pitch! ⚽
 
 ## Real values still owed
 
-Prices (including every per-session price), addresses, batch timings and days,
-the staff PIN, and the exact message wording and image branding. The global
-UPI ID is now real (`skorostunitedfootballschool@kotak`); the payee name
-still needs sign-off.
+West pricing, the payee name sign-off, and the staff PIN. East pricing,
+batch names/ages/timings, and the global UPI ID are now real.

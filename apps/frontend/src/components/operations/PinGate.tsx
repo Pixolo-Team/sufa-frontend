@@ -1,5 +1,5 @@
 // REACT //
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 
 // STYLES //
 import styles from "./operations.module.scss";
@@ -11,6 +11,15 @@ interface PinGateProps {
 	expectedPin: string;
 	onUnlock: () => void;
 }
+
+const GatePoweredBy: React.FC = memo(() => (
+	<p className={`${styles.poweredBy} ${styles.gatePoweredBy}`}>
+		<span>Powered by</span>
+		<img src="/images/brand/zizo.svg" alt="Zizo" width="40" height="16" />
+	</p>
+));
+
+GatePoweredBy.displayName = "GatePoweredBy";
 
 /**
  * Shared staff PIN, compared in the browser. This is light obfuscation for an
@@ -62,10 +71,8 @@ const PinGate: React.FC<PinGateProps> = ({ expectedPin, onUnlock }) => {
 				height="34"
 			/>
 
-			<h1 className={styles.gateTitle}>Enter passcode</h1>
-			<p className={styles.gateSubtitle}>
-				Shared staff PIN · remembered on this device
-			</p>
+				<h1 className={styles.gateTitle}>Enter passcode</h1>
+				<p className={styles.gateSubtitle}>Staff access only</p>
 
 			{/* Filled dot per entered digit */}
 			<div className={styles.pinDots}>
@@ -95,13 +102,15 @@ const PinGate: React.FC<PinGateProps> = ({ expectedPin, onUnlock }) => {
 						className={`${styles.key} ${key === "⌫" ? styles.keyGhost : ""}`}
 						style={key ? undefined : { visibility: "hidden" }}
 						onClick={() => pressKey(key)}
-					>
-						{key}
-					</button>
-				))}
+						>
+							{key}
+						</button>
+					))}
+				</div>
+
+				<GatePoweredBy />
 			</div>
-		</div>
-	);
-};
+		);
+	};
 
 export default PinGate;
