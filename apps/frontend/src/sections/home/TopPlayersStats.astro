@@ -1,0 +1,114 @@
+---
+// STYLES //
+import styles from "./top-players-stats/top-players-stats.module.scss";
+
+// COMPONENTS //
+import SectionHeader from "@/components/section-header/SectionHeader.astro";
+
+const featuredPlayers = [
+	{
+		name: "Kaairav Patel",
+		role: "Grassroot",
+		image: "/images/stats/kaairav-patel.jpeg",
+		blurb:
+			"Developing his game with bright energy, steady effort, and the confidence to keep trying in match moments.",
+		stats: [
+			{ label: "Matches", value: "17" },
+			{ label: "Goals", value: "3" },
+			{ label: "Assists", value: "2" },
+		],
+	},
+	{
+		name: "Veer Shah",
+		role: "Grassroot",
+		image: "/images/stats/veer-shah.jpeg",
+		blurb:
+			"A sharp young footballer with good awareness, quick decisions, and a calm eye for the next pass.",
+		stats: [
+			{ label: "Matches", value: "17" },
+			{ label: "Goals", value: "1" },
+			{ label: "Assists", value: "3" },
+		],
+	},
+	{
+		name: "Harsh Borkhatariya",
+		role: "Grassroot",
+		image: "/images/stats/harsh-borkhatariya.jpeg",
+		blurb:
+			"Brings discipline to training and works hard for the team across every match-day opportunity.",
+		stats: [
+			{ label: "Matches", value: "14" },
+			{ label: "Goals", value: "0" },
+			{ label: "Assists", value: "2" },
+		],
+	},
+	{
+		name: "Taksh Shah",
+		role: "Foundation",
+		image: "/images/stats/taksh-shah.jpeg",
+		blurb:
+			"Building his basics with courage, curiosity, and a growing feel for the game.",
+		stats: [
+			{ label: "Matches", value: "7" },
+			{ label: "Goals", value: "1" },
+			{ label: "Assists", value: "1" },
+		],
+	},
+];
+---
+
+<section id="stats" class={`section-spacing ${styles.section}`}>
+	<div class="container">
+		<SectionHeader
+			fadedText="Stats"
+			highlightedText="Top Academy Players"
+		/>
+
+		<div class={`${styles.sectionIntro} text-center fade-in-up`}>
+			<span class={styles.sectionKicker}>Built In Skorost Colours</span>
+			<p class={`${styles.sectionDescription} font-weight-500`}>
+				Match-day numbers from our own academy students, tracked as they grow through the Skorost pathway.
+			</p>
+		</div>
+
+		<div class={styles.playersGrid}>
+			{
+				featuredPlayers.map((player, index) => (
+					<article
+						class={`${styles.playerCard} fade-in-up`}
+						style={`animation-delay:${index * 0.08}s;`}
+					>
+						<img
+							src={player.image}
+							alt={player.name}
+							class={`${styles.playerImage} img-responsive full-width-img`}
+							loading="lazy"
+							decoding="async"
+						/>
+						<div class={styles.playerScrim}></div>
+
+						<div class={styles.playerOverlay}>
+							<span class={styles.playerRole}>{player.role}</span>
+							<h3>{player.name}</h3>
+
+							<p class={styles.playerBlurb}>
+								<span>{player.blurb}</span>
+							</p>
+
+							<div class={styles.statsList}>
+								{
+									player.stats.map((stat) => (
+										<div class={styles.statTile}>
+											<strong>{stat.value}</strong>
+											<span>{stat.label}</span>
+										</div>
+									))
+								}
+							</div>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</div>
+</section>
