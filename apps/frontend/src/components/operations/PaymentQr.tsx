@@ -255,11 +255,13 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		void copyText(upiUri, "Payment URL copied");
 	}, [copyText, upiUri]);
 
-	// wa.me can pre-fill text but never a file, and it can target a specific
+	// This can pre-fill text but never a file, and it can target a specific
 	// number but the OS share sheet can't - so which one runs depends on
 	// whether a number was typed in. Either way the QR image still gets to the
 	// chat: attached directly via the share sheet, or downloaded for staff to
 	// attach by hand when a specific number pins us to the text-only deep link.
+	// api.whatsapp.com, not wa.me - the wa.me short-link redirect strips
+	// 4-byte UTF-8 (i.e. every emoji) on desktop before WhatsApp gets it.
 	const openWhatsApp = useCallback(async () => {
 		const digits = studentPhone.replace(/\D/g, "");
 		const waNumber = digits.length >= 10 ? `91${digits.slice(-10)}` : "";
@@ -268,7 +270,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		if (waNumber) {
 			downloadQr();
 			window.open(
-				`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`,
+				`https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(message)}`,
 				"_blank",
 				"noopener"
 			);
@@ -292,7 +294,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 		downloadQr();
 		window.open(
-			`https://wa.me/?text=${encodeURIComponent(message)}`,
+			`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`,
 			"_blank",
 			"noopener"
 		);

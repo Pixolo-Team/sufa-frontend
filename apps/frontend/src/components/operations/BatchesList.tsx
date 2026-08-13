@@ -30,6 +30,7 @@ import { formatRupees } from "@/utils/fee-calculator.util";
 import {
 	formatBatchScheduleGrid,
 	formatBatchTimingLines,
+	formatDurationEmoji,
 	formatPlanLabel,
 } from "@/utils/operations.util";
 
@@ -51,30 +52,21 @@ interface BatchesListProps {
 	registrationOptions: OperationsRegistrationOptionData[];
 }
 
-const buildScheduleText = (
+const buildHeaderLines = (
 	center: OperationsCenterData,
 	batch: OperationsBatchData,
 	academyName: string
-): string =>
-	[
-		`⚽ *${academyName}*`,
-		`📍 *Centre:* ${center.name}`,
-		"",
-		`*${batch.name}*`,
-		`*Category:* ${batch.ageGroup}`,
-		"",
-		"*Timings*",
-		...formatBatchTimingLines(batch).map((line) => `- ${line}`),
-		"",
-		`📌 *Address:* ${center.address}`,
-	].join("\n");
+): string[] => [
+	`⚽ *${academyName.toUpperCase()}*`,
+	"",
+	`📍 ${center.name} Centre`,
+	`🏃 *${batch.name}* · ${batch.ageGroup}`,
+];
 
-const buildFeeStructureText = (
-	center: OperationsCenterData,
+const buildFeeLines = (
 	batch: OperationsBatchData,
-	registrationOptions: OperationsRegistrationOptionData[],
-	academyName: string
-): string => {
+	registrationOptions: OperationsRegistrationOptionData[]
+): string[] => {
 	// 2-day is only an alternate to 3-day - a batch with just a 2-day plan
 	// (e.g. Focus Batch) must show it, not hide it behind an "on request" line.
 	const hasThreeDayPlans = batch.plans.some((plan) => plan.daysPerWeek === 3);
@@ -83,30 +75,59 @@ const buildFeeStructureText = (
 		: batch.plans;
 
 	return [
-		`⚽ *${academyName}*`,
-		`📍 *Centre:* ${center.name}`,
+		"💰 *FEE STRUCTURE*",
 		"",
-		`*${batch.name}*`,
-		`*Category:* ${batch.ageGroup}`,
-		"",
-		"*Fee Structure*",
 		...visiblePlans.map(
-			(plan) => `- ${formatPlanLabel(plan)}: *${formatRupees(plan.price)}*`
+			(plan) =>
+				`${formatDurationEmoji(plan.durationMonths)} ${formatPlanLabel(plan)} — *${formatRupees(plan.price)}*`
 		),
 		hasThreeDayPlans && batch.plans.some((plan) => plan.daysPerWeek === 2)
-			? "- 2 Days per Week pricing is available for 12 months on request."
+			? "\nℹ️ 2 Days per Week pricing is available for the 12-month plan on request."
 			: null,
-		registrationOptions.length > 0 ? "" : null,
-		registrationOptions.length > 0 ? "*Registration Packages*" : null,
+		registrationOptions.length > 0 ? "\n🎽 *REGISTRATION PACKAGES*\n" : null,
 		...registrationOptions.map(
-			(item) => `- ${item.name}: ${formatRupees(item.price)}`
+			(item) => `🔹 ${item.name} — ${formatRupees(item.price)}`
 		),
-		"",
-		`📌 *Address:* ${center.address}`,
-	]
-		.filter((line): line is string => line !== null)
-		.join("\n");
+	].filter((line): line is string => line !== null);
 };
+
+const buildTimingsLines = (batch: OperationsBatchData): string[] => [
+	"🗓️ *TRAINING TIMINGS*",
+	"",
+	...formatBatchTimingLines(batch),
+];
+
+const buildVenueLines = (center: OperationsCenterData): string[] => [
+	"📌 *TRAINING VENUE*",
+	center.address,
+];
+
+const buildScheduleText = (
+	center: OperationsCenterData,
+	batch: OperationsBatchData,
+	academyName: string
+): string =>
+	[
+		...buildHeaderLines(center, batch, academyName),
+		"",
+		...buildTimingsLines(batch),
+		"",
+		...buildVenueLines(center),
+	].join("\n");
+
+const buildFeeStructureText = (
+	center: OperationsCenterData,
+	batch: OperationsBatchData,
+	registrationOptions: OperationsRegistrationOptionData[],
+	academyName: string
+): string =>
+	[
+		...buildHeaderLines(center, batch, academyName),
+		"",
+		...buildFeeLines(batch, registrationOptions),
+		"",
+		...buildVenueLines(center),
+	].join("\n");
 
 const buildBothText = (
 	center: OperationsCenterData,
@@ -115,10 +136,13 @@ const buildBothText = (
 	academyName: string
 ): string =>
 	[
-		buildFeeStructureText(center, batch, registrationOptions, academyName),
+		...buildHeaderLines(center, batch, academyName),
 		"",
-		"*Timings*",
-		...formatBatchTimingLines(batch).map((line) => `- ${line}`),
+		...buildFeeLines(batch, registrationOptions),
+		"",
+		...buildTimingsLines(batch),
+		"",
+		...buildVenueLines(center),
 	].join("\n");
 
 const buildShareText = (
@@ -153,10 +177,12 @@ const BatchesList: React.FC<BatchesListProps> = ({
 	}, [center?.id, center?.batches]);
 
 	// No number to open a DM with here (unlike Payments, this share is not tied
-	// to one parent) - wa.me with no number opens WhatsApp's own contact picker.
+	// to one parent) - with no phone param this opens WhatsApp's own contact
+	// picker. api.whatsapp.com, not wa.me - the wa.me short-link redirect
+	// strips 4-byte UTF-8 (i.e. every emoji) on desktop before WhatsApp gets it.
 	const shareText = useCallback((text: string) => {
 		window.open(
-			`https://wa.me/?text=${encodeURIComponent(text)}`,
+			`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`,
 			"_blank",
 			"noopener"
 		);
