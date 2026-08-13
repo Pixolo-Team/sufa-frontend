@@ -53,9 +53,9 @@ export const formatBatchTimings = (batch: OperationsBatchData): string =>
 		.map((slot) => formatTimingSlot(slot, true))
 		.join(" | ");
 
-/** WhatsApp share line for one slot, e.g. `MON 🕕 6:00 PM – 7:00 PM`. */
+/** WhatsApp share line for one slot, e.g. `MON 6:00 PM – 7:00 PM`. */
 const formatTimingShareLine = (slot: OperationsBatchTimingData): string =>
-	`${WEEKDAY_SHORT[slot.day].toUpperCase()} 🕕 ${formatTime(
+	`${WEEKDAY_SHORT[slot.day].toUpperCase()} ${formatTime(
 		slot.startTime
 	)} – ${formatTime(slot.endTime)}`;
 
@@ -88,16 +88,6 @@ export const formatWeekdayShort = (day: number): string =>
 export const getStaticBatchImageSrc = (batchIndex: number): string =>
 	STATIC_BATCH_IMAGES[batchIndex % STATIC_BATCH_IMAGES.length];
 
-const DIGIT_KEYCAPS = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
-
-/** WhatsApp share bullet for a plan duration - keycap digit, 🔟, or 📅 beyond that. */
-export const formatDurationEmoji = (months: number): string => {
-	if (months >= 0 && months <= 9) return DIGIT_KEYCAPS[months];
-	if (months === 10) return "🔟";
-
-	return "📅";
-};
-
 const SHARE_HEAVY_RULE = "━".repeat(24);
 export const SHARE_DIVIDER = "─".repeat(20);
 
@@ -111,7 +101,7 @@ export const buildShareLetterheadLines = (academyName: string): string[] => [
 /** Closing sign-off shown at the bottom of every WhatsApp share. */
 export const buildShareFooterLines = (): string[] => [
 	SHARE_DIVIDER,
-	"✨ _For queries, just reply to this message!_ ✨",
+	"_For queries, just reply to this message!_",
 ];
 
 /** Standard plans show only the duration; 2-day plans keep the exception visible. */
