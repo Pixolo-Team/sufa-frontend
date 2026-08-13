@@ -98,6 +98,22 @@ export const formatDurationEmoji = (months: number): string => {
 	return "📅";
 };
 
+const SHARE_HEAVY_RULE = "━".repeat(24);
+export const SHARE_DIVIDER = "─".repeat(20);
+
+/** Letterhead framing the academy name at the top of every WhatsApp share. */
+export const buildShareLetterheadLines = (academyName: string): string[] => [
+	SHARE_HEAVY_RULE,
+	`⚽ *${academyName.toUpperCase()}*`,
+	SHARE_HEAVY_RULE,
+];
+
+/** Closing sign-off shown at the bottom of every WhatsApp share. */
+export const buildShareFooterLines = (): string[] => [
+	SHARE_DIVIDER,
+	"✨ _For queries, just reply to this message!_ ✨",
+];
+
 /** Standard plans show only the duration; 2-day plans keep the exception visible. */
 export const formatPlanLabel = (plan: OperationsPlanData): string => {
 	const durationLabel =

@@ -28,10 +28,13 @@ import { showToast } from "@/neevo/services/toast.service";
 // UTILS //
 import { formatRupees } from "@/utils/fee-calculator.util";
 import {
+	buildShareFooterLines,
+	buildShareLetterheadLines,
 	formatBatchScheduleGrid,
 	formatBatchTimingLines,
 	formatDurationEmoji,
 	formatPlanLabel,
+	SHARE_DIVIDER,
 } from "@/utils/operations.util";
 
 type ShareFormat = "text" | "copy-image";
@@ -57,7 +60,7 @@ const buildHeaderLines = (
 	batch: OperationsBatchData,
 	academyName: string
 ): string[] => [
-	`⚽ *${academyName.toUpperCase()}*`,
+	...buildShareLetterheadLines(academyName),
 	"",
 	`📍 ${center.name} Centre`,
 	`🏃 *${batch.name}* · ${batch.ageGroup}`,
@@ -110,9 +113,15 @@ const buildScheduleText = (
 	[
 		...buildHeaderLines(center, batch, academyName),
 		"",
+		SHARE_DIVIDER,
+		"",
 		...buildTimingsLines(batch),
 		"",
+		SHARE_DIVIDER,
+		"",
 		...buildVenueLines(center),
+		"",
+		...buildShareFooterLines(),
 	].join("\n");
 
 const buildFeeStructureText = (
@@ -124,9 +133,15 @@ const buildFeeStructureText = (
 	[
 		...buildHeaderLines(center, batch, academyName),
 		"",
+		SHARE_DIVIDER,
+		"",
 		...buildFeeLines(batch, registrationOptions),
 		"",
+		SHARE_DIVIDER,
+		"",
 		...buildVenueLines(center),
+		"",
+		...buildShareFooterLines(),
 	].join("\n");
 
 const buildBothText = (
@@ -138,11 +153,19 @@ const buildBothText = (
 	[
 		...buildHeaderLines(center, batch, academyName),
 		"",
+		SHARE_DIVIDER,
+		"",
 		...buildFeeLines(batch, registrationOptions),
+		"",
+		SHARE_DIVIDER,
 		"",
 		...buildTimingsLines(batch),
 		"",
+		SHARE_DIVIDER,
+		"",
 		...buildVenueLines(center),
+		"",
+		...buildShareFooterLines(),
 	].join("\n");
 
 const buildShareText = (

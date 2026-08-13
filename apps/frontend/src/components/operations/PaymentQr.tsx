@@ -34,7 +34,12 @@ import { useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
 import { formatDisplayDate, formatRupees } from "@/utils/fee-calculator.util";
-import { formatPlanLabel } from "@/utils/operations.util";
+import {
+	buildShareFooterLines,
+	buildShareLetterheadLines,
+	formatPlanLabel,
+	SHARE_DIVIDER,
+} from "@/utils/operations.util";
 
 type QrMode = "global" | "payment" | "custom";
 
@@ -176,11 +181,13 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	const shareText = useMemo(() => {
 		if (mode === "global") {
 			return [
-				`⚽ *${config.payeeName}*`,
+				...buildShareLetterheadLines(config.payeeName),
 				"",
 				"Please scan the QR code and enter the payable amount.",
 				"",
-				`UPI ID: ${config.upiId}`,
+				`💳 *UPI ID:* ${config.upiId}`,
+				"",
+				...buildShareFooterLines(),
 			].join("\n");
 		}
 
@@ -190,28 +197,42 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 				: "Custom payment";
 
 			return [
-				`⚽ *${config.payeeName}*`,
+				...buildShareLetterheadLines(config.payeeName),
+				"",
 				studentName.trim() ? `👤 *Student:* ${studentName.trim()}` : null,
+				studentName.trim() ? "" : null,
+				SHARE_DIVIDER,
 				"",
 				`*${subject}*`,
-				`Amount: *${formatRupees(amount)}*`,
+				`💳 *Amount:* ${formatRupees(amount)}`,
+				"",
+				SHARE_DIVIDER,
 				"",
 				"Please scan the attached QR code to complete the payment.",
+				"",
+				...buildShareFooterLines(),
 			]
 				.filter((line): line is string => line !== null)
 				.join("\n");
 		}
 
 		return [
-			`⚽ *${config.payeeName}*`,
-			studentName.trim() ? `👤 *Student:* ${studentName.trim()}` : null,
-			batch ? `👥 *Batch:* ${batch.name} (${batch.ageGroup})` : null,
-			plan ? `📦 *Package:* ${formatPlanLabel(plan)}` : null,
-			registrationOption ? `🎒 *Registration:* ${registrationOption.name}` : null,
+			...buildShareLetterheadLines(config.payeeName),
 			"",
-			`Amount Due: *${formatRupees(amount)}*`,
+			studentName.trim() ? `👤 *Student:* ${studentName.trim()}` : null,
+			batch ? `🏃 *Batch:* ${batch.name} (${batch.ageGroup})` : null,
+			plan ? `📦 *Package:* ${formatPlanLabel(plan)}` : null,
+			registrationOption ? `🎽 *Registration:* ${registrationOption.name}` : null,
+			"",
+			SHARE_DIVIDER,
+			"",
+			`💳 *Amount Due:* ${formatRupees(amount)}`,
+			"",
+			SHARE_DIVIDER,
 			"",
 			"Please scan the attached QR code to complete the payment.",
+			"",
+			...buildShareFooterLines(),
 		]
 			.filter((line): line is string => line !== null)
 			.join("\n");
