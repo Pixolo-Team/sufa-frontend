@@ -78,8 +78,6 @@ export const fetchOperationsData = async (): Promise<OperationsData> => {
 	const timings: BatchTimingRow[] = timingsResult.data;
 	const plans: PlanRow[] = plansResult.data;
 
-	let batchImageIndex = 0;
-
 	return {
 		config: {
 			academyName: config.academy_name,
@@ -95,15 +93,11 @@ export const fetchOperationsData = async (): Promise<OperationsData> => {
 			batches: batches
 				.filter((batch) => batch.center_id === center.id)
 				.map((batch) => {
-					const imageSrc = getStaticBatchImageSrc(batchImageIndex);
-
-					batchImageIndex += 1;
-
 					return {
 						id: batch.id,
 						name: batch.name,
 						ageGroup: batch.age_group,
-						imageSrc,
+						imageSrc: getStaticBatchImageSrc(batch.name),
 						schedule: timings
 							.filter((timing) => timing.batch_id === batch.id)
 							.map((timing) => ({

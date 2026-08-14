@@ -6,20 +6,12 @@ import type {
 } from "@/types/operations";
 
 const WEEKDAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const WEEKDAY_LONG = [
-	"Sunday",
-	"Monday",
-	"Tuesday",
-	"Wednesday",
-	"Thursday",
-	"Friday",
-	"Saturday",
-];
-const STATIC_BATCH_IMAGES = [
-	"/images/operations/ghatkopar-east-foundation.png",
-	"/images/operations/ghatkopar-east-grassroot.png",
-	"/images/operations/ghatkopar-west-performance.png",
-];
+const STATIC_BATCH_IMAGES_BY_BATCH: Record<string, string> = {
+	foundation: "/images/operations/foundation-ghatkopar-east.png",
+	grassroot: "/images/operations/grassroot-ghatkopar-east.png",
+	youth: "/images/operations/youth-ghatkopar-east.png",
+	performance: "/images/operations/performance-ghatkopar-east.png",
+};
 
 /** Turn a `HH:mm` database time into `5:00 PM` */
 const formatTime = (value: string): string => {
@@ -82,8 +74,14 @@ export const getBatchWeekdays = (batch: OperationsBatchData): number[] =>
 export const formatWeekdayShort = (day: number): string =>
 	WEEKDAY_SHORT[day] ?? String(day);
 
-export const getStaticBatchImageSrc = (batchIndex: number): string =>
-	STATIC_BATCH_IMAGES[batchIndex % STATIC_BATCH_IMAGES.length];
+export const getStaticBatchImageSrc = (batchName: string): string | undefined => {
+	const normalizedBatchName = batchName.toLowerCase();
+	const batchImageKey = Object.keys(STATIC_BATCH_IMAGES_BY_BATCH).find((key) =>
+		normalizedBatchName.includes(key)
+	);
+
+	return batchImageKey ? STATIC_BATCH_IMAGES_BY_BATCH[batchImageKey] : undefined;
+};
 
 const DIGIT_KEYCAPS = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
 
