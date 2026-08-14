@@ -160,14 +160,14 @@
 
 .statsList {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
 	gap: 8px;
 	margin-top: 16px;
 }
 
 .statTile {
 	overflow: hidden;
-	padding: 10px 8px;
+	padding: 10px 5px;
 	border-radius: var(--border-radius-medium);
 	background-color: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(6px);
@@ -188,9 +188,10 @@
 		color: rgba(255, 255, 255, 0.7);
 		font-size: 9.5px;
 		font-weight: 700;
-		letter-spacing: 0.06em;
+		letter-spacing: 0;
 		text-transform: uppercase;
 		line-height: 1.3;
+		white-space: nowrap;
 	}
 }
 
@@ -226,7 +227,7 @@
 	}
 
 	.statTile {
-		padding: 7px 6px;
+		padding: 7px 4px;
 	}
 
 	// ...then scale back up smoothly through to 1500px, where the site's
@@ -253,7 +254,7 @@
 		}
 
 		span {
-			font-size: clamp(9.5px, 0.2vw + 7.55px, 10.5px);
+			font-size: clamp(8.5px, 0.2vw + 6.55px, 9.5px);
 		}
 	}
 }
