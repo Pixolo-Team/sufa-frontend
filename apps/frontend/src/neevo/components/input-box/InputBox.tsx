@@ -1,5 +1,5 @@
 // REACT //
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 
 // ENUMS //
 import { Sizes } from "@/neevo/enums/core.enum";
@@ -59,8 +59,14 @@ const InputBox: React.FC<InputBoxProps> = ({
 	// Define States
 
 	// Define Refs
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	// Helper Functions
+	const isDate = type === InputTextTypes.DATE;
+	const effectiveIconRight = iconRight || (isDate ? "calendar" : "");
+	const effectiveOnRightIconClick =
+		onRightIconClick || (isDate ? () => inputRef.current?.showPicker?.() : undefined);
+
 	/** Memoize the input class names to avoid unnecessary recalculations. */
 	const inputClasses = useMemo(() => {
 		return [
@@ -69,20 +75,23 @@ const InputBox: React.FC<InputBoxProps> = ({
 			isDisabled && styles.inputBoxDisabled,
 			!isDisabled && isError && styles.inputBoxError,
 			iconLeft && styles.inputBoxPaddingLeft,
-			iconRight && styles.inputBoxPaddingRight,
+			effectiveIconRight && styles.inputBoxPaddingRight,
 			showClear && styles.inputBoxClosePresent,
-			showClear && iconRight && styles.inputBoxRightClosePresent,
+			showClear && effectiveIconRight && styles.inputBoxRightClosePresent,
 		]
 			.filter(Boolean)
 			.join(" ");
-	}, [isDisabled, isError, iconLeft, iconRight, showClear, size]);
+	}, [isDisabled, isError, iconLeft, effectiveIconRight, showClear, size]);
 
 	/** Memoize the icon right class names to avoid unnecessary recalculations. */
 	const iconRightClasses = useMemo(() => {
-		return [styles.iconRightContainer, onRightIconClick && "cursor-pointer"]
+		return [
+			styles.iconRightContainer,
+			effectiveOnRightIconClick && "cursor-pointer",
+		]
 			.filter(Boolean)
 			.join(" ");
-	}, [onRightIconClick]);
+	}, [effectiveOnRightIconClick]);
 
 	return (
 		<div className={inputClasses}>
@@ -101,6 +110,7 @@ const InputBox: React.FC<InputBoxProps> = ({
 
 				{/* Input Element */}
 				<input
+					ref={inputRef}
 					className={styles.inputElement}
 					type={type}
 					placeholder={placeholder}
@@ -114,13 +124,13 @@ const InputBox: React.FC<InputBoxProps> = ({
 
 				<span className={styles.rightIconsWrapper}>
 					{/* Right Icon */}
-					{iconRight && (
+					{effectiveIconRight && (
 						<button
 							className={iconRightClasses}
-							onClick={onRightIconClick}
+							onClick={effectiveOnRightIconClick}
 							disabled={isDisabled}
 						>
-							<Icon className={styles.iconRight} iconName={iconRight} />
+							<Icon className={styles.iconRight} iconName={effectiveIconRight} />
 						</button>
 					)}
 

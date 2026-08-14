@@ -65,6 +65,10 @@ $sizes: (
 				-webkit-appearance: none;
 				margin: 0;
 			}
+			// Hide native date picker indicator (custom icon used instead)
+			&::-webkit-calendar-picker-indicator {
+				opacity: 0;
+			}
 		}
 		.rightIconsWrapper {
 			position: absolute;
