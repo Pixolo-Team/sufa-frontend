@@ -6,11 +6,19 @@ import type {
 } from "@/types/operations";
 
 const WEEKDAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const STATIC_BATCH_IMAGES_BY_BATCH: Record<string, string> = {
-	foundation: "/images/operations/foundation-ghatkopar-east.png",
-	grassroot: "/images/operations/grassroot-ghatkopar-east.png",
-	youth: "/images/operations/youth-ghatkopar-east.png",
-	performance: "/images/operations/performance-ghatkopar-east.png",
+const STATIC_BATCH_IMAGES_BY_CENTER_AND_BATCH: Record<string, Record<string, string>> = {
+	east: {
+		foundation: "/images/operations/foundation-ghatkopar-east.png",
+		grassroot: "/images/operations/grassroot-ghatkopar-east.png",
+		youth: "/images/operations/youth-ghatkopar-east.png",
+		performance: "/images/operations/performance-ghatkopar-east.png",
+	},
+	west: {
+		foundation: "/images/operations/foundation-ghatkopar-west.png",
+		grassroot: "/images/operations/grassroot-ghatkopar-west.png",
+		youth: "/images/operations/youth-ghatkopar-west.png",
+		performance: "/images/operations/performance-ghatkopar-west.png",
+	},
 };
 
 /** Turn a `HH:mm` database time into `5:00 PM` */
@@ -74,13 +82,24 @@ export const getBatchWeekdays = (batch: OperationsBatchData): number[] =>
 export const formatWeekdayShort = (day: number): string =>
 	WEEKDAY_SHORT[day] ?? String(day);
 
-export const getStaticBatchImageSrc = (batchName: string): string | undefined => {
+export const getStaticBatchImageSrc = (
+	centerName: string,
+	batchName: string
+): string | undefined => {
+	const normalizedCenterName = centerName.toLowerCase();
 	const normalizedBatchName = batchName.toLowerCase();
-	const batchImageKey = Object.keys(STATIC_BATCH_IMAGES_BY_BATCH).find((key) =>
+	const centerImageKey = Object.keys(STATIC_BATCH_IMAGES_BY_CENTER_AND_BATCH).find((key) =>
+		normalizedCenterName.includes(key)
+	);
+	const batchImageKey = Object.keys(
+		centerImageKey ? STATIC_BATCH_IMAGES_BY_CENTER_AND_BATCH[centerImageKey] : {}
+	).find((key) =>
 		normalizedBatchName.includes(key)
 	);
 
-	return batchImageKey ? STATIC_BATCH_IMAGES_BY_BATCH[batchImageKey] : undefined;
+	return centerImageKey && batchImageKey
+		? STATIC_BATCH_IMAGES_BY_CENTER_AND_BATCH[centerImageKey][batchImageKey]
+		: undefined;
 };
 
 const DIGIT_KEYCAPS = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];

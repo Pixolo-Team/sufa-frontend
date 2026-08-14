@@ -97,7 +97,7 @@ export const fetchOperationsData = async (): Promise<OperationsData> => {
 						id: batch.id,
 						name: batch.name,
 						ageGroup: batch.age_group,
-						imageSrc: getStaticBatchImageSrc(batch.name),
+						imageSrc: getStaticBatchImageSrc(center.name, batch.name),
 						schedule: timings
 							.filter((timing) => timing.batch_id === batch.id)
 							.map((timing) => ({
