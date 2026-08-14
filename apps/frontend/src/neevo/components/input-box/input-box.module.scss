@@ -86,7 +86,7 @@ $sizes: (
 			position: absolute;
 			z-index: 2;
 			top: 50%;
-			right: 12px;
+			right: var(--padding-select-horizontal, 16px);
 			transform: translateY(-50%);
 			display: flex;
 			align-items: center;
@@ -181,7 +181,7 @@ $sizes: (
 .inputBoxPaddingRight {
 	.inputWrapper {
 		.inputElement {
-			padding-right: calc(var(--padding-input-box-horizontal) + 28px);
+			padding-right: calc(var(--padding-select-horizontal, 16px) + 28px);
 		}
 	}
 }
@@ -190,7 +190,7 @@ $sizes: (
 .inputBoxClosePresent {
 	.inputWrapper {
 		.inputElement {
-			padding-right: calc(var(--padding-input-box-horizontal) + 28px);
+			padding-right: calc(var(--padding-select-horizontal, 16px) + 28px);
 		}
 	}
 }
@@ -198,7 +198,7 @@ $sizes: (
 .inputBoxRightClosePresent {
 	.inputWrapper {
 		.inputElement {
-			padding-right: calc(var(--padding-input-box-horizontal) + 56px);
+			padding-right: calc(var(--padding-select-horizontal, 16px) + 56px);
 		}
 	}
 }

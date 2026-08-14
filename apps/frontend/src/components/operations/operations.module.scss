@@ -443,8 +443,8 @@
 	pointer-events: none;
 	z-index: 0;
 	transition:
-		transform 0.28s cubic-bezier(0.2, 0, 0, 1),
-		width 0.28s cubic-bezier(0.2, 0, 0, 1);
+		transform 0.34s cubic-bezier(0.2, 0, 0, 1),
+		width 0.34s cubic-bezier(0.2, 0, 0, 1);
 	will-change: transform, width;
 
 	@media (prefers-reduced-motion: reduce) {
@@ -986,7 +986,7 @@
 	gap: 14px;
 	width: 100%;
 	min-height: 72px;
-	padding: 16px 18px;
+	padding: 16px;
 	border: 0;
 	background-color: transparent;
 	text-align: left;
@@ -1021,7 +1021,7 @@
 .batchAccordionPanelWrap {
 	display: grid;
 	grid-template-rows: 0fr;
-	transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+	transition: grid-template-rows 0.42s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .batchAccordionPanelWrapOpen {
@@ -1037,7 +1037,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 22px;
-	padding: 0 18px 18px;
+	padding: 0 16px 18px;
 }
 
 .centerBatchMeta {
