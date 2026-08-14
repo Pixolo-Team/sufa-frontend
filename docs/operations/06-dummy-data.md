@@ -12,8 +12,8 @@
 | Key | Value |
 | --- | --- |
 | Global UPI ID | ✅ `skorostunitedfootballschool@kotak` - **real value, confirmed** |
-| Payee name | `Skorost United Football Academy` 🔴 - confirm this is the exact name to show in UPI apps |
-| Staff PIN | `1234` 🔴 |
+| Payee name | ✅ `Skorost United Football School` - **real value, confirmed** |
+| Staff PIN | ✅ **real value set** - not shown here, see `.env` (`PUBLIC_STAFF_PIN`) |
 | Holidays | ✅ **No holiday check** - count every session day mechanically |
 | Rounding | ✅ Per-session price is derived from the 3-day package price
 (`price ÷ (months × 12)`), then rounded to the nearest ₹10 (< 5 rounds down,
@@ -101,5 +101,6 @@ For a free trial or to enroll, reply here. See you on the pitch! ⚽
 
 ## Real values still owed
 
-West pricing, the payee name sign-off, and the staff PIN. East pricing,
-batch names/ages/timings, and the global UPI ID are now real.
+West pricing and the fee-structure message wording. East pricing,
+batch names/ages/timings, the global UPI ID, payee name, and staff PIN
+are now real.

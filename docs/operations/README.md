@@ -25,9 +25,9 @@ backend endpoints are **not**.
 | [05-page-ux.md](05-page-ux.md) | The `/operations` page, two pages (Batches, Payments), PIN gate | 🟢 Built |
 | [06-dummy-data.md](06-dummy-data.md) | 🔴 Placeholder centers/prices/PIN/message - REPLACE before prod (UPI ID is now real) | 🔴 Mostly dummy |
 
-> **Real values still owed** (currently faked in doc 06): per-center prices and
-> per-session prices, addresses, batch days + timings, staff PIN, exact message
-> wording and image branding. The global UPI ID has been set to the real value.
+> **Real values still owed** (currently faked in doc 06): Ghatkopar West prices
+> and per-session prices, and the exact fee-structure message wording. The
+> global UPI ID, payee name, and staff PIN are now real.
 
 ## The two pages on the site
 

@@ -21,6 +21,7 @@ import styles from "./operations.module.scss";
 import Button from "@/neevo/components/button/Button";
 import Segmented from "./Segmented";
 import OperationsIcon from "./OperationsIcon";
+import BatchTimingsGrid from "./BatchTimingsGrid";
 
 // SERVICES //
 import { showToast } from "@/neevo/services/toast.service";
@@ -30,7 +31,6 @@ import { formatRupees } from "@/utils/fee-calculator.util";
 import {
 	buildShareFooterLines,
 	buildShareLetterheadLines,
-	formatBatchScheduleGrid,
 	formatBatchTimingLines,
 	formatDurationEmoji,
 	formatPlanLabel,
@@ -326,7 +326,6 @@ const BatchesList: React.FC<BatchesListProps> = ({
 							) : (
 								center.batches.map((batch) => {
 									const isOpen = openBatchId === batch.id;
-									const scheduleGrid = formatBatchScheduleGrid(batch);
 									const hasThreeDayFees = batch.plans.some(
 										(plan) => plan.daysPerWeek === 3
 									);
@@ -350,7 +349,7 @@ const BatchesList: React.FC<BatchesListProps> = ({
 													)
 												}
 											>
-												<span>
+												<span className={styles.batchAccordionLabel}>
 													<strong>{batch.name}</strong>
 													<small className={styles.centerBatchMeta}>
 														{batch.ageGroup}
@@ -376,24 +375,7 @@ const BatchesList: React.FC<BatchesListProps> = ({
 														<span className={styles.centerBlockLabel}>
 															Timings
 														</span>
-														<div
-															className={styles.timingGrid}
-															style={
-																{
-																	"--timing-cols": scheduleGrid.length,
-																} as React.CSSProperties
-															}
-														>
-															{scheduleGrid.map((slot) => (
-																<div
-																	key={`${batch.id}-${slot.day}-${slot.time}`}
-																	className={styles.timingCell}
-																>
-																	<strong>{slot.day}</strong>
-																	<span>{slot.time}</span>
-																</div>
-															))}
-														</div>
+														<BatchTimingsGrid batch={batch} />
 													</div>
 
 													<div className={styles.centerBlock}>

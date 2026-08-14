@@ -15,13 +15,14 @@ import styles from "./operations.module.scss";
 import InputBox from "@/neevo/components/input-box/InputBox";
 import Select from "@/neevo/components/select/Select";
 import Segmented from "./Segmented";
+import BatchTimingsGrid from "./BatchTimingsGrid";
 
 // HOOKS //
 import type { useFeeInputs } from "./use-fee-inputs";
 
 // UTILS //
 import { formatRupees } from "@/utils/fee-calculator.util";
-import { formatBatchTimings, formatWeekdayShort } from "@/utils/operations.util";
+import { formatWeekdayShort } from "@/utils/operations.util";
 
 interface FeeInputFieldsProps {
 	centers: OperationsCenterData[];
@@ -93,7 +94,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 	const registrationOptions = [
 		{ label: "None", value: "" },
 		...globalRegistrationOptions.map((item) => ({
-			label: item.name,
+			label: `${item.name} (${formatRupees(item.price)})`,
 			value: item.id,
 		})),
 	];
@@ -127,7 +128,8 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 	};
 
 	const onDurationChange = (value: string) => selectPlan(Number(value));
-	const showScheduleTabs = !!plan && plan.daysPerWeek === 2 && batchWeekdays.length > 0;
+	const showScheduleTabs =
+		!!plan && plan.daysPerWeek === 2 && batchWeekdays.length > plan.daysPerWeek;
 
 	return (
 		<div className={styles.fieldStack}>
@@ -145,12 +147,13 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 				placeholder="Select batch"
 				options={batchOptions}
 				selectedOption={selectedBatchOption}
-				caption={batch ? formatBatchTimings(batch) : ""}
 				isRequired
 				onChange={(option) => setBatchId(option.value)}
 			/>
 
-			{batch && durationOptions.length > 0 && (
+			{batch && <BatchTimingsGrid batch={batch} />}
+
+			{batch && durationOptions.length > 1 && (
 				<div>
 					<span className={styles.fieldLabel}>
 						Number of months<span style={{ color: "#de350b" }}>*</span>
@@ -163,7 +166,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 				</div>
 			)}
 
-			{plan && daysOptions.length > 0 && (
+			{plan && daysOptions.length > 1 && (
 				<div>
 					<span className={styles.fieldLabel}>
 						Number of days a week<span style={{ color: "#de350b" }}>*</span>
@@ -208,11 +211,6 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 					selectedOption={selectedRegistrationOption}
 					onChange={(option) => setRegistrationOptionId(option.value)}
 				/>
-				{registrationOption && (
-					<p className={styles.qrHint}>
-						{registrationOption.name} - {formatRupees(registrationOption.price)}
-					</p>
-				)}
 			</div>
 
 			<div className={styles.twoUp}>

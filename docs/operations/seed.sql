@@ -3,7 +3,7 @@
 -- Run after schema.sql + rls-policies.sql.
 
 INSERT INTO configs (academy_name, upi_id, payee_name) VALUES
-	('Skorost United Football Academy', 'skorostunitedfootballschool@kotak', 'Skorost United Football Academy');
+	('Skorost United Football Academy', 'skorostunitedfootballschool@kotak', 'Skorost United Football School');
 
 INSERT INTO centers (name, address, sort_order) VALUES
 	('Ghatkopar East', '12 MG Road, Ghatkopar East, Mumbai 400077', 1),

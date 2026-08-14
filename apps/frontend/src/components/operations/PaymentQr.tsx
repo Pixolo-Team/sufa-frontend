@@ -38,7 +38,6 @@ import {
 	buildShareFooterLines,
 	buildShareLetterheadLines,
 	formatPlanLabel,
-	SHARE_DIVIDER,
 } from "@/utils/operations.util";
 
 type QrMode = "global" | "payment" | "custom";
@@ -95,11 +94,10 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		if (amount > 0) params.set("am", String(amount));
 
 		const note = [
-			studentName.trim(),
 			isPaymentMode ? batch?.name : undefined,
 			isPaymentMode && plan ? formatPlanLabel(plan) : undefined,
 			isPaymentMode ? registrationOption?.name : undefined,
-			isCustomMode ? "Custom payment" : undefined,
+			isCustomMode ? customDescription.trim() || undefined : undefined,
 		]
 			.filter(Boolean)
 			.join(" | ")
@@ -115,7 +113,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		mode,
 		isPaymentMode,
 		isCustomMode,
-		studentName,
+		customDescription,
 		batch?.name,
 		plan,
 		registrationOption?.name,
@@ -183,37 +181,32 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 			return [
 				...buildShareLetterheadLines(config.payeeName),
 				"",
-				"Please scan the QR code and enter the payable amount.",
-				"",
 				`💳 *UPI ID:* ${config.upiId}`,
+				"",
+				"Please scan the QR code or click the link below to pay:",
+				upiUri,
 				"",
 				...buildShareFooterLines(),
 			].join("\n");
 		}
 
 		if (isCustomMode) {
-			const subject = customDescription.trim()
-				? customDescription.trim()
-				: "Custom payment";
+			const greeting = studentName.trim() ? `Hi ${studentName.trim()},` : "Hi,";
+			const subjectLine = customDescription.trim()
+				? `here is the QR code for the payment of your *${customDescription.trim()}*.`
+				: "here is the QR code for your payment.";
 
 			return [
 				...buildShareLetterheadLines(config.payeeName),
 				"",
-				studentName.trim() ? `👤 *Student:* ${studentName.trim()}` : null,
-				studentName.trim() ? "" : null,
-				SHARE_DIVIDER,
-				"",
-				`*${subject}*`,
+				`${greeting} ${subjectLine}`,
 				`💳 *Amount:* ${formatRupees(amount)}`,
 				"",
-				SHARE_DIVIDER,
-				"",
-				"Please scan the attached QR code to complete the payment.",
+				"Please scan the QR code or click the link below to pay:",
+				upiUri,
 				"",
 				...buildShareFooterLines(),
-			]
-				.filter((line): line is string => line !== null)
-				.join("\n");
+			].join("\n");
 		}
 
 		return [
@@ -223,14 +216,10 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 			batch ? `🏃 *Batch:* ${batch.name} (${batch.ageGroup})` : null,
 			plan ? `📦 *Package:* ${formatPlanLabel(plan)}` : null,
 			registrationOption ? `🎽 *Registration:* ${registrationOption.name}` : null,
-			"",
-			SHARE_DIVIDER,
-			"",
 			`💳 *Amount Due:* ${formatRupees(amount)}`,
 			"",
-			SHARE_DIVIDER,
-			"",
-			"Please scan the attached QR code to complete the payment.",
+			"Please scan the QR code or click the link below to pay:",
+			upiUri,
 			"",
 			...buildShareFooterLines(),
 		]
@@ -244,6 +233,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		amount,
 		config.payeeName,
 		config.upiId,
+		upiUri,
 		batch,
 		plan,
 		registrationOption,
@@ -276,51 +266,19 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		void copyText(upiUri, "Payment URL copied");
 	}, [copyText, upiUri]);
 
-	// This can pre-fill text but never a file, and it can target a specific
-	// number but the OS share sheet can't - so which one runs depends on
-	// whether a number was typed in. Either way the QR image still gets to the
-	// chat: attached directly via the share sheet, or downloaded for staff to
-	// attach by hand when a specific number pins us to the text-only deep link.
+	// Opens the WhatsApp chat with the message pre-filled - nothing else. QR
+	// download/share is a separate, explicit action via the Download button.
 	// api.whatsapp.com, not wa.me - the wa.me short-link redirect strips
 	// 4-byte UTF-8 (i.e. every emoji) on desktop before WhatsApp gets it.
-	const openWhatsApp = useCallback(async () => {
+	const openWhatsApp = useCallback(() => {
 		const digits = studentPhone.replace(/\D/g, "");
 		const waNumber = digits.length >= 10 ? `91${digits.slice(-10)}` : "";
-		const message = `${shareText}\n${upiUri}`;
+		const query = waNumber
+			? `phone=${waNumber}&text=${encodeURIComponent(shareText)}`
+			: `text=${encodeURIComponent(shareText)}`;
 
-		if (waNumber) {
-			downloadQr();
-			window.open(
-				`https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(message)}`,
-				"_blank",
-				"noopener"
-			);
-			showToast("QR downloaded | attach it in the chat", ToastTypes.SUCCESS);
-			return;
-		}
-
-		try {
-			const blob = await (await fetch(downloadSrc)).blob();
-			const file = new File([blob], fileName, { type: "image/png" });
-
-			if (navigator.canShare?.({ files: [file] })) {
-				await navigator.share({ files: [file], text: message });
-				return;
-			}
-		} catch (error) {
-			if (error instanceof DOMException && error.name === "AbortError") {
-				return;
-			}
-		}
-
-		downloadQr();
-		window.open(
-			`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`,
-			"_blank",
-			"noopener"
-		);
-		showToast("QR downloaded | attach it in the chat", ToastTypes.SUCCESS);
-	}, [studentPhone, shareText, upiUri, downloadSrc, fileName, downloadQr]);
+		window.open(`https://api.whatsapp.com/send?${query}`, "_blank", "noopener");
+	}, [studentPhone, shareText]);
 	const canGenerate = isPaymentMode
 		? !!batch && !!plan && amount > 0
 		: isCustomMode
@@ -438,8 +396,11 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 				{qrDataUrl ? (
 					<button
 						type="button"
-						className={styles.qrImageButton}
+						className={`${styles.qrImageButton} ${
+							!canGenerate ? styles.qrImageButtonDisabled : ""
+						}`}
 						aria-label="Open QR full screen"
+						disabled={!canGenerate}
 						onClick={openQrFullscreen}
 					>
 						<img
@@ -457,11 +418,11 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 				)}
 
 				<p className={styles.qrCaption}>
-					{mode !== "global" && amount > 0
-						? formatRupees(amount)
-						: isCustomMode
-							? ""
-							: config.academyName}
+					{mode === "global"
+						? config.academyName
+						: amount > 0
+							? formatRupees(amount)
+							: ""}
 				</p>
 				{mode !== "global" && (
 					<p className={styles.qrPayeeName}>{config.academyName}</p>
@@ -493,10 +454,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 				)}
 
 				{isPaymentMode && !canGenerate && (
-					<p className={styles.qrHint}>
-						Select a batch and plan first. The amount is calculated from the
-						batch-linked plan.
-					</p>
+					<p className={styles.qrHint}>Select a batch and plan to generate the QR.</p>
 				)}
 
 				{isCustomMode && !canGenerate && (

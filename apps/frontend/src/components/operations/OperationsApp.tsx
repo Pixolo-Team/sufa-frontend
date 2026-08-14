@@ -202,13 +202,15 @@ const OperationsApp: React.FC = () => {
 						</span>
 					)}
 
-					<img
-						className={styles.topBarLogo}
-						src="/images/brand/zizo.svg"
-						alt="Zizo"
-						width="34"
-						height="34"
-					/>
+					<a href="https://zizoapp.in" target="_blank" rel="noopener noreferrer">
+						<img
+							className={styles.topBarLogo}
+							src="/images/brand/zizo.svg"
+							alt="Zizo"
+							width="34"
+							height="34"
+						/>
+					</a>
 				</div>
 
 				<nav className={styles.rail}>

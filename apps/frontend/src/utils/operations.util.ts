@@ -33,26 +33,6 @@ const formatTime = (value: string): string => {
 	return `${hour12}:${`${minutes}`.padStart(2, "0")} ${suffix}`;
 };
 
-/** One readable slot, e.g. `Monday 6:00 PM - 7:00 PM`. */
-const formatTimingSlot = (
-	slot: OperationsBatchTimingData,
-	useShortDay = false
-): string =>
-	`${useShortDay ? WEEKDAY_SHORT[slot.day] : WEEKDAY_LONG[slot.day]} ${formatTime(
-		slot.startTime
-	)} - ${formatTime(slot.endTime)}`;
-
-/**
- * The timings line for a batch, e.g. `Mon 6:00 PM - 7:00 PM | Wed 7:00 PM - 8:00 PM`.
- * Timings live on the batch because one center can run several.
- */
-export const formatBatchTimings = (batch: OperationsBatchData): string =>
-	batch.schedule
-		.slice()
-		.sort((left, right) => left.day - right.day)
-		.map((slot) => formatTimingSlot(slot, true))
-		.join(" | ");
-
 /** WhatsApp share line for one slot, e.g. `MON 🕕 6:00 PM – 7:00 PM`. */
 const formatTimingShareLine = (slot: OperationsBatchTimingData): string =>
 	`${WEEKDAY_SHORT[slot.day].toUpperCase()} 🕕 ${formatTime(
@@ -66,6 +46,23 @@ export const formatBatchTimingLines = (batch: OperationsBatchData): string[] =>
 		.sort((left, right) => left.day - right.day)
 		.map((slot) => formatTimingShareLine(slot));
 
+/** `HH:mm` to minutes-since-midnight. */
+const parseTimeToMinutes = (value: string): number => {
+	const [hours, minutes] = value.split(":").map(Number);
+
+	return hours * 60 + minutes;
+};
+
+/** Session length between two `HH:mm` times, e.g. `60 min` or `1.5 hr`. */
+export const formatSessionDuration = (startTime: string, endTime: string): string => {
+	const minutes = parseTimeToMinutes(endTime) - parseTimeToMinutes(startTime);
+
+	if (minutes <= 0) return "";
+	if (minutes % 60 === 0) return `${minutes / 60} hr`;
+
+	return `${minutes} min`;
+};
+
 export const formatBatchScheduleGrid = (batch: OperationsBatchData) =>
 	batch.schedule
 		.slice()
@@ -73,7 +70,7 @@ export const formatBatchScheduleGrid = (batch: OperationsBatchData) =>
 		.map((slot) => ({
 			day: WEEKDAY_SHORT[slot.day],
 			time: formatTime(slot.startTime),
-			endTime: formatTime(slot.endTime),
+			duration: formatSessionDuration(slot.startTime, slot.endTime),
 		}));
 
 /** Unique weekdays available in a batch. */
@@ -98,12 +95,13 @@ export const formatDurationEmoji = (months: number): string => {
 	return "📅";
 };
 
-const SHARE_HEAVY_RULE = "━".repeat(24);
 export const SHARE_DIVIDER = "─".repeat(20);
+// Shorter than SHARE_DIVIDER so WhatsApp renders it as one solid bar instead
+// of wrapping onto a second line with a gap.
+const SHARE_HEAVY_RULE = "━".repeat(20);
 
 /** Letterhead framing the academy name at the top of every WhatsApp share. */
 export const buildShareLetterheadLines = (academyName: string): string[] => [
-	SHARE_HEAVY_RULE,
 	`⚽ *${academyName.toUpperCase()}*`,
 	SHARE_HEAVY_RULE,
 ];
