@@ -15,7 +15,9 @@ interface PinGateProps {
 const GatePoweredBy: React.FC = memo(() => (
 	<p className={`${styles.poweredBy} ${styles.gatePoweredBy}`}>
 		<span>Powered by</span>
-		<img src="/images/brand/zizo.svg" alt="Zizo" width="40" height="16" />
+		<a href="https://zizoapp.in" target="_blank" rel="noopener noreferrer">
+			<img src="/images/brand/zizo.svg" alt="Zizo" width="40" height="16" />
+		</a>
 	</p>
 ));
 
