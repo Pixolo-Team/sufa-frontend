@@ -220,7 +220,13 @@ export const useFeeInputs = (
 	}, [plan]);
 
 	const setEndDate = useCallback((endDate: string) => {
-		setInputs((previous) => ({ ...previous, endDate }));
+		setInputs((previous) => {
+			if (endDate && previous.startDate && endDate < previous.startDate) {
+				return previous;
+			}
+
+			return { ...previous, endDate };
+		});
 	}, []);
 
 	const setDaysPerWeek = useCallback((daysPerWeek: number) => {

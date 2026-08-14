@@ -234,6 +234,7 @@ const FeeInputFields: React.FC<FeeInputFieldsProps> = ({
 					label="End date"
 					type={InputTextTypes.DATE}
 					value={inputs.endDate}
+					min={inputs.startDate}
 					isError={false}
 					errorMessage=""
 					showClear={false}

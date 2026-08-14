@@ -33,6 +33,8 @@ interface InputBoxProps {
 	onBlur?: () => void;
 	onRightIconClick?: () => void;
 	id?: string;
+	min?: string;
+	max?: string;
 }
 
 /** Input Box Component */
@@ -55,6 +57,8 @@ const InputBox: React.FC<InputBoxProps> = ({
 	onBlur,
 	onRightIconClick,
 	id,
+	min,
+	max,
 }) => {
 	// Define States
 
@@ -120,6 +124,8 @@ const InputBox: React.FC<InputBoxProps> = ({
 					required={isRequired}
 					onBlur={onBlur}
 					id={id}
+					min={min}
+					max={max}
 				/>
 
 				<span className={styles.rightIconsWrapper}>

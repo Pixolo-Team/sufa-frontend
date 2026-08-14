@@ -65,14 +65,21 @@ $sizes: (
 				-webkit-appearance: none;
 				margin: 0;
 			}
-			// Hide native date picker indicator (custom icon used instead)
-			&::-webkit-calendar-picker-indicator {
-				display: none;
+			&[type="date"] {
 				-webkit-appearance: none;
-				width: 0;
-				height: 0;
+				appearance: none;
+			}
+			&[type="date"]::-webkit-calendar-picker-indicator,
+			&[type="date"]::-webkit-inner-spin-button,
+			&[type="date"]::-webkit-clear-button {
+				-webkit-appearance: none;
+				appearance: none;
+				background: transparent;
+				color: transparent;
 				opacity: 0;
-				pointer-events: none;
+				width: 24px;
+				height: 100%;
+				margin: 0;
 			}
 		}
 		.rightIconsWrapper {
