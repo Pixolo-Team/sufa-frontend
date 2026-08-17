@@ -41,6 +41,7 @@ export type OperationsCenterData = {
 	id: string;
 	name: string;
 	address: string;
+	mapsUrl: string | null;
 	batches: OperationsBatchData[];
 };
 

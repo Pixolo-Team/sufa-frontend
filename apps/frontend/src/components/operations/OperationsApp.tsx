@@ -21,6 +21,9 @@ const STAFF_PIN = import.meta.env.PUBLIC_STAFF_PIN ?? "";
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
 const UNLOCK_TTL_MS = 24 * 60 * 60 * 1000;
 
+// External link, not an in-app panel - opens the Zizo attendance portal.
+const ATTENDANCE_URL = "https://skorostunitedfootballschool.zizoapp.in/schedule";
+
 type ToolId = "batches" | "qr";
 
 const TOOLS: {
@@ -165,6 +168,25 @@ const OperationsApp: React.FC = () => {
 								/>
 							</button>
 						))}
+						<a
+							href={ATTENDANCE_URL}
+							target="_blank"
+							rel="noopener noreferrer"
+							className={styles.tile}
+						>
+							<span className={styles.tileIcon}>
+								<OperationsIcon name="pin" />
+							</span>
+							<span className={styles.tileText}>
+								<b>Attendance</b>
+								<small>Mark attendance on Zizo</small>
+							</span>
+							<OperationsIcon
+								name="chevron"
+								size={18}
+								className={styles.tileChevron}
+							/>
+						</a>
 					</div>
 				);
 		}

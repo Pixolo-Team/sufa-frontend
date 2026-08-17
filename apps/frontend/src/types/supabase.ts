@@ -20,6 +20,7 @@ export type Database = {
 					id: string;
 					name: string;
 					address: string;
+					maps_url: string | null;
 					sort_order: number;
 					is_active: boolean;
 					created_at: string;

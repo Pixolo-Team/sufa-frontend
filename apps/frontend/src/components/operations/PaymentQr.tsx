@@ -42,6 +42,10 @@ import {
 
 type QrMode = "global" | "payment" | "custom";
 
+// Payment surfaces (QR text, share message) show this name - not
+// config.academyName/config.payeeName, which stay as the UPI "pn" param.
+const PAYMENT_ACADEMY_NAME = "Skorost United Football School";
+
 const UPI_NOTE_MAX_LENGTH = 50;
 // Branded photo card - download/share only, never shown inline.
 const STATIC_GLOBAL_QR_SRC = "/images/operations/skorost-qr-payment.png";
@@ -179,7 +183,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 	const shareText = useMemo(() => {
 		if (mode === "global") {
 			return [
-				...buildShareLetterheadLines(config.payeeName),
+				...buildShareLetterheadLines(PAYMENT_ACADEMY_NAME),
 				"",
 				`💳 *UPI ID:* ${config.upiId}`,
 				"",
@@ -197,7 +201,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 				: "here is the QR code for your payment.";
 
 			return [
-				...buildShareLetterheadLines(config.payeeName),
+				...buildShareLetterheadLines(PAYMENT_ACADEMY_NAME),
 				"",
 				`${greeting} ${subjectLine}`,
 				`💳 *Amount:* ${formatRupees(amount)}`,
@@ -210,7 +214,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 		}
 
 		return [
-			...buildShareLetterheadLines(config.payeeName),
+			...buildShareLetterheadLines(PAYMENT_ACADEMY_NAME),
 			"",
 			studentName.trim() ? `👤 *Student:* ${studentName.trim()}` : null,
 			batch ? `🏃 *Batch:* ${batch.name} (${batch.ageGroup})` : null,
@@ -419,13 +423,13 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 
 				<p className={styles.qrCaption}>
 					{mode === "global"
-						? config.academyName
+						? PAYMENT_ACADEMY_NAME
 						: amount > 0
 							? formatRupees(amount)
 							: ""}
 				</p>
 				{mode !== "global" && (
-					<p className={styles.qrPayeeName}>{config.academyName}</p>
+					<p className={styles.qrPayeeName}>{PAYMENT_ACADEMY_NAME}</p>
 				)}
 				{mode === "global" && (
 					<p className={styles.qrHint}>
@@ -509,7 +513,7 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 					<img
 						className={styles.qrFullscreenLogo}
 						src="/images/skorost.svg"
-						alt="Skorost United Football Academy"
+						alt={PAYMENT_ACADEMY_NAME}
 					/>
 					<img
 						src={qrDataUrl}
@@ -522,12 +526,12 @@ const PaymentQr: React.FC<PaymentQrProps> = ({
 					<p className={styles.qrFullscreenName}>
 						{mode !== "global" && amount > 0
 							? formatRupees(amount)
-							: config.academyName}
+							: PAYMENT_ACADEMY_NAME}
 					</p>
 					<p className={styles.qrFullscreenHint}>
 						{mode === "global"
 							? config.upiId
-							: studentName.trim() || config.payeeName}
+							: studentName.trim() || PAYMENT_ACADEMY_NAME}
 					</p>
 					<button
 						className={styles.qrFullscreenClose}

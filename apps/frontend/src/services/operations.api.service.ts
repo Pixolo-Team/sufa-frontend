@@ -33,7 +33,7 @@ export const fetchOperationsData = async (): Promise<OperationsData> => {
 	] = await Promise.all([
 		supabase
 			.from("centers")
-			.select("id, name, address")
+			.select("id, name, address, maps_url")
 			.eq("is_active", true)
 			.order("sort_order"),
 		supabase
@@ -90,6 +90,7 @@ export const fetchOperationsData = async (): Promise<OperationsData> => {
 			id: center.id,
 			name: center.name,
 			address: center.address,
+			mapsUrl: center.maps_url,
 			batches: batches
 				.filter((batch) => batch.center_id === center.id)
 				.map((batch) => {

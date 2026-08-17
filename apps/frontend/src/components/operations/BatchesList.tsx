@@ -37,6 +37,9 @@ import {
 	SHARE_DIVIDER,
 } from "@/utils/operations.util";
 
+// Messages use the academy's public-facing youth-program name, not config.academyName.
+const MESSAGE_ACADEMY_NAME = "Skorost United Youth Academy";
+
 type ShareFormat = "text" | "copy-image";
 type ShareSections = {
 	plans?: boolean;
@@ -100,10 +103,12 @@ const buildTimingsLines = (batch: OperationsBatchData): string[] => [
 	...formatBatchTimingLines(batch),
 ];
 
-const buildVenueLines = (center: OperationsCenterData): string[] => [
-	"📌 *TRAINING VENUE*",
-	center.address,
-];
+const buildVenueLines = (center: OperationsCenterData): string[] =>
+	[
+		"📌 *TRAINING VENUE*",
+		center.address,
+		center.mapsUrl ? `🗺️ ${center.mapsUrl}` : null,
+	].filter((line): line is string => line !== null);
 
 const buildScheduleText = (
 	center: OperationsCenterData,
@@ -264,13 +269,13 @@ const BatchesList: React.FC<BatchesListProps> = ({
 				center!,
 				batch,
 				registrationOptions,
-				config.academyName,
+				MESSAGE_ACADEMY_NAME,
 				sections
 			);
 
 			shareText(text);
 		},
-		[copyImage, shareText, center, registrationOptions, config.academyName]
+		[copyImage, shareText, center, registrationOptions]
 	);
 
 	const openSharePicker = useCallback(
