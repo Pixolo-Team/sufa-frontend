@@ -1,0 +1,78 @@
+---
+// STYLES //
+// Just the toast styles, not all of globals.scss - showToast() appends its
+// own element straight to document.body, so this is the one piece of shared
+// UI this otherwise-isolated page actually depends on.
+import "@/styles/toast.scss";
+
+// TYPES //
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "" } = Astro.props;
+
+const GOOGLE_ANALYTICS_ID = "G-V7ETJVBHG2";
+---
+
+{/*
+	Deliberately chrome-free, like OperationsLayout: this is a standalone lead-gen
+	landing page (its own logo header + footer, no site nav), ported from the
+	Lovable-built registration.skorostunited.com. It intentionally does not use
+	BaseLayout so the site's Header/Footer never render here, and it loads its own
+	fonts/styles scoped to this page only - nothing here can bleed into other routes.
+*/}
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		{description && <meta name="description" content={description} />}
+
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+		{/*
+			The Lovable design has no real dark mode, so pin the scheme to light -
+			otherwise a dark-mode browser paints its own black UA background behind
+			the page content (same fix as OperationsLayout).
+		*/}
+		<meta name="color-scheme" content="light" />
+		<style is:inline>
+			:root {
+				color-scheme: light;
+			}
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				background-color: hsl(45 100% 98%);
+			}
+		</style>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap"
+		/>
+
+		{/* Google Analytics */}
+		<script
+			is:inline
+			async
+			src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}></script>
+		<script is:inline define:vars={{ GOOGLE_ANALYTICS_ID }}>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				window.dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+			gtag("config", GOOGLE_ANALYTICS_ID);
+		</script>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
