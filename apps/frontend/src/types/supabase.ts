@@ -14,6 +14,9 @@ export type Database = {
 					payee_name: string;
 					created_at: string;
 				};
+				Insert: never;
+				Update: never;
+				Relationships: [];
 			};
 			centers: {
 				Row: {
@@ -25,6 +28,9 @@ export type Database = {
 					is_active: boolean;
 					created_at: string;
 				};
+				Insert: never;
+				Update: never;
+				Relationships: [];
 			};
 			batches: {
 				Row: {
@@ -36,6 +42,9 @@ export type Database = {
 					is_active: boolean;
 					created_at: string;
 				};
+				Insert: never;
+				Update: never;
+				Relationships: [];
 			};
 			batch_timings: {
 				Row: {
@@ -46,6 +55,9 @@ export type Database = {
 					end_time: string;
 					created_at: string;
 				};
+				Insert: never;
+				Update: never;
+				Relationships: [];
 			};
 			plans: {
 				Row: {
@@ -59,6 +71,9 @@ export type Database = {
 					is_active: boolean;
 					created_at: string;
 				};
+				Insert: never;
+				Update: never;
+				Relationships: [];
 			};
 			registration_options: {
 				Row: {
@@ -70,7 +85,34 @@ export type Database = {
 					is_active: boolean;
 					created_at: string;
 				};
+				Insert: never;
+				Update: never;
+				Relationships: [];
+			};
+			leads: {
+				Row: {
+					id: string;
+					name: string;
+					phone: string;
+					student_name: string;
+					student_dob: string | null;
+					other_info: string | null;
+					created_at: string;
+				};
+				Insert: {
+					name: string;
+					phone: string;
+					student_name: string;
+					student_dob?: string | null;
+					other_info?: string | null;
+				};
+				Update: never;
+				Relationships: [];
 			};
 		};
+		Views: Record<string, never>;
+		Functions: Record<string, never>;
+		Enums: Record<string, never>;
+		CompositeTypes: Record<string, never>;
 	};
 };

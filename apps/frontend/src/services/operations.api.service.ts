@@ -9,10 +9,22 @@ import type { Database } from "@/types/supabase";
 import { getStaticBatchImageSrc } from "@/utils/operations.util";
 
 type ConfigRow = Database["public"]["Tables"]["configs"]["Row"];
-type CenterRow = Database["public"]["Tables"]["centers"]["Row"];
-type BatchRow = Database["public"]["Tables"]["batches"]["Row"];
-type BatchTimingRow = Database["public"]["Tables"]["batch_timings"]["Row"];
-type PlanRow = Database["public"]["Tables"]["plans"]["Row"];
+type CenterResult = Pick<
+	Database["public"]["Tables"]["centers"]["Row"],
+	"id" | "name" | "address" | "maps_url"
+>;
+type BatchResult = Pick<
+	Database["public"]["Tables"]["batches"]["Row"],
+	"id" | "center_id" | "name" | "age_group"
+>;
+type BatchTimingResult = Pick<
+	Database["public"]["Tables"]["batch_timings"]["Row"],
+	"batch_id" | "day_of_week" | "start_time" | "end_time"
+>;
+type PlanResult = Pick<
+	Database["public"]["Tables"]["plans"]["Row"],
+	"id" | "batch_id" | "duration_months" | "days_per_week" | "price" | "per_session_price"
+>;
 
 /**
  * Flat queries, assembled in JS - rather than one nested `.select()` - because
@@ -73,10 +85,10 @@ export const fetchOperationsData = async (): Promise<OperationsData> => {
 
 	const config: Pick<ConfigRow, "academy_name" | "upi_id" | "payee_name"> =
 		configResult.data;
-	const centers: CenterRow[] = centersResult.data;
-	const batches: BatchRow[] = batchesResult.data;
-	const timings: BatchTimingRow[] = timingsResult.data;
-	const plans: PlanRow[] = plansResult.data;
+	const centers: CenterResult[] = centersResult.data;
+	const batches: BatchResult[] = batchesResult.data;
+	const timings: BatchTimingResult[] = timingsResult.data;
+	const plans: PlanResult[] = plansResult.data;
 
 	return {
 		config: {

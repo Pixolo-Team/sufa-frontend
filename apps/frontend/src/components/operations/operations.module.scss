@@ -282,6 +282,23 @@
 	text-transform: uppercase;
 }
 
+/* ---------- lead form ---------- */
+
+.leadForm {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.leadForm .inputBox,
+.leadForm .textArea {
+	width: 100%;
+}
+
+.leadForm .buttonWrapper {
+	margin-top: 8px;
+}
+
 /* ---------- home launcher ---------- */
 
 .tiles {

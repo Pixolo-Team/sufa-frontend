@@ -20,6 +20,7 @@ CREATE TABLE centers (
 	id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 	name        TEXT NOT NULL,
 	address     TEXT NOT NULL,
+	maps_url    TEXT,
 	sort_order  SMALLINT NOT NULL DEFAULT 0,
 	is_active   BOOLEAN NOT NULL DEFAULT true,
 	created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
@@ -75,3 +76,22 @@ CREATE TABLE registration_options (
 	is_active    BOOLEAN NOT NULL DEFAULT true,
 	created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Enquiries captured by staff in the operations "Add Lead" tool. Anon key
+-- writes here (no backend), so RLS must allow inserts - see policy below.
+-- Length checks are a cheap guard against garbage/oversized payloads on the
+-- open anon-insert policy below - they do not stop spam volume, which would
+-- need a rate limiter or captcha in front of this (no backend to host one yet).
+CREATE TABLE leads (
+	id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	name          TEXT NOT NULL CHECK (char_length(name) BETWEEN 1 AND 100),
+	phone         TEXT NOT NULL CHECK (char_length(phone) BETWEEN 1 AND 20),
+	student_name  TEXT NOT NULL CHECK (char_length(student_name) BETWEEN 1 AND 100),
+	student_dob   DATE,
+	other_info    TEXT CHECK (other_info IS NULL OR char_length(other_info) <= 2000),
+	created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow anon insert on leads" ON leads
+	FOR INSERT TO anon WITH CHECK (true);

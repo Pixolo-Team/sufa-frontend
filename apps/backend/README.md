@@ -10,7 +10,6 @@ API service + academy database for the operations tooling. Framework: **Hono**
 src/
 ├── index.ts                    # Hono app entry, mounts routes
 ├── db/
-│   ├── schema.sql              # DDL for centers, plans, prices, config
 │   ├── types.ts                # shared TS types (also used by the frontend)
 │   └── seed.ts                 # DUMMY seed data (from docs/operations/06)
 └── routes/

@@ -1,38 +1,23 @@
-// PLUGINS //
-import axios from "axios";
-import type { AxiosRequestConfig } from "axios";
+// SUPABASE //
+import { supabase } from "@/services/supabase.client";
 
-/** Create Lead API Call */
-export const createLeadRequest = async (data: any) => {
-	const privyrApiKey = import.meta.env.PUBLIC_PRIVYR_API_KEY?.trim();
+export type CreateLeadInput = {
+	name: string;
+	phone: string;
+	studentName: string;
+	studentDob: string;
+	otherInfo: string;
+};
 
-	if (!privyrApiKey) {
-		console.error("Missing PUBLIC_PRIVYR_API_KEY for Privyr lead submission.");
-		return {
-			success: false,
-			message: "Lead form is not configured yet. Please try again later.",
-		};
-	}
+/** Inserts one row into the `leads` table. */
+export const createLeadRequest = async (input: CreateLeadInput): Promise<void> => {
+	const { error } = await supabase.from("leads").insert({
+		name: input.name,
+		phone: input.phone,
+		student_name: input.studentName,
+		student_dob: input.studentDob || null,
+		other_info: input.otherInfo || null,
+	});
 
-	try {
-		// Set up the API Call Config
-		const config: AxiosRequestConfig = {
-			method: "post",
-			url: `https://www.privyr.com/api/v1/incoming-leads/${privyrApiKey}`,
-			headers: {
-				"Content-Type": "application/json",
-			},
-			data,
-		};
-
-		// Make API Call
-		const response = await axios.request(config);
-		return response.data;
-	} catch (error: any) {
-		return {
-			success: false,
-			message:
-				error.response?.data?.message ?? "Failed to create lead. Please try again later.",
-		};
-	}
+	if (error) throw error;
 };

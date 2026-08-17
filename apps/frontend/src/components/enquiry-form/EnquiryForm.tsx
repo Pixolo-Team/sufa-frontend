@@ -5,8 +5,10 @@ import { useState, useCallback } from "react";
 // TYPES //
 import type { DropdownOptionData } from "@/neevo/types/forms";
 
+// CONSTANTS //
+import { VENUE_OPTIONS } from "@/constants/venues";
+
 // ENUMS //
-import { ToastTypes } from "@/neevo/enums/toast.enum";
 import { InputTextTypes } from "@/neevo/enums/input.enum";
 import { Colors, Shapes } from "@/neevo/enums/core.enum";
 import { ButtonSizes } from "@/neevo/enums/button.enum";
@@ -20,17 +22,8 @@ import Button from "@/neevo/components/button/Button";
 import Select from "@/neevo/components/select/Select";
 import TextArea from "@/neevo/components/text-area/TextArea";
 
-// API SERVICES //
-import { createLeadRequest } from "@/services/api/leads.api.service";
-
-// SERVICES //
-import { showToast } from "@/neevo/services/toast.service";
-
-// Venue options
-const VENUE_OPTIONS: DropdownOptionData[] = [
-	{ label: "Ghatkopar East", value: "Ghatkopar East" },
-	{ label: "Ghatkopar West", value: "Ghatkopar West" },
-];
+// HOOKS //
+import { useLeadSubmit } from "@/hooks/use-lead-submit";
 
 // Initial form state
 const ENQUIRY_INPUT_INIT = {
@@ -83,47 +76,42 @@ const EnquiryForm: React.FC = () => {
 		return Object.keys(newErrors).length === 0;
 	}, [enquiryInputs]);
 
+	const { submitLead, isSubmitting } = useLeadSubmit({
+		onSuccess: () => setEnquiryInputs(ENQUIRY_INPUT_INIT),
+		successMessage: "Lead created successfully",
+		errorMessage: "Failed to create lead",
+	});
+
 	/** Submit Enquiry form */
 	const submitEnquiryForm = useCallback(() => {
 		// If not a valid form then return
 		if (!validateEnquiryForm()) return;
 
-		// Map to the lead payload. The contact "name" is the parent (Your name);
-		// student details ride along in other_fields.
-		const leadPayload = {
+		// Venue/subject/details have no dedicated columns on `leads` - fold
+		// them into other_info so nothing is lost. Same "Label: value" line
+		// convention as the staff Add Lead form, so other_info reads the same
+		// way regardless of source.
+		const venue =
+			(enquiryInputs.other_fields.venue as DropdownOptionData | null)
+				?.value ?? "";
+		const otherInfo = [
+			"Subject: Free Session",
+			venue ? `Venue: ${venue}` : null,
+			enquiryInputs.other_fields.details
+				? `Details: ${enquiryInputs.other_fields.details}`
+				: null,
+		]
+			.filter(Boolean)
+			.join("\n");
+
+		submitLead({
 			name: enquiryInputs.parentName,
 			phone: enquiryInputs.phone,
-			other_fields: {
-				subject: "Free Session",
-				student_name: enquiryInputs.studentName,
-				student_dob: enquiryInputs.dob,
-				venue:
-					(enquiryInputs.other_fields.venue as DropdownOptionData | null)
-						?.value ?? "",
-				details: enquiryInputs.other_fields.details,
-			},
-		};
-
-		// Make Api call
-		createLeadRequest(leadPayload)
-			.then((response) => {
-				// If success then show a toast and reset form
-				if (response.success) {
-					showToast("Lead created successfully", ToastTypes.SUCCESS);
-					// Reset form
-					setEnquiryInputs(ENQUIRY_INPUT_INIT);
-				} else {
-					showToast(
-						response.message ?? "Failed to create lead",
-						ToastTypes.ERROR
-					);
-				}
-			})
-
-			.catch(() => {
-				showToast("Failed to create lead", ToastTypes.ERROR);
-			});
-	}, [enquiryInputs, validateEnquiryForm]);
+			studentName: enquiryInputs.studentName,
+			studentDob: enquiryInputs.dob,
+			otherInfo,
+		});
+	}, [enquiryInputs, validateEnquiryForm, submitLead]);
 
 	/** Update Inputs */
 	const handleInputChange = useCallback((key: string, value: string) => {
@@ -242,11 +230,12 @@ const EnquiryForm: React.FC = () => {
 			<div className={styles.buttonWrapper}>
 				<Button
 					onClick={submitEnquiryForm}
-					text="Submit"
+					text={isSubmitting ? "Submitting..." : "Submit"}
 					color={Colors.SECONDARY}
 					shape={Shapes.ROUNDED}
 					size={ButtonSizes.XLARGE}
 					extraClass="font-weight-600"
+					isDisabled={isSubmitting}
 				/>
 			</div>
 		</>

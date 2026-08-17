@@ -3,7 +3,9 @@ export type OperationsIconName =
 	| "pin"
 	| "chevron"
 	| "back"
-	| "lock";
+	| "lock"
+	| "user-plus"
+	| "calendar-check";
 
 /** Stroke paths, drawn on a 24×24 grid in `currentColor` */
 const ICON_PATHS: Record<OperationsIconName, React.ReactNode> = {
@@ -34,6 +36,23 @@ const ICON_PATHS: Record<OperationsIconName, React.ReactNode> = {
 		<>
 			<rect x="5" y="10.5" width="14" height="10" rx="2.5" />
 			<path d="M8.5 10.5V7.75a3.5 3.5 0 017 0v2.75" />
+		</>
+	),
+	"user-plus": (
+		<>
+			<circle cx="9.5" cy="8" r="3.25" />
+			<path d="M3.5 20c0-3.5 2.7-6 6-6s6 2.5 6 6" />
+			<path d="M18 8v6" />
+			<path d="M15 11h6" />
+		</>
+	),
+	"calendar-check": (
+		<>
+			<rect x="4" y="5.5" width="16" height="14.5" rx="2" />
+			<path d="M4 10h16" />
+			<path d="M8 3.5v3" />
+			<path d="M16 3.5v3" />
+			<path d="M9 14.5l2 2 4-4" />
 		</>
 	),
 };

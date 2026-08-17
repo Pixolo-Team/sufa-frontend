@@ -9,6 +9,7 @@ import OperationsIcon, { type OperationsIconName } from "./OperationsIcon";
 import PinGate from "./PinGate";
 import PaymentQr from "./PaymentQr";
 import BatchesList from "./BatchesList";
+import LeadForm from "./LeadForm";
 
 // SERVICES //
 import { fetchOperationsData } from "@/services/operations.api.service";
@@ -21,17 +22,27 @@ const STAFF_PIN = import.meta.env.PUBLIC_STAFF_PIN ?? "";
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
 const UNLOCK_TTL_MS = 24 * 60 * 60 * 1000;
 
-// External link, not an in-app panel - opens the Zizo attendance portal.
-const ATTENDANCE_URL = "https://skorostunitedfootballschool.zizoapp.in/schedule";
+type ToolId = "batches" | "qr" | "lead";
 
-type ToolId = "batches" | "qr";
-
-const TOOLS: {
+type PanelToolTile = {
 	id: ToolId;
 	icon: OperationsIconName;
 	title: string;
 	subtitle: string;
-}[] = [
+};
+
+type ExternalToolTile = {
+	href: string;
+	icon: OperationsIconName;
+	title: string;
+	subtitle: string;
+};
+
+type ToolTile = PanelToolTile | ExternalToolTile;
+
+// Tiles with `id` open an in-app panel; tiles with `href` are external links
+// (e.g. Attendance) and only ever render in the home grid, never the rail.
+const TOOLS: ToolTile[] = [
 	{
 		id: "batches",
 		icon: "pin",
@@ -44,7 +55,23 @@ const TOOLS: {
 		title: "Payments",
 		subtitle: "QR & fee collection",
 	},
+	{
+		id: "lead",
+		icon: "user-plus",
+		title: "Add Lead",
+		subtitle: "Capture a new enquiry",
+	},
+	{
+		href: "https://skorostunitedfootballschool.zizoapp.in/schedule",
+		icon: "calendar-check",
+		title: "Attendance",
+		subtitle: "Mark attendance on Zizo",
+	},
 ];
+
+const PANEL_TOOLS = TOOLS.filter(
+	(tool): tool is PanelToolTile => "id" in tool
+);
 
 /** Staff-only operations tools. Everything is computed and sent in the browser. */
 const OperationsApp: React.FC = () => {
@@ -122,7 +149,7 @@ const OperationsApp: React.FC = () => {
 
 	const { config, centers, registrationOptions } = data;
 	const center = centers.find((item) => item.id === centerId);
-	const activeToolMeta = TOOLS.find((tool) => tool.id === activeTool);
+	const activeToolMeta = PANEL_TOOLS.find((tool) => tool.id === activeTool);
 
 	const renderPanel = () => {
 		const toolProps = { centers, center, onCenterChange: setCenterId };
@@ -144,49 +171,54 @@ const OperationsApp: React.FC = () => {
 						registrationOptions={registrationOptions}
 					/>
 				);
+			case "lead":
+				return <LeadForm />;
 			default:
 				return (
 					<div className={styles.tiles}>
-						{TOOLS.map((tool) => (
-							<button
-								key={tool.id}
-								type="button"
-								className={styles.tile}
-								onClick={() => setActiveTool(tool.id)}
-							>
-								<span className={styles.tileIcon}>
-									<OperationsIcon name={tool.icon} />
-								</span>
-								<span className={styles.tileText}>
-									<b>{tool.title}</b>
-									<small>{tool.subtitle}</small>
-								</span>
-								<OperationsIcon
-									name="chevron"
-									size={18}
-									className={styles.tileChevron}
-								/>
-							</button>
-						))}
-						<a
-							href={ATTENDANCE_URL}
-							target="_blank"
-							rel="noopener noreferrer"
-							className={styles.tile}
-						>
-							<span className={styles.tileIcon}>
-								<OperationsIcon name="pin" />
-							</span>
-							<span className={styles.tileText}>
-								<b>Attendance</b>
-								<small>Mark attendance on Zizo</small>
-							</span>
-							<OperationsIcon
-								name="chevron"
-								size={18}
-								className={styles.tileChevron}
-							/>
-						</a>
+						{TOOLS.map((tool) => {
+							const tileContent = (
+								<>
+									<span className={styles.tileIcon}>
+										<OperationsIcon name={tool.icon} />
+									</span>
+									<span className={styles.tileText}>
+										<b>{tool.title}</b>
+										<small>{tool.subtitle}</small>
+									</span>
+									<OperationsIcon
+										name="chevron"
+										size={18}
+										className={styles.tileChevron}
+									/>
+								</>
+							);
+
+							if ("href" in tool) {
+								return (
+									<a
+										key={tool.title}
+										href={tool.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										className={styles.tile}
+									>
+										{tileContent}
+									</a>
+								);
+							}
+
+							return (
+								<button
+									key={tool.id}
+									type="button"
+									className={styles.tile}
+									onClick={() => setActiveTool(tool.id)}
+								>
+									{tileContent}
+								</button>
+							);
+						})}
 					</div>
 				);
 		}
@@ -236,7 +268,7 @@ const OperationsApp: React.FC = () => {
 				</div>
 
 				<nav className={styles.rail}>
-					{TOOLS.map((tool) => (
+					{PANEL_TOOLS.map((tool) => (
 						<button
 							key={tool.id}
 							type="button"
