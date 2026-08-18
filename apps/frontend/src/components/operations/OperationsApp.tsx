@@ -51,7 +51,7 @@ const TOOLS: ToolTile[] = [
 	},
 	{
 		id: "qr",
-		icon: "qr",
+		icon: "qr-code",
 		title: "Payments",
 		subtitle: "QR & fee collection",
 	},

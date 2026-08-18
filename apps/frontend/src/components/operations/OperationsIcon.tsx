@@ -1,5 +1,5 @@
 export type OperationsIconName =
-	| "qr"
+	| "qr-code"
 	| "pin"
 	| "chevron"
 	| "back"
@@ -9,14 +9,20 @@ export type OperationsIconName =
 
 /** Stroke paths, drawn on a 24×24 grid in `currentColor` */
 const ICON_PATHS: Record<OperationsIconName, React.ReactNode> = {
-	qr: (
+	"qr-code": (
 		<>
-			<rect x="3.5" y="3.5" width="7" height="7" rx="1.5" />
-			<rect x="13.5" y="3.5" width="7" height="7" rx="1.5" />
-			<rect x="3.5" y="13.5" width="7" height="7" rx="1.5" />
-			<line x1="13.5" y1="13.5" x2="13.5" y2="20.5" />
-			<line x1="17" y1="13.5" x2="20.5" y2="13.5" />
-			<line x1="20.5" y1="17" x2="20.5" y2="20.5" />
+			<rect width="5" height="5" x="3" y="3" rx="1" />
+			<rect width="5" height="5" x="16" y="3" rx="1" />
+			<rect width="5" height="5" x="3" y="16" rx="1" />
+			<path d="M21 16h-3a2 2 0 0 0-2 2v3" />
+			<path d="M21 21v.01" />
+			<path d="M12 7v3a2 2 0 0 1-2 2H7" />
+			<path d="M3 12h.01" />
+			<path d="M12 3h.01" />
+			<path d="M12 16v.01" />
+			<path d="M16 12h1" />
+			<path d="M21 12v.01" />
+			<path d="M12 21v-1" />
 		</>
 	),
 	pin: (
