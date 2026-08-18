@@ -135,6 +135,26 @@
 	}
 }
 
+// Ultra-wide screens (1920px+): `.left-container-padding`'s own
+// viewport-based calc (centered against a 1440px container) and the grid's
+// proportional 60/40 columns each keep growing past what the text
+// (max-width: 1050px) and the height-capped artwork actually need, leaving
+// a large dead gap between them. Capping and centering the whole row - and
+// dropping the now-redundant left padding, since centering already
+// provides the left inset - keeps both sides close to their real content
+// width instead.
+@media only screen and (min-width: 1700px) {
+	.contentWrapper {
+		max-width: 1700px;
+		margin-inline: auto;
+	}
+	.messageWrapper {
+		:global(.left-container-padding) {
+			padding-left: 0;
+		}
+	}
+}
+
 // Custom
 @media only screen and (max-width: 991px) {
 	.messageWrapper {
