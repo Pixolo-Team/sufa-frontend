@@ -2,7 +2,7 @@
 import { useCallback, useMemo, useState } from "react";
 
 // STYLES //
-import styles from "./registration.module.scss";
+import styles from "./registration-page.module.scss";
 
 // CONSTANTS //
 import { VENUE_OPTIONS } from "@/constants/venues";
