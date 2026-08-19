@@ -78,20 +78,19 @@ const LeadForm: React.FC = () => {
 	const handleSubmit = useCallback(() => {
 		if (!validate()) return;
 
-		// Same "Label: value" line convention as the public enquiry form, so
-		// other_info reads the same way regardless of source.
 		const otherInfo = [
-			inputs.venue ? `Venue: ${inputs.venue.value}` : null,
 			inputs.otherInfo.trim() ? `Details: ${inputs.otherInfo.trim()}` : null,
 		]
 			.filter(Boolean)
 			.join("\n");
 
 		submitLead({
+			source: "operation_portal",
 			name: inputs.name,
 			phone: inputs.phone,
 			studentName: inputs.studentName,
 			studentDob: inputs.studentDob,
+			centerName: inputs.venue?.value ?? null,
 			otherInfo,
 		});
 	}, [inputs, validate, submitLead]);

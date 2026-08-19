@@ -87,16 +87,10 @@ const EnquiryForm: React.FC = () => {
 		// If not a valid form then return
 		if (!validateEnquiryForm()) return;
 
-		// Venue/subject/details have no dedicated columns on `leads` - fold
-		// them into other_info so nothing is lost. Same "Label: value" line
-		// convention as the staff Add Lead form, so other_info reads the same
-		// way regardless of source.
 		const venue =
 			(enquiryInputs.other_fields.venue as DropdownOptionData | null)
 				?.value ?? "";
 		const otherInfo = [
-			"Subject: Free Session",
-			venue ? `Venue: ${venue}` : null,
 			enquiryInputs.other_fields.details
 				? `Details: ${enquiryInputs.other_fields.details}`
 				: null,
@@ -105,10 +99,12 @@ const EnquiryForm: React.FC = () => {
 			.join("\n");
 
 		submitLead({
+			source: "homepage_enquiry",
 			name: enquiryInputs.parentName,
 			phone: enquiryInputs.phone,
 			studentName: enquiryInputs.studentName,
 			studentDob: enquiryInputs.dob,
+			centerName: venue,
 			otherInfo,
 		});
 	}, [enquiryInputs, validateEnquiryForm, submitLead]);

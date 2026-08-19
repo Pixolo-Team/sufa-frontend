@@ -41,14 +41,6 @@ const GENDERS = [
 	{ value: "other", label: "Other" },
 ];
 
-// Plain (no emoji) text for the `other_info` line - GENDERS' labels are for
-// the on-screen pills only.
-const GENDER_TEXT: Record<string, string> = {
-	male: "Boy",
-	female: "Girl",
-	other: "Other",
-};
-
 const CONNECT_LINKS = [
 	{
 		href: "https://academy.skorostunited.com/",
@@ -158,22 +150,22 @@ const RegistrationApp: React.FC = () => {
 				return;
 			}
 
-			// Same "Subject" / "Venue" line order as EnquiryForm's other_info, so
-			// staff reading leads from either source see a consistent layout.
 			const otherInfo = [
 				"Subject: Free Trial (Registration Form)",
-				form.trainingVenue ? `Venue: ${form.trainingVenue}` : null,
-				`Gender: ${GENDER_TEXT[form.gender] ?? form.gender}`,
 			]
 				.filter(Boolean)
 				.join("\n");
 
 			submitLead({
-				name: form.playerName,
+				source: "registration_page",
+				name: null,
 				phone: form.mobileNumber,
 				studentName: form.playerName,
 				studentDob: form.dateOfBirth,
+				centerName: form.trainingVenue,
+				gender: form.gender as "male" | "female" | "other",
 				otherInfo,
+				consent: form.consent,
 			});
 		},
 		[form, validate, submitLead]

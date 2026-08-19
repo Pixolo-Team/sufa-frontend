@@ -89,26 +89,6 @@ export type Database = {
 				Update: never;
 				Relationships: [];
 			};
-			leads: {
-				Row: {
-					id: string;
-					name: string;
-					phone: string;
-					student_name: string;
-					student_dob: string | null;
-					other_info: string | null;
-					created_at: string;
-				};
-				Insert: {
-					name: string;
-					phone: string;
-					student_name: string;
-					student_dob?: string | null;
-					other_info?: string | null;
-				};
-				Update: never;
-				Relationships: [];
-			};
 		};
 		Views: Record<string, never>;
 		Functions: Record<string, never>;
