@@ -5,7 +5,8 @@ export type OperationsIconName =
 	| "back"
 	| "lock"
 	| "user-plus"
-	| "calendar-check";
+	| "calendar-check"
+	| "info-book";
 
 /** Stroke paths, drawn on a 24×24 grid in `currentColor` */
 const ICON_PATHS: Record<OperationsIconName, React.ReactNode> = {
@@ -59,6 +60,14 @@ const ICON_PATHS: Record<OperationsIconName, React.ReactNode> = {
 			<path d="M8 3.5v3" />
 			<path d="M16 3.5v3" />
 			<path d="M9 14.5l2 2 4-4" />
+		</>
+	),
+	"info-book": (
+		<>
+			<path d="M4 5.5A2 2 0 016 3.5h13v14H6a2 2 0 00-2 2z" />
+			<path d="M4 19.5a2 2 0 012-2h13v3H6a2 2 0 01-2-2z" />
+			<path d="M9.5 8h6" />
+			<path d="M9.5 11.5h4" />
 		</>
 	),
 };

@@ -1946,3 +1946,305 @@
 		height: 30px;
 	}
 }
+
+/* ---------- regular information ----------
+   Reference material staff copy/paste to parents. Each card is a collapsible
+   section; the card padding is handled by .card, so these only cover the
+   header/body split and the content types (text block, table, image). */
+
+.infoCard {
+	padding: 0;
+	overflow: hidden;
+}
+
+.infoCardOpen {
+	border-color: rgba(0, 197, 102, 0.28);
+}
+
+.infoHeader {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	min-height: 72px;
+	padding: 16px 18px;
+	border: 0;
+	background-color: transparent;
+	color: var(--ops-ink);
+	text-align: left;
+	cursor: pointer;
+	transition: background-color 0.18s ease;
+
+	&:hover {
+		background-color: var(--ops-surface-sunken);
+	}
+}
+
+.infoHeaderText {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	flex: 1;
+	min-width: 0;
+
+	b {
+		font-size: 14.5px;
+		font-weight: 600;
+	}
+
+	small {
+		color: var(--ops-muted);
+		font-size: 12px;
+		line-height: 1.4;
+	}
+}
+
+.infoChevron {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+	width: 30px;
+	height: 30px;
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-surface-sunken);
+	color: var(--ops-muted);
+	transition: transform 0.24s ease;
+}
+
+.infoChevronOpen {
+	transform: rotate(180deg);
+}
+
+.infoBodyWrap {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.infoBodyWrapOpen {
+	grid-template-rows: 1fr;
+}
+
+.infoBodyInner {
+	min-height: 0;
+	overflow: hidden;
+}
+
+.infoBody {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding-top: 16px;
+	border-top: 1px solid var(--ops-line);
+	padding: 16px 18px 18px;
+	background: linear-gradient(
+		180deg,
+		rgba(247, 248, 249, 0.45),
+		rgba(255, 255, 255, 0)
+	);
+}
+
+// Preserves the source line breaks - this text is meant to be pasted into
+// WhatsApp exactly as written, so it must not be re-wrapped by the browser.
+.infoText {
+	margin: 0;
+	padding: 14px;
+	border-radius: var(--ops-radius-md);
+	background-color: var(--ops-surface-sunken);
+	color: var(--ops-ink);
+	font-family: inherit;
+	font-size: 13px;
+	line-height: 1.65;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.infoAccordionList {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.infoAccordionItem {
+	overflow: hidden;
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-xs);
+	background-color: var(--ops-surface);
+	transition:
+		border-color 0.18s ease,
+		box-shadow 0.18s ease;
+
+	&:focus-within {
+		border-color: var(--ops-accent-border);
+		box-shadow: 0 0 0 3px rgba(0, 197, 102, 0.1);
+	}
+}
+
+.infoAccordionHeader {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	min-height: 52px;
+	padding-right: 8px;
+}
+
+.infoAccordionToggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	flex: 1;
+	min-width: 0;
+	min-height: 52px;
+	padding: 12px 8px 12px 14px;
+	border: 0;
+	background-color: transparent;
+	color: var(--ops-ink);
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.35;
+	text-align: left;
+	cursor: pointer;
+
+	span:first-child {
+		min-width: 0;
+		overflow-wrap: anywhere;
+	}
+
+	&:hover {
+		background-color: var(--ops-surface-sunken);
+	}
+
+	.infoChevron {
+		width: 28px;
+		height: 28px;
+		background-color: transparent;
+	}
+}
+
+.infoCopyIconButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	flex: none;
+	border: 0;
+	border-radius: var(--ops-radius-full);
+	background-color: transparent;
+	color: var(--ops-muted);
+	cursor: pointer;
+	transition:
+		background-color 0.18s ease,
+		color 0.18s ease,
+		transform 0.12s ease;
+
+	&:hover {
+		background-color: var(--ops-surface-sunken);
+		color: var(--ops-ink);
+	}
+
+	&:active {
+		transform: scale(0.96);
+	}
+}
+
+.infoAccordionContent {
+	margin: 0;
+	padding: 0 14px 16px;
+	color: var(--ops-ink);
+	font-size: 13px;
+	line-height: 1.6;
+	overflow-wrap: anywhere;
+}
+
+.infoAccordionText {
+	margin: 0;
+	font-family: inherit;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.infoAccordionPanelWrap {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.infoAccordionPanelWrapOpen {
+	grid-template-rows: 1fr;
+}
+
+.infoAccordionPanelInner {
+	min-height: 0;
+	overflow: hidden;
+}
+
+.infoAccordionBullets {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	margin: 0;
+	padding-left: 18px;
+	list-style: disc outside;
+
+	li {
+		padding-left: 2px;
+	}
+}
+
+.infoTableWrap {
+	overflow-x: auto;
+	border-radius: var(--ops-radius-md);
+	border: 1px solid var(--ops-line);
+}
+
+.infoTable {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+	font-variant-numeric: tabular-nums;
+
+	th,
+	td {
+		padding: 9px 12px;
+		text-align: left;
+		white-space: nowrap;
+	}
+
+	th {
+		background-color: var(--ops-surface-sunken);
+		color: var(--ops-muted);
+		font-size: 11.5px;
+		font-weight: 600;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+	}
+
+	tbody tr + tr td {
+		border-top: 1px solid var(--ops-line);
+	}
+}
+
+.infoImage {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: var(--ops-radius-md);
+	border: 1px solid var(--ops-line);
+	background-color: var(--ops-surface-sunken);
+}
+
+.infoNote {
+	margin: -4px 0 0;
+	color: var(--ops-muted);
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+// Inside .cardStack the flex `gap` already spaces this notice from the first
+// card - .notice's own margin-bottom would double it up.
+.infoNotice {
+	margin-bottom: 0;
+}
