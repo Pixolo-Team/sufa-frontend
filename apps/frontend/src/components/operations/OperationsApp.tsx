@@ -166,7 +166,6 @@ const OperationsApp: React.FC = () => {
 				return (
 					<BatchesList
 						centers={centers}
-						config={config}
 						registrationOptions={registrationOptions}
 					/>
 				);

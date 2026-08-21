@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 import type {
 	OperationsBatchData,
 	OperationsCenterData,
-	OperationsConfigData,
 	OperationsRegistrationOptionData,
 } from "@/types/operations";
 
@@ -54,7 +53,6 @@ type PendingShare = {
 
 interface BatchesListProps {
 	centers: OperationsCenterData[];
-	config: OperationsConfigData;
 	registrationOptions: OperationsRegistrationOptionData[];
 }
 
@@ -189,7 +187,6 @@ const buildShareText = (
 /** All batches, timings and plans - grouped by center tabs */
 const BatchesList: React.FC<BatchesListProps> = ({
 	centers,
-	config,
 	registrationOptions,
 }) => {
 	const [centerId, setCenterId] = useState(centers[0]?.id ?? "");

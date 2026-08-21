@@ -12,6 +12,12 @@ export type RegularInfoSection = {
 	description: string;
 	/** Rendered as a copyable text block */
 	copyText?: string;
+	/** Rendered as nested copyable accordion rows */
+	accordions?: {
+		id: string;
+		title: string;
+		copyText: string;
+	}[];
 	/** Short caveat shown under a table - the part that doesn't fit in columns */
 	note?: string;
 	/** Rendered as a downloadable/copyable image */
@@ -43,6 +49,36 @@ What parents need to provide:
 
 Registration is completed by the academy. Parents do not need to create an account themselves.`;
 
+const AIFF_CRS_ITEMS = [
+	{
+		id: "what-is-aiff-crs",
+		title: "What is the AIFF CRS?",
+		copyText:
+			"The AIFF Centralised Registration System (CRS) is the All India Football Federation's official player registration platform. Every player who takes part in AIFF-affiliated competitions must be registered on it.",
+	},
+	{
+		id: "why-it-is-needed",
+		title: "Why it is needed",
+		copyText: `- It creates a single verified identity for each player across all Indian football competitions.
+- It confirms a player's age and eligibility for their age group, which keeps age-group football fair.
+- It links the player to their club or academy, so transfers and participation history are traceable.
+- It is mandatory for entry into AIFF-affiliated tournaments and leagues.`,
+	},
+	{
+		id: "documents-required",
+		title: "What parents need to provide",
+		copyText: `- The player's birth certificate or Aadhaar card
+- A recent passport-size photograph
+- The parent or guardian's contact details`,
+	},
+	{
+		id: "academy-completion",
+		title: "Who completes registration?",
+		copyText:
+			"Registration is completed by the academy. Parents do not need to create an account themselves.",
+	},
+];
+
 // Tabular sections deliberately have no `copyText` twin - the table is the
 // single source of truth, and "Copy table" already emits paste-ready text.
 // Anything that doesn't fit a table (caveats, terms) goes in `note`.
@@ -53,6 +89,7 @@ export const REGULAR_INFO_SECTIONS: RegularInfoSection[] = [
 		title: "AIFF CRS",
 		description: "What it is and why registration is required.",
 		copyText: AIFF_CRS_TEXT,
+		accordions: AIFF_CRS_ITEMS,
 	},
 	{
 		id: "registration-package",

@@ -1952,17 +1952,139 @@
    section; the card padding is handled by .card, so these only cover the
    header/body split and the content types (text block, table, image). */
 
+.infoToolbar {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 14px;
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-md);
+	background-color: var(--ops-surface);
+	box-shadow: var(--ops-shadow);
+	animation: opsFadeUp 0.44s ease-out both;
+}
+
+.infoSearch {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 48px;
+	padding: 0 14px;
+	border: 1px solid var(--ops-border-default);
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-surface-sunken);
+	color: var(--ops-muted);
+	transition:
+		background-color 0.18s ease,
+		border-color 0.18s ease,
+		box-shadow 0.18s ease;
+
+	&:focus-within {
+		border-color: var(--ops-accent-border);
+		background-color: var(--ops-surface);
+		box-shadow: 0 0 0 3px rgba(0, 197, 102, 0.12);
+		color: var(--ops-ink);
+	}
+
+	input {
+		width: 100%;
+		min-width: 0;
+		border: 0;
+		outline: 0;
+		background-color: transparent;
+		color: var(--ops-ink);
+		font: inherit;
+		font-size: 14px;
+	}
+
+	input::placeholder {
+		color: var(--ops-muted);
+	}
+}
+
+.infoFilters {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 8px;
+}
+
+.infoFilterChip {
+	min-width: 0;
+	min-height: 40px;
+	padding: 0 10px;
+	border: 1px solid var(--ops-border-default);
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-surface);
+	color: var(--ops-muted);
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+	cursor: pointer;
+	transition:
+		background-color 0.18s ease,
+		border-color 0.18s ease,
+		color 0.18s ease,
+		transform 0.12s ease;
+
+	&:active {
+		transform: scale(0.97);
+	}
+}
+
+.infoFilterChipActive {
+	border-color: var(--ops-accent-border);
+	background-color: var(--ops-accent-soft);
+	color: var(--ops-accent-text);
+}
+
+.infoEmptyState {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 22px;
+	border: 1px dashed var(--ops-border-strong);
+	border-radius: var(--ops-radius-md);
+	background-color: var(--ops-surface);
+	text-align: center;
+
+	b {
+		font-size: 14px;
+		font-weight: 700;
+	}
+
+	small {
+		color: var(--ops-muted);
+		font-size: 12.5px;
+		line-height: 1.45;
+	}
+}
+
+.infoCard {
+	padding: 0;
+	overflow: hidden;
+}
+
+.infoCardOpen {
+	border-color: rgba(0, 197, 102, 0.28);
+}
+
 .infoHeader {
 	display: flex;
 	align-items: center;
 	gap: 12px;
 	width: 100%;
-	padding: 0;
+	min-height: 72px;
+	padding: 16px 18px;
 	border: 0;
 	background-color: transparent;
 	color: var(--ops-ink);
 	text-align: left;
 	cursor: pointer;
+	transition: background-color 0.18s ease;
+
+	&:hover {
+		background-color: var(--ops-surface-sunken);
+	}
 }
 
 .infoHeaderText {
@@ -1984,9 +2106,28 @@
 	}
 }
 
+.infoTypeBadge {
+	display: none;
+	flex: none;
+	padding: 7px 9px;
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-surface-sunken);
+	color: var(--ops-muted);
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1;
+	white-space: nowrap;
+}
+
 .infoChevron {
 	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	flex: none;
+	width: 30px;
+	height: 30px;
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-surface-sunken);
 	color: var(--ops-muted);
 	transition: transform 0.24s ease;
 }
@@ -1999,9 +2140,14 @@
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
-	margin-top: 16px;
 	padding-top: 16px;
 	border-top: 1px solid var(--ops-line);
+	padding: 16px 18px 18px;
+	background: linear-gradient(
+		180deg,
+		rgba(247, 248, 249, 0.45),
+		rgba(255, 255, 255, 0)
+	);
 }
 
 // Preserves the source line breaks - this text is meant to be pasted into
@@ -2015,6 +2161,97 @@
 	font-family: inherit;
 	font-size: 13px;
 	line-height: 1.65;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.infoAccordionList {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.infoAccordionItem {
+	overflow: hidden;
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-sm);
+	background-color: var(--ops-surface);
+	transition:
+		border-color 0.18s ease,
+		box-shadow 0.18s ease;
+
+	&:focus-within {
+		border-color: var(--ops-accent-border);
+		box-shadow: 0 0 0 3px rgba(0, 197, 102, 0.1);
+	}
+}
+
+.infoAccordionHeader {
+	display: flex;
+	align-items: stretch;
+	min-height: 50px;
+}
+
+.infoAccordionToggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	flex: 1;
+	min-width: 0;
+	padding: 13px 12px 13px 14px;
+	border: 0;
+	background-color: transparent;
+	color: var(--ops-ink);
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.35;
+	text-align: left;
+	cursor: pointer;
+
+	span:first-child {
+		min-width: 0;
+		overflow-wrap: anywhere;
+	}
+
+	&:hover {
+		background-color: var(--ops-surface-sunken);
+	}
+}
+
+.infoCopyIconButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	flex: none;
+	border: 0;
+	border-left: 1px solid var(--ops-line);
+	background-color: transparent;
+	color: var(--ops-muted);
+	cursor: pointer;
+	transition:
+		background-color 0.18s ease,
+		color 0.18s ease,
+		transform 0.12s ease;
+
+	&:hover {
+		background-color: var(--ops-surface-sunken);
+		color: var(--ops-ink);
+	}
+
+	&:active {
+		transform: scale(0.96);
+	}
+}
+
+.infoAccordionText {
+	margin: 0;
+	padding: 0 14px 16px;
+	color: var(--ops-ink);
+	font-family: inherit;
+	font-size: 13px;
+	line-height: 1.6;
 	white-space: pre-wrap;
 	overflow-wrap: anywhere;
 }
@@ -2072,4 +2309,14 @@
 // card - .notice's own margin-bottom would double it up.
 .infoNotice {
 	margin-bottom: 0;
+}
+
+@media only screen and (min-width: 560px) {
+	.infoToolbar {
+		padding: 16px;
+	}
+
+	.infoTypeBadge {
+		display: inline-flex;
+	}
 }
