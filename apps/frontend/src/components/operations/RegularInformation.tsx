@@ -94,7 +94,7 @@ const RegularInformation: React.FC = () => {
 
 	return (
 		<div className={styles.cardStack}>
-			<p className={styles.notice}>
+			<p className={`${styles.notice} ${styles.infoNotice}`}>
 				Placeholder content. Real copy, photos and prices are pending.
 			</p>
 

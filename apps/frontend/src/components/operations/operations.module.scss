@@ -2067,3 +2067,9 @@
 	font-size: 12px;
 	line-height: 1.5;
 }
+
+// Inside .cardStack the flex `gap` already spaces this notice from the first
+// card - .notice's own margin-bottom would double it up.
+.infoNotice {
+	margin-bottom: 0;
+}
