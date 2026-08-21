@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-label="Registration Package placeholder">
+  <rect width="900" height="1200" fill="#f2f7f3"/>
+  <rect x="8" y="8" width="884" height="1184" fill="none" stroke="#0d965d" stroke-width="2" stroke-dasharray="10 8" rx="10"/>
+  <text x="450" y="590" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0d965d">Registration Package</text>
+  <text x="450" y="616" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#5c6b60">Awaiting final artwork</text>
+  <text x="450" y="1178" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#8a978d">900 x 1200 &#183; placeholder, pending real asset</text>
+</svg>

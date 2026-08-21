@@ -10,6 +10,7 @@ import PinGate from "./PinGate";
 import PaymentQr from "./PaymentQr";
 import BatchesList from "./BatchesList";
 import LeadForm from "./LeadForm";
+import RegularInformation from "./RegularInformation";
 
 // SERVICES //
 import { fetchOperationsData } from "@/services/operations.api.service";
@@ -22,7 +23,7 @@ const STAFF_PIN = import.meta.env.PUBLIC_STAFF_PIN ?? "";
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
 const UNLOCK_TTL_MS = 24 * 60 * 60 * 1000;
 
-type ToolId = "batches" | "qr" | "lead";
+type ToolId = "batches" | "qr" | "lead" | "regular-info";
 
 type PanelToolTile = {
 	id: ToolId;
@@ -60,6 +61,12 @@ const TOOLS: ToolTile[] = [
 		icon: "user-plus",
 		title: "Add Lead",
 		subtitle: "Capture a new enquiry",
+	},
+	{
+		id: "regular-info",
+		icon: "info-book",
+		title: "Regular Information",
+		subtitle: "Copy-paste reference material",
 	},
 	{
 		href: "https://skorostunitedfootballschool.zizoapp.in/schedule",
@@ -173,6 +180,8 @@ const OperationsApp: React.FC = () => {
 				);
 			case "lead":
 				return <LeadForm />;
+			case "regular-info":
+				return <RegularInformation />;
 			default:
 				return (
 					<div className={styles.tiles}>
@@ -288,7 +297,7 @@ const OperationsApp: React.FC = () => {
 						activeTool === null ? styles.panelHome : ""
 					}`}
 				>
-					{activeTool !== "batches" && (
+					{activeTool !== "batches" && activeTool !== "regular-info" && (
 						<p className={styles.notice}>Staff tool. Not linked from the public site.</p>
 					)}
 
