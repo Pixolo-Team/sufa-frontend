@@ -1,5 +1,5 @@
 // REACT //
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 // ENUMS //
 import { Colors, Shapes, Variants } from "@/neevo/enums/core.enum";
@@ -39,41 +39,25 @@ const tableToText = (section: RegularInfoSection) => {
 	return lines.join("\n");
 };
 
-type InfoFilter = "all" | "text" | "image" | "table";
+const renderAccordionText = (text: string) => {
+	const lines = text.split("\n").filter((line) => line.trim() !== "");
+	const bulletItems = lines
+		.map((line) => line.trim())
+		.filter((line) => line.startsWith("- "))
+		.map((line) => line.slice(2));
 
-const INFO_FILTERS: { id: InfoFilter; label: string }[] = [
-	{ id: "all", label: "All" },
-	{ id: "text", label: "Text" },
-	{ id: "image", label: "Images" },
-	{ id: "table", label: "Tables" },
-];
+	if (bulletItems.length === lines.length && bulletItems.length > 0) {
+		return (
+			<ul className={styles.infoAccordionBullets}>
+				{bulletItems.map((item) => (
+					<li key={item}>{item}</li>
+				))}
+			</ul>
+		);
+	}
 
-const getSectionTypeLabel = (section: RegularInfoSection) => {
-	const labels = [];
-
-	if (section.copyText || section.accordions) labels.push("Text");
-	if (section.image) labels.push("Image");
-	if (section.table) labels.push("Table");
-
-	return labels.join(" + ");
+	return <p className={styles.infoAccordionText}>{text}</p>;
 };
-
-const getSectionSearchText = (section: RegularInfoSection) =>
-	[
-		section.title,
-		section.description,
-		section.copyText,
-		section.note,
-		section.image?.alt,
-		section.table?.headers.join(" "),
-		section.table?.rows.flat().join(" "),
-		section.accordions
-			?.map((item) => `${item.title} ${item.copyText}`)
-			.join(" "),
-	]
-		.filter(Boolean)
-		.join(" ")
-		.toLowerCase();
 
 /**
  * Tool - reference material staff send to parents often enough that hunting
@@ -84,8 +68,6 @@ const RegularInformation: React.FC = () => {
 	const [openSectionId, setOpenSectionId] = useState<string | null>(
 		REGULAR_INFO_SECTIONS[0]?.id ?? null
 	);
-	const [searchTerm, setSearchTerm] = useState("");
-	const [activeFilter, setActiveFilter] = useState<InfoFilter>("all");
 	const [openAccordionIds, setOpenAccordionIds] = useState<Set<string>>(
 		() =>
 			new Set(
@@ -94,37 +76,6 @@ const RegularInformation: React.FC = () => {
 					: []
 			)
 	);
-
-	const visibleSections = useMemo(() => {
-		const normalizedSearch = searchTerm.trim().toLowerCase();
-
-		return REGULAR_INFO_SECTIONS.filter((section) => {
-			const matchesFilter =
-				activeFilter === "all" ||
-				(activeFilter === "text" && (section.copyText || section.accordions)) ||
-				(activeFilter === "image" && section.image) ||
-				(activeFilter === "table" && section.table);
-
-			if (!matchesFilter) return false;
-			if (!normalizedSearch) return true;
-
-			return getSectionSearchText(section).includes(normalizedSearch);
-		});
-	}, [activeFilter, searchTerm]);
-
-	useEffect(() => {
-		if (visibleSections.length === 0) {
-			setOpenSectionId(null);
-			return;
-		}
-
-		if (
-			openSectionId !== null &&
-			!visibleSections.some((section) => section.id === openSectionId)
-		) {
-			setOpenSectionId(visibleSections[0].id);
-		}
-	}, [openSectionId, visibleSections]);
 
 	const copyText = useCallback(async (text: string, successMessage: string) => {
 		try {
@@ -182,63 +133,8 @@ const RegularInformation: React.FC = () => {
 
 	return (
 		<div className={styles.cardStack}>
-			<div className={styles.infoToolbar}>
-				<label className={styles.infoSearch}>
-					<span aria-hidden="true">
-						<svg
-							width="17"
-							height="17"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="1.9"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
-							<circle cx="11" cy="11" r="7" />
-							<path d="M20 20l-3.5-3.5" />
-						</svg>
-					</span>
-					<input
-						type="search"
-						value={searchTerm}
-						placeholder="Search regular info"
-						aria-label="Search regular information"
-						onChange={(event) => setSearchTerm(event.target.value)}
-					/>
-				</label>
-
-				<div className={styles.infoFilters} aria-label="Regular information filters">
-					{INFO_FILTERS.map((filter) => (
-						<button
-							key={filter.id}
-							type="button"
-							className={`${styles.infoFilterChip} ${
-								activeFilter === filter.id ? styles.infoFilterChipActive : ""
-							}`}
-							aria-pressed={activeFilter === filter.id}
-							onClick={() => setActiveFilter(filter.id)}
-						>
-							{filter.label}
-						</button>
-					))}
-				</div>
-			</div>
-
-			<p className={`${styles.notice} ${styles.infoNotice}`}>
-				Placeholder content. Real copy, photos and prices are pending.
-			</p>
-
-			{visibleSections.length === 0 && (
-				<div className={styles.infoEmptyState}>
-					<b>No matching information</b>
-					<small>Try another search or switch the filter.</small>
-				</div>
-			)}
-
-			{visibleSections.map((section) => {
+			{REGULAR_INFO_SECTIONS.map((section) => {
 				const isOpen = openSectionId === section.id;
-				const typeLabel = getSectionTypeLabel(section);
 
 				return (
 					<div
@@ -258,9 +154,6 @@ const RegularInformation: React.FC = () => {
 								<b>{section.title}</b>
 								<small>{section.description}</small>
 							</span>
-							{typeLabel && (
-								<span className={styles.infoTypeBadge}>{typeLabel}</span>
-							)}
 							<span
 								className={`${styles.infoChevron} ${
 									isOpen ? styles.infoChevronOpen : ""
@@ -282,7 +175,12 @@ const RegularInformation: React.FC = () => {
 							</span>
 						</button>
 
-						{isOpen && (
+						<div
+							className={`${styles.infoBodyWrap} ${
+								isOpen ? styles.infoBodyWrapOpen : ""
+							}`}
+						>
+							<div className={styles.infoBodyInner}>
 							<div className={styles.infoBody} id={`regular-info-${section.id}`}>
 								{section.accordions && (
 									<div className={styles.infoAccordionList}>
@@ -346,14 +244,22 @@ const RegularInformation: React.FC = () => {
 														</button>
 													</div>
 
-													{isAccordionOpen && (
-														<pre
-															className={styles.infoAccordionText}
+													<div
+														className={`${styles.infoAccordionPanelWrap} ${
+															isAccordionOpen
+																? styles.infoAccordionPanelWrapOpen
+																: ""
+														}`}
+													>
+														<div className={styles.infoAccordionPanelInner}>
+														<div
+															className={styles.infoAccordionContent}
 															id={`regular-info-${section.id}-${item.id}`}
 														>
-															{item.copyText}
-														</pre>
-													)}
+															{renderAccordionText(item.copyText)}
+														</div>
+														</div>
+													</div>
 												</div>
 											);
 										})}
@@ -452,7 +358,8 @@ const RegularInformation: React.FC = () => {
 									)}
 								</div>
 							</div>
-						)}
+							</div>
+						</div>
 					</div>
 				);
 			})}

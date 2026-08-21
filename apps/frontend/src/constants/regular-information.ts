@@ -1,11 +1,3 @@
-// PLACEHOLDER CONTENT
-// ===================
-// Every string and image path in this file is dummy content standing in for
-// the real assets, which are still pending from Abhay. The Regular
-// Information page's layout and behaviour are final; only the values here
-// need swapping once the real PDF copy, photos, banners, size chart and
-// jersey prices land. Nothing outside this file should need to change.
-
 export type RegularInfoSection = {
 	id: string;
 	title: string;
@@ -90,80 +82,45 @@ export const REGULAR_INFO_SECTIONS: RegularInfoSection[] = [
 		description: "What it is and why registration is required.",
 		copyText: AIFF_CRS_TEXT,
 		accordions: AIFF_CRS_ITEMS,
-	},
-	{
-		id: "registration-package",
-		title: "Registration Package",
-		description: "The package photo shared with new joiners.",
 		image: {
-			src: "/images/operations/regular-info/registration-package.svg",
-			alt: "Skorost United registration package",
+			src: "/images/operations/regular-info/aiff-docs.png",
+			alt: "AIFF CRS document requirements",
 		},
 	},
 	{
-		id: "banner-all-venues",
-		title: "All Venues Banner",
-		description: "Skorost banner listing every centre.",
+		id: "main-pamphlet",
+		title: "Main Pamphlet",
+		description: "Primary programme pamphlet for sharing with parents.",
 		image: {
-			src: "/images/operations/regular-info/banner-all-venues.svg",
-			alt: "Skorost United all venues banner",
+			src: "/images/operations/regular-info/main-pamphlet.png",
+			alt: "Skorost United main programme pamphlet",
 		},
 	},
 	{
-		id: "banner-ghatkopar-east",
-		title: "Ghatkopar East Banner",
-		description: "Centre-specific banner.",
+		id: "banner",
+		title: "Banner",
+		description: "Skorost banner for regular sharing.",
 		image: {
-			src: "/images/operations/regular-info/banner-ghatkopar-east.svg",
-			alt: "Skorost United Ghatkopar East banner",
-		},
-	},
-	{
-		id: "banner-ghatkopar-west",
-		title: "Ghatkopar West Banner",
-		description: "Centre-specific banner.",
-		image: {
-			src: "/images/operations/regular-info/banner-ghatkopar-west.svg",
-			alt: "Skorost United Ghatkopar West banner",
+			src: "/images/operations/regular-info/banner.png",
+			alt: "Skorost United banner",
 		},
 	},
 	{
 		id: "size-chart",
 		title: "Size Chart",
-		description: "Jersey sizing by chest, length and age.",
+		description: "Yearwise jersey size mapping.",
 		image: {
-			src: "/images/operations/regular-info/size-chart.svg",
+			src: "/images/operations/regular-info/size-chart.png",
 			alt: "Skorost United jersey size chart",
 		},
-		table: {
-			headers: ["Size", "Chest", "Length", "Age"],
-			rows: [
-				["XS", "30\"", "22\"", "5-6"],
-				["S", "32\"", "24\"", "7-8"],
-				["M", "34\"", "26\"", "9-10"],
-				["L", "36\"", "27\"", "11-12"],
-				["XL", "38\"", "28\"", "13-14"],
-				["XXL", "40\"", "29\"", "15-16"],
-			],
-		},
-		note: "Sizes are approximate. When a player is between two sizes, we recommend the larger one.",
 	},
 	{
-		id: "jersey-prices",
-		title: "Jersey Prices",
-		description: "Current kit and jersey pricing.",
-		table: {
-			headers: ["Item", "Price"],
-			rows: [
-				["Home Jersey", "Rs. 850"],
-				["Away Jersey", "Rs. 850"],
-				["Shorts", "Rs. 450"],
-				["Socks", "Rs. 200"],
-				["Full Kit", "Rs. 1,400"],
-				["Training T-shirt", "Rs. 600"],
-				["Name & number printing", "Rs. 150 / item"],
-			],
+		id: "fee-structure",
+		title: "Fee Structure",
+		description: "Current programme fee structure.",
+		image: {
+			src: "/images/operations/regular-info/fee-structure.png",
+			alt: "Skorost United fee structure",
 		},
-		note: "All prices include GST.",
 	},
 ];
