@@ -6,6 +6,7 @@ export type OperationsIconName =
 	| "lock"
 	| "user-plus"
 	| "calendar-check"
+	| "whistle"
 	| "info-book";
 
 /** Stroke paths, drawn on a 24×24 grid in `currentColor` */
@@ -60,6 +61,14 @@ const ICON_PATHS: Record<OperationsIconName, React.ReactNode> = {
 			<path d="M8 3.5v3" />
 			<path d="M16 3.5v3" />
 			<path d="M9 14.5l2 2 4-4" />
+		</>
+	),
+	whistle: (
+		<>
+			<path d="M4 10.5h7.5a5 5 0 1 1-4.58 7H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z" />
+			<circle cx="11.5" cy="15.5" r="1.5" />
+			<path d="M16.5 10.5H22l-2 3" />
+			<path d="M6.5 10.5V7.75a2.25 2.25 0 0 1 2.25-2.25H12" />
 		</>
 	),
 	"info-book": (

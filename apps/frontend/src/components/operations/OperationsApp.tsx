@@ -74,6 +74,12 @@ const TOOLS: ToolTile[] = [
 		title: "Attendance",
 		subtitle: "Mark attendance on Zizo",
 	},
+	{
+		href: "https://docs.google.com/forms/d/e/1FAIpQLSeDWHQQAzNhG8gjXKV3fpi7eLPNih3KWDxyVjlQQuFy6AZbYw/viewform",
+		icon: "whistle",
+		title: "Coach Attendance",
+		subtitle: "Submit coach attendance",
+	},
 ];
 
 const PANEL_TOOLS = TOOLS.filter(
