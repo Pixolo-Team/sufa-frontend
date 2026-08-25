@@ -119,7 +119,7 @@ export const REGULAR_INFO_SECTIONS: RegularInfoSection[] = [
 		title: "Fee Structure",
 		description: "Current programme fee structure.",
 		image: {
-			src: "/images/operations/regular-info/fee-structure.png",
+			src: "/images/operations/regular-info/fee-structure-new-jersey.png",
 			alt: "Skorost United fee structure",
 		},
 	},
