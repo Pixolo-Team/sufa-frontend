@@ -3,13 +3,15 @@
 /** The two predictors — matches the Abhay | Harsh tabs. */
 export type PredictorId = "abhay" | "harsh";
 
-/** One fixture from football-data.org (only the fields we use). */
+/** One fixture from API-Football v3 (only the fields we use). */
 export interface FixtureData {
 	id: number;
 	homeTeam: string;
 	homeTla: string;
+	homeLogo: string;
 	awayTeam: string;
 	awayTla: string;
+	awayLogo: string;
 	/** ISO kickoff, for display ordering */
 	utcDate: string;
 }

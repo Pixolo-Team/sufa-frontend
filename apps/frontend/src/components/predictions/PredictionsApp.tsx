@@ -32,7 +32,7 @@ import {
 
 // SERVICES //
 import { showToast } from "@/neevo/services/toast.service";
-import { getGameweekFixturesRequest } from "@/services/api/football-data.api.service";
+import { getGameweekFixturesRequest } from "@/services/api/api-football.api.service";
 import {
 	getGameweekPredictionsRequest,
 	savePredictionsRequest,
@@ -108,7 +108,7 @@ const PredictionsApp: React.FC = () => {
 		try {
 			const [fetchedFixtures, fetchedSaved] = await Promise.all([
 				getGameweekFixturesRequest(PREDICTIONS_SEASON, gw),
-				// Backend down ho to device-local picks dikhao — Export dono se chalta hai.
+				// Fall back to device-local picks when the backend is down — Export works from either source.
 				getGameweekPredictionsRequest(PREDICTIONS_SEASON, gw).catch(() =>
 					getLocalPredictions(PREDICTIONS_SEASON, gw)
 				),
@@ -208,12 +208,11 @@ const PredictionsApp: React.FC = () => {
 			setSaved(refreshed);
 			showToast(`${predictorLabel(predictor)}'s predictions saved`, ToastTypes.SUCCESS);
 		} catch {
-			// Backend unreachable (jaise abhi api.skorostunited.com) — is device
-			// pe save karo taaki Export na ruke. Backend up hote hi dobara Save
-			// dabane pe server pe sync ho jayega.
+			// Backend unreachable — save on this device so Export keeps working.
+			// Pressing Save again once the backend is up syncs to the server.
 			saveLocalPredictions(PREDICTIONS_SEASON, gameweek, predictor, picks);
 			setSaved(getLocalPredictions(PREDICTIONS_SEASON, gameweek));
-			showToast("Backend offline — is device pe save hua", ToastTypes.WARNING);
+			showToast("Backend offline — saved on this device", ToastTypes.WARNING);
 		} finally {
 			setIsSaving(false);
 		}
@@ -379,36 +378,60 @@ const PredictionsApp: React.FC = () => {
 				{/* ---------- Screen 2: predict ---------- */}
 				{screen === "predict" && gameweek !== null && (
 					<div className={opsStyles.cardStack}>
-						<div className={opsStyles.card}>
-							<span className={opsStyles.sectionLabel}>Predicting as</span>
-							<div
-								className={styles.predictorTabs}
-								style={{ ["--tab-color" as string]: activeColor }}
-							>
-								{PREDICTORS.map((item) => (
-									<button
-										key={item.id}
-										type="button"
-										className={`${styles.predictorTab} ${
-											predictor === item.id ? styles.predictorTabActive : ""
-										}`}
-										style={{ ["--tab-color" as string]: item.color }}
-										onClick={() => setPredictor(item.id)}
-									>
-										<span
-											className={styles.predictorDot}
-											style={{ backgroundColor: item.color }}
-										/>
-										{item.label}
-									</button>
-								))}
-							</div>
-							<p className={opsStyles.qrHint}>
-								Saved: Abhay {abhayCount} · Harsh {harshCount} picks
-							</p>
-						</div>
+						<div className={styles.predictLayout}>
+							<div className={`${opsStyles.card} ${styles.predictSide}`}>
+								<span className={opsStyles.sectionLabel}>Predicting as</span>
+								<div
+									className={styles.predictorTabs}
+									style={{ ["--tab-color" as string]: activeColor }}
+								>
+									{PREDICTORS.map((item) => (
+										<button
+											key={item.id}
+											type="button"
+											className={`${styles.predictorTab} ${
+												predictor === item.id ? styles.predictorTabActive : ""
+											}`}
+											style={{ ["--tab-color" as string]: item.color }}
+											onClick={() => setPredictor(item.id)}
+										>
+											<span
+												className={styles.predictorDot}
+												style={{ backgroundColor: item.color }}
+											/>
+											{item.label}
+										</button>
+									))}
+								</div>
+								<p className={opsStyles.qrHint}>
+									Saved: Abhay {abhayCount} · Harsh {harshCount} picks
+								</p>
 
-						<div className={opsStyles.card}>
+								{fixturesState === "ready" && fixtures.length > 0 && (
+									<div className={opsStyles.buttonRow}>
+										<Button
+											text="Export"
+											variant={Variants.OUTLINE}
+											color={Colors.NEUTRAL_DARK}
+											shape={Shapes.ROUNDED}
+											size={ButtonSizes.LARGE}
+											onClick={() => setScreen("export")}
+										/>
+										<Button
+											text={isSaving ? "Saving…" : "Save"}
+											color={Colors.PRIMARY}
+											shape={Shapes.ROUNDED}
+											size={ButtonSizes.LARGE}
+											isDisabled={isSaving}
+											onClick={() => {
+												void savePredictions();
+											}}
+										/>
+									</div>
+								)}
+							</div>
+
+							<div className={opsStyles.card}>
 							<span className={opsStyles.sectionLabel}>
 								Gameweek {gameweek} fixtures
 							</span>
@@ -449,8 +472,26 @@ const PredictionsApp: React.FC = () => {
 										return (
 											<div key={fixture.id} className={styles.fixtureRow}>
 												<div className={styles.fixtureTeams}>
-													<span>{fixture.homeTeam}</span>
-													<span>{fixture.awayTeam}</span>
+													<span className={styles.fixtureTeam}>
+														<img
+															src={fixture.homeLogo}
+															alt=""
+															width="22"
+															height="22"
+															loading="lazy"
+														/>
+														{fixture.homeTeam}
+													</span>
+													<span className={styles.fixtureTeam}>
+														<img
+															src={fixture.awayLogo}
+															alt=""
+															width="22"
+															height="22"
+															loading="lazy"
+														/>
+														{fixture.awayTeam}
+													</span>
 												</div>
 												<div className={styles.scoreInputs}>
 													<input
@@ -485,28 +526,7 @@ const PredictionsApp: React.FC = () => {
 								</div>
 							)}
 
-							{fixturesState === "ready" && fixtures.length > 0 && (
-								<div className={opsStyles.buttonRow}>
-									<Button
-										text="Export"
-										variant={Variants.OUTLINE}
-										color={Colors.NEUTRAL_DARK}
-										shape={Shapes.ROUNDED}
-										size={ButtonSizes.LARGE}
-										onClick={() => setScreen("export")}
-									/>
-									<Button
-										text={isSaving ? "Saving…" : "Save"}
-										color={Colors.PRIMARY}
-										shape={Shapes.ROUNDED}
-										size={ButtonSizes.LARGE}
-										isDisabled={isSaving}
-										onClick={() => {
-											void savePredictions();
-										}}
-									/>
-								</div>
-							)}
+							</div>
 						</div>
 					</div>
 				)}
@@ -538,70 +558,74 @@ const PredictionsApp: React.FC = () => {
 							)}
 
 							{fixturesState === "ready" && (
-								<div className={opsStyles.previewBody}>
-									{isDrawing || !imageUrl ? (
-										<p className={opsStyles.qrHint}>Drawing image…</p>
-									) : (
-										<img
-											className={styles.exportPreview}
-											src={imageUrl}
-											alt={`Gameweek ${gameweek} predictions — Abhay vs Harsh`}
-										/>
-									)}
-									{(abhayCount === 0 || harshCount === 0) && (
+								<div className={styles.exportLayout}>
+									<div className={opsStyles.previewBody}>
+										{isDrawing || !imageUrl ? (
+											<p className={opsStyles.qrHint}>Drawing image…</p>
+										) : (
+											<img
+												className={styles.exportPreview}
+												src={imageUrl}
+												alt={`Gameweek ${gameweek} predictions — Abhay vs Harsh`}
+											/>
+										)}
+										{(abhayCount === 0 || harshCount === 0) && (
+											<p className={opsStyles.qrHint}>
+												{abhayCount === 0 && harshCount === 0
+													? "No predictions saved yet — empty rows show as – : –."
+													: `Only ${abhayCount === 0 ? "Harsh" : "Abhay"} saved so far — the other column shows – : –.`}
+											</p>
+										)}
+									</div>
+
+									<div className={styles.exportSide}>
+										<div className={opsStyles.buttonRow}>
+											<Button
+												text="Back to Predict"
+												variant={Variants.OUTLINE}
+												color={Colors.NEUTRAL_DARK}
+												shape={Shapes.ROUNDED}
+												size={ButtonSizes.LARGE}
+												onClick={() => setScreen("predict")}
+											/>
+											<Button
+												text="Download"
+												color={Colors.PRIMARY}
+												shape={Shapes.ROUNDED}
+												size={ButtonSizes.LARGE}
+												isDisabled={!imageBlob}
+												onClick={downloadImage}
+											/>
+										</div>
+										<div className={opsStyles.buttonRow}>
+											<Button
+												text="Copy image"
+												variant={Variants.OUTLINE}
+												color={Colors.NEUTRAL_DARK}
+												shape={Shapes.ROUNDED}
+												size={ButtonSizes.LARGE}
+												isDisabled={!imageBlob}
+												onClick={() => {
+													void copyImage();
+												}}
+											/>
+											<Button
+												text="Send image"
+												color={Colors.PRIMARY}
+												shape={Shapes.ROUNDED}
+												size={ButtonSizes.LARGE}
+												isDisabled={!imageBlob}
+												onClick={() => {
+													void shareImage();
+												}}
+											/>
+										</div>
 										<p className={opsStyles.qrHint}>
-											{abhayCount === 0 && harshCount === 0
-												? "No predictions saved yet — empty rows show as – : –."
-												: `Only ${abhayCount === 0 ? "Harsh" : "Abhay"} saved so far — the other column shows – : –.`}
+											Send image opens the phone's share sheet — post it straight to Instagram.
 										</p>
-									)}
+									</div>
 								</div>
 							)}
-
-							<div className={opsStyles.buttonRow}>
-								<Button
-									text="Back to Predict"
-									variant={Variants.OUTLINE}
-									color={Colors.NEUTRAL_DARK}
-									shape={Shapes.ROUNDED}
-									size={ButtonSizes.LARGE}
-									onClick={() => setScreen("predict")}
-								/>
-								<Button
-									text="Download"
-									color={Colors.PRIMARY}
-									shape={Shapes.ROUNDED}
-									size={ButtonSizes.LARGE}
-									isDisabled={!imageBlob}
-									onClick={downloadImage}
-								/>
-							</div>
-							<div className={opsStyles.buttonRow}>
-								<Button
-									text="Copy image"
-									variant={Variants.OUTLINE}
-									color={Colors.NEUTRAL_DARK}
-									shape={Shapes.ROUNDED}
-									size={ButtonSizes.LARGE}
-									isDisabled={!imageBlob}
-									onClick={() => {
-										void copyImage();
-									}}
-								/>
-								<Button
-									text="Send image"
-									color={Colors.PRIMARY}
-									shape={Shapes.ROUNDED}
-									size={ButtonSizes.LARGE}
-									isDisabled={!imageBlob}
-									onClick={() => {
-										void shareImage();
-									}}
-								/>
-							</div>
-							<p className={opsStyles.qrHint}>
-								Send image opens the phone's share sheet — post it straight to Instagram.
-							</p>
 						</div>
 					</div>
 				)}

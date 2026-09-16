@@ -15,15 +15,15 @@ export default defineConfig({
 	],
 	vite: {
 		server: {
-			// Dev-only: same-origin proxy for football-data.org. Their API
-			// only whitelists `http://localhost` for CORS, so direct browser
-			// calls from localhost:PORT get blocked. Production uses the
-			// matching rewrite in vercel.json.
+			// Dev-only: same-origin proxy for API-Football v3. The API only
+			// allows the `x-apisports-key` header, which triggers a browser
+			// preflight on direct calls — proxying same-origin avoids CORS
+			// entirely. Production uses the matching rewrite in vercel.json.
 			proxy: {
-				"/api/football-data": {
-					target: "https://api.football-data.org",
+				"/api/football": {
+					target: "https://v3.football.api-sports.io",
 					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/api\/football-data/, ""),
+					rewrite: (path) => path.replace(/^\/api\/football/, ""),
 				},
 			},
 		},

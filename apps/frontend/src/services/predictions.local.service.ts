@@ -7,9 +7,9 @@ import type {
 } from "@/types/predictions";
 
 /**
- * Device-local fallback jab backend unreachable ho (jaise abhi
- * api.skorostunited.com reset ho raha hai). Backend up hote hi Save backend
- * pe jayega — shapes identical hai, Export dono se chalta hai.
+ * Device-local fallback for when the backend is unreachable. Once the
+ * backend is up, saving goes to the server again — shapes are identical,
+ * and Export works from either source.
  */
 
 const storageKey = (season: number, gameweek: number) =>

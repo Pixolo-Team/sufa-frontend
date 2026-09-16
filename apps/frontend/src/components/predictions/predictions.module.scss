@@ -16,7 +16,13 @@ rows need room on tablet/desktop. Applied alongside ops `shell`. */
 
 @media (min-width: 992px) {
 	.wideShell.wideShell {
-		max-width: 920px;
+		max-width: 960px;
+	}
+}
+
+@media (min-width: 1280px) {
+	.wideShell.wideShell {
+		max-width: 1140px;
 	}
 }
 
@@ -72,7 +78,35 @@ rows need room on tablet/desktop. Applied alongside ops `shell`. */
 	background-color: var(--ops-accent-soft);
 }
 
+@media (hover: hover) {
+	.gwButton:hover {
+		border-color: var(--ops-accent-bright);
+		transform: translateY(-2px);
+	}
+}
+
 /* ---------- Screen 2: fixtures + score inputs ---------- */
+
+/* Mobile: stacked cards. Desktop: sticky controls sidebar + fixtures. */
+.predictLayout {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+@media (min-width: 992px) {
+	.predictLayout {
+		display: grid;
+		grid-template-columns: 300px minmax(0, 1fr);
+		gap: 20px;
+		align-items: start;
+	}
+
+	.predictSide {
+		position: sticky;
+		top: 16px;
+	}
+}
 
 .predictorTabs {
 	display: flex;
@@ -146,6 +180,19 @@ rows need room on tablet/desktop. Applied alongside ops `shell`. */
 	text-overflow: ellipsis;
 }
 
+.fixtureTeam {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.fixtureTeam img {
+	width: 22px;
+	height: 22px;
+	flex: none;
+	object-fit: contain;
+}
+
 .fixtureTeams small {
 	font-size: 11px;
 	font-weight: 500;
@@ -192,10 +239,34 @@ rows need room on tablet/desktop. Applied alongside ops `shell`. */
 
 /* ---------- Screen 3: export preview ---------- */
 
+/* Mobile: preview over actions. Desktop: preview + sticky actions column. */
+.exportLayout {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
 .exportPreview {
 	width: 100%;
 	border-radius: 14px;
 	border: 1px solid var(--ops-line);
+}
+
+@media (min-width: 992px) {
+	.exportLayout {
+		display: grid;
+		grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+		gap: 20px;
+		align-items: start;
+	}
+
+	.exportSide {
+		position: sticky;
+		top: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
 }
 
 .savedBadge {

@@ -2,8 +2,8 @@
 	"$schema": "https://openapi.vercel.sh/vercel.json",
 	"rewrites": [
 		{
-			"source": "/api/football-data/:path*",
-			"destination": "https://api.football-data.org/:path*"
+			"source": "/api/football/:path*",
+			"destination": "https://v3.football.api-sports.io/:path*"
 		}
 	]
 }
