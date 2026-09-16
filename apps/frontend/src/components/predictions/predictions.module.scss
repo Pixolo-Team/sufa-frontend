@@ -1,0 +1,208 @@
+// Score Predictor page-local styles. Shell, cards, buttons and the PIN gate
+// come from operations.module.scss — only predictor-specific bits live here.
+
+/* Wider than the operations 520px column — the GW grid and fixture
+rows need room on tablet/desktop. Applied alongside ops `shell`. */
+.wideShell.wideShell {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media (min-width: 768px) {
+	.wideShell.wideShell {
+		max-width: 720px;
+	}
+}
+
+@media (min-width: 992px) {
+	.wideShell.wideShell {
+		max-width: 920px;
+	}
+}
+
+/* ---------- Screen 1: gameweek grid ---------- */
+
+.gwGrid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+}
+
+@media (min-width: 768px) {
+	.gwGrid {
+		grid-template-columns: repeat(6, 1fr);
+	}
+}
+
+@media (min-width: 992px) {
+	.gwGrid {
+		grid-template-columns: repeat(8, 1fr);
+	}
+}
+
+.gwButton {
+	min-height: 56px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+	border: 1px solid var(--ops-line);
+	border-radius: 14px;
+	background-color: var(--ops-surface);
+	box-shadow: var(--ops-shadow);
+	font-weight: 800;
+	font-size: 15px;
+	transition:
+		transform 0.15s ease,
+		border-color 0.15s ease,
+		background-color 0.15s ease;
+}
+
+.gwButton small {
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	color: var(--ops-muted);
+}
+
+.gwButton:active {
+	transform: scale(0.96);
+	border-color: var(--ops-accent-bright);
+	background-color: var(--ops-accent-soft);
+}
+
+/* ---------- Screen 2: fixtures + score inputs ---------- */
+
+.predictorTabs {
+	display: flex;
+	gap: 10px;
+}
+
+.predictorTab {
+	flex: 1;
+	min-height: 52px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: 2px solid var(--ops-line);
+	border-radius: 14px;
+	background-color: var(--ops-surface);
+	font-weight: 800;
+	font-size: 15px;
+}
+
+.predictorDot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	flex: none;
+}
+
+.predictorTabActive {
+	border-color: var(--tab-color, var(--ops-accent));
+	background-color: var(--ops-surface);
+	box-shadow: var(--ops-shadow);
+}
+
+.fixtureList {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+@media (min-width: 992px) {
+	.fixtureList {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.fixtureRow {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 12px;
+	border: 1px solid var(--ops-line);
+	border-radius: 14px;
+	background-color: var(--ops-surface);
+}
+
+.fixtureTeams {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+.fixtureTeams span {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.fixtureTeams small {
+	font-size: 11px;
+	font-weight: 500;
+	color: var(--ops-muted);
+}
+
+.scoreInputs {
+	flex: none;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.scoreInput {
+	width: 48px;
+	height: 48px;
+	border: 2px solid var(--ops-line);
+	border-radius: 12px;
+	background-color: var(--ops-bg);
+	text-align: center;
+	font-size: 18px;
+	font-weight: 800;
+	font-family: inherit;
+	color: inherit;
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
+
+.scoreInput::-webkit-outer-spin-button,
+.scoreInput::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.scoreInput:focus {
+	outline: none;
+	border-color: var(--tab-color, var(--ops-accent));
+}
+
+.scoreDash {
+	font-weight: 800;
+	color: var(--ops-muted);
+}
+
+/* ---------- Screen 3: export preview ---------- */
+
+.exportPreview {
+	width: 100%;
+	border-radius: 14px;
+	border: 1px solid var(--ops-line);
+}
+
+.savedBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--ops-accent);
+}

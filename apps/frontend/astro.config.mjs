@@ -14,6 +14,19 @@ export default defineConfig({
 		react({ include: ["**/*.tsx"] }),
 	],
 	vite: {
+		server: {
+			// Dev-only: same-origin proxy for football-data.org. Their API
+			// only whitelists `http://localhost` for CORS, so direct browser
+			// calls from localhost:PORT get blocked. Production uses the
+			// matching rewrite in vercel.json.
+			proxy: {
+				"/api/football-data": {
+					target: "https://api.football-data.org",
+					changeOrigin: true,
+					rewrite: (path) => path.replace(/^\/api\/football-data/, ""),
+				},
+			},
+		},
 		css: {
 			preprocessorOptions: {
 				scss: {

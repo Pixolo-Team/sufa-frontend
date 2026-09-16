@@ -1,0 +1,60 @@
+.sectionDescription {
+	font-size: var(--color-brand-font-size-xlarge);
+	color: var(--color-text-tint);
+	max-width: 640px;
+	margin: 12px auto 0;
+	line-height: 1.6;
+}
+
+.cardsWrapper {
+	margin-top: 40px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+
+	.cardItem {
+		width: 100%;
+
+		&:nth-child(1) {
+			--card-color: #16db93;
+		}
+		&:nth-child(2) {
+			--card-color: #ce6ee0;
+		}
+		&:nth-child(3) {
+			--card-color: #fd7042;
+		}
+	}
+}
+
+// Ipad Mini
+@media only screen and (min-width: 768px) {
+	.cardsWrapper {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 20px;
+
+		.cardItem {
+			width: calc(50% - 10px);
+			&:last-child {
+				width: 100%;
+			}
+		}
+	}
+}
+
+// Ipad air / Desktop — 3 up
+@media only screen and (min-width: 992px) {
+	.cardsWrapper {
+		flex-wrap: nowrap;
+		gap: 24px;
+		margin-top: 50px;
+
+		.cardItem {
+			width: 100%;
+			&:last-child {
+				width: 100%;
+			}
+		}
+	}
+}

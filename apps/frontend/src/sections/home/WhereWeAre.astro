@@ -1,0 +1,67 @@
+---
+// STYLES //
+import styles from "./where-we-are/where-we-are.module.scss";
+
+// COMPONENTS //
+import SectionHeader from "@/components/section-header/SectionHeader.astro";
+import CentersCard from "@/components/centers-card/CentersCard.astro";
+
+// Centers list — TODO: replace placeholder photos with real center photos.
+// Drop files into `public/images/centers/` (e.g. `ghatkopar-east.jpg`) and
+// update `imageSrc` below. Same for the Kurla–Vidyavihar West address/maps URL.
+const centersList = [
+	{
+		name: "Ghatkopar East",
+		address: "12 MG Road, Ghatkopar East, Mumbai 400077",
+		mapsUrl: "https://maps.app.goo.gl/d38jgYnoAiz5ovPU7",
+		imageSrc: "/images/established-team.jpg",
+		imageAlt:
+			"Training session at Skorost United Football Academy, Ghatkopar East",
+	},
+	{
+		name: "Ghatkopar West",
+		address: "45 LBS Marg, Ghatkopar West, Mumbai 400086",
+		mapsUrl: "https://maps.google.com/?q=Ghatkopar+West+Mumbai",
+		imageSrc: "/images/skorost.jpg",
+		imageAlt:
+			"Training session at Skorost United Football Academy, Ghatkopar West",
+	},
+	{
+		name: "Kurla / Vidyavihar West",
+		address: "Kurla / Vidyavihar West, Mumbai — full address coming soon",
+		mapsUrl: "https://maps.google.com/?q=Kurla+Vidyavihar+West+Mumbai",
+		imageSrc: "/images/courses/u-12.jpg",
+		imageAlt:
+			"Training session at Skorost United Football Academy, Kurla / Vidyavihar West",
+	},
+];
+---
+
+<section id="centers" class="section-spacing">
+	<div class="container">
+		{/* Section header */}
+		<SectionHeader fadedText="Centers" highlightedText="Where We Are" />
+		<p
+			class={`${styles.sectionDescription} text-center font-weight-500 fade-in-up`}
+		>
+			Three centers across Mumbai — pick the one closest to you and come train
+			with us!
+		</p>
+		{/* Center cards */}
+		<div class={styles.cardsWrapper}>
+			{
+				centersList.map((center, idx) => (
+					<CentersCard
+						wrapperClass={styles.cardItem}
+						index={String(idx + 1).padStart(2, "0")}
+						name={center.name}
+						address={center.address}
+						mapsUrl={center.mapsUrl}
+						imageSrc={center.imageSrc}
+						imageAlt={center.imageAlt}
+					/>
+				))
+			}
+		</div>
+	</div>
+</section>
