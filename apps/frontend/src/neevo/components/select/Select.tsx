@@ -124,7 +124,11 @@ const Select: React.FC<SelectProps> = ({
 					{isRequired && <span className={styles.inputRequired}>*</span>}
 				</p>
 			)}
-			<div className={styles.selectElementWrapper}>
+			<div
+				className={`${styles.selectElementWrapper} ${
+					isDropdownOpen ? styles.selectElementWrapperOpen : ""
+				}`}
+			>
 				{/* Select Element */}
 				<div
 					onClick={(event) => toggleDropdown(event)}

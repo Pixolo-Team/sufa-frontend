@@ -24,10 +24,12 @@ type FeeQuoteInput = {
 	endDate: string;
 	/** JS day numbers the batch runs sessions on (0 = Sunday) */
 	sessionWeekdays: number[];
-	/** Flat price of one full calendar month at this center for this plan */
+	/** Flat package price for the selected plan duration */
 	monthlyPrice: number;
 	/** Stored per-session price for this center plan - never derived */
 	perSessionPrice: number;
+	/** Number of full months covered by the selected package price */
+	durationMonths?: number;
 };
 
 /**
@@ -66,33 +68,24 @@ const getLastDayOfMonth = (date: Date): Date =>
 
 /**
  * Default end date (editable by staff) - docs/operations/02-fee-calculation.md
- * - Start on the 1st  → last day of that month.
- * - Start mid-month   → last day of the *next* month (partial joining month
- *   bundled with one full month).
+ * - Start on the 1st  → last day of the selected duration's last month.
+ * - Start mid-month   → last day of the month after the selected duration
+ *   window, bundling the partial joining month with the full duration.
  */
-export const getDefaultEndDate = (startDate: string): string => {
-	const start = parseDateInput(startDate);
-
-	if (!start) return "";
-
-	const monthOffset = start.getDate() === 1 ? 0 : 1;
-
-	return toDateInputValue(
-		new Date(start.getFullYear(), start.getMonth() + monthOffset + 1, 0)
-	);
-};
-
-/** End date of a fixed multi-month plan that always starts on the 1st */
-export const getFixedTermEndDate = (
+export const getDefaultEndDate = (
 	startDate: string,
-	durationMonths: number
+	durationMonths = 1
 ): string => {
 	const start = parseDateInput(startDate);
 
 	if (!start) return "";
 
+	const safeDuration = Math.max(1, durationMonths);
+	const monthOffset =
+		start.getDate() === 1 ? safeDuration - 1 : safeDuration;
+
 	return toDateInputValue(
-		new Date(start.getFullYear(), start.getMonth() + durationMonths, 0)
+		new Date(start.getFullYear(), start.getMonth() + monthOffset + 1, 0)
 	);
 };
 
@@ -115,11 +108,26 @@ const countSessionDays = (
 	return count;
 };
 
+const getFullMonthAmount = (
+	packagePrice: number,
+	durationMonths: number,
+	fullMonthIndex: number
+): number => {
+	const safeDuration = Math.max(1, durationMonths);
+	const baseAmount = Math.floor(packagePrice / safeDuration);
+	const remainder = packagePrice % safeDuration;
+
+	return baseAmount + (fullMonthIndex % safeDuration < remainder ? 1 : 0);
+};
+
+const getFullMonthDetail = (count: number): string =>
+	`${count} full ${count === 1 ? "month" : "months"} - package price`;
+
 /**
  * Walk every calendar month overlapping [start, end].
  * A month fully inside the range bills the flat price; a partial month bills
  * `session days in range × the stored per-session price`. No holiday
- * adjustment, and no rounding - both prices come from the database.
+ * adjustment; both prices come from the database.
  */
 export const calculateFeeQuote = ({
 	startDate,
@@ -127,6 +135,7 @@ export const calculateFeeQuote = ({
 	sessionWeekdays,
 	monthlyPrice,
 	perSessionPrice,
+	durationMonths = 1,
 }: FeeQuoteInput): FeeQuoteData | null => {
 	const start = parseDateInput(startDate);
 	const end = parseDateInput(endDate);
@@ -134,9 +143,55 @@ export const calculateFeeQuote = ({
 	// Nothing to bill for an incomplete or backwards range
 	if (!start || !end || end < start) return null;
 
+	if (start.getDate() === 1 && endDate === getDefaultEndDate(startDate, durationMonths)) {
+		return {
+			rows: [
+				{
+					id: `${durationMonths}-month-package`,
+					label:
+						durationMonths === 1
+							? "1 Month Package"
+							: `${durationMonths} Month Package`,
+					detail: "Fixed package price",
+					amount: monthlyPrice,
+					isFullMonth: true,
+				},
+			],
+			total: monthlyPrice,
+			sessionCount: countSessionDays(start, end, sessionWeekdays),
+			isExactPackage: true,
+		};
+	}
+
 	const rows: FeeBreakdownRowData[] = [];
 	let total = 0;
 	let sessionCount = 0;
+	let fullMonthIndex = 0;
+	let fullMonthGroup:
+		| {
+				firstLabel: string;
+				lastLabel: string;
+				count: number;
+				amount: number;
+		  }
+		| undefined;
+
+	const flushFullMonthGroup = () => {
+		if (!fullMonthGroup) return;
+
+		rows.push({
+			id: `${fullMonthGroup.firstLabel}-${fullMonthGroup.lastLabel}`,
+			label:
+				fullMonthGroup.firstLabel === fullMonthGroup.lastLabel
+					? fullMonthGroup.firstLabel
+					: `${fullMonthGroup.firstLabel} - ${fullMonthGroup.lastLabel}`,
+			detail: getFullMonthDetail(fullMonthGroup.count),
+			amount: fullMonthGroup.amount,
+			isFullMonth: true,
+		});
+
+		fullMonthGroup = undefined;
+	};
 
 	// Start at the 1st of the starting month and step one month at a time
 	const cursor = new Date(start.getFullYear(), start.getMonth(), 1);
@@ -155,16 +210,30 @@ export const calculateFeeQuote = ({
 			rangeEnd.getTime() === monthEnd.getTime();
 
 		if (isFullMonth) {
-			total += monthlyPrice;
+			const amount = getFullMonthAmount(
+				monthlyPrice,
+				durationMonths,
+				fullMonthIndex
+			);
 
-			rows.push({
-				id: monthLabel,
-				label: monthLabel,
-				detail: "Full month · flat price",
-				amount: monthlyPrice,
-				isFullMonth: true,
-			});
+			total += amount;
+			fullMonthIndex += 1;
+			fullMonthGroup = fullMonthGroup
+				? {
+						...fullMonthGroup,
+						lastLabel: monthLabel,
+						count: fullMonthGroup.count + 1,
+						amount: fullMonthGroup.amount + amount,
+					}
+				: {
+						firstLabel: monthLabel,
+						lastLabel: monthLabel,
+						count: 1,
+						amount,
+					};
 		} else {
+			flushFullMonthGroup();
+
 			const sessions = countSessionDays(rangeStart, rangeEnd, sessionWeekdays);
 			const amount = sessions * perSessionPrice;
 
@@ -174,7 +243,7 @@ export const calculateFeeQuote = ({
 			rows.push({
 				id: monthLabel,
 				label: `${rangeStart.getDate()}-${rangeEnd.getDate()} ${MONTH_NAMES[cursor.getMonth()]}`,
-				detail: `${sessions} × ₹${perSessionPrice} · part month`,
+				detail: `${sessions} sessions x ₹${perSessionPrice} - part month`,
 				amount,
 				isFullMonth: false,
 			});
@@ -183,7 +252,9 @@ export const calculateFeeQuote = ({
 		cursor.setMonth(cursor.getMonth() + 1);
 	}
 
-	return { rows, total, sessionCount };
+	flushFullMonthGroup();
+
+	return { rows, total, sessionCount, isExactPackage: false };
 };
 
 /** Format an amount the way staff read it out, e.g. `₹3,970` */

@@ -3,6 +3,12 @@
 A staff-only internal page for the academy's day-to-day operations. The database
 design is in a separate document (`DATABASE.md`).
 
+> ⚠️ **This is the original design proposal, not the current build.** The
+> "three tools" in §3 below were consolidated into **two pages** (Batches,
+> Payments) - see [05-page-ux.md](05-page-ux.md) for what's actually shipped
+> and why. The fee-calculation logic and database shape described here are
+> still accurate.
+
 ---
 
 ## 1. Purpose
@@ -74,7 +80,7 @@ Walk every calendar month overlapping `[startDate, endDate]`:
 ```
 For each month M in the range:
   if M is a FULL calendar month inside the range:
-      amount += center_plan.price              # stored flat price
+      amount += package month share           # plan price spread across duration
   else:                                        # partial month
       amount += (session-days of M in range) × center_plan.per_session_price
 
@@ -82,14 +88,17 @@ total = amount                                 # no rounding
 ```
 
 - "session-days" = the center/batch's session weekdays (from `batch_days`) that
-  fall in the range. For a 2-day plan, the student's chosen subset of those days.
+  fall in the range. For a 2-day plan, the first two configured batch days are
+  counted automatically.
 - **No holiday adjustment** - every scheduled session day counts.
 
 **Default end date** (editable by staff)
 
-- Start on the **1st** → default end = last day of that month.
-- Start **mid-month** → default end = last day of the **next** month (bundles the
-  partial joining month with one full month).
+- Start on the **1st** → default end = last day of the selected duration's last
+  month.
+- Start **mid-month** → default end = last day of the month after the selected
+  duration window. Example: 15 Jul on a 1-month plan ends 31 Aug; 15 Jul on a
+  3-month plan ends 31 Oct.
 
 **Worked example** (3-day center, per-session price ₹285, flat ₹3,400)
 
@@ -137,7 +146,7 @@ registration options.
         "plans": [
           { "id": "<uuid>", "name": "1 Month 3-Day", "durationMonths": 1, "daysPerWeek": 3, "price": 3400, "perSessionPrice": 285 },
           { "id": "<uuid>", "name": "1 Month 2-Day", "durationMonths": 1, "daysPerWeek": 2, "price": 2280, "perSessionPrice": 285 },
-          { "id": "<uuid>", "name": "3 Month 3-Day", "durationMonths": 3, "daysPerWeek": 3, "price": 9600, "perSessionPrice": 285 },
+          { "id": "<uuid>", "name": "3 Month 3-Day", "durationMonths": 3, "daysPerWeek": 3, "price": 9000, "perSessionPrice": 285 },
           { "id": "<uuid>", "name": "3 Month 2-Day", "durationMonths": 3, "daysPerWeek": 2, "price": 6500, "perSessionPrice": 285 }
         ]
       }
@@ -191,11 +200,10 @@ needed before go-live:
 3. **Center + batch + plan data** - for each center: address, batches (age
    group, timings + session days), and each plan's flat price + per-session
    price.
-4. **3-month plan scope** - confirmed: **two centers**, each selling a 1-month
-   and a 3-month plan at 3-day and 2-day attendance (no 6-month plan). Still to
-   confirm: can a student **join a 3-month plan mid-month**? It is currently
-   treated as a fixed term starting on the 1st, inherited from the retired
-   6-month rule.
+4. **Plan scope** - confirmed: **two centers**, each selling **1, 3, 6 and
+   12-month** plans at 3-day and 2-day attendance. All durations can start
+   mid-month; the partial joining month is pro-rated and the end date remains
+   editable.
 5. **Global UPI ID + payee name** for the payment QRs.
 6. **Fee-structure image content** - layout/branding of the generated image and
    the exact details to show.

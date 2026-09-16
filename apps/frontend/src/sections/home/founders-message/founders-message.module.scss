@@ -1,9 +1,16 @@
+// Mobile-first: stacked layout (quote -> message -> signature -> artwork).
+// The two-column editorial grid only kicks in at desktop (see 992px+ below).
 .contentWrapper {
 	width: 100%;
 	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	padding: 50px 0;
 }
 .founderContentStyles {
+	max-width: 1050px;
+
 	p {
 		margin: var(--margin-xxlarge) 0;
 		line-height: 32px;
@@ -15,7 +22,7 @@
 	margin-top: 36px;
 }
 .messageWrapper {
-	flex: 1;
+	width: 100%;
 }
 .quoteIcon {
 	width: 20px;
@@ -29,11 +36,42 @@
 	color: var(--color-brand-primary-deep);
 	font-size: var(--color-brand-font-size-regular);
 }
+
+// abhay.png is a transparent-background illustration with an intentionally
+// rough painted edge, meant to sit directly on the section background - not
+// a rectangular photo cropped into a card. It carries real visual weight
+// (founder + two players + a football), so unlike the old photograph it
+// stays fully visible and un-faded; only scale and position change per
+// breakpoint.
 .imageWrapper {
+	// Hidden below desktop - the artwork only shows in the two-column
+	// editorial layout at 992px+ (see below), same as the site's previous
+	// behavior for the founder photo.
 	display: none;
+	position: relative;
+
+	// Very faint ambient wash behind the artwork - not a spotlight, just
+	// enough to keep the figure from sitting on flat, empty background.
+	&::before {
+		content: "";
+		position: absolute;
+		inset: -10%;
+		background: radial-gradient(
+			circle at 50% 55%,
+			color-mix(in srgb, var(--color-brand-primary-regular) 8%, transparent),
+			transparent 55%
+		);
+		z-index: 0;
+	}
 }
 .founderImage {
-	transform: scale(1.2);
+	position: relative;
+	z-index: 1;
+	display: block;
+	width: 100%;
+	height: auto;
+	object-fit: contain;
+	filter: drop-shadow(0 20px 32px rgba(20, 30, 25, 0.1));
 }
 
 // Mobile Phones
@@ -56,21 +94,60 @@
 	}
 }
 
-// Ipad air
+// Ipad air and up - premium editorial two-column layout with both the
+// message and artwork centered in their columns.
 @media only screen and (min-width: 992px) {
+	.contentWrapper {
+		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr);
+		align-items: center;
+		column-gap: var(--spacing-40);
+		// The parent <section> already carries `.section-spacing` (70px top
+		// and bottom); this tops that up so the combined total lands around
+		// 94px/86px - generous, without double-stacking to an excessive sum.
+		padding-top: 24px;
+		padding-bottom: 16px;
+	}
 	.messageWrapper {
 		position: relative;
 		z-index: 2;
+
+		:global(.left-container-padding) {
+			padding-left: 5%;
+			padding-right: 5%;
+		}
 	}
 	.imageWrapper {
-		display: block;
-		width: 500px;
-		height: 500px;
+		width: 100%;
+		height: clamp(420px, 42vw, 640px);
+		margin: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.founderImage {
+		width: auto;
+		height: 100%;
+		max-width: 100%;
+		object-position: center;
 	}
 }
 
-// Small laptops
-@media only screen and (min-width: 1500px) {
+// Small laptops and large desktops - give the artwork a little more room to
+// breathe as the section itself has more height to work with.
+@media only screen and (min-width: 1440px) {
+	.imageWrapper {
+		height: clamp(560px, 44vw, 720px);
+	}
+}
+
+// Ultra-wide screens (1920px+): cap and center the whole row so both sides
+// stay close to their real content width instead of drifting apart.
+@media only screen and (min-width: 1700px) {
+	.contentWrapper {
+		max-width: 1500px;
+		margin-inline: auto;
+	}
 }
 
 // Custom

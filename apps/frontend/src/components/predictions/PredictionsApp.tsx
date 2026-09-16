@@ -24,7 +24,6 @@ import PinGate from "../operations/PinGate";
 import Button from "@/neevo/components/button/Button";
 
 // DATA //
-import { OPERATIONS_DATA } from "@/data/operations.data";
 import {
 	PREDICTORS,
 	PREDICTIONS_SEASON,
@@ -46,8 +45,9 @@ import {
 // UTILS //
 import { renderPredictionsImage } from "@/utils/predictions-image.util";
 
-// Same device key as operations — one unlock opens both staff tools.
+// Same device key + PIN source as operations — one unlock opens both staff tools.
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
+const STAFF_PIN = import.meta.env.PUBLIC_STAFF_PIN ?? "";
 
 type Screen = "gameweeks" | "predict" | "export";
 
@@ -301,7 +301,7 @@ const PredictionsApp: React.FC = () => {
 	if (!isUnlocked) {
 		return (
 			<div className={`${opsStyles.operations} ${opsStyles.operationsGate}`}>
-				<PinGate expectedPin={OPERATIONS_DATA.config.staffPin} onUnlock={unlock} />
+				<PinGate expectedPin={STAFF_PIN} onUnlock={unlock} />
 			</div>
 		);
 	}

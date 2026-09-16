@@ -37,3 +37,7 @@ yarn-error.log*
 
 .env
 apps/frontend/public/images/new/
+
+# local review artifacts (screenshots, review builds)
+operations-screenshots/
+operations-review.zip

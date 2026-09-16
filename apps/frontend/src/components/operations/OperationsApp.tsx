@@ -1,5 +1,5 @@
 // REACT //
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 // STYLES //
 import styles from "./operations.module.scss";
@@ -7,82 +7,171 @@ import styles from "./operations.module.scss";
 // COMPONENTS //
 import OperationsIcon, { type OperationsIconName } from "./OperationsIcon";
 import PinGate from "./PinGate";
-import FeeCalculator from "./FeeCalculator";
-import FeeStructure from "./FeeStructure";
 import PaymentQr from "./PaymentQr";
-import CentersList from "./CentersList";
+import BatchesList from "./BatchesList";
+import LeadForm from "./LeadForm";
+import RegularInformation from "./RegularInformation";
 
-// DATA //
-import { OPERATIONS_DATA } from "@/data/operations.data";
+// SERVICES //
+import { fetchOperationsData } from "@/services/operations.api.service";
+
+// TYPES //
+import type { OperationsData } from "@/types/operations";
+
+const STAFF_PIN = import.meta.env.PUBLIC_STAFF_PIN ?? "";
 
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
+const UNLOCK_TTL_MS = 24 * 60 * 60 * 1000;
 
-type ToolId = "calculator" | "structure" | "qr" | "centers";
+type ToolId = "batches" | "qr" | "lead" | "regular-info";
 
-const TOOLS: {
+type PanelToolTile = {
 	id: ToolId;
 	icon: OperationsIconName;
 	title: string;
 	subtitle: string;
-}[] = [
+};
+
+type ExternalToolTile = {
+	href: string;
+	icon: OperationsIconName;
+	title: string;
+	subtitle: string;
+};
+
+type ToolTile = PanelToolTile | ExternalToolTile;
+
+// Tiles with `id` open an in-app panel; tiles with `href` are external links
+// (e.g. Attendance) and only ever render in the home grid, never the rail.
+const TOOLS: ToolTile[] = [
 	{
-		id: "calculator",
-		icon: "calculator",
-		title: "Fee Calculator",
-		subtitle: "Work out dues",
-	},
-	{
-		id: "structure",
-		icon: "message",
-		title: "Fee Structure",
-		subtitle: "Send on WhatsApp",
-	},
-	{ id: "qr", icon: "qr", title: "Payment QR", subtitle: "Global / student" },
-	{
-		id: "centers",
+		id: "batches",
 		icon: "pin",
-		title: "Centers",
+		title: "Batches",
 		subtitle: "Prices & timings",
+	},
+	{
+		id: "qr",
+		icon: "qr-code",
+		title: "Payments",
+		subtitle: "QR & fee collection",
+	},
+	{
+		id: "lead",
+		icon: "user-plus",
+		title: "Add Lead",
+		subtitle: "Capture a new enquiry",
+	},
+	{
+		id: "regular-info",
+		icon: "info-book",
+		title: "Regular Information",
+		subtitle: "Copy-paste reference material",
+	},
+	{
+		href: "https://skorostunitedfootballschool.zizoapp.in/schedule",
+		icon: "calendar-check",
+		title: "Attendance",
+		subtitle: "Mark attendance on Zizo",
+	},
+	{
+		href: "https://docs.google.com/forms/d/e/1FAIpQLSeDWHQQAzNhG8gjXKV3fpi7eLPNih3KWDxyVjlQQuFy6AZbYw/viewform",
+		icon: "whistle",
+		title: "Coach Attendance",
+		subtitle: "Submit coach attendance",
 	},
 ];
 
+const PANEL_TOOLS = TOOLS.filter(
+	(tool): tool is PanelToolTile => "id" in tool
+);
+
 /** Staff-only operations tools. Everything is computed and sent in the browser. */
 const OperationsApp: React.FC = () => {
-	const { config, centers, registrationOptions } = OPERATIONS_DATA;
+	const [isUnlocked, setIsUnlocked] = useState(() => {
+		const storedValue = window.sessionStorage.getItem(UNLOCK_STORAGE_KEY);
+		const expiresAt = storedValue ? Number(storedValue) : 0;
 
-	const [isUnlocked, setIsUnlocked] = useState(
-		() => window.localStorage.getItem(UNLOCK_STORAGE_KEY) === "true"
-	);
+		if (expiresAt > Date.now()) return true;
+
+		window.sessionStorage.removeItem(UNLOCK_STORAGE_KEY);
+		return false;
+	});
 	const [activeTool, setActiveTool] = useState<ToolId | null>(null);
-	const [centerId, setCenterId] = useState(centers[0]?.id ?? "");
-
-	const center = centers.find((item) => item.id === centerId);
-	const activeToolMeta = TOOLS.find((tool) => tool.id === activeTool);
+	const [centerId, setCenterId] = useState("");
+	const [data, setData] = useState<OperationsData | null>(null);
+	const [loadError, setLoadError] = useState(false);
 
 	const unlock = useCallback(() => {
-		window.localStorage.setItem(UNLOCK_STORAGE_KEY, "true");
+		window.sessionStorage.setItem(
+			UNLOCK_STORAGE_KEY,
+			String(Date.now() + UNLOCK_TTL_MS)
+		);
 		setIsUnlocked(true);
 	}, []);
+
+	useEffect(() => {
+		if (!isUnlocked) return;
+
+		let isActive = true;
+
+		fetchOperationsData()
+			.then((result) => {
+				if (!isActive) return;
+				setData(result);
+				setCenterId(result.centers[0]?.id ?? "");
+			})
+			.catch(() => {
+				if (isActive) setLoadError(true);
+			});
+
+		return () => {
+			isActive = false;
+		};
+	}, [isUnlocked]);
 
 	if (!isUnlocked) {
 		return (
 			<div className={`${styles.operations} ${styles.operationsGate}`}>
-				<PinGate expectedPin={config.staffPin} onUnlock={unlock} />
+				<PinGate expectedPin={STAFF_PIN} onUnlock={unlock} />
 			</div>
 		);
 	}
+
+	if (loadError) {
+		return (
+			<div className={styles.operations}>
+				<div className={styles.shell}>
+					<p className={styles.notice}>
+						Could not load operations data. Check your connection and reload.
+					</p>
+				</div>
+			</div>
+		);
+	}
+
+	if (!data) {
+		return (
+			<div className={styles.operations}>
+				<div className={styles.shell}>
+					<p className={styles.notice}>Loading...</p>
+				</div>
+			</div>
+		);
+	}
+
+	const { config, centers, registrationOptions } = data;
+	const center = centers.find((item) => item.id === centerId);
+	const activeToolMeta = PANEL_TOOLS.find((tool) => tool.id === activeTool);
 
 	const renderPanel = () => {
 		const toolProps = { centers, center, onCenterChange: setCenterId };
 
 		switch (activeTool) {
-			case "calculator":
-				return <FeeCalculator {...toolProps} registrationOptions={registrationOptions} />;
-			case "structure":
+			case "batches":
 				return (
-					<FeeStructure
-						{...toolProps}
-						config={config}
+					<BatchesList
+						centers={centers}
 						registrationOptions={registrationOptions}
 					/>
 				);
@@ -94,34 +183,56 @@ const OperationsApp: React.FC = () => {
 						registrationOptions={registrationOptions}
 					/>
 				);
-			case "centers":
-				return (
-					<CentersList centers={centers} registrationOptions={registrationOptions} />
-				);
+			case "lead":
+				return <LeadForm />;
+			case "regular-info":
+				return <RegularInformation />;
 			default:
 				return (
 					<div className={styles.tiles}>
-						{TOOLS.map((tool) => (
-							<button
-								key={tool.id}
-								type="button"
-								className={styles.tile}
-								onClick={() => setActiveTool(tool.id)}
-							>
-								<span className={styles.tileIcon}>
-									<OperationsIcon name={tool.icon} />
-								</span>
-								<span className={styles.tileText}>
-									<b>{tool.title}</b>
-									<small>{tool.subtitle}</small>
-								</span>
-								<OperationsIcon
-									name="chevron"
-									size={18}
-									className={styles.tileChevron}
-								/>
-							</button>
-						))}
+						{TOOLS.map((tool) => {
+							const tileContent = (
+								<>
+									<span className={styles.tileIcon}>
+										<OperationsIcon name={tool.icon} />
+									</span>
+									<span className={styles.tileText}>
+										<b>{tool.title}</b>
+										<small>{tool.subtitle}</small>
+									</span>
+									<OperationsIcon
+										name="chevron"
+										size={18}
+										className={styles.tileChevron}
+									/>
+								</>
+							);
+
+							if ("href" in tool) {
+								return (
+									<a
+										key={tool.title}
+										href={tool.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										className={styles.tile}
+									>
+										{tileContent}
+									</a>
+								);
+							}
+
+							return (
+								<button
+									key={tool.id}
+									type="button"
+									className={styles.tile}
+									onClick={() => setActiveTool(tool.id)}
+								>
+									{tileContent}
+								</button>
+							);
+						})}
 					</div>
 				);
 		}
@@ -156,19 +267,22 @@ const OperationsApp: React.FC = () => {
 								width="71"
 								height="34"
 							/>
-							<span className={styles.brandDivider} aria-hidden="true" />
-							<span className={styles.brandLabel}>Ops</span>
 						</span>
 					)}
 
-					<span className={styles.lockChip}>
-						<OperationsIcon name="lock" size={12} />
-						Unlocked
-					</span>
+					<a href="https://zizoapp.in" target="_blank" rel="noopener noreferrer">
+						<img
+							className={styles.topBarLogo}
+							src="/images/brand/zizo.svg"
+							alt="Zizo"
+							width="34"
+							height="34"
+						/>
+					</a>
 				</div>
 
 				<nav className={styles.rail}>
-					{TOOLS.map((tool) => (
+					{PANEL_TOOLS.map((tool) => (
 						<button
 							key={tool.id}
 							type="button"
@@ -188,11 +302,25 @@ const OperationsApp: React.FC = () => {
 						activeTool === null ? styles.panelHome : ""
 					}`}
 				>
-					{activeTool !== "centers" && (
+					{activeTool !== "batches" && activeTool !== "regular-info" && (
 						<p className={styles.notice}>Staff tool. Not linked from the public site.</p>
 					)}
 
 					{renderPanel()}
+
+					{activeTool === null && (
+						<p className={styles.poweredBy}>
+							<span>Powered by</span>
+							<a href="https://zizoapp.in" target="_blank" rel="noopener noreferrer">
+								<img
+									src="/images/brand/zizo.svg"
+									alt="Zizo"
+									width="40"
+									height="16"
+								/>
+							</a>
+						</p>
+					)}
 				</div>
 			</div>
 		</div>

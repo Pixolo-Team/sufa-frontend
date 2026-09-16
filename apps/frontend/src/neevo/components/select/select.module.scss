@@ -23,6 +23,11 @@ $sizes: (
 	.selectElementWrapper {
 		// Select element.
 		position: relative;
+		z-index: 4;
+
+		&.selectElementWrapperOpen {
+			z-index: 20;
+		}
 		.selectElement {
 			cursor: pointer;
 			display: flex;
@@ -81,7 +86,7 @@ $sizes: (
 			top: 100%;
 			left: 0%;
 			width: 100%;
-			z-index: 1;
+			z-index: 21;
 			overflow-y: auto;
 			background-color: var(--color-select-options-background-default);
 			// Dropdown list options.

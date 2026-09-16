@@ -5,10 +5,13 @@ export type OperationsBatchTimingData = {
 	endTime: string;
 };
 
-/** A plan sold inside a specific batch. */
+/**
+ * A plan sold inside a specific batch. There is no `name` - the label is
+ * derived from duration + days per week so there is one source of truth.
+ * See DATABASE.md.
+ */
 export type OperationsPlanData = {
 	id: string;
-	name: string;
 	durationMonths: number;
 	daysPerWeek: number;
 	price: number;
@@ -30,6 +33,7 @@ export type OperationsBatchData = {
 	ageGroup: string;
 	schedule: OperationsBatchTimingData[];
 	plans: OperationsPlanData[];
+	imageSrc?: string;
 };
 
 /** A center with everything the tools need */
@@ -37,6 +41,7 @@ export type OperationsCenterData = {
 	id: string;
 	name: string;
 	address: string;
+	mapsUrl: string | null;
 	batches: OperationsBatchData[];
 };
 
@@ -69,4 +74,5 @@ export type FeeQuoteData = {
 	rows: FeeBreakdownRowData[];
 	total: number;
 	sessionCount: number;
+	isExactPackage: boolean;
 };

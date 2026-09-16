@@ -6,13 +6,14 @@ export const showToast = (message: string, type: ToastTypes) => {
 	// Create a new toast element
 	const toastElement = document.createElement("div");
 	toastElement.className = `toast ${type}`;
-	toastElement.innerHTML = `<p>${message}</p>`;
+	toastElement.innerHTML = `<span class="toast-bar"></span><p>${message}</p>`;
 
 	// Append the toast element to the body
 	document.body.appendChild(toastElement);
 
-	// Set a timer to remove the toast after 3 seconds
+	// Fade out, then remove once the exit transition finishes
 	setTimeout(() => {
-		document.body.removeChild(toastElement);
+		toastElement.classList.add("toast-exit");
+		setTimeout(() => toastElement.remove(), 250);
 	}, 3000); // 3000 milliseconds (3 seconds)
 };
