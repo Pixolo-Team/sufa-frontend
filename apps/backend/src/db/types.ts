@@ -55,3 +55,34 @@ export interface OperationsData {
 	config: OpsConfig;
 	centers: OpsCenter[];
 }
+
+// ---------------------------------------------------------------------------
+// Score Predictor (EPL) — same DB pattern as operations: tables in schema.sql,
+// scaffold store until Postgres is wired.
+// ---------------------------------------------------------------------------
+
+/** The two predictors. Fixed for now — matches the Abhay | Harsh tabs. */
+export type PredictorId = "abhay" | "harsh";
+
+export interface PredictionPick {
+	/** football-data.org fixture id, stable across fetches */
+	fixtureId: number;
+	homeTeam: string;
+	awayTeam: string;
+	/** 3-letter codes (e.g. ARS, LIV) for the export image */
+	homeTla: string;
+	awayTla: string;
+	homeScore: number;
+	awayScore: number;
+}
+
+export interface PredictorPredictions {
+	predictor: PredictorId;
+	picks: PredictionPick[];
+}
+
+export interface GameweekPredictions {
+	season: number;
+	gameweek: number;
+	predictions: PredictorPredictions[];
+}

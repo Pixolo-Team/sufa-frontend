@@ -73,3 +73,23 @@ CREATE TABLE IF NOT EXISTS registration_options (
 	is_active BOOLEAN NOT NULL DEFAULT true,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Score Predictor (EPL). One row per predictor per fixture.
+-- Fixtures themselves live in football-data.org; we store team names + scores
+-- snapshots so the Instagram export stays frozen even if fixtures move.
+CREATE TABLE IF NOT EXISTS prediction_picks (
+	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	season SMALLINT NOT NULL,
+	gameweek SMALLINT NOT NULL CHECK (gameweek BETWEEN 1 AND 38),
+	predictor TEXT NOT NULL CHECK (predictor IN ('abhay', 'harsh')),
+	fixture_id BIGINT NOT NULL,
+	home_team TEXT NOT NULL,
+	away_team TEXT NOT NULL,
+	home_tla TEXT NOT NULL,
+	away_tla TEXT NOT NULL,
+	home_score SMALLINT NOT NULL CHECK (home_score BETWEEN 0 AND 20),
+	away_score SMALLINT NOT NULL CHECK (away_score BETWEEN 0 AND 20),
+	created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+	updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+	UNIQUE (season, gameweek, predictor, fixture_id)
+);
