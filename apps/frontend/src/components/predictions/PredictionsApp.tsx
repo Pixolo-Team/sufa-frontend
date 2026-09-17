@@ -492,7 +492,7 @@ const PredictionsApp: React.FC = () => {
 								</p>
 
 								{fixturesState === "ready" && fixtures.length > 0 && (
-									<div className={opsStyles.buttonRow}>
+									<div className={styles.actionStack}>
 										<Button
 											text="Export"
 											variant={Variants.OUTLINE}

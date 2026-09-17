@@ -98,6 +98,14 @@ centered column at every breakpoint. */
 	}
 }
 
+/* Sidebar Export/Save stacked full-width, one below the other */
+.actionStack {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 16px;
+}
+
 /* ---------- Screen 2: fixtures + score inputs ---------- */
 
 /* Mobile: stacked cards. Desktop: sticky controls sidebar + fixtures. */
@@ -194,21 +202,18 @@ centered column at every breakpoint. */
 .fixtureHome,
 .fixtureAway {
 	min-width: 0;
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
+	display: block;
 	font-size: 13px;
 	font-weight: 700;
-	line-height: 1.35;
+	line-height: 1.4;
+	overflow-wrap: break-word;
 }
 
 .fixtureHome {
-	justify-content: flex-end;
 	text-align: right;
 }
 
 .fixtureAway {
-	justify-content: flex-start;
 	text-align: left;
 }
 
@@ -216,8 +221,16 @@ centered column at every breakpoint. */
 .fixtureAway img {
 	width: 26px;
 	height: 26px;
-	flex: none;
 	object-fit: contain;
+	vertical-align: -7px;
+}
+
+.fixtureHome img {
+	margin-left: 8px;
+}
+
+.fixtureAway img {
+	margin-right: 8px;
 }
 
 .scoreInputs {
