@@ -3,6 +3,8 @@
  * project to run `supabase gen types` against yet. Regenerate properly once
  * the project exists: `npx supabase gen types typescript --project-id <id>`.
  */
+
+export type Json = string | number | boolean | null | { [key: string]: Json } | Json[];
 export type Database = {
 	public: {
 		Tables: {
@@ -87,6 +89,29 @@ export type Database = {
 				};
 				Insert: never;
 				Update: never;
+				Relationships: [];
+			};
+			gameweek_predictions: {
+				Row: {
+					id: string;
+					season: number;
+					gameweek: number;
+					abhay_snapshot: Json | null;
+					harsh_snapshot: Json | null;
+					created_at: string;
+					updated_at: string;
+				};
+				Insert: {
+					season: number;
+					gameweek: number;
+					abhay_snapshot?: Json | null;
+					harsh_snapshot?: Json | null;
+				};
+				Update: {
+					abhay_snapshot?: Json | null;
+					harsh_snapshot?: Json | null;
+					updated_at?: string;
+				};
 				Relationships: [];
 			};
 		};

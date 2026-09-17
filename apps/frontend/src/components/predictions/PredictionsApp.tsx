@@ -156,8 +156,8 @@ const PredictionsApp: React.FC = () => {
 
 	/**
 	 * Fixtures render the moment the season JSON arrives — saved snapshots
-	 * load in the background and never block the UI (the backend host is
-	 * often slow/unreachable, so waiting on it stalled every GW open).
+	 * load in the background and never block the UI (waiting on the cloud
+	 * stalled every GW open when the network is slow).
 	 */
 	const loadGameweek = useCallback(
 		async (gw: number) => {
@@ -285,11 +285,11 @@ const PredictionsApp: React.FC = () => {
 			setSaved(refreshed);
 			showToast(`${predictorLabel(predictor)}'s predictions saved`, ToastTypes.SUCCESS);
 		} catch {
-			// Backend unreachable — save on this device so Export keeps working.
-			// Pressing Save again once the backend is up syncs to the server.
+			// Cloud sync failed — save on this device so Export keeps working.
+			// Pressing Save again once the network is back syncs to Supabase.
 			saveLocalPredictions(PREDICTIONS_SEASON, gameweek, predictor, round);
 			setSaved(getLocalPredictions(PREDICTIONS_SEASON, gameweek));
-			showToast("Backend offline — saved on this device", ToastTypes.WARNING);
+			showToast("Sync failed — saved on this device", ToastTypes.WARNING);
 		} finally {
 			setIsSaving(false);
 		}
