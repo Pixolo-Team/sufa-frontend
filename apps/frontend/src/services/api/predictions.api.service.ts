@@ -19,15 +19,33 @@ import { matchFixtureId, shortTeamName, toTla } from "./openfootball.api.service
 const baseUrl = (season: number, gameweek: number) =>
 	`${CONSTANTS.API_URL}/predictions/${season}/${gameweek}`;
 
+// The backend host is often unreachable (cold/dev) — never hang the UI on it.
+const api = axios.create({ timeout: 8000 });
+
+/** Session flag: once the backend fails to answer, loads skip it entirely. */
+let backendDown = false;
+
+const isNetworkFailure = (error: unknown): boolean =>
+	axios.isAxiosError(error) &&
+	(error.code === "ECONNABORTED" || error.response === undefined);
+
 /** Saved round snapshots for a gameweek (prefill + export screen). */
 export const getGameweekPredictionsRequest = async (
 	season: number,
 	gameweek: number
 ): Promise<GameweekPredictionsData> => {
-	const response = await axios.get<{ data: GameweekPredictionsData }>(
-		baseUrl(season, gameweek)
-	);
-	return response.data.data;
+	if (backendDown) throw new Error("Backend offline");
+
+	try {
+		const response = await api.get<{ data: GameweekPredictionsData }>(
+			baseUrl(season, gameweek)
+		);
+		backendDown = false;
+		return response.data.data;
+	} catch (error) {
+		if (isNetworkFailure(error)) backendDown = true;
+		throw error;
+	}
 };
 
 /** Save one predictor's full matchday JSON (source rows + predicted scores). */
@@ -37,11 +55,17 @@ export const savePredictionsRequest = async (
 	predictor: PredictorId,
 	round: SavedRoundData
 ): Promise<PredictorRoundData> => {
-	const response = await axios.post<{ data: PredictorRoundData }>(
-		baseUrl(season, gameweek),
-		{ predictor, round }
-	);
-	return response.data.data;
+	try {
+		const response = await api.post<{ data: PredictorRoundData }>(
+			baseUrl(season, gameweek),
+			{ predictor, round }
+		);
+		backendDown = false;
+		return response.data.data;
+	} catch (error) {
+		if (isNetworkFailure(error)) backendDown = true;
+		throw error;
+	}
 };
 
 /** Snapshot → UI picks (prefill edits, draw the IG export). Skips unpicked. */

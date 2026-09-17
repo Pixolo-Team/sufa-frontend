@@ -1,5 +1,5 @@
 // REACT //
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 // TYPES //
 import type {
@@ -33,7 +33,10 @@ import {
 
 // SERVICES //
 import { showToast } from "@/neevo/services/toast.service";
-import { getMatchdayFixturesRequest } from "@/services/api/openfootball.api.service";
+import {
+	getMatchdayFixturesRequest,
+	prefetchSeasonMatches,
+} from "@/services/api/openfootball.api.service";
 import {
 	getGameweekPredictionsRequest,
 	roundToPicks,
@@ -119,58 +122,90 @@ const PredictionsApp: React.FC = () => {
 		setIsUnlocked(true);
 	}, []);
 
-	/** Matchday fixtures + saved round snapshots for the open gameweek */
-	const loadGameweek = useCallback(async (gw: number) => {
-		setFixturesState("loading");
-		setFixturesError("");
-		setMatchday(null);
-		setSaved(null);
-		setEdits(emptyEdits());
-		setImageBlob(null);
-		setImageUrl("");
+	// Warm the fixtures cache while the user browses gameweeks.
+	useEffect(() => {
+		if (isUnlocked) prefetchSeasonMatches(PREDICTIONS_SEASON);
+	}, [isUnlocked]);
 
-		try {
-			const [fetchedMatchday, fetchedSaved] = await Promise.all([
-				getMatchdayFixturesRequest(PREDICTIONS_SEASON, gw),
-				// Fall back to device-local snapshots when the backend is down — Export works from either source.
-				getGameweekPredictionsRequest(PREDICTIONS_SEASON, gw).catch(() =>
-					getLocalPredictions(PREDICTIONS_SEASON, gw)
+	// Guards stale loads when the user jumps between gameweeks quickly.
+	const loadSeq = useRef(0);
+
+	/** Prefill score boxes from a saved snapshot */
+	const applySaved = useCallback(
+		(fetchedSaved: GameweekPredictionsData, gw: number) => {
+			setSaved(fetchedSaved);
+			setEdits({
+				abhay: picksToEdits(
+					roundToPicks(
+						fetchedSaved.predictions.find((item) => item.predictor === "abhay")
+							?.round,
+						gw
+					)
 				),
-			]);
+				harsh: picksToEdits(
+					roundToPicks(
+						fetchedSaved.predictions.find((item) => item.predictor === "harsh")
+							?.round,
+						gw
+					)
+				),
+			});
+		},
+		[]
+	);
 
+	/**
+	 * Fixtures render the moment the season JSON arrives — saved snapshots
+	 * load in the background and never block the UI (the backend host is
+	 * often slow/unreachable, so waiting on it stalled every GW open).
+	 */
+	const loadGameweek = useCallback(
+		async (gw: number) => {
+			const seq = ++loadSeq.current;
+			setFixturesState("loading");
+			setFixturesError("");
+			setMatchday(null);
+			setSaved(null);
+			setEdits(emptyEdits());
+			setImageBlob(null);
+			setImageUrl("");
+
+			let fetchedMatchday: MatchdayData | null = null;
+
+			try {
+				fetchedMatchday = await getMatchdayFixturesRequest(PREDICTIONS_SEASON, gw);
+			} catch (error) {
+				if (seq !== loadSeq.current) return;
+				setFixturesState("error");
+				setFixturesError(
+					error instanceof Error ? error.message : "Could not load fixtures"
+				);
+				return;
+			}
+
+			if (seq !== loadSeq.current) return;
 			setMatchday(fetchedMatchday);
 			setFixturesState("ready");
-
-			if (fetchedSaved) {
-				setSaved(fetchedSaved);
-				setEdits({
-					abhay: picksToEdits(
-						roundToPicks(
-							fetchedSaved.predictions.find((item) => item.predictor === "abhay")
-								?.round,
-							gw
-						)
-					),
-					harsh: picksToEdits(
-						roundToPicks(
-							fetchedSaved.predictions.find((item) => item.predictor === "harsh")
-								?.round,
-							gw
-						)
-					),
-				});
-			}
 
 			if (fetchedMatchday.fixtures.length === 0) {
 				showToast("No fixtures published for this gameweek yet", ToastTypes.WARNING);
 			}
-		} catch (error) {
-			setFixturesState("error");
-			setFixturesError(
-				error instanceof Error ? error.message : "Could not load fixtures"
-			);
-		}
-	}, []);
+
+			// Saved snapshots arrive whenever — prefill silently when they do.
+			try {
+				const fetchedSaved = await getGameweekPredictionsRequest(
+					PREDICTIONS_SEASON,
+					gw
+				);
+				if (seq !== loadSeq.current) return;
+				applySaved(fetchedSaved, gw);
+			} catch {
+				if (seq !== loadSeq.current) return;
+				applySaved(getLocalPredictions(PREDICTIONS_SEASON, gw), gw);
+			}
+		},
+		[applySaved]
+	);
 
 	const openGameweek = (gw: number, target: Screen = "predict") => {
 		setGameweek(gw);

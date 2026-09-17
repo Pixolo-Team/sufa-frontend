@@ -64,7 +64,9 @@ const loadSeasonMatches = async (season: number): Promise<OpenFootballMatch[]> =
 	const cached = seasonCache.get(season);
 	if (cached) return cached;
 
-	const response = await axios.get<OpenFootballFile>(seasonFile(season));
+	const response = await axios.get<OpenFootballFile>(seasonFile(season), {
+		timeout: 15000,
+	});
 	const matches = response.data.matches ?? [];
 	seasonCache.set(season, matches);
 	return matches;
@@ -81,6 +83,16 @@ export interface MatchdayData {
 /** Stable per-match id: GW * 100 + index inside the round. */
 export const matchFixtureId = (gameweek: number, index: number): number =>
 	gameweek * 100 + index;
+
+/**
+ * Warm the season cache (fire-and-forget from the GW grid) so the first
+ * GW open renders instantly while the user is still browsing gameweeks.
+ */
+export const prefetchSeasonMatches = (season: number): void => {
+	loadSeasonMatches(season).catch(() => {
+		// Real errors surface when the GW actually opens.
+	});
+};
 
 /**
  * One matchday's fixtures, filtered from the season JSON.
