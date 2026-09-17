@@ -142,46 +142,52 @@ export const renderPredictionsImage = async ({
 		fixtures.forEach((fixture, row) => {
 			const rowY = y + row * rowH + 50;
 			const centerX = x + columnWidth / 2;
-			const badgeSize = 40;
+			const badgeSize = 34;
 
-			context.font = `700 28px ${body}`;
-			context.fillStyle = MUTED;
-			// Badge + TLA on each side, score centered:
-			// [badge] ARS  2 - 1  CHE [badge]
-			const homeTlaWidth = context.measureText(fixture.homeTla).width;
-			const awayTlaWidth = context.measureText(fixture.awayTla).width;
-
-			context.textAlign = "right";
-			context.fillText(fixture.homeTla, centerX - 70, rowY);
-			context.textAlign = "left";
-			context.fillText(fixture.awayTla, centerX + 70, rowY);
-
-			const homeBadge = badges.get(fixture.homeLogo);
-			if (homeBadge) {
-				context.drawImage(
-					homeBadge,
-					centerX - 70 - homeTlaWidth - 12 - badgeSize,
-					rowY - 32,
-					badgeSize,
-					badgeSize
-				);
-			}
-
-			const awayBadge = badges.get(fixture.awayLogo);
-			if (awayBadge) {
-				context.drawImage(
-					awayBadge,
-					centerX + 70 + awayTlaWidth + 12,
-					rowY - 32,
-					badgeSize,
-					badgeSize
-				);
-			}
-
+			// Score centered, names outside-in: Arsenal [badge] 2 - 1 [badge] Chelsea
+			const score = scoreText(picks?.get(fixture.id));
 			context.fillStyle = INK;
-			context.font = `800 32px ${body}`;
+			context.font = `800 30px ${body}`;
 			context.textAlign = "center";
-			context.fillText(scoreText(picks?.get(fixture.id)), centerX, rowY);
+			context.fillText(score, centerX, rowY);
+			const scoreHalf = Math.max(context.measureText(score).width / 2, 48);
+
+			const drawSide = (
+				name: string,
+				logo: string,
+				side: -1 | 1
+			) => {
+				// Shrink long names until they fit the column half
+				let size = 22;
+				context.font = `600 ${size}px ${body}`;
+				while (context.measureText(name).width > 148 && size > 15) {
+					size -= 1;
+					context.font = `600 ${size}px ${body}`;
+				}
+
+				const gapScore = 14;
+				const gapBadge = 10;
+				const badgeX =
+					side === -1
+						? centerX - scoreHalf - gapScore - badgeSize
+						: centerX + scoreHalf + gapScore;
+				const badge = badges.get(logo);
+
+				if (badge) {
+					context.drawImage(badge, badgeX, rowY - 27, badgeSize, badgeSize);
+				}
+
+				context.fillStyle = INK;
+				context.textAlign = side === -1 ? "right" : "left";
+				context.fillText(
+					name,
+					side === -1 ? badgeX - gapBadge : badgeX + badgeSize + gapBadge,
+					rowY
+				);
+			};
+
+			drawSide(fixture.homeTeam, fixture.homeLogo, -1);
+			drawSide(fixture.awayTeam, fixture.awayLogo, 1);
 
 			// Divider between rows
 			if (row < fixtures.length - 1) {
