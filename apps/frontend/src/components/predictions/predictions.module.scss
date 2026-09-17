@@ -178,10 +178,12 @@ centered column at every breakpoint. */
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
-	padding: 12px;
-	border: 1px solid var(--ops-line);
-	border-radius: 14px;
-	background-color: var(--ops-surface);
+	padding: 14px 4px;
+	border-bottom: 1px solid var(--ops-line);
+}
+
+.fixtureList > div:last-child {
+	border-bottom: none;
 }
 
 .fixtureKickoff {
