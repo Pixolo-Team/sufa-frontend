@@ -7,7 +7,7 @@ export const PREDICTORS: { id: PredictorId; label: string; color: string }[] = [
 	{ id: "harsh", label: "Harsh", color: "#ce6ee0" },
 ];
 
-/** football-data.org season = starting year. 2026 → 2026/27 PL season. */
+/** Season starting year. 2026 → 2026/27 PL season (openfootball file 2026-27). */
 export const PREDICTIONS_SEASON = 2026;
 
 export const TOTAL_GAMEWEEKS = 38;
