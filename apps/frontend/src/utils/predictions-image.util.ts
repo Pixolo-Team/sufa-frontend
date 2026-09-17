@@ -16,7 +16,6 @@ const BG = "#101c33";
 const CARD = "#1a2c4e";
 const INK = "#ffffff";
 const MUTED = "#93a1bd";
-const LINE = "#2b3f66";
 
 type PredictionsImageInput = {
 	season: number;
@@ -142,31 +141,42 @@ export const renderPredictionsImage = async ({
 		fixtures.forEach((fixture, row) => {
 			const rowY = y + row * rowH + 50;
 			const centerX = x + columnWidth / 2;
-			const badgeSize = 34;
 
-			// Score centered, names outside-in: Arsenal [badge] 2 - 1 [badge] Chelsea
-			const score = scoreText(picks?.get(fixture.id));
-			context.fillStyle = INK;
-			context.font = `800 30px ${body}`;
+			// Subtle zebra stripe behind even rows
+			if (row % 2 === 1) {
+				context.fillStyle = "rgba(255, 255, 255, 0.03)";
+				context.beginPath();
+				context.roundRect(x + 10, y + row * rowH + 4, columnWidth - 20, rowH - 8, 12);
+				context.fill();
+			}
+			const badgeSize = 32;
+			const gapScore = 12;
+			const gapBadge = 8;
+
+			// Score centered, names outside-in: Arsenal [badge] 2 - 1 [badge] Chelsea.
+			// Unpicked rows render dimmed so saved scores stand out.
+			const pick = picks?.get(fixture.id);
+			const score = scoreText(pick);
+			context.font = `800 28px ${body}`;
+			const scoreHalf = Math.max(context.measureText(score).width / 2, 44);
+
+			context.fillStyle = pick ? INK : MUTED;
 			context.textAlign = "center";
 			context.fillText(score, centerX, rowY);
-			const scoreHalf = Math.max(context.measureText(score).width / 2, 48);
 
-			const drawSide = (
-				name: string,
-				logo: string,
-				side: -1 | 1
-			) => {
-				// Shrink long names until they fit the column half
-				let size = 22;
+			// Exact room for names, derived from the real geometry — nothing
+			// may cross the card edges.
+			const nameBudget =
+				columnWidth / 2 - (scoreHalf + gapScore + badgeSize + gapBadge) - 12;
+
+			const drawSide = (name: string, logo: string, side: -1 | 1) => {
+				let size = 21;
 				context.font = `600 ${size}px ${body}`;
-				while (context.measureText(name).width > 148 && size > 15) {
+				while (context.measureText(name).width > nameBudget && size > 13) {
 					size -= 1;
 					context.font = `600 ${size}px ${body}`;
 				}
 
-				const gapScore = 14;
-				const gapBadge = 10;
 				const badgeX =
 					side === -1
 						? centerX - scoreHalf - gapScore - badgeSize
@@ -174,7 +184,7 @@ export const renderPredictionsImage = async ({
 				const badge = badges.get(logo);
 
 				if (badge) {
-					context.drawImage(badge, badgeX, rowY - 27, badgeSize, badgeSize);
+					context.drawImage(badge, badgeX, rowY - 26, badgeSize, badgeSize);
 				}
 
 				context.fillStyle = INK;
@@ -188,16 +198,6 @@ export const renderPredictionsImage = async ({
 
 			drawSide(fixture.homeTeam, fixture.homeLogo, -1);
 			drawSide(fixture.awayTeam, fixture.awayLogo, 1);
-
-			// Divider between rows
-			if (row < fixtures.length - 1) {
-				context.strokeStyle = LINE;
-				context.lineWidth = 1;
-				context.beginPath();
-				context.moveTo(x + 28, y + (row + 1) * rowH);
-				context.lineTo(x + columnWidth - 28, y + (row + 1) * rowH);
-				context.stroke();
-			}
 		});
 	});
 
