@@ -468,6 +468,7 @@ const PredictionsApp: React.FC = () => {
 											shape={Shapes.ROUNDED}
 											size={ButtonSizes.LARGE}
 											isDisabled={isSaving}
+											extraClass="pred-solid-btn"
 											onClick={() => {
 												void savePredictions();
 											}}
@@ -628,6 +629,7 @@ const PredictionsApp: React.FC = () => {
 												shape={Shapes.ROUNDED}
 												size={ButtonSizes.LARGE}
 												isDisabled={!imageBlob}
+												extraClass="pred-solid-btn"
 												onClick={downloadImage}
 											/>
 										</div>
@@ -649,6 +651,7 @@ const PredictionsApp: React.FC = () => {
 												shape={Shapes.ROUNDED}
 												size={ButtonSizes.LARGE}
 												isDisabled={!imageBlob}
+												extraClass="pred-solid-btn"
 												onClick={() => {
 													void shareImage();
 												}}

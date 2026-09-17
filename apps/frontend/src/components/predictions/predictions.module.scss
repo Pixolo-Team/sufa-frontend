@@ -1,6 +1,13 @@
 // Score Predictor page-local styles. Shell, cards, buttons and the PIN gate
 // come from operations.module.scss — only predictor-specific bits live here.
 
+/* Solid primary buttons (Save / Download / Send) must keep white text on
+the green background. Scoped hotfix: some browsers resolve the inherited
+body color onto `.buttonText` instead of the token foreground. */
+:global(.pred-solid-btn p) {
+	color: var(--color-brand-primary-contrast) !important;
+}
+
 /* Own shell — ops `.shell` turns into a rail/panel grid on desktop, which
 squeezes any non-operations content into the rail column. This stays a plain
 centered column at every breakpoint. */
