@@ -284,12 +284,16 @@ const PredictionsApp: React.FC = () => {
 			const refreshed = await getGameweekPredictionsRequest(PREDICTIONS_SEASON, gameweek);
 			setSaved(refreshed);
 			showToast(`${predictorLabel(predictor)}'s predictions saved`, ToastTypes.SUCCESS);
-		} catch {
+		} catch (error) {
 			// Cloud sync failed — save on this device so Export keeps working.
 			// Pressing Save again once the network is back syncs to Supabase.
+			// The exact reason goes into the toast + console so setup issues
+			// (missing env, table/RLS not run) are visible instead of silent.
+			const detail = error instanceof Error ? error.message : "unknown error";
+			console.error("[predictions] save failed:", error);
 			saveLocalPredictions(PREDICTIONS_SEASON, gameweek, predictor, round);
 			setSaved(getLocalPredictions(PREDICTIONS_SEASON, gameweek));
-			showToast("Sync failed — saved on this device", ToastTypes.WARNING);
+			showToast(`Sync failed (${detail}) — saved on this device`, ToastTypes.WARNING);
 		} finally {
 			setIsSaving(false);
 		}
