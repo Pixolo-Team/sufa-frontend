@@ -43,9 +43,32 @@ export const toTla = (name: string): string =>
 /** Local badge path for an openfootball team name (same-origin, canvas-safe). */
 export const teamLogo = (name: string): string => `/images/clubs/${toTla(name)}.png`;
 
-/** "Arsenal FC" → "Arsenal", "Hull City AFC" → "Hull City" (UI labels). */
+/** Short display names, LiveScore style ("Tottenham Hotspur FC" → "Tottenham"). */
+const SHORT_NAME_BY_TEAM: Record<string, string> = {
+	"AFC Bournemouth": "Bournemouth",
+	"Arsenal FC": "Arsenal",
+	"Aston Villa FC": "Aston Villa",
+	"Brentford FC": "Brentford",
+	"Brighton & Hove Albion FC": "Brighton",
+	"Chelsea FC": "Chelsea",
+	"Coventry City FC": "Coventry",
+	"Crystal Palace FC": "Crystal Palace",
+	"Everton FC": "Everton",
+	"Fulham FC": "Fulham",
+	"Hull City AFC": "Hull",
+	"Ipswich Town FC": "Ipswich",
+	"Leeds United FC": "Leeds",
+	"Liverpool FC": "Liverpool",
+	"Manchester City FC": "Man City",
+	"Manchester United FC": "Man United",
+	"Newcastle United FC": "Newcastle",
+	"Nottingham Forest FC": "Nottm Forest",
+	"Sunderland AFC": "Sunderland",
+	"Tottenham Hotspur FC": "Tottenham",
+};
+
 export const shortTeamName = (name: string): string =>
-	name.replace(/\s+(FC|AFC)$/, "");
+	SHORT_NAME_BY_TEAM[name] ?? name.replace(/\s+(FC|AFC)$/, "");
 
 interface OpenFootballMatch {
 	round: string;
