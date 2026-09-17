@@ -14,19 +14,6 @@ export default defineConfig({
 		react({ include: ["**/*.tsx"] }),
 	],
 	vite: {
-		server: {
-			// Dev-only: same-origin proxy for API-Football v3. The API only
-			// allows the `x-apisports-key` header, which triggers a browser
-			// preflight on direct calls — proxying same-origin avoids CORS
-			// entirely. Production uses the matching rewrite in vercel.json.
-			proxy: {
-				"/api/football": {
-					target: "https://v3.football.api-sports.io",
-					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/api\/football/, ""),
-				},
-			},
-		},
 		css: {
 			preprocessorOptions: {
 				scss: {

@@ -1,9 +1,9 @@
 // TYPES //
 import type {
 	GameweekPredictionsData,
-	PredictorPredictionsData,
 	PredictorId,
-	PredictionPickData,
+	PredictorRoundData,
+	SavedRoundData,
 } from "@/types/predictions";
 
 /**
@@ -36,13 +36,10 @@ export const saveLocalPredictions = (
 	season: number,
 	gameweek: number,
 	predictor: PredictorId,
-	picks: PredictionPickData[]
-): PredictorPredictionsData => {
+	round: SavedRoundData
+): PredictorRoundData => {
 	const current = getLocalPredictions(season, gameweek);
-	const saved: PredictorPredictionsData = {
-		predictor,
-		picks: [...picks].sort((a, b) => a.fixtureId - b.fixtureId),
-	};
+	const saved: PredictorRoundData = { predictor, round };
 
 	const next: GameweekPredictionsData = {
 		season,

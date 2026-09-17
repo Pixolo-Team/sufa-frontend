@@ -180,19 +180,6 @@ rows need room on tablet/desktop. Applied alongside ops `shell`. */
 	text-overflow: ellipsis;
 }
 
-.fixtureTeam {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.fixtureTeam img {
-	width: 22px;
-	height: 22px;
-	flex: none;
-	object-fit: contain;
-}
-
 .fixtureTeams small {
 	font-size: 11px;
 	font-weight: 500;

@@ -77,25 +77,18 @@ CREATE TABLE registration_options (
 	created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- Score Predictor (/predictions). One row per predictor per fixture.
--- Fixtures live in football-data.org; team names + scores are snapshotted so
--- the Instagram export stays frozen even if fixtures move. Writes currently
--- go through the Hono backend + device-local fallback (no RLS policy yet).
-CREATE TABLE prediction_picks (
-	id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-	season       SMALLINT NOT NULL,
-	gameweek     SMALLINT NOT NULL CHECK (gameweek BETWEEN 1 AND 38),
-	predictor    TEXT NOT NULL CHECK (predictor IN ('abhay', 'harsh')),
-	fixture_id   BIGINT NOT NULL,
-	home_team    TEXT NOT NULL,
-	away_team    TEXT NOT NULL,
-	home_tla     TEXT NOT NULL,
-	away_tla     TEXT NOT NULL,
-	home_score   SMALLINT NOT NULL CHECK (home_score BETWEEN 0 AND 20),
-	away_score   SMALLINT NOT NULL CHECK (away_score BETWEEN 0 AND 20),
-	created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
-	updated_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
-	UNIQUE (season, gameweek, predictor, fixture_id)
+-- Score Predictor (/predictions). One row per gameweek; each predictor's
+-- full matchday JSON (openfootball source rows + predicted scores) lives in
+-- its own snapshot column, so the Instagram export stays frozen even if the
+-- source file updates. Writes currently go through the Hono backend +
+-- device-local fallback (no RLS policy yet).
+CREATE TABLE gameweek_predictions (
+	id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	season          SMALLINT NOT NULL,
+	gameweek        SMALLINT NOT NULL CHECK (gameweek BETWEEN 1 AND 38),
+	abhay_snapshot  JSONB,
+	harsh_snapshot  JSONB,
+	created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+	updated_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+	UNIQUE (season, gameweek)
 );
-
-CREATE INDEX idx_prediction_picks_gameweek ON prediction_picks(season, gameweek);

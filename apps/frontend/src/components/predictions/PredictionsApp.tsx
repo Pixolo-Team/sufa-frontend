@@ -3,11 +3,12 @@ import { useCallback, useEffect, useState } from "react";
 
 // TYPES //
 import type {
-	FixtureData,
 	GameweekPredictionsData,
 	PredictionPickData,
 	PredictorId,
+	SavedRoundData,
 } from "@/types/predictions";
+import type { MatchdayData } from "@/services/api/openfootball.api.service";
 
 // ENUMS //
 import { Colors, Shapes, Variants } from "@/neevo/enums/core.enum";
@@ -32,9 +33,10 @@ import {
 
 // SERVICES //
 import { showToast } from "@/neevo/services/toast.service";
-import { getGameweekFixturesRequest } from "@/services/api/api-football.api.service";
+import { getMatchdayFixturesRequest } from "@/services/api/openfootball.api.service";
 import {
 	getGameweekPredictionsRequest,
+	roundToPicks,
 	savePredictionsRequest,
 } from "@/services/api/predictions.api.service";
 import {
@@ -78,9 +80,11 @@ const PredictionsApp: React.FC = () => {
 	const [gameweek, setGameweek] = useState<number | null>(null);
 	const [predictor, setPredictor] = useState<PredictorId>("abhay");
 
-	const [fixtures, setFixtures] = useState<FixtureData[]>([]);
+	const [matchday, setMatchday] = useState<MatchdayData | null>(null);
 	const [fixturesState, setFixturesState] = useState<"idle" | "loading" | "error" | "ready">("idle");
 	const [fixturesError, setFixturesError] = useState("");
+
+	const fixtures = matchday?.fixtures ?? [];
 
 	const [saved, setSaved] = useState<GameweekPredictionsData | null>(null);
 	const [edits, setEdits] = useState<EditsByPredictor>(emptyEdits);
@@ -95,41 +99,49 @@ const PredictionsApp: React.FC = () => {
 		setIsUnlocked(true);
 	}, []);
 
-	/** Fixtures + saved picks for the open gameweek */
+	/** Matchday fixtures + saved round snapshots for the open gameweek */
 	const loadGameweek = useCallback(async (gw: number) => {
 		setFixturesState("loading");
 		setFixturesError("");
-		setFixtures([]);
+		setMatchday(null);
 		setSaved(null);
 		setEdits(emptyEdits());
 		setImageBlob(null);
 		setImageUrl("");
 
 		try {
-			const [fetchedFixtures, fetchedSaved] = await Promise.all([
-				getGameweekFixturesRequest(PREDICTIONS_SEASON, gw),
-				// Fall back to device-local picks when the backend is down — Export works from either source.
+			const [fetchedMatchday, fetchedSaved] = await Promise.all([
+				getMatchdayFixturesRequest(PREDICTIONS_SEASON, gw),
+				// Fall back to device-local snapshots when the backend is down — Export works from either source.
 				getGameweekPredictionsRequest(PREDICTIONS_SEASON, gw).catch(() =>
 					getLocalPredictions(PREDICTIONS_SEASON, gw)
 				),
 			]);
 
-			setFixtures(fetchedFixtures);
+			setMatchday(fetchedMatchday);
 			setFixturesState("ready");
 
 			if (fetchedSaved) {
 				setSaved(fetchedSaved);
 				setEdits({
 					abhay: picksToEdits(
-						fetchedSaved.predictions.find((item) => item.predictor === "abhay")?.picks
+						roundToPicks(
+							fetchedSaved.predictions.find((item) => item.predictor === "abhay")
+								?.round,
+							gw
+						)
 					),
 					harsh: picksToEdits(
-						fetchedSaved.predictions.find((item) => item.predictor === "harsh")?.picks
+						roundToPicks(
+							fetchedSaved.predictions.find((item) => item.predictor === "harsh")
+								?.round,
+							gw
+						)
 					),
 				});
 			}
 
-			if (fetchedFixtures.length === 0) {
+			if (fetchedMatchday.fixtures.length === 0) {
 				showToast("No fixtures published for this gameweek yet", ToastTypes.WARNING);
 			}
 		} catch (error) {
@@ -164,9 +176,9 @@ const PredictionsApp: React.FC = () => {
 		}));
 	};
 
-	/** Save active predictor's picks — team names + scores snapshot */
+	/** Save active predictor's full matchday JSON — source rows + scores */
 	const savePredictions = useCallback(async () => {
-		if (gameweek === null || isSaving) return;
+		if (gameweek === null || isSaving || !matchday) return;
 
 		const drafts = edits[predictor];
 		const missing = fixtures.filter(
@@ -185,17 +197,27 @@ const PredictionsApp: React.FC = () => {
 			return;
 		}
 
-		const picks: PredictionPickData[] = fixtures.map((fixture) => ({
-			fixtureId: fixture.id,
-			homeTeam: fixture.homeTeam,
-			awayTeam: fixture.awayTeam,
-			homeTla: fixture.homeTla,
-			awayTla: fixture.awayTla,
-			homeScore: Number(drafts[fixture.id].h),
-			awayScore: Number(drafts[fixture.id].a),
-		}));
+		const round: SavedRoundData = {
+			name: matchday.roundName,
+			matches: matchday.sourceMatches.map((match, index) => {
+				const fixtureId = fixtures[index]?.id ?? gameweek * 100 + index;
+				return {
+					date: match.date,
+					...(match.time ? { time: match.time } : {}),
+					team1: match.team1,
+					team2: match.team2,
+					predictedHome: Number(drafts[fixtureId].h),
+					predictedAway: Number(drafts[fixtureId].a),
+				};
+			}),
+		};
 
-		if (picks.some((pick) => pick.homeScore > 20 || pick.awayScore > 20)) {
+		if (
+			round.matches.some(
+				(match) =>
+					(match.predictedHome ?? 0) > 20 || (match.predictedAway ?? 0) > 20
+			)
+		) {
 			showToast("Scores must be 0 - 20", ToastTypes.WARNING);
 			return;
 		}
@@ -203,20 +225,20 @@ const PredictionsApp: React.FC = () => {
 		setIsSaving(true);
 
 		try {
-			await savePredictionsRequest(PREDICTIONS_SEASON, gameweek, predictor, picks);
+			await savePredictionsRequest(PREDICTIONS_SEASON, gameweek, predictor, round);
 			const refreshed = await getGameweekPredictionsRequest(PREDICTIONS_SEASON, gameweek);
 			setSaved(refreshed);
 			showToast(`${predictorLabel(predictor)}'s predictions saved`, ToastTypes.SUCCESS);
 		} catch {
 			// Backend unreachable — save on this device so Export keeps working.
 			// Pressing Save again once the backend is up syncs to the server.
-			saveLocalPredictions(PREDICTIONS_SEASON, gameweek, predictor, picks);
+			saveLocalPredictions(PREDICTIONS_SEASON, gameweek, predictor, round);
 			setSaved(getLocalPredictions(PREDICTIONS_SEASON, gameweek));
 			showToast("Backend offline — saved on this device", ToastTypes.WARNING);
 		} finally {
 			setIsSaving(false);
 		}
-	}, [edits, fixtures, gameweek, isSaving, predictor]);
+	}, [edits, fixtures, gameweek, isSaving, matchday, predictor]);
 
 	// Draw the 4:5 export image whenever the export screen has data
 	useEffect(() => {
@@ -230,7 +252,10 @@ const PredictionsApp: React.FC = () => {
 			season: PREDICTIONS_SEASON,
 			gameweek,
 			fixtures,
-			predictions: saved?.predictions ?? [],
+			predictions: (saved?.predictions ?? []).map((item) => ({
+				predictor: item.predictor,
+				picks: roundToPicks(item.round, gameweek),
+			})),
 		}).then((blob) => {
 			if (!isActive) return;
 			setIsDrawing(false);
@@ -306,10 +331,14 @@ const PredictionsApp: React.FC = () => {
 	}
 
 	const activeColor = PREDICTORS.find((item) => item.id === predictor)?.color;
-	const abhayCount =
-		saved?.predictions.find((item) => item.predictor === "abhay")?.picks.length ?? 0;
-	const harshCount =
-		saved?.predictions.find((item) => item.predictor === "harsh")?.picks.length ?? 0;
+	const savedPickCount = (id: PredictorId): number =>
+		saved?.predictions
+			.find((item) => item.predictor === id)
+			?.round.matches.filter(
+				(match) => match.predictedHome !== null && match.predictedAway !== null
+			).length ?? 0;
+	const abhayCount = savedPickCount("abhay");
+	const harshCount = savedPickCount("harsh");
 
 	return (
 		<div className={opsStyles.operations}>
@@ -472,26 +501,8 @@ const PredictionsApp: React.FC = () => {
 										return (
 											<div key={fixture.id} className={styles.fixtureRow}>
 												<div className={styles.fixtureTeams}>
-													<span className={styles.fixtureTeam}>
-														<img
-															src={fixture.homeLogo}
-															alt=""
-															width="22"
-															height="22"
-															loading="lazy"
-														/>
-														{fixture.homeTeam}
-													</span>
-													<span className={styles.fixtureTeam}>
-														<img
-															src={fixture.awayLogo}
-															alt=""
-															width="22"
-															height="22"
-															loading="lazy"
-														/>
-														{fixture.awayTeam}
-													</span>
+													<span>{fixture.homeTeam}</span>
+													<span>{fixture.awayTeam}</span>
 												</div>
 												<div className={styles.scoreInputs}>
 													<input

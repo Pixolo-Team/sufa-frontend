@@ -2,7 +2,7 @@
 import type {
 	FixtureData,
 	PredictionPickData,
-	PredictorPredictionsData,
+	PredictorId,
 } from "@/types/predictions";
 
 // DATA //
@@ -23,7 +23,7 @@ type PredictionsImageInput = {
 	gameweek: number;
 	/** Kickoff-sorted fixtures — defines row order */
 	fixtures: FixtureData[];
-	predictions: PredictorPredictionsData[];
+	predictions: { predictor: PredictorId; picks: PredictionPickData[] }[];
 };
 
 const scoreText = (pick: PredictionPickData | undefined): string =>

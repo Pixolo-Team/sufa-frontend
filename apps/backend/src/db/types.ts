@@ -57,32 +57,35 @@ export interface OperationsData {
 }
 
 // ---------------------------------------------------------------------------
-// Score Predictor (EPL) — same DB pattern as operations: tables in schema.sql,
-// scaffold store until Postgres is wired.
+// Score Predictor (EPL) — fixtures come from the openfootball JSON; each
+// predictor's full matchday JSON is stored as one snapshot column per
+// gameweek (see gameweek_predictions in docs/operations/schema.sql).
 // ---------------------------------------------------------------------------
 
 /** The two predictors. Fixed for now — matches the Abhay | Harsh tabs. */
 export type PredictorId = "abhay" | "harsh";
 
-export interface PredictionPick {
-	/** football-data.org fixture id, stable across fetches */
-	fixtureId: number;
-	homeTeam: string;
-	awayTeam: string;
-	/** 3-letter codes (e.g. ARS, LIV) for the export image */
-	homeTla: string;
-	awayTla: string;
-	homeScore: number;
-	awayScore: number;
+export interface SavedMatch {
+	date: string;
+	time?: string;
+	team1: string;
+	team2: string;
+	predictedHome: number | null;
+	predictedAway: number | null;
 }
 
-export interface PredictorPredictions {
+export interface SavedRound {
+	name: string;
+	matches: SavedMatch[];
+}
+
+export interface PredictorRound {
 	predictor: PredictorId;
-	picks: PredictionPick[];
+	round: SavedRound;
 }
 
 export interface GameweekPredictions {
 	season: number;
 	gameweek: number;
-	predictions: PredictorPredictions[];
+	predictions: PredictorRound[];
 }
