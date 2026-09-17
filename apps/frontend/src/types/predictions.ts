@@ -10,8 +10,10 @@ export interface FixtureData {
 	id: number;
 	homeTeam: string;
 	homeTla: string;
+	homeLogo: string;
 	awayTeam: string;
 	awayTla: string;
+	awayLogo: string;
 	/** ISO kickoff, for display ordering */
 	utcDate: string;
 }

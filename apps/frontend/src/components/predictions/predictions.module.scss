@@ -194,22 +194,30 @@ centered column at every breakpoint. */
 .fixtureHome,
 .fixtureAway {
 	min-width: 0;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
 	font-size: 13px;
 	font-weight: 700;
 	line-height: 1.35;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
 }
 
 .fixtureHome {
+	justify-content: flex-end;
 	text-align: right;
 }
 
 .fixtureAway {
+	justify-content: flex-start;
 	text-align: left;
+}
+
+.fixtureHome img,
+.fixtureAway img {
+	width: 26px;
+	height: 26px;
+	flex: none;
+	object-fit: contain;
 }
 
 .scoreInputs {

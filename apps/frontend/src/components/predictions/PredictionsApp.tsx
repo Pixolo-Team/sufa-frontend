@@ -562,6 +562,13 @@ const PredictionsApp: React.FC = () => {
 												<div className={styles.fixtureMatch}>
 													<span className={styles.fixtureHome}>
 														{fixture.homeTeam}
+														<img
+															src={fixture.homeLogo}
+															alt=""
+															width="26"
+															height="26"
+															loading="lazy"
+														/>
 													</span>
 													<div className={styles.scoreInputs}>
 														<input
@@ -591,6 +598,13 @@ const PredictionsApp: React.FC = () => {
 														/>
 													</div>
 													<span className={styles.fixtureAway}>
+														<img
+															src={fixture.awayLogo}
+															alt=""
+															width="26"
+															height="26"
+															loading="lazy"
+														/>
 														{fixture.awayTeam}
 													</span>
 												</div>

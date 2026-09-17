@@ -29,6 +29,15 @@ type PredictionsImageInput = {
 const scoreText = (pick: PredictionPickData | undefined): string =>
 	pick ? `${pick.homeScore} - ${pick.awayScore}` : "- : -";
 
+/** Same-origin badges load clean — a failed one resolves null (TLA fallback). */
+const loadImage = (src: string): Promise<HTMLImageElement | null> =>
+	new Promise((resolve) => {
+		const image = new Image();
+		image.onload = () => resolve(image);
+		image.onerror = () => resolve(null);
+		image.src = src;
+	});
+
 /**
  * Instagram-ready 4:5 portrait (1080x1350) PNG: GW header + two columns
  * (Abhay | Harsh) with every fixture's predicted score. Text-only — no
@@ -56,6 +65,13 @@ export const renderPredictionsImage = async ({
 	const byPredictor = new Map(
 		predictions.map((item) => [item.predictor, new Map(item.picks.map((pick) => [pick.fixtureId, pick]))])
 	);
+
+	// Preload each club badge once — local files, so the canvas never taints.
+	const badgeUrls = [...new Set(fixtures.flatMap((f) => [f.homeLogo, f.awayLogo]))];
+	const badgeEntries = await Promise.all(
+		badgeUrls.map(async (url) => [url, await loadImage(url)] as const)
+	);
+	const badges = new Map<string, HTMLImageElement | null>(badgeEntries);
 
 	// Background
 	context.fillStyle = BG;
@@ -126,14 +142,41 @@ export const renderPredictionsImage = async ({
 		fixtures.forEach((fixture, row) => {
 			const rowY = y + row * rowH + 50;
 			const centerX = x + columnWidth / 2;
+			const badgeSize = 40;
 
 			context.font = `700 28px ${body}`;
 			context.fillStyle = MUTED;
-			// Home TLA right-aligned, away TLA left-aligned around the score
+			// Badge + TLA on each side, score centered:
+			// [badge] ARS  2 - 1  CHE [badge]
+			const homeTlaWidth = context.measureText(fixture.homeTla).width;
+			const awayTlaWidth = context.measureText(fixture.awayTla).width;
+
 			context.textAlign = "right";
-			context.fillText(fixture.homeTla, centerX - 78, rowY);
+			context.fillText(fixture.homeTla, centerX - 70, rowY);
 			context.textAlign = "left";
-			context.fillText(fixture.awayTla, centerX + 78, rowY);
+			context.fillText(fixture.awayTla, centerX + 70, rowY);
+
+			const homeBadge = badges.get(fixture.homeLogo);
+			if (homeBadge) {
+				context.drawImage(
+					homeBadge,
+					centerX - 70 - homeTlaWidth - 12 - badgeSize,
+					rowY - 32,
+					badgeSize,
+					badgeSize
+				);
+			}
+
+			const awayBadge = badges.get(fixture.awayLogo);
+			if (awayBadge) {
+				context.drawImage(
+					awayBadge,
+					centerX + 70 + awayTlaWidth + 12,
+					rowY - 32,
+					badgeSize,
+					badgeSize
+				);
+			}
 
 			context.fillStyle = INK;
 			context.font = `800 32px ${body}`;
@@ -158,7 +201,7 @@ export const renderPredictionsImage = async ({
 	context.fillStyle = MUTED;
 	context.font = `600 26px ${body}`;
 	context.textAlign = "center";
-	context.fillText("SKOROST UNITED  •  SCORE PREDICTOR", WIDTH / 2, y);
+	context.fillText("EXTRA TOUCHES", WIDTH / 2, y);
 
 	return new Promise((resolve) =>
 		canvas.toBlob((blob) => resolve(blob), "image/png")

@@ -40,6 +40,9 @@ const TLA_BY_TEAM_NAME: Record<string, string> = {
 export const toTla = (name: string): string =>
 	TLA_BY_TEAM_NAME[name] ?? name.replace(/[^A-Za-z]/g, "").slice(0, 3).toUpperCase();
 
+/** Local badge path for an openfootball team name (same-origin, canvas-safe). */
+export const teamLogo = (name: string): string => `/images/clubs/${toTla(name)}.png`;
+
 /** "Arsenal FC" → "Arsenal", "Hull City AFC" → "Hull City" (UI labels). */
 export const shortTeamName = (name: string): string =>
 	name.replace(/\s+(FC|AFC)$/, "");
@@ -118,8 +121,10 @@ export const getMatchdayFixturesRequest = async (
 			id: matchFixtureId(gameweek, index),
 			homeTeam: shortTeamName(match.team1),
 			homeTla: toTla(match.team1),
+			homeLogo: teamLogo(match.team1),
 			awayTeam: shortTeamName(match.team2),
 			awayTla: toTla(match.team2),
+			awayLogo: teamLogo(match.team2),
 			utcDate: `${match.date}T${time}`,
 		};
 	});
