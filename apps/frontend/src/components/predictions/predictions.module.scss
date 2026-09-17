@@ -1,27 +1,33 @@
 // Score Predictor page-local styles. Shell, cards, buttons and the PIN gate
 // come from operations.module.scss — only predictor-specific bits live here.
 
-/* Wider than the operations 520px column — the GW grid and fixture
-rows need room on tablet/desktop. Applied alongside ops `shell`. */
-.wideShell.wideShell {
+/* Own shell — ops `.shell` turns into a rail/panel grid on desktop, which
+squeezes any non-operations content into the rail column. This stays a plain
+centered column at every breakpoint. */
+.pageShell {
+	width: 100%;
+	max-width: 520px;
 	margin-left: auto;
 	margin-right: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
 }
 
 @media (min-width: 768px) {
-	.wideShell.wideShell {
+	.pageShell {
 		max-width: 720px;
 	}
 }
 
 @media (min-width: 992px) {
-	.wideShell.wideShell {
+	.pageShell {
 		max-width: 960px;
 	}
 }
 
 @media (min-width: 1280px) {
-	.wideShell.wideShell {
+	.pageShell {
 		max-width: 1140px;
 	}
 }
@@ -155,35 +161,48 @@ rows need room on tablet/desktop. Applied alongside ops `shell`. */
 
 .fixtureRow {
 	display: flex;
-	align-items: center;
-	gap: 10px;
+	flex-direction: column;
+	gap: 8px;
 	padding: 12px;
 	border: 1px solid var(--ops-line);
 	border-radius: 14px;
 	background-color: var(--ops-surface);
 }
 
-.fixtureTeams {
-	flex: 1;
-	min-width: 0;
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
-	font-size: 13px;
-	font-weight: 600;
-	line-height: 1.35;
+.fixtureKickoff {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	color: var(--ops-muted);
+	text-align: center;
 }
 
-.fixtureTeams span {
-	white-space: nowrap;
+.fixtureMatch {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+	align-items: center;
+	gap: 10px;
+}
+
+.fixtureHome,
+.fixtureAway {
+	min-width: 0;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.35;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
-.fixtureTeams small {
-	font-size: 11px;
-	font-weight: 500;
-	color: var(--ops-muted);
+.fixtureHome {
+	text-align: right;
+}
+
+.fixtureAway {
+	text-align: left;
 }
 
 .scoreInputs {

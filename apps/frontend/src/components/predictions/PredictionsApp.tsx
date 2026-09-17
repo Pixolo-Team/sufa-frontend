@@ -71,6 +71,26 @@ const picksToEdits = (
 const predictorLabel = (id: PredictorId) =>
 	PREDICTORS.find((item) => item.id === id)?.label ?? id;
 
+/** "2026-08-22T17:30:00" → "Sat 22 Aug · 5:30 PM" (parts-parsed, no TZ shift). */
+const formatKickoff = (utcDate: string): string => {
+	const [datePart = "", timePart = ""] = utcDate.split("T");
+	const [year, month, day] = datePart.split("-").map(Number);
+	const [hour = 0, minute = 0] = timePart.split(":").map(Number);
+
+	if (!year || !month || !day) return "";
+
+	const weekday = new Date(year, month - 1, day).toLocaleDateString("en-GB", {
+		weekday: "short",
+	});
+	const monthName = new Date(year, month - 1, day).toLocaleDateString("en-GB", {
+		month: "short",
+	});
+	const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+	const period = hour < 12 ? "AM" : "PM";
+
+	return `${weekday} ${day} ${monthName} · ${hour12}:${String(minute).padStart(2, "0")} ${period}`;
+};
+
 /** EPL Score Predictor — GW grid → predictions (Abhay | Harsh) → IG export. */
 const PredictionsApp: React.FC = () => {
 	const [isUnlocked, setIsUnlocked] = useState(
@@ -342,7 +362,7 @@ const PredictionsApp: React.FC = () => {
 
 	return (
 		<div className={opsStyles.operations}>
-			<div className={`${opsStyles.shell} ${styles.wideShell}`}>
+			<div className={styles.pageShell}>
 				<div className={opsStyles.topBar}>
 					{screen === "gameweeks" ? (
 						<span className={opsStyles.brand}>
@@ -375,10 +395,6 @@ const PredictionsApp: React.FC = () => {
 						</>
 					)}
 
-					<span className={opsStyles.lockChip}>
-						<OperationsIcon name="lock" size={12} />
-						Unlocked
-					</span>
 				</div>
 
 				{/* ---------- Screen 1: GW grid ---------- */}
@@ -500,36 +516,43 @@ const PredictionsApp: React.FC = () => {
 										const draft = edits[predictor][fixture.id] ?? { h: "", a: "" };
 										return (
 											<div key={fixture.id} className={styles.fixtureRow}>
-												<div className={styles.fixtureTeams}>
-													<span>{fixture.homeTeam}</span>
-													<span>{fixture.awayTeam}</span>
-												</div>
-												<div className={styles.scoreInputs}>
-													<input
-														className={styles.scoreInput}
-														type="number"
-														min={0}
-														max={20}
-														inputMode="numeric"
-														aria-label={`${fixture.homeTeam} score`}
-														value={draft.h}
-														onChange={(event) =>
-															setScore(fixture.id, "h", event.target.value)
-														}
-													/>
-													<span className={styles.scoreDash}>–</span>
-													<input
-														className={styles.scoreInput}
-														type="number"
-														min={0}
-														max={20}
-														inputMode="numeric"
-														aria-label={`${fixture.awayTeam} score`}
-														value={draft.a}
-														onChange={(event) =>
-															setScore(fixture.id, "a", event.target.value)
-														}
-													/>
+												<p className={styles.fixtureKickoff}>
+													{formatKickoff(fixture.utcDate)}
+												</p>
+												<div className={styles.fixtureMatch}>
+													<span className={styles.fixtureHome}>
+														{fixture.homeTeam}
+													</span>
+													<div className={styles.scoreInputs}>
+														<input
+															className={styles.scoreInput}
+															type="number"
+															min={0}
+															max={20}
+															inputMode="numeric"
+															aria-label={`${fixture.homeTeam} score`}
+															value={draft.h}
+															onChange={(event) =>
+																setScore(fixture.id, "h", event.target.value)
+															}
+														/>
+														<span className={styles.scoreDash}>–</span>
+														<input
+															className={styles.scoreInput}
+															type="number"
+															min={0}
+															max={20}
+															inputMode="numeric"
+															aria-label={`${fixture.awayTeam} score`}
+															value={draft.a}
+															onChange={(event) =>
+																setScore(fixture.id, "a", event.target.value)
+															}
+														/>
+													</div>
+													<span className={styles.fixtureAway}>
+														{fixture.awayTeam}
+													</span>
 												</div>
 											</div>
 										);
