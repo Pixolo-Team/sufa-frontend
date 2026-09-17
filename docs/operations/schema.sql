@@ -80,8 +80,8 @@ CREATE TABLE registration_options (
 -- Score Predictor (/predictions). One row per gameweek; each predictor's
 -- full matchday JSON (openfootball source rows + predicted scores) lives in
 -- its own snapshot column, so the Instagram export stays frozen even if the
--- source file updates. Writes currently go through the Hono backend +
--- device-local fallback (no RLS policy yet).
+-- source file updates. Writes go through the anon key (RLS below) with a
+-- device-local fallback when offline.
 CREATE TABLE gameweek_predictions (
 	id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 	season          SMALLINT NOT NULL,
