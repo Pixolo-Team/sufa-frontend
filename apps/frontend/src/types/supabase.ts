@@ -98,6 +98,8 @@ export type Database = {
 					gameweek: number;
 					abhay_snapshot: Json | null;
 					harsh_snapshot: Json | null;
+					abhay_points: number | null;
+					harsh_points: number | null;
 					created_at: string;
 					updated_at: string;
 				};
@@ -106,10 +108,14 @@ export type Database = {
 					gameweek: number;
 					abhay_snapshot?: Json | null;
 					harsh_snapshot?: Json | null;
+					abhay_points?: number | null;
+					harsh_points?: number | null;
 				};
 				Update: {
 					abhay_snapshot?: Json | null;
 					harsh_snapshot?: Json | null;
+					abhay_points?: number | null;
+					harsh_points?: number | null;
 					updated_at?: string;
 				};
 				Relationships: [];

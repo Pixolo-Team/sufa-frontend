@@ -43,6 +43,15 @@ export interface GameweekPredictionsData {
 	season: number;
 	gameweek: number;
 	predictions: PredictorRoundData[];
+	/** Calculated points per predictor (null = not calculated yet) */
+	points?: { abhay: number | null; harsh: number | null };
+}
+
+/** One row of the /scores table */
+export interface GameweekScoreData {
+	gameweek: number;
+	abhay: number | null;
+	harsh: number | null;
 }
 
 /** UI-internal pick derived from a snapshot — feeds prefill + IG export. */

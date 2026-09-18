@@ -76,6 +76,8 @@ interface OpenFootballMatch {
 	time?: string;
 	team1: string;
 	team2: string;
+	/** Final scores appear after the matchday is played — absent before */
+	score?: { ht?: [number, number]; ft?: [number, number] };
 }
 
 interface OpenFootballFile {

@@ -1,10 +1,10 @@
 // TYPES //
 import type {
 	GameweekPredictionsData,
+	GameweekScoreData,
 	PredictionPickData,
 	PredictorId,
 	PredictorRoundData,
-	SavedMatchData,
 	SavedRoundData,
 } from "@/types/predictions";
 
@@ -56,7 +56,12 @@ const isValidRound = (value: unknown): value is SavedRoundData => {
 const toPredictionsData = (
 	season: number,
 	gameweek: number,
-	row: { abhay_snapshot: unknown; harsh_snapshot: unknown } | null
+	row: {
+		abhay_snapshot: unknown;
+		harsh_snapshot: unknown;
+		abhay_points?: unknown;
+		harsh_points?: unknown;
+	} | null
 ): GameweekPredictionsData => {
 	const predictions: PredictorRoundData[] = [];
 
@@ -68,8 +73,18 @@ const toPredictionsData = (
 		predictions.push({ predictor: "harsh", round: row.harsh_snapshot });
 	}
 
-	return { season, gameweek, predictions };
+	return {
+		season,
+		gameweek,
+		predictions,
+		points: {
+			abhay: typeof row?.abhay_points === "number" ? row.abhay_points : null,
+			harsh: typeof row?.harsh_points === "number" ? row.harsh_points : null,
+		},
+	};
 };
+
+const SNAPSHOT_COLUMNS = "abhay_snapshot, harsh_snapshot, abhay_points, harsh_points";
 
 /** Saved round snapshots for a gameweek (prefill + export screen). */
 export const getGameweekPredictionsRequest = async (
@@ -81,7 +96,7 @@ export const getGameweekPredictionsRequest = async (
 	const { data, error } = await withTimeout(
 		supabase
 			.from("gameweek_predictions")
-			.select("abhay_snapshot, harsh_snapshot")
+			.select(SNAPSHOT_COLUMNS)
 			.eq("season", season)
 			.eq("gameweek", gameweek)
 			.maybeSingle(),
@@ -121,7 +136,7 @@ export const savePredictionsRequest = async (
 	const { data, error: readError } = await withTimeout(
 		supabase
 			.from("gameweek_predictions")
-			.select("abhay_snapshot, harsh_snapshot")
+			.select(SNAPSHOT_COLUMNS)
 			.eq("season", season)
 			.eq("gameweek", gameweek)
 			.maybeSingle(),
@@ -137,6 +152,55 @@ export const savePredictionsRequest = async (
 	if (!saved) throw new Error("Save did not persist");
 
 	return saved;
+};
+
+/** Persist calculated points on the same gameweek row (snapshots untouched). */
+export const saveGameweekPointsRequest = async (
+	season: number,
+	gameweek: number,
+	points: { abhay: number; harsh: number }
+): Promise<void> => {
+	const supabase = await getClient();
+
+	const { error } = await withTimeout(
+		supabase.from("gameweek_predictions").upsert(
+			{
+				season,
+				gameweek,
+				abhay_points: points.abhay,
+				harsh_points: points.harsh,
+				updated_at: new Date().toISOString(),
+			},
+			{ onConflict: "season,gameweek" }
+		),
+		15000
+	);
+
+	if (error) throw error;
+};
+
+/** Every gameweek's points for the season, ordered — feeds /scores. */
+export const getAllGameweekScoresRequest = async (
+	season: number
+): Promise<GameweekScoreData[]> => {
+	const supabase = await getClient();
+
+	const { data, error } = await withTimeout(
+		supabase
+			.from("gameweek_predictions")
+			.select("gameweek, abhay_points, harsh_points")
+			.eq("season", season)
+			.order("gameweek", { ascending: true }),
+		15000
+	);
+
+	if (error) throw error;
+
+	return (data ?? []).map((row) => ({
+		gameweek: row.gameweek,
+		abhay: typeof row.abhay_points === "number" ? row.abhay_points : null,
+		harsh: typeof row.harsh_points === "number" ? row.harsh_points : null,
+	}));
 };
 
 /** Snapshot → UI picks (prefill edits, draw the IG export). Skips unpicked. */

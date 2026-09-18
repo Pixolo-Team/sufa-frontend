@@ -36,19 +36,27 @@ import { showToast } from "@/neevo/services/toast.service";
 import {
 	getMatchdayFixturesRequest,
 	prefetchSeasonMatches,
+	shortTeamName,
 } from "@/services/api/openfootball.api.service";
 import {
 	getGameweekPredictionsRequest,
 	roundToPicks,
+	saveGameweekPointsRequest,
 	savePredictionsRequest,
 } from "@/services/api/predictions.api.service";
 import {
 	getLocalPredictions,
+	saveLocalPoints,
 	saveLocalPredictions,
 } from "@/services/predictions.local.service";
 
 // UTILS //
 import { renderPredictionsImage } from "@/utils/predictions-image.util";
+import {
+	calculatePredictorPoints,
+	type PredictorScore,
+	type SourceResult,
+} from "@/utils/predictions-scoring.util";
 
 // Same device key + PIN source as operations — one unlock opens both staff tools.
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
@@ -112,6 +120,11 @@ const PredictionsApp: React.FC = () => {
 	const [saved, setSaved] = useState<GameweekPredictionsData | null>(null);
 	const [edits, setEdits] = useState<EditsByPredictor>(emptyEdits);
 	const [isSaving, setIsSaving] = useState(false);
+	const [isCalculating, setIsCalculating] = useState(false);
+	const [calcResult, setCalcResult] = useState<{
+		abhay: PredictorScore;
+		harsh: PredictorScore;
+	} | null>(null);
 
 	const [imageBlob, setImageBlob] = useState<Blob | null>(null);
 	const [imageUrl, setImageUrl] = useState("");
@@ -167,6 +180,7 @@ const PredictionsApp: React.FC = () => {
 			setMatchday(null);
 			setSaved(null);
 			setEdits(emptyEdits());
+			setCalcResult(null);
 			setImageBlob(null);
 			setImageUrl("");
 
@@ -290,14 +304,79 @@ const PredictionsApp: React.FC = () => {
 			// The exact reason goes into the toast + console so setup issues
 			// (missing env, table/RLS not run) are visible instead of silent.
 			const detail = error instanceof Error ? error.message : "unknown error";
-			console.error("[predictions] save failed:", error);
-			saveLocalPredictions(PREDICTIONS_SEASON, gameweek, predictor, round);
-			setSaved(getLocalPredictions(PREDICTIONS_SEASON, gameweek));
-			showToast(`Sync failed (${detail}) — saved on this device`, ToastTypes.WARNING);
+		console.error("[predictions] save failed:", error);
+		saveLocalPredictions(PREDICTIONS_SEASON, gameweek, predictor, round);
+		setSaved(getLocalPredictions(PREDICTIONS_SEASON, gameweek));
+		showToast(`Sync failed (${detail}) — saved on this device`, ToastTypes.WARNING);
 		} finally {
 			setIsSaving(false);
 		}
 	}, [edits, fixtures, gameweek, isSaving, matchday, predictor]);
+
+	/**
+	 * CALCULATE — compare saved predictions against the final scores in the
+	 * same openfootball JSON (exact = 5, outcome = 3), show the gameweek
+	 * points and persist them on the gameweek row.
+	 */
+	const calculateScores = useCallback(async () => {
+		if (gameweek === null || isCalculating || !matchday) return;
+
+		const results: SourceResult[] = matchday.sourceMatches.map((match) => {
+			const ft = match.score?.ft;
+			return {
+				team1: match.team1,
+				team2: match.team2,
+				ft:
+					Array.isArray(ft) &&
+					typeof ft[0] === "number" &&
+					typeof ft[1] === "number"
+						? { home: ft[0], away: ft[1] }
+						: null,
+			};
+		});
+
+		if (!results.some((item) => item.ft !== null)) {
+			showToast("Results not published yet — check back after the matchday", ToastTypes.WARNING);
+			return;
+		}
+
+		setIsCalculating(true);
+
+		try {
+			const abhay = calculatePredictorPoints(
+				saved?.predictions.find((item) => item.predictor === "abhay")?.round,
+				results
+			);
+			const harsh = calculatePredictorPoints(
+				saved?.predictions.find((item) => item.predictor === "harsh")?.round,
+				results
+			);
+			setCalcResult({ abhay, harsh });
+
+			const points = { abhay: abhay.points, harsh: harsh.points };
+
+			try {
+				await saveGameweekPointsRequest(PREDICTIONS_SEASON, gameweek, points);
+				const refreshed = await getGameweekPredictionsRequest(
+					PREDICTIONS_SEASON,
+					gameweek
+				);
+				setSaved(refreshed);
+				showToast(
+					`Points saved — Abhay ${points.abhay} · Harsh ${points.harsh}`,
+					ToastTypes.SUCCESS
+				);
+			} catch (error) {
+				const detail = error instanceof Error ? error.message : "unknown error";
+				console.error("[predictions] points save failed:", error);
+				saveLocalPoints(PREDICTIONS_SEASON, gameweek, points);
+				setSaved(getLocalPredictions(PREDICTIONS_SEASON, gameweek));
+				showToast(`Sync failed (${detail}) — points saved on this device`, ToastTypes.WARNING);
+			}
+		} finally {
+			setIsCalculating(false);
+		}
+	}, [gameweek, isCalculating, matchday, saved]);
 
 	// Draw the 4:5 export image whenever the export screen has data
 	useEffect(() => {
@@ -454,6 +533,18 @@ const PredictionsApp: React.FC = () => {
 									</button>
 								))}
 							</div>
+							<div className={styles.actionStack}>
+								<Button
+									text="See score"
+									variant={Variants.OUTLINE}
+									color={Colors.NEUTRAL_DARK}
+									shape={Shapes.ROUNDED}
+									size={ButtonSizes.LARGE}
+									onClick={() => {
+										window.location.href = "/scores";
+									}}
+								/>
+							</div>
 						</div>
 						<p className={opsStyles.notice}>Staff tool. Not linked from the public site.</p>
 					</div>
@@ -490,6 +581,13 @@ const PredictionsApp: React.FC = () => {
 								<p className={opsStyles.qrHint}>
 									Saved: Abhay {abhayCount} · Harsh {harshCount} picks
 								</p>
+								{saved?.points &&
+									(saved.points.abhay !== null || saved.points.harsh !== null) && (
+										<p className={opsStyles.qrHint}>
+											Points: Abhay {saved.points.abhay ?? "–"} · Harsh{" "}
+											{saved.points.harsh ?? "–"}
+										</p>
+									)}
 
 								{fixturesState === "ready" && fixtures.length > 0 && (
 									<div className={styles.actionStack}>
@@ -510,6 +608,17 @@ const PredictionsApp: React.FC = () => {
 											extraClass="pred-solid-btn"
 											onClick={() => {
 												void savePredictions();
+											}}
+										/>
+										<Button
+											text={isCalculating ? "Calculating…" : "Calculate"}
+											variant={Variants.OUTLINE}
+											color={Colors.NEUTRAL_DARK}
+											shape={Shapes.ROUNDED}
+											size={ButtonSizes.LARGE}
+											isDisabled={isCalculating}
+											onClick={() => {
+												void calculateScores();
 											}}
 										/>
 									</div>
@@ -616,6 +725,72 @@ const PredictionsApp: React.FC = () => {
 
 							</div>
 						</div>
+
+						{/* Calculated points for this gameweek */}
+						{calcResult && gameweek !== null && (
+							<div className={opsStyles.card}>
+								<span className={opsStyles.sectionLabel}>
+									Gameweek {gameweek} results
+								</span>
+								<div className={styles.resultsTotals}>
+									{PREDICTORS.map((item) => {
+										const score =
+											item.id === "abhay" ? calcResult.abhay : calcResult.harsh;
+										return (
+											<div key={item.id} className={styles.resultsTotal}>
+												<span
+													className={styles.predictorDot}
+													style={{ backgroundColor: item.color }}
+												/>
+												<b>{item.label}</b>
+												<span className={styles.resultsPoints}>
+													{score.points} pts
+												</span>
+												<small>
+													{score.played} played
+													{score.pending > 0 ? ` · ${score.pending} pending` : ""}
+												</small>
+											</div>
+										);
+									})}
+								</div>
+								<div className={styles.resultsList}>
+									{calcResult.abhay.matches.map((match, index) => {
+										const harshMatch = calcResult.harsh.matches[index];
+										return (
+											<div key={index} className={styles.resultsRow}>
+												<p className={styles.resultsFixture}>
+													{shortTeamName(match.team1)}{" "}
+													{match.actual
+														? `${match.actual.home}–${match.actual.away}`
+														: "vs"}{" "}
+													{shortTeamName(match.team2)}
+												</p>
+												<div className={styles.resultsPicks}>
+													<span>
+														Abhay{" "}
+														{match.predicted
+															? `${match.predicted.home}–${match.predicted.away}`
+															: "–"}{" "}
+														· +{match.points}
+													</span>
+													<span>
+														Harsh{" "}
+														{harshMatch?.predicted
+															? `${harshMatch.predicted.home}–${harshMatch.predicted.away}`
+															: "–"}{" "}
+														· +{harshMatch?.points ?? 0}
+													</span>
+												</div>
+											</div>
+										);
+									})}
+								</div>
+								<p className={opsStyles.qrHint}>
+									Exact score = 5 pts · Right outcome = 3 pts
+								</p>
+							</div>
+						)}
 					</div>
 				)}
 

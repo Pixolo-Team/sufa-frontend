@@ -44,6 +44,7 @@ export const saveLocalPredictions = (
 	const next: GameweekPredictionsData = {
 		season,
 		gameweek,
+		points: current.points,
 		predictions: [
 			...current.predictions.filter((item) => item.predictor !== predictor),
 			saved,
@@ -57,4 +58,22 @@ export const saveLocalPredictions = (
 	}
 
 	return saved;
+};
+
+/** Persist calculated points on the device-local copy. */
+export const saveLocalPoints = (
+	season: number,
+	gameweek: number,
+	points: { abhay: number; harsh: number }
+): void => {
+	const current = getLocalPredictions(season, gameweek);
+
+	try {
+		window.localStorage.setItem(
+			storageKey(season, gameweek),
+			JSON.stringify({ ...current, points })
+		);
+	} catch {
+		// Storage full/blocked — caller already toasted.
+	}
 };

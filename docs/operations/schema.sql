@@ -88,6 +88,8 @@ CREATE TABLE gameweek_predictions (
 	gameweek        SMALLINT NOT NULL CHECK (gameweek BETWEEN 1 AND 38),
 	abhay_snapshot  JSONB,
 	harsh_snapshot  JSONB,
+	abhay_points    SMALLINT,
+	harsh_points    SMALLINT,
 	created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
 	updated_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
 	UNIQUE (season, gameweek)
