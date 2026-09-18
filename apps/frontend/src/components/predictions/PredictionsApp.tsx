@@ -140,6 +140,15 @@ const PredictionsApp: React.FC = () => {
 	const [imageUrl, setImageUrl] = useState("");
 	const [isDrawing, setIsDrawing] = useState(false);
 
+	/** Drop the export preview and free its blob URL (revoke is idempotent) */
+	const clearImage = useCallback(() => {
+		setImageBlob(null);
+		setImageUrl((previous) => {
+			if (previous) URL.revokeObjectURL(previous);
+			return "";
+		});
+	}, []);
+
 	const unlock = useCallback(() => {
 		window.localStorage.setItem(UNLOCK_STORAGE_KEY, "true");
 		setIsUnlocked(true);
@@ -244,8 +253,7 @@ const PredictionsApp: React.FC = () => {
 			setEdits(emptyEdits());
 			touchedRef.current = { abhay: false, harsh: false };
 			setCalcResult(null);
-			setImageBlob(null);
-			setImageUrl("");
+			clearImage();
 
 			let fetchedMatchday: MatchdayData | null = null;
 
@@ -288,7 +296,7 @@ const PredictionsApp: React.FC = () => {
 				showAutoResults(getLocalPredictions(PREDICTIONS_SEASON, gw));
 			}
 		},
-		[applySaved, buildCalcResult]
+		[applySaved, buildCalcResult, clearImage]
 	);
 
 	const openGameweek = (gw: number, target: Screen = "predict") => {
@@ -301,6 +309,7 @@ const PredictionsApp: React.FC = () => {
 	const goHome = () => {
 		setScreen("gameweeks");
 		setGameweek(null);
+		clearImage();
 	};
 
 	/** One score box edited */
