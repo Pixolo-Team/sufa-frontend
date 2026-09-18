@@ -6,33 +6,30 @@ import styles from "./where-we-are/where-we-are.module.scss";
 import SectionHeader from "@/components/section-header/SectionHeader.astro";
 import CentersCard from "@/components/centers-card/CentersCard.astro";
 
-// Centers list — TODO: replace placeholder photos with real center photos.
-// Drop files into `public/images/centers/` (e.g. `ghatkopar-east.jpg`) and
-// update `imageSrc` below. Same for the Kurla–Vidyavihar West address/maps URL.
+// Centers list — real turf photos per center.
+// TODO: Kurla–Vidyavihar West address/maps URL still placeholder.
 const centersList = [
 	{
 		name: "Ghatkopar East",
 		address: "12 MG Road, Ghatkopar East, Mumbai 400077",
 		mapsUrl: "https://maps.app.goo.gl/d38jgYnoAiz5ovPU7",
-		imageSrc: "/images/operations/youth-ghatkopar-east.png",
-		imageAlt:
-			"Training session at Skorost United Football Academy, Ghatkopar East",
+		imageSrc: "/images/centers/ramji-asar-turf.jpg",
+		imageAlt: "Ramji Asar Turf — Skorost United Football Academy, Ghatkopar East",
 	},
 	{
 		name: "Ghatkopar West",
 		address: "45 LBS Marg, Ghatkopar West, Mumbai 400086",
 		mapsUrl: "https://maps.google.com/?q=Ghatkopar+West+Mumbai",
-		imageSrc: "/images/operations/youth-ghatkopar-west.png",
-		imageAlt:
-			"Training session at Skorost United Football Academy, Ghatkopar West",
+		imageSrc: "/images/centers/velocity-turf.jpg",
+		imageAlt: "Velocity Turf — Skorost United Football Academy, Ghatkopar West",
 	},
 	{
 		name: "Kurla / Vidyavihar West",
 		address: "Kurla / Vidyavihar West, Mumbai — full address coming soon",
 		mapsUrl: "https://maps.google.com/?q=Kurla+Vidyavihar+West+Mumbai",
-		imageSrc: "/images/established-team.jpg",
+		imageSrc: "/images/centers/jbsc-circular-turf.jpg",
 		imageAlt:
-			"Training session at Skorost United Football Academy, Kurla / Vidyavihar West",
+			"JBSC Circular Turf — Skorost United Football Academy, Kurla / Vidyavihar West",
 	},
 ];
 ---
