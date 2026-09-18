@@ -143,6 +143,51 @@ const PredictionsApp: React.FC = () => {
 	// Guards stale loads when the user jumps between gameweeks quickly.
 	const loadSeq = useRef(0);
 
+	/** Final scores from the source JSON (null = not played yet) */
+	const toSourceResults = useCallback((md: MatchdayData): SourceResult[] => {
+		return md.sourceMatches.map((match) => {
+			const ft = match.score?.ft;
+			return {
+				team1: match.team1,
+				team2: match.team2,
+				ft:
+					Array.isArray(ft) &&
+					typeof ft[0] === "number" &&
+					typeof ft[1] === "number"
+						? { home: ft[0], away: ft[1] }
+						: null,
+			};
+		});
+	}, []);
+
+	/**
+	 * Results for a finished week with saved picks — null otherwise, so
+	 * nothing auto-shows for live/future gameweeks.
+	 */
+	const buildCalcResult = useCallback(
+		(md: MatchdayData | null, data: GameweekPredictionsData | null) => {
+			if (!md || !data) return null;
+			const results = toSourceResults(md);
+			if (results.length === 0 || !results.every((item) => item.ft !== null)) {
+				return null;
+			}
+			if (!data.predictions.some((item) => item.round.matches.length > 0)) {
+				return null;
+			}
+			return {
+				abhay: calculatePredictorPoints(
+					data.predictions.find((item) => item.predictor === "abhay")?.round,
+					results
+				),
+				harsh: calculatePredictorPoints(
+					data.predictions.find((item) => item.predictor === "harsh")?.round,
+					results
+				),
+			};
+		},
+		[toSourceResults]
+	);
+
 	/** Prefill score boxes from a saved snapshot */
 	const applySaved = useCallback(
 		(fetchedSaved: GameweekPredictionsData, gw: number) => {
@@ -206,19 +251,26 @@ const PredictionsApp: React.FC = () => {
 			}
 
 			// Saved snapshots arrive whenever — prefill silently when they do.
+			// Finished weeks with saved picks show their results right away.
+			const showAutoResults = (fetchedSaved: GameweekPredictionsData) => {
+				applySaved(fetchedSaved, gw);
+				const auto = buildCalcResult(fetchedMatchday, fetchedSaved);
+				if (auto) setCalcResult(auto);
+			};
+
 			try {
 				const fetchedSaved = await getGameweekPredictionsRequest(
 					PREDICTIONS_SEASON,
 					gw
 				);
 				if (seq !== loadSeq.current) return;
-				applySaved(fetchedSaved, gw);
+				showAutoResults(fetchedSaved);
 			} catch {
 				if (seq !== loadSeq.current) return;
-				applySaved(getLocalPredictions(PREDICTIONS_SEASON, gw), gw);
+				showAutoResults(getLocalPredictions(PREDICTIONS_SEASON, gw));
 			}
 		},
-		[applySaved]
+		[applySaved, buildCalcResult]
 	);
 
 	const openGameweek = (gw: number, target: Screen = "predict") => {
@@ -321,19 +373,7 @@ const PredictionsApp: React.FC = () => {
 	const calculateScores = useCallback(async () => {
 		if (gameweek === null || isCalculating || !matchday) return;
 
-		const results: SourceResult[] = matchday.sourceMatches.map((match) => {
-			const ft = match.score?.ft;
-			return {
-				team1: match.team1,
-				team2: match.team2,
-				ft:
-					Array.isArray(ft) &&
-					typeof ft[0] === "number" &&
-					typeof ft[1] === "number"
-						? { home: ft[0], away: ft[1] }
-						: null,
-			};
-		});
+		const results = toSourceResults(matchday);
 
 		if (!results.some((item) => item.ft !== null)) {
 			showToast("Results not published yet — check back after the matchday", ToastTypes.WARNING);
@@ -376,7 +416,7 @@ const PredictionsApp: React.FC = () => {
 		} finally {
 			setIsCalculating(false);
 		}
-	}, [gameweek, isCalculating, matchday, saved]);
+	}, [gameweek, isCalculating, matchday, saved, toSourceResults]);
 
 	// Draw the 4:5 export image whenever the export screen has data
 	useEffect(() => {
@@ -578,16 +618,7 @@ const PredictionsApp: React.FC = () => {
 										</button>
 									))}
 								</div>
-								<p className={opsStyles.qrHint}>
-									Saved: Abhay {abhayCount} · Harsh {harshCount} picks
-								</p>
-								{saved?.points &&
-									(saved.points.abhay !== null || saved.points.harsh !== null) && (
-										<p className={opsStyles.qrHint}>
-											Points: Abhay {saved.points.abhay ?? "–"} · Harsh{" "}
-											{saved.points.harsh ?? "–"}
-										</p>
-									)}
+								{/* Status lines removed — tabs lead straight into actions */}
 
 								{fixturesState === "ready" && fixtures.length > 0 && (
 									<div className={styles.actionStack}>
@@ -610,17 +641,23 @@ const PredictionsApp: React.FC = () => {
 												void savePredictions();
 											}}
 										/>
-										<Button
-											text={isCalculating ? "Calculating…" : "Calculate"}
-											variant={Variants.OUTLINE}
-											color={Colors.NEUTRAL_DARK}
-											shape={Shapes.ROUNDED}
-											size={ButtonSizes.LARGE}
-											isDisabled={isCalculating}
-											onClick={() => {
-												void calculateScores();
-											}}
-										/>
+										{/* Only once the week is over — every match has a final score */}
+										{(matchday?.sourceMatches ?? []).length > 0 &&
+											(matchday?.sourceMatches ?? []).every((match) =>
+												Array.isArray(match.score?.ft)
+											) && (
+												<Button
+													text={isCalculating ? "Calculating…" : "Calculate"}
+													variant={Variants.OUTLINE}
+													color={Colors.NEUTRAL_DARK}
+													shape={Shapes.ROUNDED}
+													size={ButtonSizes.LARGE}
+													isDisabled={isCalculating}
+													onClick={() => {
+														void calculateScores();
+													}}
+												/>
+											)}
 									</div>
 								)}
 							</div>
