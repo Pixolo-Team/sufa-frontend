@@ -1,5 +1,5 @@
 // REACT //
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 // TYPES //
 import type {
@@ -116,10 +116,19 @@ const PredictionsApp: React.FC = () => {
 	const [fixturesState, setFixturesState] = useState<"idle" | "loading" | "error" | "ready">("idle");
 	const [fixturesError, setFixturesError] = useState("");
 
-	const fixtures = matchday?.fixtures ?? [];
+	// Stable identity — a fresh `?? []` every render retriggered the export
+	// redraw effect in a loop.
+	const fixtures = useMemo(() => matchday?.fixtures ?? [], [matchday]);
 
 	const [saved, setSaved] = useState<GameweekPredictionsData | null>(null);
 	const [edits, setEdits] = useState<EditsByPredictor>(emptyEdits);
+	// Predictors the user already typed for — background prefill must not
+	// wipe their in-progress scores when the saved fetch lands late.
+	// A ref: only read inside callbacks, never rendered.
+	const touchedRef = useRef<Record<PredictorId, boolean>>({
+		abhay: false,
+		harsh: false,
+	});
 	const [isSaving, setIsSaving] = useState(false);
 	const [isCalculating, setIsCalculating] = useState(false);
 	const [calcResult, setCalcResult] = useState<{
@@ -189,26 +198,33 @@ const PredictionsApp: React.FC = () => {
 		[toSourceResults]
 	);
 
-	/** Prefill score boxes from a saved snapshot */
+	/** Prefill score boxes from a saved snapshot (never clobbers typing) */
 	const applySaved = useCallback(
 		(fetchedSaved: GameweekPredictionsData, gw: number) => {
 			setSaved(fetchedSaved);
-			setEdits({
-				abhay: picksToEdits(
-					roundToPicks(
-						fetchedSaved.predictions.find((item) => item.predictor === "abhay")
-							?.round,
-						gw
-					)
-				),
-				harsh: picksToEdits(
-					roundToPicks(
-						fetchedSaved.predictions.find((item) => item.predictor === "harsh")
-							?.round,
-						gw
-					)
-				),
-			});
+			const touched = touchedRef.current;
+			setEdits((previousEdits) => ({
+				abhay: touched.abhay
+					? previousEdits.abhay
+					: picksToEdits(
+							roundToPicks(
+								fetchedSaved.predictions.find(
+									(item) => item.predictor === "abhay"
+								)?.round,
+								gw
+							)
+						),
+				harsh: touched.harsh
+					? previousEdits.harsh
+					: picksToEdits(
+							roundToPicks(
+								fetchedSaved.predictions.find(
+									(item) => item.predictor === "harsh"
+								)?.round,
+								gw
+							)
+						),
+			}));
 		},
 		[]
 	);
@@ -226,6 +242,7 @@ const PredictionsApp: React.FC = () => {
 			setMatchday(null);
 			setSaved(null);
 			setEdits(emptyEdits());
+			touchedRef.current = { abhay: false, harsh: false };
 			setCalcResult(null);
 			setImageBlob(null);
 			setImageUrl("");
@@ -288,6 +305,7 @@ const PredictionsApp: React.FC = () => {
 
 	/** One score box edited */
 	const setScore = (fixtureId: number, side: "h" | "a", value: string) => {
+		touchedRef.current[predictor] = true;
 		const digits = value.replace(/\D/g, "").slice(0, 2);
 		setEdits((previous) => ({
 			...previous,

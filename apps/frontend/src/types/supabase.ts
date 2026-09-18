@@ -110,6 +110,7 @@ export type Database = {
 					harsh_snapshot?: Json | null;
 					abhay_points?: number | null;
 					harsh_points?: number | null;
+					updated_at?: string;
 				};
 				Update: {
 					abhay_snapshot?: Json | null;

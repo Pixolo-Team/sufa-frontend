@@ -5,8 +5,10 @@ import type {
 	PredictionPickData,
 	PredictorId,
 	PredictorRoundData,
+	SavedMatchData,
 	SavedRoundData,
 } from "@/types/predictions";
+import type { Json } from "@/types/supabase";
 
 // UTILS //
 import { matchFixtureId, shortTeamName, toTla } from "./openfootball.api.service";
@@ -16,13 +18,18 @@ import { matchFixtureId, shortTeamName, toTla } from "./openfootball.api.service
 // Falls back to device-local when Supabase is unreachable — the app catches
 // and loads/saves locally instead.
 
-const withTimeout = <T>(work: Promise<T>, ms: number): Promise<T> =>
+// PostgREST builders are thenables, not real Promises — accept PromiseLike
+// and normalize with Promise.resolve so the timeout race typechecks.
+const withTimeout = <T>(work: PromiseLike<T>, ms: number): Promise<T> =>
 	Promise.race([
-		work,
+		Promise.resolve(work),
 		new Promise<T>((_, reject) =>
 			window.setTimeout(() => reject(new Error("Supabase timeout")), ms)
 		),
 	]);
+
+/** Rounds are plain JSON-serializable data, safe for JSONB columns. */
+const roundToJson = (round: SavedRoundData): Json => round as unknown as Json;
 
 /** Lazy import — the client module throws when env vars are missing. */
 const getClient = async () =>
@@ -116,14 +123,15 @@ export const savePredictionsRequest = async (
 	round: SavedRoundData
 ): Promise<PredictorRoundData> => {
 	const supabase = await getClient();
-	const column = `${predictor}_snapshot`;
 
 	const { error: upsertError } = await withTimeout(
 		supabase.from("gameweek_predictions").upsert(
 			{
 				season,
 				gameweek,
-				[column]: round,
+				...(predictor === "abhay"
+					? { abhay_snapshot: roundToJson(round) }
+					: { harsh_snapshot: roundToJson(round) }),
 				updated_at: new Date().toISOString(),
 			},
 			{ onConflict: "season,gameweek" }
