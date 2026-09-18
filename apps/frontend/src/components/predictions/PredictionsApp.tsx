@@ -37,6 +37,7 @@ import {
 	getMatchdayFixturesRequest,
 	prefetchSeasonMatches,
 	shortTeamName,
+	teamLogo,
 } from "@/services/api/openfootball.api.service";
 import {
 	getGameweekPredictionsRequest,
@@ -580,6 +581,7 @@ const PredictionsApp: React.FC = () => {
 									color={Colors.NEUTRAL_DARK}
 									shape={Shapes.ROUNDED}
 									size={ButtonSizes.LARGE}
+									extraClass="pred-calm-btn"
 									onClick={() => {
 										window.location.href = "/scores";
 									}}
@@ -798,9 +800,23 @@ const PredictionsApp: React.FC = () => {
 											<div key={index} className={styles.resultsRow}>
 												<p className={styles.resultsFixture}>
 													{shortTeamName(match.team1)}{" "}
+													<img
+														src={teamLogo(match.team1)}
+														alt=""
+														width="22"
+														height="22"
+														loading="lazy"
+													/>{" "}
 													{match.actual
 														? `${match.actual.home}–${match.actual.away}`
 														: "vs"}{" "}
+													<img
+														src={teamLogo(match.team2)}
+														alt=""
+														width="22"
+														height="22"
+														loading="lazy"
+													/>{" "}
 													{shortTeamName(match.team2)}
 												</p>
 												<div className={styles.resultsPicks}>

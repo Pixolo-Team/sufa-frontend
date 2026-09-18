@@ -8,6 +8,13 @@ body color onto `.buttonText` instead of the token foreground. */
 	color: var(--color-brand-primary-contrast) !important;
 }
 
+/* Calm buttons — no zoom animation on hover/press (e.g. See score) */
+:global(.pred-calm-btn),
+:global(.pred-calm-btn:hover),
+:global(.pred-calm-btn:active) {
+	transform: none !important;
+}
+
 /* Own shell — ops `.shell` turns into a rail/panel grid on desktop, which
 squeezes any non-operations content into the rail column. This stays a plain
 centered column at every breakpoint. */
@@ -342,6 +349,14 @@ centered column at every breakpoint. */
 	font-size: 13px;
 	font-weight: 700;
 	text-align: center;
+}
+
+.resultsFixture img {
+	width: 22px;
+	height: 22px;
+	object-fit: contain;
+	vertical-align: -5px;
+	margin: 0 4px;
 }
 
 .resultsPicks {
