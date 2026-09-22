@@ -670,23 +670,17 @@ const PredictionsApp: React.FC = () => {
 												void savePredictions();
 											}}
 										/>
-										{/* Only once the week is over — every match has a final score */}
-										{(matchday?.sourceMatches ?? []).length > 0 &&
-											(matchday?.sourceMatches ?? []).every((match) =>
-												Array.isArray(match.score?.ft)
-											) && (
-												<Button
-													text={isCalculating ? "Calculating…" : "Calculate"}
-													variant={Variants.OUTLINE}
-													color={Colors.NEUTRAL_DARK}
-													shape={Shapes.ROUNDED}
-													size={ButtonSizes.LARGE}
-													isDisabled={isCalculating}
-													onClick={() => {
-														void calculateScores();
-													}}
-												/>
-											)}
+										<Button
+											text={isCalculating ? "Calculating…" : "Calculate"}
+											variant={Variants.OUTLINE}
+											color={Colors.NEUTRAL_DARK}
+											shape={Shapes.ROUNDED}
+											size={ButtonSizes.LARGE}
+											isDisabled={isCalculating}
+											onClick={() => {
+												void calculateScores();
+											}}
+										/>
 									</div>
 								)}
 							</div>
