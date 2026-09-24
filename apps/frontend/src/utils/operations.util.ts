@@ -19,6 +19,27 @@ const STATIC_BATCH_IMAGES_BY_CENTER_AND_BATCH: Record<string, Record<string, str
 		youth: "/images/operations/youth-ghatkopar-west.png",
 		performance: "/images/operations/performance-ghatkopar-west.png",
 	},
+	// Vidyavihar / Kurla (JFSC Turfs) - placeholder copies of the West cards
+	// until center-specific pamphlets are designed; swap the files in
+	// public/images/operations, the filenames stay the same.
+	vidyavihar: {
+		foundation: "/images/operations/foundation-vidyavihar.png",
+		grassroot: "/images/operations/grassroot-vidyavihar.png",
+		youth: "/images/operations/youth-vidyavihar.png",
+		performance: "/images/operations/performance-vidyavihar.png",
+	},
+	kurla: {
+		foundation: "/images/operations/foundation-vidyavihar.png",
+		grassroot: "/images/operations/grassroot-vidyavihar.png",
+		youth: "/images/operations/youth-vidyavihar.png",
+		performance: "/images/operations/performance-vidyavihar.png",
+	},
+	jfsc: {
+		foundation: "/images/operations/foundation-vidyavihar.png",
+		grassroot: "/images/operations/grassroot-vidyavihar.png",
+		youth: "/images/operations/youth-vidyavihar.png",
+		performance: "/images/operations/performance-vidyavihar.png",
+	},
 };
 
 /** Turn a `HH:mm` database time into `5:00 PM` */
