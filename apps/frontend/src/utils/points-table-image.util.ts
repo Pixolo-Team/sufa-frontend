@@ -1,6 +1,6 @@
 // TYPES //
 import type { SeniorStandingRow } from "@/types/senior-seasons";
-import { HIGHLIGHT_TEAM } from "@/types/senior-seasons";
+import { HIGHLIGHT_TEAM, SENIOR_TEAM_LOGOS } from "@/types/senior-seasons";
 
 const WIDTH = 1080;
 const HEIGHT = 1920;
@@ -55,6 +55,13 @@ export const renderStandingsImage = async ({
 	context.scale(scale, scale);
 
 	const [zizo, pixolo] = await Promise.all([loadImage(ZIZO_LOGO), loadImage(PIXOLO_LOGO)]);
+
+	// Club crests used in the table - text-only fallback when one is missing.
+	const crestUrls = [...new Set(rows.map((row) => SENIOR_TEAM_LOGOS[row.team]).filter(Boolean))];
+	const crestEntries = await Promise.all(
+		crestUrls.map(async (url) => [url, await loadImage(url)] as const)
+	);
+	const crests = new Map<string, HTMLImageElement | null>(crestEntries);
 
 	// Background + top accent bar
 	context.fillStyle = BG;
@@ -147,15 +154,29 @@ export const renderStandingsImage = async ({
 		context.fillText(String(index + 1), PADDING + posW / 2, baseline);
 
 		// Shrink long club names until they fit their column.
+		// A white chip carries the crest so any logo colours read on dark green.
+		const crest = crests.get(SENIOR_TEAM_LOGOS[row.team] ?? "");
+		const chipSize = crest ? 46 : 0;
+		const chipGap = crest ? 12 : 0;
+		const teamX = PADDING + posW + 12 + chipSize + chipGap;
+
+		if (crest) {
+			context.fillStyle = "#ffffff";
+			context.beginPath();
+			context.roundRect(PADDING + posW + 12, baseline - 36, chipSize, chipSize, 12);
+			context.fill();
+			context.drawImage(crest, PADDING + posW + 12 + 5, baseline - 36 + 5, chipSize - 10, chipSize - 10);
+		}
+
 		let teamSize = 32;
 		context.font = `700 ${teamSize}px ${body}`;
-		while (context.measureText(row.team.toUpperCase()).width > teamW - 24 && teamSize > 18) {
+		while (context.measureText(row.team.toUpperCase()).width > teamW - 24 - chipSize - chipGap && teamSize > 18) {
 			teamSize -= 1;
 			context.font = `700 ${teamSize}px ${body}`;
 		}
 		context.fillStyle = textColor;
 		context.textAlign = "left";
-		context.fillText(row.team.toUpperCase(), PADDING + posW + 12, baseline);
+		context.fillText(row.team.toUpperCase(), teamX, baseline);
 
 		context.font = `700 28px ${body}`;
 		context.textAlign = "center";

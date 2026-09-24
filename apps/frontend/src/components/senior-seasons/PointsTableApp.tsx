@@ -23,6 +23,7 @@ import {
 	HIGHLIGHT_TEAM,
 	SENIOR_SEASON,
 	SENIOR_SEASON_LABEL,
+	SENIOR_TEAM_LOGOS,
 } from "@/types/senior-seasons";
 
 // UTILS //
@@ -190,7 +191,7 @@ const PointsTableApp: React.FC = () => {
 							shape={Shapes.ROUNDED}
 							size={ButtonSizes.SMALL}
 							isDisabled={isExporting}
-							extraClass={styles.seniorDownloadButton}
+							extraClass={styles.seniorCompactButton}
 						/>
 					</div>
 
@@ -222,7 +223,19 @@ const PointsTableApp: React.FC = () => {
 									>
 										<td>{index + 1}</td>
 										<td>
-											<b>{row.team}</b>
+											<span className={styles.seniorTeamCell}>
+												{SENIOR_TEAM_LOGOS[row.team] && (
+													<img
+														className={styles.seniorTeamLogo}
+														src={SENIOR_TEAM_LOGOS[row.team]}
+														alt=""
+														width="28"
+														height="28"
+														loading="lazy"
+													/>
+												)}
+												<b>{row.team}</b>
+											</span>
 										</td>
 										<td>{row.played}</td>
 										<td>{row.won}</td>

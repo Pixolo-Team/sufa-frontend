@@ -6,6 +6,14 @@ export const SENIOR_SEASON_LABEL = "Senior Season 26-27";
 
 export const HIGHLIGHT_TEAM = "Skorost United";
 
+/**
+ * Club crests by team name. Teams missing here render text-only until
+ * their logo arrives in `public/images/senior-seasons/` - then add one line.
+ */
+export const SENIOR_TEAM_LOGOS: Record<string, string> = {
+	"Skorost United": "/skorost-pwa-icon-192.png",
+};
+
 /** The 12 group teams, in fixture-dropdown order. */
 export const SENIOR_TEAMS = [
 	"Skorost United",

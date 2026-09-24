@@ -1,5 +1,5 @@
 // REACT //
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 
 // ENUMS //
 import { InputTextTypes } from "@/neevo/enums/input.enum";
@@ -215,11 +215,6 @@ const FixturesApp: React.FC = () => {
 			});
 		},
 		[]
-	);
-
-	const errorCount = useMemo(
-		() => Object.keys(rowErrors).length,
-		[rowErrors]
 	);
 
 	const handleSave = useCallback(() => {
@@ -445,11 +440,6 @@ const FixturesApp: React.FC = () => {
 					)}
 
 					<div className={styles.stickySaveBar}>
-						{errorCount > 0 && (
-							<span className={styles.stickySaveBarError}>
-								{errorCount} {errorCount === 1 ? "row needs" : "rows need"} fixing
-							</span>
-						)}
 						<Button
 							onClick={handleSave}
 							text={isSaving ? "Saving..." : `Save ${rows.length} ${rows.length === 1 ? "match" : "matches"}`}

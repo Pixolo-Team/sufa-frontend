@@ -2375,28 +2375,18 @@
 }
 
 /* Stuck to the panel bottom while the grid scrolls, so Save is always
-at thumb reach. Sticky (not fixed) keeps it inside the panel on desktop
-where the rail sits beside it. */
+at thumb reach. Box-free - just the compact button (and the error line
+when a row needs fixing). Sticky (not fixed) keeps it inside the panel on
+desktop where the rail sits beside it. */
 .stickySaveBar {
 	position: sticky;
 	bottom: 12px;
 	z-index: 10;
 	display: flex;
-	align-items: center;
-	gap: 12px;
-	padding: 12px 14px;
-	border: 1px solid var(--ops-line);
-	border-radius: var(--ops-radius-lg);
-	background-color: var(--ops-surface);
-	box-shadow: var(--ops-shadow-lg);
-}
-
-.stickySaveBarError {
-	flex: 1;
-	min-width: 0;
-	color: var(--ops-danger);
-	font-size: 12.5px;
-	font-weight: 600;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 8px;
+	padding: 4px 2px;
 }
 
 .standingsWrap {
@@ -2487,6 +2477,21 @@ where the rail sits beside it. */
 	background-color: var(--ops-accent-soft);
 }
 
+/* Club crest + name in the frozen Team column. */
+.seniorTeamCell {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+}
+
+.seniorTeamLogo {
+	width: 28px;
+	height: 28px;
+	flex: none;
+	object-fit: contain;
+}
+
 /* Title left, action right - stacks on narrow phones, one row above that. */
 .seniorTitleRow {
 	display: flex;
@@ -2507,10 +2512,10 @@ where the rail sits beside it. */
 	}
 }
 
-// Neevo Button stretches full-width by default - the header download action
-// stays a compact pill instead. Scoped under .operations (0,2,0) so it wins
-// over the neevo module's single-class width regardless of bundle order.
-.operations .seniorDownloadButton {
+// Neevo Button stretches full-width by default - compact header/bar actions
+// stay pills instead. Scoped under .operations (0,2,0) so it wins over the
+// neevo module's single-class width regardless of bundle order.
+.operations .seniorCompactButton {
 	width: auto;
 	flex: none;
 	align-self: flex-start;
