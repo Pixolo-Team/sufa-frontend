@@ -1,0 +1,15 @@
+---
+// LAYOUTS //
+import OperationsLayout from "@/layouts/OperationsLayout.astro";
+
+// COMPONENTS //
+import FixturesApp from "@/components/senior-seasons/FixturesApp";
+---
+
+<OperationsLayout title="Fixtures - Senior Season 26-27 | Skorost United">
+	{/*
+		`client:only` so the PIN gate decides what to render before anything paints -
+		a hydrated island would flash the grid before the gate ran.
+	*/}
+	<FixturesApp client:only="react" />
+</OperationsLayout>

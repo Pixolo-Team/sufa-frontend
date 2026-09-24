@@ -1,0 +1,11 @@
+---
+// LAYOUTS //
+import OperationsLayout from "@/layouts/OperationsLayout.astro";
+
+// COMPONENTS //
+import PointsTableApp from "@/components/senior-seasons/PointsTableApp";
+---
+
+<OperationsLayout title="Points Table - Senior Season 26-27 | Skorost United">
+	<PointsTableApp client:only="react" />
+</OperationsLayout>

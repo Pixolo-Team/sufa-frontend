@@ -147,6 +147,34 @@ export type Database = {
 			};
 			Relationships: [];
 		};
+		senior_fixtures: {
+			Row: {
+				id: string;
+				season: string;
+				home_team: string;
+				away_team: string;
+				home_score: number | null;
+				away_score: number | null;
+				created_at: string;
+				updated_at: string;
+			};
+			Insert: {
+				season?: string;
+				home_team: string;
+				away_team: string;
+				home_score?: number | null;
+				away_score?: number | null;
+			};
+			Update: {
+				season?: string;
+				home_team?: string;
+				away_team?: string;
+				home_score?: number | null;
+				away_score?: number | null;
+				updated_at?: string;
+			};
+			Relationships: [];
+		};
 		};
 		Views: Record<string, never>;
 		Functions: Record<string, never>;

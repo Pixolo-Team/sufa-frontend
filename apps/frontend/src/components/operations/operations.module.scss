@@ -2301,3 +2301,237 @@
 .infoNotice {
 	margin-bottom: 0;
 }
+
+/* ---------- senior seasons ----------
+   Fixtures editor (staff) + group standings (public). Reuses the ops shell,
+   cards and buttons - only the grid rows, sticky save bar and standings
+   table are new. */
+
+.seniorFixtureList {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.seniorFixtureRow {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	padding: 16px;
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-md);
+	background-color: var(--ops-surface);
+	box-shadow: var(--ops-shadow);
+}
+
+.seniorFixtureRowError {
+	border-color: var(--ops-danger);
+}
+
+.seniorRowHead {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	grid-column: 1 / -1;
+
+	b {
+		font-size: 14px;
+		font-weight: 700;
+	}
+}
+
+.seniorDelete {
+	min-height: 44px;
+	padding: 0 14px;
+	border: 0;
+	border-radius: var(--ops-radius-full);
+	background-color: transparent;
+	color: var(--ops-danger);
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.seniorFieldWide {
+	grid-column: 1 / -1;
+}
+
+.seniorRowError {
+	grid-column: 1 / -1;
+	margin: 0;
+	color: var(--ops-danger);
+	font-size: 12.5px;
+	font-weight: 600;
+	line-height: 1.45;
+}
+
+.seniorAddRow {
+	min-height: 52px;
+	border: 1px dashed var(--ops-border-strong);
+	border-radius: var(--ops-radius-md);
+	background-color: transparent;
+	color: var(--ops-muted);
+	font-size: 14px;
+	font-weight: 700;
+}
+
+/* Stuck to the panel bottom while the grid scrolls, so Save is always
+at thumb reach. Sticky (not fixed) keeps it inside the panel on desktop
+where the rail sits beside it. */
+.stickySaveBar {
+	position: sticky;
+	bottom: 12px;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 14px;
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-lg);
+	background-color: var(--ops-surface);
+	box-shadow: var(--ops-shadow-lg);
+}
+
+.stickySaveBarError {
+	flex: 1;
+	min-width: 0;
+	color: var(--ops-danger);
+	font-size: 12.5px;
+	font-weight: 600;
+}
+
+.standingsWrap {
+	margin-top: 16px;
+	overflow-x: auto;
+	border: 1px solid var(--ops-line);
+	border-radius: var(--ops-radius-md);
+	// Stats scroll by swipe - the bar itself stays hidden.
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+.standingsTable {
+	width: 100%;
+	// Separate model + border-box so the frozen columns below measure exact
+	// pixels. With collapsing borders the # column width drifted and left a
+	// white sliver between the frozen columns while scrolling.
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: 13px;
+	font-variant-numeric: tabular-nums;
+
+	th,
+	td {
+		padding: 10px 8px;
+		text-align: center;
+		white-space: nowrap;
+	}
+
+	th {
+		background-color: var(--ops-surface-sunken);
+		color: var(--ops-muted);
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+	}
+
+	th:nth-child(2),
+	td:nth-child(2) {
+		text-align: left;
+	}
+
+	tbody tr + tr td {
+		border-top: 1px solid var(--ops-line);
+	}
+
+	// Frozen # + Team columns: stat columns scroll underneath them.
+	th:first-child,
+	td:first-child {
+		position: sticky;
+		left: 0;
+		z-index: 1;
+		box-sizing: border-box;
+		width: 56px;
+		min-width: 56px;
+		max-width: 56px;
+		background-color: var(--ops-surface);
+	}
+
+	th:first-child {
+		background-color: var(--ops-surface-sunken);
+	}
+
+	th:nth-child(2),
+	td:nth-child(2) {
+		position: sticky;
+		left: 56px;
+		z-index: 1;
+		background-color: var(--ops-surface);
+		border-right: 1px solid var(--ops-line);
+	}
+
+	th:nth-child(2) {
+		background-color: var(--ops-surface-sunken);
+	}
+}
+
+.standingsSkorost td {
+	background-color: var(--ops-accent-soft);
+	font-weight: 700;
+}
+
+.standingsTable .standingsSkorost td:first-child,
+.standingsTable .standingsSkorost td:nth-child(2) {
+	background-color: var(--ops-accent-soft);
+}
+
+/* Title left, action right - stacks on narrow phones, one row above that. */
+.seniorTitleRow {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	b {
+		display: block;
+		font-family: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
+		font-size: 17px;
+		font-weight: 700;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+
+	.centerAddress {
+		margin: 8px 0 0;
+	}
+}
+
+// Neevo Button stretches full-width by default - the header download action
+// stays a compact pill instead. Scoped under .operations (0,2,0) so it wins
+// over the neevo module's single-class width regardless of bundle order.
+.operations .seniorDownloadButton {
+	width: auto;
+	flex: none;
+	align-self: flex-start;
+}
+
+@media only screen and (min-width: 480px) {
+	.seniorTitleRow {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+	}
+}
+
+@media only screen and (min-width: 720px) {
+	.seniorFixtureRow {
+		grid-template-columns: minmax(0, 1.4fr) 84px 84px minmax(0, 1.4fr);
+		align-items: end;
+	}
+
+	.seniorFieldWide {
+		grid-column: auto;
+	}
+}
