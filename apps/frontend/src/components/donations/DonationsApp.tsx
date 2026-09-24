@@ -114,7 +114,7 @@ const DonorWall: React.FC = memo(() => {
 		return (
 			<div className={styles.emptyState}>
 				<span className={styles.emptyStateIcon}>
-					<OperationsIcon name="pin" size={42} />
+					<OperationsIcon name="heart" size={42} />
 				</span>
 				<h3>No donations yet</h3>
 				<p>Contributions will appear here once they are added.</p>
@@ -138,27 +138,27 @@ const DonorWall: React.FC = memo(() => {
 			<section className={styles.card}>
 				<div className={styles.centerHeader}>
 					<div>
-						<b>Contributors · {donations.length}</b>
+						<b>Contributors</b>
 					</div>
+					<span className={styles.centerBatchMeta}>{donations.length}</span>
 				</div>
 
-				<table className={styles.plansTable}>
-					<tbody>
-						{donations.map((donation) => (
-							<tr key={donation.id}>
-								<td>
-									<b>{donation.name}</b>
-									<br />
-									<small>
-										{formatDonationDate(donation.donatedOn)}
-										{donation.details ? ` · ${donation.details}` : ""}
-									</small>
-								</td>
-								<td>{formatRupees(donation.amount)}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
+				<ul className={styles.donorList}>
+					{donations.map((donation) => (
+						<li key={donation.id} className={styles.donorRow}>
+							<div className={styles.donorInfo}>
+								<b>{donation.name}</b>
+								<small>
+									{formatDonationDate(donation.donatedOn)}
+									{donation.details ? ` · ${donation.details}` : ""}
+								</small>
+							</div>
+							<span className={styles.donorAmount}>
+								{formatRupees(donation.amount)}
+							</span>
+						</li>
+					))}
+				</ul>
 			</section>
 		</div>
 	);

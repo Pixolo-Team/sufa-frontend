@@ -1274,6 +1274,59 @@
 	}
 }
 
+/* ---------- donor wall ---------- */
+
+.donorList {
+	display: flex;
+	flex-direction: column;
+	margin: 16px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.donorRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px 0;
+}
+
+.donorRow + .donorRow {
+	border-top: 1px solid var(--ops-line);
+}
+
+.donorInfo {
+	min-width: 0;
+
+	b {
+		display: block;
+		font-size: 14.5px;
+		font-weight: 700;
+		line-height: 1.3;
+	}
+
+	small {
+		display: block;
+		margin-top: 3px;
+		color: var(--ops-muted);
+		font-size: 12.5px;
+		line-height: 1.45;
+	}
+}
+
+.donorAmount {
+	flex: none;
+	padding: 7px 14px;
+	border-radius: var(--ops-radius-full);
+	background-color: var(--ops-accent-soft);
+	color: var(--ops-ink);
+	font-size: 13.5px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
 .modalOverlay {
 	position: fixed;
 	inset: 0;
