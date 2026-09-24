@@ -72,30 +72,7 @@ const SideMenu: React.FC<{ active: "list" | "add" }> = memo(({ active }) => {
 
 SideMenu.displayName = "DonationsSideMenu";
 
-/** Static CTA tile - no props, never re-renders. */
-const AddDonationTile: React.FC = memo(() => {
-	return (
-		<div className={styles.tiles}>
-			<a href="/add-donation" className={styles.tile}>
-				<span className={styles.tileIcon}>
-					<OperationsIcon name="user-plus" />
-				</span>
-				<span className={styles.tileText}>
-					<b>Add Donation</b>
-				</span>
-				<OperationsIcon
-					name="chevron"
-					size={18}
-					className={styles.tileChevron}
-				/>
-			</a>
-		</div>
-	);
-});
-
-AddDonationTile.displayName = "AddDonationTile";
-
-/** Owns the fetch state so TopBar / SideMenu / Tile never re-render on load. */
+/** Owns the fetch state so TopBar / SideMenu never re-render on load. */
 const DonorWall: React.FC = memo(() => {
 	const [donations, setDonations] = useState<DonationData[] | null>(null);
 	const [loadError, setLoadError] = useState(false);
@@ -148,15 +125,14 @@ const DonorWall: React.FC = memo(() => {
 	return (
 		<div className={styles.cardStack}>
 			<section className={styles.card}>
-				<div className={styles.centerHeader}>
-					<div>
-						<b>{formatRupees(total)} raised</b>
-						<p className={styles.centerAddress}>
-							{donations.length}{" "}
-							{donations.length === 1 ? "contributor" : "contributors"}
-						</p>
-					</div>
+				<div className={styles.resultTotal}>
+					<span>Total raised</span>
+					<b>{formatRupees(total)}</b>
 				</div>
+				<p className={styles.centerAddress}>
+					{donations.length}{" "}
+					{donations.length === 1 ? "contributor" : "contributors"}
+				</p>
 			</section>
 
 			<section className={styles.card}>
@@ -202,7 +178,6 @@ const DonationsApp: React.FC = () => {
 				<SideMenu active="list" />
 
 				<div className={`${styles.panel} ${styles.panelHome}`}>
-					<AddDonationTile />
 					<DonorWall />
 				</div>
 			</div>
