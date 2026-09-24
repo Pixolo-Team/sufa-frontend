@@ -2485,10 +2485,20 @@ desktop where the rail sits beside it. */
 	min-width: 0;
 }
 
-.seniorTeamLogo {
-	width: 28px;
-	height: 28px;
+.seniorTeamLogoChip {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
 	flex: none;
+	border-radius: 9px;
+	padding: 3px;
+}
+
+.seniorTeamLogo {
+	width: 100%;
+	height: 100%;
 	object-fit: contain;
 }
 

@@ -9,9 +9,13 @@ export const HIGHLIGHT_TEAM = "Skorost United";
 /**
  * Club crests by team name. Teams missing here render text-only until
  * their logo arrives in `public/images/senior-seasons/` - then add one line.
+ * The footer artwork is white, so each crest gets its chip colour below.
  */
-export const SENIOR_TEAM_LOGOS: Record<string, string> = {
-	"Skorost United": "/skorost-pwa-icon-192.png",
+export const SENIOR_TEAM_LOGOS: Record<string, string> = {};
+
+/** Badge background per team - defaults to white for future dark artwork. */
+export const SENIOR_TEAM_LOGO_CHIP: Record<string, string> = {
+	"Skorost United": "#0F9563",
 };
 
 /** The 12 group teams, in fixture-dropdown order. */

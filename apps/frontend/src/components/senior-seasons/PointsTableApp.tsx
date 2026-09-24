@@ -24,6 +24,7 @@ import {
 	SENIOR_SEASON,
 	SENIOR_SEASON_LABEL,
 	SENIOR_TEAM_LOGOS,
+	SENIOR_TEAM_LOGO_CHIP,
 } from "@/types/senior-seasons";
 
 // UTILS //
@@ -225,14 +226,22 @@ const PointsTableApp: React.FC = () => {
 										<td>
 											<span className={styles.seniorTeamCell}>
 												{SENIOR_TEAM_LOGOS[row.team] && (
-													<img
-														className={styles.seniorTeamLogo}
-														src={SENIOR_TEAM_LOGOS[row.team]}
-														alt=""
-														width="28"
-														height="28"
-														loading="lazy"
-													/>
+													<span
+														className={styles.seniorTeamLogoChip}
+														style={{
+															backgroundColor:
+																SENIOR_TEAM_LOGO_CHIP[row.team] ?? "#ffffff",
+														}}
+													>
+														<img
+															className={styles.seniorTeamLogo}
+															src={SENIOR_TEAM_LOGOS[row.team]}
+															alt=""
+															width="28"
+															height="28"
+															loading="lazy"
+														/>
+													</span>
 												)}
 												<b>{row.team}</b>
 											</span>
