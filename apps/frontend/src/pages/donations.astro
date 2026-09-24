@@ -1,0 +1,11 @@
+---
+// LAYOUTS //
+import OperationsLayout from "@/layouts/OperationsLayout.astro";
+
+// COMPONENTS //
+import DonationsApp from "@/components/donations/DonationsApp";
+---
+
+<OperationsLayout title="Donations | Skorost United">
+	<DonationsApp client:only="react" />
+</OperationsLayout>

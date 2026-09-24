@@ -1,0 +1,15 @@
+---
+// LAYOUTS //
+import OperationsLayout from "@/layouts/OperationsLayout.astro";
+
+// COMPONENTS //
+import AddDonationApp from "@/components/donations/AddDonationApp";
+---
+
+<OperationsLayout title="Add Donation | Skorost United">
+	{/*
+		`client:only` so the PIN gate decides what to render before anything paints -
+		a hydrated island would flash the form before the gate ran.
+	*/}
+	<AddDonationApp client:only="react" />
+</OperationsLayout>

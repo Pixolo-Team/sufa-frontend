@@ -7,7 +7,8 @@ export type OperationsIconName =
 	| "user-plus"
 	| "calendar-check"
 	| "whistle"
-	| "info-book";
+	| "info-book"
+	| "heart";
 
 /** Stroke paths, drawn on a 24×24 grid in `currentColor` */
 const ICON_PATHS: Record<OperationsIconName, React.ReactNode> = {
@@ -77,6 +78,11 @@ const ICON_PATHS: Record<OperationsIconName, React.ReactNode> = {
 			<path d="M4 19.5a2 2 0 012-2h13v3H6a2 2 0 01-2-2z" />
 			<path d="M9.5 8h6" />
 			<path d="M9.5 11.5h4" />
+		</>
+	),
+	heart: (
+		<>
+			<path d="M12 20.5C7.5 16.5 3.5 13.3 3.5 9.6A4.6 4.6 0 018.1 5c1.6 0 3 .8 3.9 2A4.6 4.6 0 0115.9 5a4.6 4.6 0 014.6 4.6c0 3.7-4 6.9-8.5 10.9z" />
 		</>
 	),
 };
