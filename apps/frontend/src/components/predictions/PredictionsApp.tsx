@@ -59,7 +59,7 @@ import {
 	type SourceResult,
 } from "@/utils/predictions-scoring.util";
 
-// Same device key + PIN source as operations — one unlock opens both staff tools.
+// Same device key + PIN source as operations - one unlock opens both staff tools.
 const UNLOCK_STORAGE_KEY = "skorost-ops-unlocked";
 const STAFF_PIN = import.meta.env.PUBLIC_STAFF_PIN ?? "";
 
@@ -103,7 +103,7 @@ const formatKickoff = (utcDate: string): string => {
 	return `${weekday} ${day} ${monthName} · ${hour12}:${String(minute).padStart(2, "0")} ${period}`;
 };
 
-/** EPL Score Predictor — GW grid → predictions (Abhay | Harsh) → IG export. */
+/** EPL Score Predictor - GW grid → predictions (Abhay | Harsh) → IG export. */
 const PredictionsApp: React.FC = () => {
 	const [isUnlocked, setIsUnlocked] = useState(
 		() => window.localStorage.getItem(UNLOCK_STORAGE_KEY) === "true"
@@ -116,13 +116,13 @@ const PredictionsApp: React.FC = () => {
 	const [fixturesState, setFixturesState] = useState<"idle" | "loading" | "error" | "ready">("idle");
 	const [fixturesError, setFixturesError] = useState("");
 
-	// Stable identity — a fresh `?? []` every render retriggered the export
+	// Stable identity - a fresh `?? []` every render retriggered the export
 	// redraw effect in a loop.
 	const fixtures = useMemo(() => matchday?.fixtures ?? [], [matchday]);
 
 	const [saved, setSaved] = useState<GameweekPredictionsData | null>(null);
 	const [edits, setEdits] = useState<EditsByPredictor>(emptyEdits);
-	// Predictors the user already typed for — background prefill must not
+	// Predictors the user already typed for - background prefill must not
 	// wipe their in-progress scores when the saved fetch lands late.
 	// A ref: only read inside callbacks, never rendered.
 	const touchedRef = useRef<Record<PredictorId, boolean>>({
@@ -180,7 +180,7 @@ const PredictionsApp: React.FC = () => {
 	}, []);
 
 	/**
-	 * Results for a finished week with saved picks — null otherwise, so
+	 * Results for a finished week with saved picks - null otherwise, so
 	 * nothing auto-shows for live/future gameweeks.
 	 */
 	const buildCalcResult = useCallback(
@@ -239,7 +239,7 @@ const PredictionsApp: React.FC = () => {
 	);
 
 	/**
-	 * Fixtures render the moment the season JSON arrives — saved snapshots
+	 * Fixtures render the moment the season JSON arrives - saved snapshots
 	 * load in the background and never block the UI (waiting on the cloud
 	 * stalled every GW open when the network is slow).
 	 */
@@ -276,7 +276,7 @@ const PredictionsApp: React.FC = () => {
 				showToast("No fixtures published for this gameweek yet", ToastTypes.WARNING);
 			}
 
-			// Saved snapshots arrive whenever — prefill silently when they do.
+			// Saved snapshots arrive whenever - prefill silently when they do.
 			// Finished weeks with saved picks show their results right away.
 			const showAutoResults = (fetchedSaved: GameweekPredictionsData) => {
 				applySaved(fetchedSaved, gw);
@@ -325,7 +325,7 @@ const PredictionsApp: React.FC = () => {
 		}));
 	};
 
-	/** Save active predictor's full matchday JSON — source rows + scores */
+	/** Save active predictor's full matchday JSON - source rows + scores */
 	const savePredictions = useCallback(async () => {
 		if (gameweek === null || isSaving || !matchday) return;
 
@@ -379,7 +379,7 @@ const PredictionsApp: React.FC = () => {
 			setSaved(refreshed);
 			showToast(`${predictorLabel(predictor)}'s predictions saved`, ToastTypes.SUCCESS);
 		} catch (error) {
-			// Cloud sync failed — save on this device so Export keeps working.
+			// Cloud sync failed - save on this device so Export keeps working.
 			// Pressing Save again once the network is back syncs to Supabase.
 			// The exact reason goes into the toast + console so setup issues
 			// (missing env, table/RLS not run) are visible instead of silent.
@@ -387,14 +387,14 @@ const PredictionsApp: React.FC = () => {
 		console.error("[predictions] save failed:", error);
 		saveLocalPredictions(PREDICTIONS_SEASON, gameweek, predictor, round);
 		setSaved(getLocalPredictions(PREDICTIONS_SEASON, gameweek));
-		showToast(`Sync failed (${detail}) — saved on this device`, ToastTypes.WARNING);
+		showToast(`Sync failed (${detail}): saved on this device`, ToastTypes.WARNING);
 		} finally {
 			setIsSaving(false);
 		}
 	}, [edits, fixtures, gameweek, isSaving, matchday, predictor]);
 
 	/**
-	 * CALCULATE — compare saved predictions against the final scores in the
+	 * CALCULATE - compare saved predictions against the final scores in the
 	 * same openfootball JSON (exact = 5, outcome = 3), show the gameweek
 	 * points and persist them on the gameweek row.
 	 */
@@ -404,7 +404,7 @@ const PredictionsApp: React.FC = () => {
 		const results = toSourceResults(matchday);
 
 		if (!results.some((item) => item.ft !== null)) {
-			showToast("Results not published yet — check back after the matchday", ToastTypes.WARNING);
+			showToast("Results not published yet. Check back after the matchday", ToastTypes.WARNING);
 			return;
 		}
 
@@ -431,7 +431,7 @@ const PredictionsApp: React.FC = () => {
 				);
 				setSaved(refreshed);
 				showToast(
-					`Points saved — Abhay ${points.abhay} · Harsh ${points.harsh}`,
+					`Points saved - Abhay ${points.abhay} · Harsh ${points.harsh}`,
 					ToastTypes.SUCCESS
 				);
 			} catch (error) {
@@ -439,7 +439,7 @@ const PredictionsApp: React.FC = () => {
 				console.error("[predictions] points save failed:", error);
 				saveLocalPoints(PREDICTIONS_SEASON, gameweek, points);
 				setSaved(getLocalPredictions(PREDICTIONS_SEASON, gameweek));
-				showToast(`Sync failed (${detail}) — points saved on this device`, ToastTypes.WARNING);
+				showToast(`Sync failed (${detail}) - points saved on this device`, ToastTypes.WARNING);
 			}
 		} finally {
 			setIsCalculating(false);
@@ -647,7 +647,7 @@ const PredictionsApp: React.FC = () => {
 										</button>
 									))}
 								</div>
-								{/* Status lines removed — tabs lead straight into actions */}
+								{/* Status lines removed - tabs lead straight into actions */}
 
 								{fixturesState === "ready" && fixtures.length > 0 && (
 									<div className={styles.actionStack}>
@@ -712,7 +712,7 @@ const PredictionsApp: React.FC = () => {
 
 							{fixturesState === "ready" && fixtures.length === 0 && (
 								<p className={opsStyles.notice}>
-									No fixtures published for this gameweek yet — check back later.
+									No fixtures published for this gameweek yet. Check back later.
 								</p>
 							)}
 
@@ -903,14 +903,14 @@ const PredictionsApp: React.FC = () => {
 											<img
 												className={styles.exportPreview}
 												src={imageUrl}
-												alt={`Gameweek ${gameweek} predictions — Abhay vs Harsh`}
+												alt={`Gameweek ${gameweek} predictions: Abhay vs Harsh`}
 											/>
 										)}
 										{(abhayCount === 0 || harshCount === 0) && (
 											<p className={opsStyles.qrHint}>
 												{abhayCount === 0 && harshCount === 0
-													? "No predictions saved yet — empty rows show as – : –."
-													: `Only ${abhayCount === 0 ? "Harsh" : "Abhay"} saved so far — the other column shows – : –.`}
+													? "No predictions saved yet. Empty rows show as – : –."
+													: `Only ${abhayCount === 0 ? "Harsh" : "Abhay"} saved so far. The other column shows – : –.`}
 											</p>
 										)}
 									</div>
@@ -960,7 +960,7 @@ const PredictionsApp: React.FC = () => {
 											/>
 										</div>
 										<p className={opsStyles.qrHint}>
-											Send image opens the phone's share sheet — post it straight to Instagram.
+											Send image opens the phone's share sheet. Post it straight to Instagram.
 										</p>
 									</div>
 								</div>

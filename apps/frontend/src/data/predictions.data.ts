@@ -1,4 +1,4 @@
-// Score Predictor config — predictors, season and gameweek range.
+// Score Predictor config - predictors, season and gameweek range.
 
 import type { PredictorId } from "@/types/predictions";
 

@@ -15,10 +15,10 @@ import { matchFixtureId, shortTeamName, toTla } from "./openfootball.api.service
 
 // Storage: Supabase `gameweek_predictions` (one row per season + gameweek,
 // one snapshot column per predictor). Same DB the operations page reads.
-// Falls back to device-local when Supabase is unreachable — the app catches
+// Falls back to device-local when Supabase is unreachable - the app catches
 // and loads/saves locally instead.
 
-// PostgREST builders are thenables, not real Promises — accept PromiseLike
+// PostgREST builders are thenables, not real Promises - accept PromiseLike
 // and normalize with Promise.resolve so the timeout race typechecks.
 const withTimeout = <T>(work: PromiseLike<T>, ms: number): Promise<T> =>
 	Promise.race([
@@ -31,7 +31,7 @@ const withTimeout = <T>(work: PromiseLike<T>, ms: number): Promise<T> =>
 /** Rounds are plain JSON-serializable data, safe for JSONB columns. */
 const roundToJson = (round: SavedRoundData): Json => round as unknown as Json;
 
-/** Lazy import — the client module throws when env vars are missing. */
+/** Lazy import - the client module throws when env vars are missing. */
 const getClient = async () =>
 	(await import("@/services/supabase.client")).supabase;
 
@@ -187,7 +187,7 @@ export const saveGameweekPointsRequest = async (
 	if (error) throw error;
 };
 
-/** Every gameweek's points for the season, ordered — feeds /scores. */
+/** Every gameweek's points for the season, ordered - feeds /scores. */
 export const getAllGameweekScoresRequest = async (
 	season: number
 ): Promise<GameweekScoreData[]> => {

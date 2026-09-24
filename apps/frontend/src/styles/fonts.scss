@@ -1,4 +1,4 @@
-// Kippax Modern — self hosted brand font (previously loaded through `next/font/local`)
+// Kippax Modern - self hosted brand font (previously loaded through `next/font/local`)
 @font-face {
 	font-family: "Kippax Modern";
 	src: url("/fonts/kippax-modern/Kippax-Modern-Black.woff") format("woff");
@@ -47,7 +47,7 @@
 	font-display: swap;
 }
 
-// Font family variables — these were injected by `next/font` on the <body> before
+// Font family variables - these were injected by `next/font` on the <body> before
 :root {
 	--font-family-primary: "Kippax Modern", ui-sans-serif, system-ui, sans-serif;
 	--font-family-secondary: "Montserrat Variable", ui-sans-serif, system-ui,

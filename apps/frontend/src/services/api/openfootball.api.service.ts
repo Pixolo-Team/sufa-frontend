@@ -4,7 +4,7 @@ import axios from "axios";
 // TYPES //
 import type { FixtureData } from "@/types/predictions";
 
-// openfootball JSON — free, no key, no rate limit, CORS open (*).
+// openfootball JSON - free, no key, no rate limit, CORS open (*).
 // File updates after every matchday:
 // https://github.com/openfootball/football.json (2026-27/en.1.json)
 
@@ -13,7 +13,7 @@ const seasonFile = (season: number): string =>
 		season + 1
 	).slice(2)}/en.1.json`;
 
-/** 3-letter codes — openfootball only ships full names ("Arsenal FC"). */
+/** 3-letter codes - openfootball only ships full names ("Arsenal FC"). */
 const TLA_BY_TEAM_NAME: Record<string, string> = {
 	"AFC Bournemouth": "BOU",
 	"Arsenal FC": "ARS",
@@ -76,7 +76,7 @@ interface OpenFootballMatch {
 	time?: string;
 	team1: string;
 	team2: string;
-	/** Final scores appear after the matchday is played — absent before */
+	/** Final scores appear after the matchday is played - absent before */
 	score?: { ht?: [number, number]; ft?: [number, number] };
 }
 
@@ -85,7 +85,7 @@ interface OpenFootballFile {
 	matches: OpenFootballMatch[];
 }
 
-/** One season file cached in memory — GW switching never refetches. */
+/** One season file cached in memory - GW switching never refetches. */
 const seasonCache = new Map<number, OpenFootballMatch[]>();
 
 const loadSeasonMatches = async (season: number): Promise<OpenFootballMatch[]> => {
@@ -104,7 +104,7 @@ export interface MatchdayData {
 	/** e.g. "Matchday 5" */
 	roundName: string;
 	fixtures: FixtureData[];
-	/** Raw source rows — saved verbatim into the round snapshot */
+	/** Raw source rows - saved verbatim into the round snapshot */
 	sourceMatches: OpenFootballMatch[];
 }
 
@@ -124,7 +124,7 @@ export const prefetchSeasonMatches = (season: number): void => {
 
 /**
  * One matchday's fixtures, filtered from the season JSON.
- * Unplayed matches simply carry no `score` — every listed match is predictable.
+ * Unplayed matches simply carry no `score` - every listed match is predictable.
  */
 export const getMatchdayFixturesRequest = async (
 	season: number,

@@ -1462,7 +1462,7 @@
 	flex-direction: column;
 	justify-content: center;
 	// Fill the container (which is already one viewport tall) instead of
-	// declaring another 100vh — avoids the doubled-height scroll.
+	// declaring another 100vh - avoids the doubled-height scroll.
 	flex: 1;
 	min-height: 0;
 	width: 100%;

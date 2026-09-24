@@ -20,7 +20,7 @@ const MUTED = "#93a1bd";
 type PredictionsImageInput = {
 	season: number;
 	gameweek: number;
-	/** Kickoff-sorted fixtures — defines row order */
+	/** Kickoff-sorted fixtures - defines row order */
 	fixtures: FixtureData[];
 	predictions: { predictor: PredictorId; picks: PredictionPickData[] }[];
 };
@@ -28,7 +28,7 @@ type PredictionsImageInput = {
 const scoreText = (pick: PredictionPickData | undefined): string =>
 	pick ? `${pick.homeScore} - ${pick.awayScore}` : "- : -";
 
-/** Same-origin badges load clean — a failed one resolves null (TLA fallback). */
+/** Same-origin badges load clean - a failed one resolves null (TLA fallback). */
 const loadImage = (src: string): Promise<HTMLImageElement | null> =>
 	new Promise((resolve) => {
 		const image = new Image();
@@ -39,7 +39,7 @@ const loadImage = (src: string): Promise<HTMLImageElement | null> =>
 
 /**
  * Instagram-ready 4:5 portrait (1080x1350) PNG: GW header + two columns
- * (Abhay | Harsh) with every fixture's predicted score. Text-only — no
+ * (Abhay | Harsh) with every fixture's predicted score. Text-only - no
  * remote crests, so the canvas never gets tainted.
  */
 export const renderPredictionsImage = async ({
@@ -65,7 +65,7 @@ export const renderPredictionsImage = async ({
 		predictions.map((item) => [item.predictor, new Map(item.picks.map((pick) => [pick.fixtureId, pick]))])
 	);
 
-	// Preload each club badge once — local files, so the canvas never taints.
+	// Preload each club badge once - local files, so the canvas never taints.
 	const badgeUrls = [...new Set(fixtures.flatMap((f) => [f.homeLogo, f.awayLogo]))];
 	const badgeEntries = await Promise.all(
 		badgeUrls.map(async (url) => [url, await loadImage(url)] as const)
@@ -124,7 +124,7 @@ export const renderPredictionsImage = async ({
 
 	y += 76 + 20;
 
-	// Fixture rows — both columns share the same row rhythm
+	// Fixture rows - both columns share the same row rhythm
 	const rowH = 78;
 	const rowsHeight = fixtures.length * rowH;
 
@@ -164,7 +164,7 @@ export const renderPredictionsImage = async ({
 			context.textAlign = "center";
 			context.fillText(score, centerX, rowY);
 
-			// Exact room for names, derived from the real geometry — nothing
+			// Exact room for names, derived from the real geometry - nothing
 			// may cross the card edges.
 			const nameBudget =
 				columnWidth / 2 - (scoreHalf + gapScore + badgeSize + gapBadge) - 12;

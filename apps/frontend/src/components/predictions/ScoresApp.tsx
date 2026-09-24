@@ -30,7 +30,7 @@ const STAFF_PIN = import.meta.env.PUBLIC_STAFF_PIN ?? "";
 const formatCell = (value: number | null): string =>
 	value === null ? "–" : String(value);
 
-/** Season scoreboard — Total row first, then GW1 to GW38. */
+/** Season scoreboard - Total row first, then GW1 to GW38. */
 const ScoresApp: React.FC = () => {
 	const [isUnlocked, setIsUnlocked] = useState(
 		() => window.localStorage.getItem(UNLOCK_STORAGE_KEY) === "true"
@@ -161,7 +161,7 @@ const ScoresApp: React.FC = () => {
 					{state === "ready" &&
 						!tableRows.some((row) => row.abhay !== null || row.harsh !== null) && (
 							<p className={opsStyles.notice}>
-								No points calculated yet — open a gameweek and press Calculate.
+								No points calculated yet. Open a gameweek and press Calculate.
 							</p>
 						)}
 				</div>

@@ -2,7 +2,7 @@
 // Fixtures come from the openfootball JSON; each predictor's full matchday
 // JSON (with predicted scores) is stored as one snapshot per gameweek.
 
-/** The two predictors — matches the Abhay | Harsh tabs. */
+/** The two predictors - matches the Abhay | Harsh tabs. */
 export type PredictorId = "abhay" | "harsh";
 
 /** One fixture from the openfootball season file (only the fields we use). */
@@ -54,7 +54,7 @@ export interface GameweekScoreData {
 	harsh: number | null;
 }
 
-/** UI-internal pick derived from a snapshot — feeds prefill + IG export. */
+/** UI-internal pick derived from a snapshot - feeds prefill + IG export. */
 export interface PredictionPickData {
 	fixtureId: number;
 	homeTeam: string;

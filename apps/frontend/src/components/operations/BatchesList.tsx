@@ -83,14 +83,14 @@ const buildFeeLines = (
 		"",
 		...visiblePlans.map(
 			(plan) =>
-				`${formatDurationEmoji(plan.durationMonths)} ${formatPlanLabel(plan)} — *${formatRupees(plan.price)}*`
+				`${formatDurationEmoji(plan.durationMonths)} ${formatPlanLabel(plan)}: *${formatRupees(plan.price)}*`
 		),
 		hasThreeDayPlans && batch.plans.some((plan) => plan.daysPerWeek === 2)
 			? "\nℹ️ 2 Days per Week pricing is available for the 12-month plan on request."
 			: null,
 		registrationOptions.length > 0 ? "\n🎽 *REGISTRATION PACKAGES*\n" : null,
 		...registrationOptions.map(
-			(item) => `🔹 ${item.name} — ${formatRupees(item.price)}`
+			(item) => `🔹 ${item.name}: ${formatRupees(item.price)}`
 		),
 	].filter((line): line is string => line !== null);
 };

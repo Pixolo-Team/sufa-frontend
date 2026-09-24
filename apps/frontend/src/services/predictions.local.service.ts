@@ -8,7 +8,7 @@ import type {
 
 /**
  * Device-local fallback for when the backend is unreachable. Once the
- * backend is up, saving goes to the server again — shapes are identical,
+ * backend is up, saving goes to the server again - shapes are identical,
  * and Export works from either source.
  */
 
@@ -26,7 +26,7 @@ export const getLocalPredictions = (
 			if (parsed && Array.isArray(parsed.predictions)) return parsed;
 		}
 	} catch {
-		// Corrupt entry — fall through to empty.
+		// Corrupt entry - fall through to empty.
 	}
 
 	return { season, gameweek, predictions: [] };
@@ -54,7 +54,7 @@ export const saveLocalPredictions = (
 	try {
 		window.localStorage.setItem(storageKey(season, gameweek), JSON.stringify(next));
 	} catch {
-		// Storage full/blocked — caller already toasted.
+		// Storage full/blocked - caller already toasted.
 	}
 
 	return saved;
@@ -74,6 +74,6 @@ export const saveLocalPoints = (
 			JSON.stringify({ ...current, points })
 		);
 	} catch {
-		// Storage full/blocked — caller already toasted.
+		// Storage full/blocked - caller already toasted.
 	}
 };
