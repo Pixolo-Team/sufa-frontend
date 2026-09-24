@@ -112,15 +112,41 @@ export type Database = {
 					harsh_points?: number | null;
 					updated_at?: string;
 				};
-				Update: {
-					abhay_snapshot?: Json | null;
-					harsh_snapshot?: Json | null;
-					abhay_points?: number | null;
-					harsh_points?: number | null;
-					updated_at?: string;
-				};
-				Relationships: [];
+			Update: {
+				abhay_snapshot?: Json | null;
+				harsh_snapshot?: Json | null;
+				abhay_points?: number | null;
+				harsh_points?: number | null;
+				updated_at?: string;
 			};
+			Relationships: [];
+		};
+		donations: {
+			Row: {
+				id: string;
+				name: string;
+				amount: number;
+				details: string;
+				donated_on: string;
+				is_visible: boolean;
+				created_at: string;
+			};
+			Insert: {
+				name: string;
+				amount: number;
+				details?: string;
+				donated_on?: string;
+				is_visible?: boolean;
+			};
+			Update: {
+				name?: string;
+				amount?: number;
+				details?: string;
+				donated_on?: string;
+				is_visible?: boolean;
+			};
+			Relationships: [];
+		};
 		};
 		Views: Record<string, never>;
 		Functions: Record<string, never>;

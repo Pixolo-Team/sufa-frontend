@@ -77,6 +77,21 @@ CREATE TABLE registration_options (
 	created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- Donations (donor wall: /donations public list, /add-donation staff form).
+-- Same anon-key read/write tradeoff as gameweek_predictions - the PIN gate
+-- is a soft gate, so only donor names staff choose to publish go here.
+CREATE TABLE donations (
+	id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	name        TEXT NOT NULL,
+	amount      INTEGER NOT NULL CHECK (amount > 0),
+	details     TEXT NOT NULL DEFAULT '',
+	donated_on  DATE NOT NULL DEFAULT CURRENT_DATE,
+	is_visible  BOOLEAN NOT NULL DEFAULT true,
+	created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_donations_donated_on ON donations(donated_on DESC);
+
 -- Score Predictor (/predictions). One row per gameweek; each predictor's
 -- full matchday JSON (openfootball source rows + predicted scores) lives in
 -- its own snapshot column, so the Instagram export stays frozen even if the

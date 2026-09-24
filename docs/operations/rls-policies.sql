@@ -16,6 +16,7 @@ ALTER TABLE batch_timings         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE plans                 ENABLE ROW LEVEL SECURITY;
 ALTER TABLE registration_options  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE gameweek_predictions  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE donations              ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "public read" ON configs               FOR SELECT USING (true);
 CREATE POLICY "public read" ON centers               FOR SELECT USING (is_active = true);
@@ -30,3 +31,10 @@ CREATE POLICY "public insert" ON gameweek_predictions
 	FOR INSERT WITH CHECK (true);
 CREATE POLICY "public update" ON gameweek_predictions
 	FOR UPDATE USING (true) WITH CHECK (true);
+
+-- Donations: public donor wall reads visible rows; the staff form inserts
+-- with the anon key (soft PIN gate, same tradeoff as gameweek_predictions).
+CREATE POLICY "public read" ON donations
+	FOR SELECT USING (is_visible = true);
+CREATE POLICY "public insert" ON donations
+	FOR INSERT WITH CHECK (true);
