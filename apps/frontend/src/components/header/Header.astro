@@ -14,7 +14,7 @@ const headerListItems: HeaderListData[] = [
 	{ label: "Courses", id: "courses" },
 	{ label: "Centers", id: "centers" },
 	{ label: "Stats", id: "stats" },
-	{ label: "Contact Us", id: "contact" },
+	{ label: "Contact Us", id: "contact", opensEnquiry: true },
 ];
 ---
 
@@ -29,11 +29,17 @@ const headerListItems: HeaderListData[] = [
 			{/* Links */}
 			<nav class={`${styles.pageLinkWrap} font-weight-500 justify-end`}>
 				{
-					headerListItems.map((link) => (
-						<a href={`#${link.id}`} class={styles.pageLink}>
-							{link.label}
-						</a>
-					))
+					headerListItems.map((link) =>
+						link.opensEnquiry ? (
+							<a class={styles.pageLink} data-enquiry-trigger>
+								{link.label}
+							</a>
+						) : (
+							<a href={`#${link.id}`} class={styles.pageLink}>
+								{link.label}
+							</a>
+						)
+					)
 				}
 			</nav>
 
@@ -47,11 +53,17 @@ const headerListItems: HeaderListData[] = [
 			data-show-class={styles.showDropdown}
 		>
 			{
-				headerListItems.map((link) => (
-					<a href={`#${link.id}`} class={styles.pageLink}>
-						{link.label}
-					</a>
-				))
+				headerListItems.map((link) =>
+					link.opensEnquiry ? (
+						<a class={styles.pageLink} data-enquiry-trigger>
+							{link.label}
+						</a>
+					) : (
+						<a href={`#${link.id}`} class={styles.pageLink}>
+							{link.label}
+						</a>
+					)
+				)
 			}
 		</div>
 	</div>

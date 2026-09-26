@@ -20,9 +20,7 @@ import TextArea from "@/neevo/components/text-area/TextArea";
 
 // HOOKS //
 import { useLeadSubmit } from "@/hooks/use-lead-submit";
-
-// CONSTANTS //
-import { VENUE_OPTIONS } from "@/constants/venues";
+import { useCenters } from "@/hooks/use-centers";
 
 const LEAD_INPUT_INIT: {
 	name: string;
@@ -44,6 +42,13 @@ const LEAD_INPUT_INIT: {
 const LeadForm: React.FC = () => {
 	const [inputs, setInputs] = useState(LEAD_INPUT_INIT);
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// Load training centers for the venue dropdown (label = location, value = id)
+	const {
+		options: venueOptions,
+		isLoading: isLoadingCenters,
+		error: centersError,
+	} = useCenters();
 
 	const handleInputChange = useCallback((key: string, value: string) => {
 		setInputs((previous) => ({ ...previous, [key]: value }));
@@ -90,7 +95,7 @@ const LeadForm: React.FC = () => {
 			phone: inputs.phone,
 			studentName: inputs.studentName,
 			studentDob: inputs.studentDob,
-			centerName: inputs.venue?.value ?? null,
+			centerId: inputs.venue?.value ?? null,
 			otherInfo,
 		});
 	}, [inputs, validate, submitLead]);
@@ -157,12 +162,18 @@ const LeadForm: React.FC = () => {
 
 			<div className={styles.inputBox}>
 				<Select
-					options={VENUE_OPTIONS}
+					options={venueOptions}
 					isRequired
 					label="Venue"
 					onChange={handleVenueChange}
 					selectedOption={inputs.venue}
-					placeholder="Select Venue"
+					placeholder={
+						centersError
+							? "Couldn't load venues"
+							: isLoadingCenters
+								? "Loading venues..."
+								: "Select Venue"
+					}
 					isError={!!errors.venue}
 					errorMessage={errors.venue}
 				/>

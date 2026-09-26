@@ -1,19 +1,18 @@
+// CONFIG //
+import { LEADS_API_URL, LEADS_TENANT_ID } from "./zizo.config";
+
 export type CreateLeadInput = {
-	source: "registration_page" | "homepage_enquiry" | "operation_portal";
+	source: "registration_page" | "website" | "operation_portal";
 	name?: string | null;
 	parentName?: string | null;
 	phone: string;
 	studentName: string;
 	studentDob?: string | null;
-	centerName?: string | null;
+	centerId?: string | null;
 	gender?: "male" | "female" | "other" | null;
 	otherInfo?: string | null;
 	consent?: boolean;
 };
-
-const LEADS_API_URL =
-	import.meta.env.PUBLIC_LEADS_API_URL?.replace(/\/$/, "") ??
-	"http://localhost:3000";
 
 /** Creates one lead through the Zizo Leads backend. */
 export const createLeadRequest = async (input: CreateLeadInput): Promise<void> => {
@@ -21,6 +20,7 @@ export const createLeadRequest = async (input: CreateLeadInput): Promise<void> =
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
+			"x-tenant-id": LEADS_TENANT_ID,
 		},
 		body: JSON.stringify({
 			source: input.source,
@@ -28,7 +28,7 @@ export const createLeadRequest = async (input: CreateLeadInput): Promise<void> =
 			studentDob: input.studentDob || null,
 			parentName: input.parentName ?? input.name ?? null,
 			phone: input.phone,
-			centerName: input.centerName || null,
+			centerId: input.centerId || null,
 			gender: input.gender ?? null,
 			otherInfo: input.otherInfo || null,
 			consent: input.consent ?? false,

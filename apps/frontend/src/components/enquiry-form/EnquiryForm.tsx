@@ -5,9 +5,6 @@ import { useState, useCallback } from "react";
 // TYPES //
 import type { DropdownOptionData } from "@/neevo/types/forms";
 
-// CONSTANTS //
-import { VENUE_OPTIONS } from "@/constants/venues";
-
 // ENUMS //
 import { InputTextTypes } from "@/neevo/enums/input.enum";
 import { Colors, Shapes } from "@/neevo/enums/core.enum";
@@ -24,6 +21,7 @@ import TextArea from "@/neevo/components/text-area/TextArea";
 
 // HOOKS //
 import { useLeadSubmit } from "@/hooks/use-lead-submit";
+import { useCenters } from "@/hooks/use-centers";
 
 // Initial form state
 const ENQUIRY_INPUT_INIT = {
@@ -42,6 +40,13 @@ const EnquiryForm: React.FC = () => {
 	// Define states
 	const [enquiryInputs, setEnquiryInputs] = useState(ENQUIRY_INPUT_INIT);
 	const [enquiryErrors, setEnquiryErrors] = useState<Record<string, string>>({});
+
+	// Load training centers for the venue dropdown (label = location, value = id)
+	const {
+		options: venueOptions,
+		isLoading: isLoadingCenters,
+		error: centersError,
+	} = useCenters();
 
 	/** Validate Enquiry form */
 	const validateEnquiryForm = useCallback(() => {
@@ -99,12 +104,12 @@ const EnquiryForm: React.FC = () => {
 			.join("\n");
 
 		submitLead({
-			source: "homepage_enquiry",
+			source: "website",
 			name: enquiryInputs.parentName,
 			phone: enquiryInputs.phone,
 			studentName: enquiryInputs.studentName,
 			studentDob: enquiryInputs.dob,
-			centerName: venue,
+			centerId: venue,
 			otherInfo,
 		});
 	}, [enquiryInputs, validateEnquiryForm, submitLead]);
@@ -195,12 +200,18 @@ const EnquiryForm: React.FC = () => {
 				{/* Select Venue */}
 				<div className={styles.inputBox}>
 					<Select
-						options={VENUE_OPTIONS}
+						options={venueOptions}
 						isRequired
 						label="Venue"
 						onChange={(item) => handleOthersChange("venue", item)}
 						selectedOption={enquiryInputs.other_fields.venue}
-						placeholder="Select Venue"
+						placeholder={
+							centersError
+								? "Couldn't load venues"
+								: isLoadingCenters
+									? "Loading venues..."
+									: "Select Venue"
+						}
 						isError={!!enquiryErrors["other_fields.venue"]}
 						errorMessage={enquiryErrors["other_fields.venue"]}
 					/>

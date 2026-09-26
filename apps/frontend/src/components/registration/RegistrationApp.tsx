@@ -4,14 +4,12 @@ import { useCallback, useMemo, useState } from "react";
 // STYLES //
 import styles from "./registration-page.module.scss";
 
-// CONSTANTS //
-import { VENUE_OPTIONS } from "@/constants/venues";
-
 // ENUMS //
 import { ToastTypes } from "@/neevo/enums/toast.enum";
 
 // HOOKS //
 import { useLeadSubmit } from "@/hooks/use-lead-submit";
+import { useCenters } from "@/hooks/use-centers";
 
 // SERVICES //
 import { showToast } from "@/neevo/services/toast.service";
@@ -26,14 +24,6 @@ import {
 	WhatsappIcon,
 	YoutubeIcon,
 } from "./RegistrationIcons";
-
-// Same values as the shared VENUE_OPTIONS (staff Add Lead + public Enquiry
-// forms) so a venue reads identically no matter which form it came through -
-// only the emoji prefix here is form-specific decoration.
-const VENUES = VENUE_OPTIONS.map((option) => ({
-	value: option.value,
-	label: `📍 ${option.label}`,
-}));
 
 const GENDERS = [
 	{ value: "male", label: "🧒 Boy" },
@@ -95,6 +85,22 @@ const RegistrationApp: React.FC = () => {
 	const [form, setForm] = useState<FormState>(FORM_INIT);
 	const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
 	const [submitted, setSubmitted] = useState(false);
+
+	// Load training centers for the venue dropdown (label = location, value = id).
+	// The 📍 prefix is form-specific decoration on top of the shared options.
+	const {
+		options: centerOptions,
+		isLoading: isLoadingCenters,
+		error: centersError,
+	} = useCenters();
+	const venues = useMemo(
+		() =>
+			centerOptions.map((option) => ({
+				value: option.value,
+				label: `📍 ${option.label}`,
+			})),
+		[centerOptions]
+	);
 
 	const updateField = useCallback(
 		<K extends keyof FormState>(key: K, value: FormState[K]) => {
@@ -162,7 +168,7 @@ const RegistrationApp: React.FC = () => {
 				phone: form.mobileNumber,
 				studentName: form.playerName,
 				studentDob: form.dateOfBirth,
-				centerName: form.trainingVenue,
+				centerId: form.trainingVenue,
 				gender: form.gender as "male" | "female" | "other",
 				otherInfo,
 				consent: form.consent,
@@ -466,9 +472,16 @@ const RegistrationApp: React.FC = () => {
 										onChange={(event) =>
 											updateField("trainingVenue", event.target.value)
 										}
+										disabled={isLoadingCenters || !!centersError}
 									>
-										<option value="">Select training venue</option>
-										{VENUES.map((venue) => (
+										<option value="">
+											{centersError
+												? "Couldn't load venues"
+												: isLoadingCenters
+													? "Loading venues..."
+													: "Select training venue"}
+										</option>
+										{venues.map((venue) => (
 											<option key={venue.value} value={venue.value}>
 												{venue.label}
 											</option>
